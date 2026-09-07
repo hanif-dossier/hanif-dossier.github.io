@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Pusat laporan Hanif Investment Service: briefing harian, radar portofolio, peringatan, dan screening altcoin — satu pintu.">
+<title>Hanif Investment Service — Pusat Laporan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230d366b'/%3E%3Cstop offset='.55' stop-color='%232a78d6'/%3E%3Cstop offset='1' stop-color='%231baf7a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M14 44 L26 30 L34 38 L50 18' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light dark;
+ --bg:#f4f5f7;--kartu:#ffffff;--tx:#141619;--lb:#5b6472;--gr:#e2e5ea;--kd:#eef1f5;
+ --ak:#2a78d6;--ak-lembut:#e3eefc;--hangat:#eb6834;--hangat-lembut:#fdece4;--ungu:#4a3aa7;--ungu-lembut:#ebe8f9;
+ --naik:#006300;--naik-lembut:#e3f5e3;--turun:#c73535;--turun-lembut:#fbe6e6;--dingin:#9aa4b2;
+ --bayang:0 1px 2px rgba(20,22,25,.06),0 8px 24px rgba(20,22,25,.06)}
+@media(prefers-color-scheme:dark){:root{
+ --bg:#0f1114;--kartu:#181b20;--tx:#e8eaed;--lb:#9aa4b2;--gr:#2a2f38;--kd:#1f242b;
+ --ak:#3987e5;--ak-lembut:#1a2a44;--hangat:#e8703f;--hangat-lembut:#3a2418;--ungu:#9085e9;--ungu-lembut:#26224a;
+ --naik:#3ec13e;--naik-lembut:#16301a;--turun:#ef7070;--turun-lembut:#3a1c1c;--dingin:#6b7480;
+ --bayang:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--ak)}
+main{max-width:1040px;margin:0 auto;padding:16px 16px 56px}
+
+/* kepala */
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:34px 28px 30px;color:#fff;box-shadow:var(--bayang);
+ background:linear-gradient(135deg,#0d366b 0%,#2a78d6 50%,#1baf7a 100%)}
+.hero::after{content:"";position:absolute;right:-60px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero::before{content:"";position:absolute;right:120px;bottom:-140px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero>*{position:relative}
+.hero .merek{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;opacity:.88}
+.hero h1{font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.15;margin:.2em 0 .25em;letter-spacing:-.015em;color:#fff}
+.hero p{margin:0;max-width:640px;opacity:.94;font-size:1.02rem}
+.hero .tgl{margin-top:16px;display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 14px;font-size:.85rem}
+
+/* ubin angka */
+.ubin{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0 6px}
+.ubin>div{background:var(--kartu);border:1px solid var(--gr);border-top:4px solid var(--lb);border-radius:14px;padding:12px 14px;box-shadow:var(--bayang);min-height:78px}
+.ubin>div.naik{border-top-color:#0ca30c}.ubin>div.turun{border-top-color:#d03b3b}.ubin>div.netral{border-top-color:var(--ak)}
+.ubin small{display:block;color:var(--lb);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.ubin b{display:block;font-size:1.3rem;font-weight:750;font-variant-numeric:tabular-nums;margin-top:2px}
+.ubin>div.naik b{color:var(--naik)}.ubin>div.turun b{color:var(--turun)}
+.ubin .sub{font-size:.78rem;color:var(--lb)}
+.sumber{font-size:.78rem;color:var(--lb);margin:4px 2px 0}
+
+h2{font-size:1.15rem;margin:2em 0 .7em;padding-left:12px;border-left:4px solid var(--ak);line-height:1.3}
+h2 small{font-weight:400;color:var(--lb);font-size:.85rem;margin-left:8px}
+
+/* kartu halaman */
+.kisi{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.kartu{display:flex;flex-direction:column;background:var(--kartu);border:1px solid var(--gr);border-radius:18px;box-shadow:var(--bayang);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.kartu:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(20,22,25,.08),0 14px 34px rgba(20,22,25,.12)}
+.kartu .pita{height:6px;background:linear-gradient(90deg,#0d366b,#2a78d6,#1baf7a)}
+.kartu.radar .pita{background:linear-gradient(90deg,#2b1d6b,#4a3aa7,#2a78d6)}
+.kartu.peringatan .pita{background:linear-gradient(90deg,#6b2a0d,#eb6834,#eda100)}
+.kartu.screening .pita{background:linear-gradient(90deg,#0d4d3a,#1baf7a,#2a78d6)}
+.kartu .isi{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.kartu header{display:flex;align-items:center;gap:12px}
+.ikon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff;background:var(--ak)}
+.kartu.radar .ikon{background:var(--ungu)}.kartu.peringatan .ikon{background:var(--hangat)}.kartu.screening .ikon{background:#1baf7a}
+.ikon svg{width:24px;height:24px}
+.kartu h3{margin:0;font-size:1.15rem;line-height:1.2}
+.kartu .jadwal{display:block;font-size:.78rem;color:var(--lb);margin-top:2px}
+.kartu p.desk{margin:0;color:var(--lb);font-size:.92rem}
+.cuplik{background:var(--kd);border-radius:12px;padding:10px 12px;font-size:.9rem;min-height:56px}
+.cuplik .kapan{display:block;font-size:.74rem;color:var(--lb);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.cuplik .memuat{color:var(--lb);font-style:italic}
+.cuplik ul{margin:4px 0 0;padding-left:1.1em}.cuplik li{margin:3px 0}
+.pil{display:inline-block;padding:1px 9px;border-radius:999px;font-size:.76rem;font-weight:650;line-height:1.55;white-space:nowrap;margin:2px 4px 2px 0}
+.pil.koin{background:var(--ak-lembut);color:var(--ak)}.pil.naik{background:var(--naik-lembut);color:var(--naik)}.pil.turun{background:var(--turun-lembut);color:var(--turun)}
+.pil.datar{background:var(--kd);color:var(--lb);border:1px solid var(--gr)}.pil.hangat{background:var(--hangat-lembut);color:var(--hangat)}
+.pil.kebijakan{background:var(--ungu-lembut);color:var(--ungu)}.pil.internal{background:var(--hangat-lembut);color:var(--hangat)}.pil.makro{background:var(--ak-lembut);color:var(--ak)}
+.pil b{font-variant-numeric:tabular-nums;margin-left:4px}
+.naik{color:var(--naik)}.turun{color:var(--turun)}
+.tombol{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ak);color:#fff;text-decoration:none;font-weight:650;padding:10px 16px;border-radius:12px;font-size:.95rem}
+.tombol:hover{filter:brightness(1.08)}
+.kartu.radar .tombol{background:var(--ungu)}.kartu.peringatan .tombol{background:var(--hangat)}.kartu.screening .tombol{background:#158f63}
+
+/* daftar tautan kecil */
+.daftar{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.daftar a{display:flex;align-items:center;gap:12px;background:var(--kartu);border:1px solid var(--gr);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--tx);box-shadow:var(--bayang)}
+.daftar a:hover{border-color:var(--ak)}
+.daftar .ikon{width:36px;height:36px;border-radius:10px;background:var(--kd);color:var(--lb)}
+.daftar .ikon svg{width:20px;height:20px}
+.daftar b{display:block;font-size:.95rem}.daftar small{color:var(--lb);font-size:.8rem}
+.catatan{font-size:.85rem;color:var(--lb);margin:8px 2px 0}
+.kaki{margin-top:40px;padding-top:14px;border-top:1px solid var(--gr);font-size:.8rem;color:var(--lb)}
+.kaki a{color:var(--lb)}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="merek">Hanif Investment Service</div>
+  <h1>Pusat Laporan Pasar Crypto</h1>
+  <p>Satu pintu ke semua laporan otomatis: briefing pagi, radar koin yang kamu pegang, peringatan tiap tiga jam, dan screening 750 altcoin. Semua terbit sendiri di server GitHub, tanpa laptop menyala.</p>
+  <div class="tgl" id="tgl">memuat…</div>
+</header>
+
+<div class="ubin" id="ubin">
+  <div class="netral"><small>Bitcoin</small><b id="u-btc">…</b><span class="sub" id="u-btc-sub"></span></div>
+  <div class="netral"><small>Kapitalisasi total</small><b id="u-cap">…</b><span class="sub" id="u-cap-sub"></span></div>
+  <div class="netral"><small>Dominasi BTC</small><b id="u-dom">…</b><span class="sub">porsi Bitcoin di pasar</span></div>
+  <div class="netral"><small>Fear &amp; Greed</small><b id="u-fg">…</b><span class="sub" id="u-fg-sub"></span></div>
+</div>
+<p class="sumber" id="sumber-ubin">Angka diambil dari laporan pagi ini.</p>
+
+<h2>Empat halaman laporan <small>diperbarui otomatis</small></h2>
+<div class="kisi">
+
+  <article class="kartu briefing">
+    <div class="pita"></div>
+    <div class="isi">
+      <header>
+        <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14"/><path d="M4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></div>
+        <div><h3>Briefing Harian</h3><span class="jadwal">Terbit tiap pagi ±06.00 WIB</span></div>
+      </header>
+      <p class="desk">Yang paling penting hari ini, keadaan pasar, sentimen, rotasi sektor, berita berdampak, dan sisi lainnya.</p>
+      <div class="cuplik" id="c-briefing"><span class="memuat">Memuat cuplikan…</span></div>
+      <a class="tombol" href="https://hanif-dossier.github.io/laporan-harian/">Buka Briefing Harian →</a>
+    </div>
+  </article>
+
+  <article class="kartu radar">
+    <div class="pita"></div>
+    <div class="isi">
+      <header>
+        <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v4M12 12l5-5"/></svg></div>
+        <div><h3>Radar Portofolio</h3><span class="jadwal">Lengkap tiap pagi, koinmu dipantau sepanjang hari</span></div>
+      </header>
+      <p class="desk">Berita dan kebijakan yang menyebut koin yang kamu pegang, rotasi sektornya, kalender 21 hari, dan faktor baru.</p>
+      <div class="cuplik" id="c-radar"><span class="memuat">Memuat cuplikan…</span></div>
+      <a class="tombol" href="https://hanif-dossier.github.io/laporan-harian/radar.html">Buka Radar Portofolio →</a>
+    </div>
+  </article>
+
+  <article class="kartu peringatan">
+    <div class="pita"></div>
+    <div class="isi">
+      <header>
+        <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+        <div><h3>Peringatan</h3><span class="jadwal">Diperiksa tiap 3 jam, hanya yang baru</span></div>
+      </header>
+      <p class="desk">Kebijakan atau kejadian internal yang baru menyebut koinmu, plus pengingat kalender H-7, H-3, H-1, dan hari-H.</p>
+      <div class="cuplik" id="c-peringatan"><span class="memuat">Memuat cuplikan…</span></div>
+      <a class="tombol" href="https://hanif-dossier.github.io/laporan-harian/peringatan.html">Buka Peringatan →</a>
+    </div>
+  </article>
+
+  <article class="kartu screening">
+    <div class="pita"></div>
+    <div class="isi">
+      <header>
+        <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg></div>
+        <div><h3>Screening Altcoin</h3><span class="jadwal">Mesin 05.07 WIB, daftar pendek final ±06.30 WIB</span></div>
+      </header>
+      <p class="desk">750 altcoin disaring sembilan lapis sinyal, lalu 3-6 nama dibedah lewat riset web dan diberi syarat batalnya.</p>
+      <div class="cuplik" id="c-screening"><span class="memuat">Memuat cuplikan…</span></div>
+      <a class="tombol" href="https://hanif-dossier.github.io/potret-pasar-crypto/">Buka Screening Altcoin →</a>
+    </div>
+  </article>
+
+</div>
+
+<h2>Alat di laptop <small>hanya hidup saat laptop menyala</small></h2>
+<div class="daftar">
+  <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/7a229dd9-e597-44e9-90e0-89ebf542b9bb/chat">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg></div>
+    <span><b>Chat asisten</b><small>Tanya apa saja soal laporan dan pasar</small></span>
+  </a>
+  <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/laporan">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div>
+    <span><b>Laporan harian versi laptop</b><small>Halaman dari n8n</small></span>
+  </a>
+</div>
+
+<h2>Arsip &amp; sumber</h2>
+<div class="daftar">
+  <a href="https://github.com/hanif-dossier/laporan-harian/tree/main/harian">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <span><b>Arsip briefing &amp; radar</b><small>Satu berkas per hari sejak 2 September 2026</small></span>
+  </a>
+  <a href="https://github.com/hanif-dossier/potret-pasar-crypto/tree/main/laporan">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+    <span><b>Arsip screening</b><small>Laporan mesin dan daftar pendek final per hari</small></span>
+  </a>
+  <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/portofolio.json">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+    <span><b>Ubah daftar koin</b><small>Koin yang dipantau radar dan peringatan</small></span>
+  </a>
+  <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/agenda.json">
+    <div class="ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+    <span><b>Ubah kalender</b><small>FOMC, data tenaga kerja, unlock token</small></span>
+  </a>
+</div>
+
+<div class="kaki">Semua laporan disusun otomatis dan menyajikan situasi pasar, bukan nasihat investasi. Hanif Investment Service menjual riset dan analisis, bukan nasihat investasi berizin.<br>
+Kalau cuplikan di halaman ini kosong, laporannya tetap bisa dibuka lewat tombol masing-masing.</div>
+
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const AKAR = 'https://hanif-dossier.github.io';
+
+  // Tanggal hari ini menurut WIB — dipakai di kepala dan untuk mencari berkas peringatan.
+  const wib = new Date(Date.now() + 7 * 3600 * 1000);
+  const iso = d => d.toISOString().slice(0, 10);
+  const hariIni = iso(wib), kemarin = iso(new Date(wib.getTime() - 86400000));
+  $('tgl').textContent = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())
+    + ' · ' + new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }).format(new Date()).replace('.', ':') + ' WIB';
+
+  // Markdown mentah dari dua repo di alamat yang sama, jadi bisa dibaca langsung.
+  const ambil = async jalur => {
+    const r = await fetch(AKAR + jalur, { cache: 'no-cache' });
+    if (!r.ok) throw new Error(r.status);
+    return r.text();
+  };
+  const bacaPersen = s => { const m = String(s || '').match(/([+\-−]?\d[\d.,]*)\s*%/); if (!m) return null; let t = m[1].replace('−', '-'); if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.'); const v = Number(t); return Number.isFinite(v) ? v : null; };
+  const arah = v => v == null ? 'datar' : v > 0 ? 'naik' : v < 0 ? 'turun' : 'datar';
+  // Akhir bagian = judul ## berikutnya atau akhir berkas (JavaScript tidak punya \Z).
+  const bagian = (md, judul) => { const m = md.match(new RegExp('^##\\s+' + judul + '[^\\n]*\\n([\\s\\S]*?)(?=^##\\s|(?![\\s\\S]))', 'm')); return m ? m[1].trim() : ''; };
+  const barisTabel = teks => teks.split('\n').filter(b => b.trim().startsWith('|')).slice(2).map(b => b.trim().replace(/^\||\|$/g, '').split('|').map(x => x.trim()));
+  const polos = s => s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '$1').replace(/[*`_]/g, '').replace(/!\[[^\]]*\]\([^)]*\)/g, '').trim();
+  const gagal = (id, pesan) => { $(id).innerHTML = `<span class="memuat">${esc(pesan)}</span>`; };
+  const ubin = (id, kelas) => { const el = $(id).closest('div'); el.className = kelas; };
+
+  // 1. Briefing Harian
+  ambil('/laporan-harian/harian/terbaru.md').then(md => {
+    const tgl = (md.match(/^# Briefing Harian — (.+)$/m) || [])[1] || '';
+    const jam = (md.match(/Disusun otomatis (\d{2}:\d{2}) WIB/) || [])[1];
+    const inti = polos(bagian(md, 'Yang Paling Penting Hari Ini')).split('\n').find(b => b.trim()) || '';
+    const kalimat = inti.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
+    $('c-briefing').innerHTML = `<span class="kapan">${esc(tgl)}${jam ? ` · ${jam} WIB` : ''}</span>${esc(kalimat)}`;
+    // ubin: BTC dan Fear & Greed
+    const btc = barisTabel(bagian(md, 'Pasar Crypto')).find(r => /^BTC/.test(r[0]));
+    if (btc) { const v = bacaPersen(btc[2]); $('u-btc').textContent = btc[1]; $('u-btc-sub').innerHTML = `<span class="${arah(v)}">${esc(btc[2])}</span> dalam 24 jam`; ubin('u-btc', arah(v) === 'datar' ? 'netral' : arah(v)); }
+    const fg = md.match(/Fear & Greed hari ini berada di angka (\d+) \(([^)]+)\)/);
+    if (fg) { const n = Number(fg[1]); $('u-fg').textContent = `${n} · ${fg[2]}`; $('u-fg-sub').textContent = n >= 75 ? 'serakah ekstrem' : n >= 55 ? 'serakah' : n >= 45 ? 'netral' : n >= 25 ? 'takut' : 'takut ekstrem'; ubin('u-fg', n >= 55 ? 'naik' : n < 45 ? 'turun' : 'netral'); }
+    const cap = md.match(/Total kapitalisasi pasar global (?:menyusut|naik|turun|tumbuh|bertambah|melonjak)?\s*([+\-−]?\d[\d.,]*%)[^$]*(\$[\d.,]+ (?:triliun|miliar))/);
+    if (cap) { const v = bacaPersen(cap[1]); $('u-cap').textContent = cap[2]; $('u-cap-sub').innerHTML = `<span class="${arah(v)}">${esc(cap[1])}</span> dalam 24 jam`; ubin('u-cap', arah(v) === 'datar' ? 'netral' : arah(v)); }
+    const dom = md.match(/Dominasi Bitcoin[^.]*?(\d[\d,]*%)/);
+    if (dom) $('u-dom').textContent = dom[1];
+  }).catch(() => gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
+
+  // 2. Radar Portofolio: koinmu hari ini
+  ambil('/laporan-harian/harian/radar.md').then(md => {
+    const tgl = (md.match(/^# Radar Portofolio — (.+)$/m) || [])[1] || '';
+    const jam = (md.match(/Diperbarui (\d{2}:\d{2}) WIB/) || [])[1];
+    const koin = barisTabel(bagian(md, 'Koin Kamu Hari Ini'));
+    const jumlahPeringatan = bagian(md, 'Peringatan Hari Ini').split('\n').filter(b => /^[-*]\s/.test(b.trim())).length;
+    const keping = koin.map(r => { const v = bacaPersen(r[2]); return `<span class="pil ${arah(v)}" title="${esc(r[0])}: 24 jam ${esc(r[2])}, 7 hari ${esc(r[3])}, 30 hari ${esc(r[4])}">${esc(r[0])}<b>${esc(r[2])}</b></span>`; }).join('');
+    $('c-radar').innerHTML = `<span class="kapan">${esc(tgl)}${jam ? ` · ${jam} WIB` : ''} · ${jumlahPeringatan} peringatan hari ini</span>${keping || 'Belum ada tabel koin.'}<div class="sumber" style="margin-top:6px">Angka = perubahan 24 jam. Sentuh untuk 7 dan 30 hari.</div>`;
+  }).catch(() => gagal('c-radar', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
+
+  // 3. Peringatan: yang baru hari ini (atau kemarin kalau hari ini masih kosong)
+  (async () => {
+    let md = '', tgl = hariIni;
+    try { md = await ambil(`/laporan-harian/peringatan/${hariIni}.md`); }
+    catch { try { md = await ambil(`/laporan-harian/peringatan/${kemarin}.md`); tgl = kemarin; } catch { return gagal('c-peringatan', 'Belum ada peringatan dua hari terakhir.'); } }
+    const blok = [...md.matchAll(/^### (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) WIB\n([\s\S]*?)(?=^### |(?![\s\S]))/gm)];
+    const item = blok.flatMap(b => b[2].split('\n').filter(x => /^[-*]\s/.test(x.trim())).map(x => ({ jam: b[1].slice(11), teks: x.trim().replace(/^[-*]\s+/, '') })));
+    const terbaru = item.slice(-4).reverse();
+    const lipat = t => { const m = t.match(/^(Kebijakan|Internal|Makro|H-\d+|Hari-H|hari-H)\s*(?:·\s*([A-Z0-9, ]+?)\s*)?—\s*(.*)$/); if (!m) return esc(polos(t)); const jenis = m[1].toLowerCase().startsWith('h') ? 'hangat' : m[1].toLowerCase(); return `<span class="pil ${jenis}">${esc(m[1])}</span>${m[2] ? `<span class="pil koin">${esc(m[2])}</span>` : ''}${esc(polos(m[3]))}`; };
+    $('c-peringatan').innerHTML = `<span class="kapan">${esc(tgl)} · ${item.length} peringatan${blok.length ? ` · pemeriksaan terakhir ${blok[blok.length - 1][1].slice(11)} WIB` : ''}</span><ul>${terbaru.map(i => `<li>${lipat(i.teks)} <small style="color:var(--lb)">(${i.jam})</small></li>`).join('')}</ul>`;
+  })();
+
+  // 4. Screening Altcoin: daftar pendek final, narasi hangat, angka pasar
+  Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
+    if (!final && !mesin) throw new Error('kosong');
+    const tgl = (final.match(/^# Daftar pendek final — (.+)$/m) || mesin.match(/^# Screening altcoin — (.+)$/m) || [])[1] || '';
+    const nama = [...final.matchAll(/^\*\*([A-Z0-9]{1,12}) \((.+?)\)\*\*\s*—\s*(.*)$/gm)].map(m => `<span class="pil koin" title="${esc(polos(m[3]))}">${esc(m[1])} <small style="font-weight:500">${esc(m[2])}</small></span>`);
+    const hangat = barisTabel(bagian(mesin, 'Narasi hari ini')).filter(r => /menghangat/.test(r[3] || '')).map(r => `<span class="pil hangat">${esc(r[0])}</span>`);
+    const kandidatMesin = [...mesin.matchAll(/^### \d+\. ([A-Z0-9]+) \(/gm)].map(m => `<span class="pil koin">${esc(m[1])}</span>`);
+    const keping = nama.length ? nama : kandidatMesin;
+    $('c-screening').innerHTML = `<span class="kapan">${esc(tgl)} · ${nama.length ? 'daftar pendek final' : 'kandidat mesin (final belum terbit)'}</span>${keping.join('') || 'Belum ada kandidat.'}${hangat.length ? `<div style="margin-top:6px"><small style="color:var(--lb)">Narasi menghangat:</small> ${hangat.join('')}</div>` : ''}`;
+    // ubin dari tabel keadaan pasar kalau briefing tidak memberi angka
+    const pasar = barisTabel(bagian(mesin, 'Keadaan pasar hari ini'))[0];
+    if (pasar) {
+      if ($('u-cap').textContent === '…') { const v = bacaPersen(pasar[4]); $('u-cap').textContent = pasar[0]; $('u-cap-sub').innerHTML = `<span class="${arah(v)}">${esc(pasar[4])}</span> dalam 24 jam`; ubin('u-cap', arah(v) === 'datar' ? 'netral' : arah(v)); }
+      if ($('u-dom').textContent === '…') $('u-dom').textContent = pasar[1];
+    }
+  }).catch(() => gagal('c-screening', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
+
+  // Ubin yang tetap kosong setelah semuanya dicoba
+  setTimeout(() => { for (const id of ['u-btc', 'u-cap', 'u-dom', 'u-fg']) if ($(id).textContent === '…') $(id).textContent = 'n/a'; }, 8000);
+})();
+</script>
+</body>
+</html>
