@@ -65,3 +65,19 @@ create policy "anggota disetujui boleh baca laporan" on storage.objects
 -- 7. Tampilan ringkas untuk halaman admin (jumlah per status).
 create or replace view public.ringkasan_anggota as
   select status, count(*)::int as jumlah from public.anggota group by status;
+
+-- 8. Hapus akun sepenuhnya (dari auth.users; baris anggota ikut terhapus).
+--    Hanya admin yang boleh memanggil; dipakai tombol tempat sampah di admin.html.
+create or replace function public.hapus_akun(target uuid)
+returns void language plpgsql security definer set search_path = public, auth as $$
+begin
+  if not public.adalah_admin() then
+    raise exception 'hanya admin yang boleh menghapus akun';
+  end if;
+  if lower((select email from auth.users where id = target)) in ('abdullahhanif033@gmail.com', 'abdhanif033@gmail.com') then
+    raise exception 'akun admin tidak boleh dihapus dari sini';
+  end if;
+  delete from auth.users where id = target;
+end $$;
+revoke all on function public.hapus_akun(uuid) from public;
+grant execute on function public.hapus_akun(uuid) to authenticated;

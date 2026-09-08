@@ -41,6 +41,8 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
 .aksi button.setuju{background:var(--sage);border-color:var(--sage);color:#fff}
 .aksi button.tolak:hover{border-color:var(--bata);color:var(--bata)}
 .aksi button:disabled{opacity:.5;cursor:wait}
+.aksi button.ikon{padding:8px 10px;display:inline-flex;align-items:center;gap:6px}
+.aksi button.hapus{border-color:#e9d2cc;color:var(--bata)}.aksi button.hapus:hover{background:var(--bata-lembut)}
 .kosong{background:var(--kartu);border-radius:18px;padding:34px;text-align:center;color:var(--lb);box-shadow:var(--bayang)}
 .pesan{margin:0 0 14px;padding:10px 12px;border-radius:12px;font-size:14px;display:none}
 .pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
@@ -127,6 +129,8 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
       const aksi = document.createElement('div'); aksi.className = 'aksi';
       if (a.status !== 'disetujui') aksi.append(tombol('Setujui', 'setuju', a, 'disetujui'));
       if (a.status !== 'ditolak') aksi.append(tombol('Tolak', 'tolak', a, 'ditolak'));
+      aksi.append(tombolSandi(a));
+      aksi.append(tombolHapus(a));
       baris.append(isi, cap, aksi);
       wadah.append(baris);
     }
@@ -143,6 +147,38 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
         .eq('id', anggota.id);
       if (error) { pesan('Gagal menyimpan: ' + error.message); b.disabled = false; return; }
       pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
+      await muat();
+    });
+    return b;
+  }
+
+  // Kata sandi tidak pernah bisa dilihat siapa pun (tersimpan sebagai hash).
+  // Yang bisa dilakukan admin: mengirimkan tautan ganti kata sandi ke emailnya.
+  function tombolSandi(anggota) {
+    const b = document.createElement('button');
+    b.className = 'ikon'; b.title = 'Kirim tautan ganti kata sandi ke email ini';
+    b.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M10.9 12.1 21 2M15 8l3 3M18 5l3 3"/></svg><span>Sandi</span>';
+    b.addEventListener('click', async () => {
+      if (!confirm('Kirim tautan ganti kata sandi ke ' + anggota.email + '?')) return;
+      b.disabled = true;
+      const { error } = await akun.sb.auth.resetPasswordForEmail(anggota.email, { redirectTo: location.origin + '/masuk.html' });
+      pesan(error ? 'Gagal mengirim: ' + error.message : 'Tautan ganti kata sandi dikirim ke ' + anggota.email + '.', error ? 'salah' : 'baik');
+      b.disabled = false;
+    });
+    return b;
+  }
+
+  // Hapus akun sepenuhnya lewat fungsi hapus_akun di Supabase (hanya admin).
+  function tombolHapus(anggota) {
+    const b = document.createElement('button');
+    b.className = 'ikon hapus'; b.title = 'Hapus akun ini';
+    b.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>';
+    b.addEventListener('click', async () => {
+      if (!confirm('Hapus akun ' + anggota.email + ' sepenuhnya? Orang itu harus mendaftar ulang kalau ingin masuk lagi.')) return;
+      b.disabled = true;
+      const { error } = await akun.sb.rpc('hapus_akun', { target: anggota.id });
+      if (error) { pesan('Gagal menghapus: ' + error.message); b.disabled = false; return; }
+      pesan('Akun ' + anggota.email + ' dihapus.', 'baik');
       await muat();
     });
     return b;
