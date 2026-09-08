@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Langganan — Hanif Dossier Crypto</title>
+<meta name="description" content="Rp 250.000 per bulan: briefing pasar tiap pagi, radar portofolio, peringatan, screening 750 altcoin, dan seluruh pustaka dossier token. Berhenti kapan saja. Riset dan edukasi, bukan nasihat investasi.">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+.nilai{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+.nilai .kartu{padding:16px 18px;border-radius:18px}
+.nilai .besar{font-size:1.6rem;line-height:1.1}
+.nilai .catatan{margin-top:2px}
+.cara-bayar{font-size:13px;color:var(--tx2);background:var(--lembut);border-radius:14px;padding:12px 14px;margin-top:6px}
+.cara-bayar b{color:var(--tx)}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="index.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a class="aktif" href="langganan.html">Langganan</a>
+    <a href="dasbor.html" data-anggota hidden>Laporan</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<div class="spanduk hijau" data-anggota hidden>Anda sudah anggota — semua yang ada di halaman ini sudah terbuka untuk Anda. <a href="dasbor.html">Buka laporan →</a></div>
+<div class="spanduk" data-menunggu hidden>Akun Anda sudah terdaftar. Tinggal selesaikan pembayaran (langkah 2 di bawah); begitu kami terima, akun dikonfirmasi paling lambat 24 jam.</div>
+
+<section class="sambut" style="grid-template-columns:1fr">
+  <div class="sapa" style="max-width:720px">
+    <div class="mata">Langganan</div>
+    <h1 class="serif">Satu langganan,<br><span>semua riset dan laporannya.</span></h1>
+    <p>Tidak ada paket bertingkat yang bikin bingung. Satu harga, semua isi: empat laporan tiap pagi, seluruh pustaka dossier, dan setiap dossier baru yang terbit selama Anda berlangganan. Berhenti kapan saja tanpa perlu menghubungi siapa pun.</p>
+  </div>
+</section>
+
+<div class="saklar" role="tablist">
+  <button class="aktif" data-mode="bulanan">Bulanan</button>
+  <button data-mode="tahunan">Tahunan · hemat 2 bulan</button>
+</div>
+
+<section class="paket">
+  <div class="kartu utama-paket">
+    <div class="mata">Anggota</div>
+    <div class="harga" id="harga-utama"><span class="serif nominal">Rp 250.000</span><span class="per">/ bulan</span></div>
+    <div class="kecil" id="harga-kecil">Ditagih per bulan. Tidak ada kontrak, tidak ada perpanjangan otomatis yang diam-diam.</div>
+    <ul>
+      <li><b>Briefing Harian</b>&nbsp;— harga, sentimen, kebijakan, agenda; tiap pagi 06.00 WIB</li>
+      <li><b>Radar Portofolio</b>&nbsp;— koin pantauan, perubahan 24 jam / 7 hari / 30 hari, rotasi sektor</li>
+      <li><b>Peringatan</b>&nbsp;— unlock token, FOMC, data makro, pergerakan tajam, dicatat saat terjadi</li>
+      <li><b>Screening 750 Altcoin</b>&nbsp;— daftar pendek 3–6 nama beserta pemicu dan syarat batalnya</li>
+      <li><b>Pustaka Dossier</b>&nbsp;— seluruh dossier token yang sudah tersusun, PDF berdiagram, <span id="jumlah-dossier">belasan</span> judul</li>
+      <li><b>Dossier baru</b>&nbsp;— setiap dossier yang terbit selama Anda berlangganan, otomatis masuk pustaka</li>
+      <li><b>Tanya lewat DM</b>&nbsp;— pertanyaan soal isi laporan dijawab lewat Instagram, biasanya di hari yang sama</li>
+    </ul>
+    <div class="aksi tombol">
+      <a class="utama" id="tombol-bayar" href="masuk.html?daftar&ke=langganan.html">Daftar akun, lalu bayar</a>
+    </div>
+    <div class="cara-bayar" id="cara-bayar"></div>
+  </div>
+
+  <div class="tumpuk">
+    <div class="kartu">
+      <div class="mata">Dossier pesanan</div>
+      <div class="harga"><span class="serif nominal" style="font-size:1.7rem">Rp 750.000</span><span class="per">/ token</span></div>
+      <div class="kecil">Anggota: <b>Rp 500.000</b>. Selesai 5–7 hari kerja.</div>
+      <ul>
+        <li>Token pilihan Anda yang belum ada di pustaka</li>
+        <li>Struktur sama dengan dossier lain: jantung protokol, tokenomics, distribusi, valuasi, bull &amp; bear, red flag</li>
+        <li>PDF berdiagram, 6.000–10.000 kata, plus masuk pustaka untuk semua anggota</li>
+      </ul>
+      <div class="aksi tombol"><a class="kedua" href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Sebut nama tokennya lewat DM</a></div>
+    </div>
+    <div class="kartu">
+      <div class="mata">Second opinion</div>
+      <div class="harga"><span class="serif nominal" style="font-size:1.7rem">Rp 350.000</span><span class="per">/ tesis</span></div>
+      <div class="kecil">Selesai 2–3 hari kerja.</div>
+      <ul>
+        <li>Anda sudah punya alasan kenapa ingin membeli; tugas saya mencari lubangnya, bukan menyetujui</li>
+        <li>Kalau setelah dicari sungguh-sungguh tesis Anda tetap berdiri, itu justru hasil paling berharga</li>
+      </ul>
+      <div class="aksi tombol"><a class="kedua" href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Kirim tesis Anda lewat DM</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="bagian">
+  <div class="mata">Cara kerjanya</div>
+  <h2 class="serif">Empat langkah, tidak ada yang harus ditelepon</h2>
+  <ol class="langkah">
+    <li><b>Daftar akun</b><span>Nama, email, kata sandi. Cek email Anda dan klik tombol konfirmasinya.</span></li>
+    <li><b>Bayar satu bulan</b><span id="langkah-bayar">Lewat tautan pembayaran (QRIS, transfer bank, e-wallet). Pakai email yang sama dengan akun Anda.</span></li>
+    <li><b>Kami konfirmasi</b><span>Paling lambat 24 jam — biasanya jauh lebih cepat. Halaman status akun berubah sendiri, dan kami mengabari lewat email.</span></li>
+    <li><b>Semua terbuka</b><span>Laporan pagi, pustaka dossier, semuanya dibaca lewat HP tanpa aplikasi tambahan.</span></li>
+  </ol>
+</section>
+
+<section class="bagian">
+  <div class="mata">Kenapa harganya segini</div>
+  <h2 class="serif">Yang Anda bayar Rp 250.000, isinya:</h2>
+  <div class="nilai">
+    <div class="kartu"><div class="serif besar" id="nilai-dossier">12 dossier</div><div class="catatan">Dibeli satuan Rp 750.000 per token — <span id="nilai-rupiah">Rp 9 juta</span> kalau dibeli satu per satu.</div></div>
+    <div class="kartu"><div class="serif besar">~120 laporan</div><div class="catatan">Empat laporan tiap pagi, 30 hari. Tiap laporan disusun mesin dari data publik, bukan disalin dari grup.</div></div>
+    <div class="kartu"><div class="serif besar">750 altcoin</div><div class="catatan">Dipindai tiap pagi dengan sembilan lapis sinyal. Anda menerima daftar pendeknya, bukan 750 barisnya.</div></div>
+    <div class="kartu"><div class="serif besar">1 sudut pandang</div><div class="catatan">Yang jarang ada: alasan untuk <em>tidak</em> beli, ditulis seserius alasan untuk beli.</div></div>
+  </div>
+  <p class="catatan" style="margin-top:12px">Yang tidak termasuk, dan memang tidak akan pernah ada: sinyal beli/jual, target harga, dan janji imbal hasil.</p>
+</section>
+
+<section class="bagian faq">
+  <div class="mata">Sebelum bayar</div>
+  <h2 class="serif">Yang biasanya ditanyakan</h2>
+  <div style="margin-top:18px">
+    <details><summary>Bisa berhenti kapan saja?</summary><p>Bisa. Langganan berlaku 30 hari sejak dikonfirmasi. Kalau tidak diperpanjang, akses berhenti sendiri di hari ke-31 — tidak ada tagihan diam-diam, tidak perlu menghubungi siapa pun. Kalau ingin lanjut, bayar lagi dan akses menyambung.</p></details>
+    <details><summary>Bagaimana kalau tidak cocok?</summary><p>Baca dulu daftar isi dossier di <a href="riset.html">halaman riset</a> — semuanya terbuka. Kalau setelah tujuh hari pertama Anda merasa isinya tidak seperti yang digambarkan di halaman ini, kirim DM; sisa bulan pertama dikembalikan tanpa tanya-tanya.</p></details>
+    <details><summary>Pembayarannya lewat apa?</summary><p id="faq-bayar">Lewat tautan pembayaran resmi yang menerima QRIS, transfer bank, dan e-wallet. Kami tidak pernah meminta transfer ke rekening pribadi lewat DM tanpa Anda memintanya lebih dulu — kalau ada yang begitu mengatasnamakan kami, abaikan.</p></details>
+    <details><summary>Ini nasihat investasi?</summary><p>Bukan. Ini riset dan edukasi. Saya bukan Penasihat Investasi berizin OJK, tidak memberi perintah beli/jual, tidak menerima titipan dana, dan tidak menjanjikan hasil. Keputusan dan risikonya tetap di tangan Anda — dan justru itu yang membuat laporan ini berguna: Anda memutuskan dengan bahan yang lengkap, termasuk sisi buruknya.</p></details>
+    <details><summary>Bayar tahunan, dapat apa?</summary><p>Harga 10 bulan untuk 12 bulan — dua bulan gratis — dan tidak perlu memikirkan perpanjangan selama setahun. Selebihnya sama persis dengan bulanan.</p></details>
+  </div>
+</section>
+
+<div class="batas">
+  <h3 class="serif">Batas layanan ini</h3>
+  <ul>
+    <li><strong>Bukan Penasihat Investasi berizin OJK.</strong> Yang dijual adalah riset dan edukasi.</li>
+    <li><strong>Tidak ada perintah beli/jual, tidak ada janji imbal hasil.</strong></li>
+    <li><strong>Tidak menerima, mengelola, atau menampung dana siapa pun</strong> — pembayaran hanya untuk langganan dan penyusunan riset.</li>
+  </ul>
+</div>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Seluruh isi situs ini bersifat riset dan edukasi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil dalam bentuk apa pun. Setiap keputusan investasi beserta risikonya sepenuhnya menjadi tanggung jawab pembaca.</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+
+  // ===== Tautan pembayaran =====
+  // Isi dua tautan ini setelah akun Mayar (atau Lynk.id) jadi — satu untuk
+  // paket bulanan, satu untuk tahunan. Selama kosong, tombolnya memakai alur
+  // manual: daftar akun -> DM Instagram -> cara bayar dikirim -> dikonfirmasi.
+  const TAUTAN_BAYAR = { bulanan: '', tahunan: '' };
+  const HARGA = { bulanan: { nominal: 'Rp 250.000', per: '/ bulan', kecil: 'Ditagih per bulan. Tidak ada kontrak, tidak ada perpanjangan otomatis yang diam-diam.' },
+                  tahunan: { nominal: 'Rp 2.500.000', per: '/ tahun', kecil: 'Setara Rp 208.000 per bulan — dua bulan gratis dibanding bulanan.' } };
+  let mode = 'bulanan';
+  const IG = 'https://ig.me/m/hanif.dossiercrypto';
+
+  const p = await akun.pasangMenu();
+  const sudahAkun = !!p;
+
+  function gambar() {
+    const h = HARGA[mode];
+    $('harga-utama').innerHTML = `<span class="serif nominal">${h.nominal}</span><span class="per">${h.per}</span>`;
+    $('harga-kecil').textContent = h.kecil;
+    const tautan = TAUTAN_BAYAR[mode];
+    const tombol = $('tombol-bayar');
+    if (p && p.disetujui) {
+      tombol.textContent = 'Anda sudah anggota — buka laporan'; tombol.href = 'dasbor.html'; tombol.removeAttribute('target');
+      $('cara-bayar').innerHTML = 'Untuk memperpanjang, cukup bayar lagi sebelum masa langganan habis; aksesnya menyambung.';
+    } else if (tautan) {
+      tombol.textContent = `Bayar ${h.nominal} sekarang`; tombol.href = tautan; tombol.target = '_blank'; tombol.rel = 'noopener';
+      $('cara-bayar').innerHTML = sudahAkun
+        ? `Bayar dengan email <b>${p.pengguna.email}</b> supaya langsung cocok dengan akun Anda. Setelah bayar, kembali ke <a href="masuk.html#status">halaman status</a> — ia berubah sendiri begitu dikonfirmasi.`
+        : `Setelah bayar, <a href="masuk.html?daftar&ke=langganan.html">daftar akun</a> dengan email yang sama. Akun dikonfirmasi paling lambat 24 jam.`;
+      $('langkah-bayar').textContent = 'Lewat tautan pembayaran resmi (QRIS, transfer bank, e-wallet). Pakai email yang sama dengan akun Anda.';
+    } else {
+      // Alur manual sementara tautan pembayaran belum ada.
+      if (sudahAkun) { tombol.textContent = 'Minta cara bayar lewat DM Instagram'; tombol.href = IG; tombol.target = '_blank'; tombol.rel = 'noopener'; }
+      else { tombol.textContent = 'Daftar akun, lalu bayar'; tombol.href = 'masuk.html?daftar&ke=langganan.html'; tombol.removeAttribute('target'); }
+      $('cara-bayar').innerHTML = sudahAkun
+        ? `Kirim DM berisi kata <b>"langganan ${mode}"</b> dan email akun Anda (<b>${p.pengguna.email}</b>) ke <a href="${IG}" target="_blank" rel="noopener">@hanif.dossiercrypto</a>. Kami balas dengan cara bayar (QRIS / transfer). Begitu pembayaran masuk, akun dikonfirmasi.`
+        : `Setelah daftar, kirim DM berisi kata <b>"langganan ${mode}"</b> dan email akun Anda ke <a href="${IG}" target="_blank" rel="noopener">@hanif.dossiercrypto</a>. Kami balas dengan cara bayar (QRIS / transfer). Begitu pembayaran masuk, akun dikonfirmasi.`;
+      $('langkah-bayar').textContent = 'Kirim DM "langganan" beserta email akun Anda; kami balas dengan cara bayar (QRIS / transfer bank).';
+      $('faq-bayar').textContent = 'Saat ini lewat QRIS atau transfer bank yang kami kirimkan lewat DM setelah Anda mendaftar. Kami tidak pernah memulai DM meminta transfer — kalau ada yang begitu mengatasnamakan kami, abaikan.';
+    }
+  }
+  document.querySelectorAll('.saklar button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('.saklar button').forEach(x => x.classList.toggle('aktif', x === b));
+    gambar();
+  }));
+  gambar();
+
+  // Jumlah dossier dan nilai satuannya, dari pustaka.json.
+  try {
+    const pk = await (await fetch('pustaka.json', { cache: 'no-cache' })).json();
+    const n = pk.dossier.length;
+    $('jumlah-dossier').textContent = n;
+    $('nilai-dossier').textContent = `${n} dossier`;
+    $('nilai-rupiah').textContent = `Rp ${(n * 750000 / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 1 })} juta`;
+  } catch {}
+})();
+</script>
+</body>
+</html>

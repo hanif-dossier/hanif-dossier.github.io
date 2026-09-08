@@ -49,7 +49,7 @@ button.utama:disabled{opacity:.6;cursor:wait}
         <button class="utama" id="kirim" type="submit">Simpan dan masuk</button>
       </form>
       <div class="pesan" id="pesan"></div>
-      <div class="tautan"><a href="index.html">Lewati untuk sekarang</a></div>
+      <div class="tautan"><a href="dasbor.html">Lewati untuk sekarang</a></div>
     </div>
   </div>
 </main>
@@ -75,7 +75,7 @@ button.utama:disabled{opacity:.6;cursor:wait}
     const { error } = await akun.sb.auth.updateUser({ password: $('sandi').value });
     if (error) { pesan(error.message, 'salah'); $('kirim').disabled = false; return; }
     pesan('Kata sandi tersimpan. Mengalihkan ke beranda…', 'baik');
-    setTimeout(() => location.replace('index.html'), 900);
+    setTimeout(() => location.replace('dasbor.html'), 900);
   });
 })();
 </script>

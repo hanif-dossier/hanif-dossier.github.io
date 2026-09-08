@@ -73,7 +73,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       <div class="ikon" id="status-ikon"></div>
       <h2 class="serif" id="status-judul"></h2>
       <p id="status-teks"></p>
-      <a class="tombol" id="status-tombol" href="index.html" hidden>Masuk ke laporan</a>
+      <a class="tombol" id="status-tombol" href="dasbor.html" hidden>Masuk ke laporan</a>
       <p class="kecil" id="status-kecil"></p>
       <div class="tautan"><a href="#" id="keluar">Keluar</a> <span id="admin-tautan" hidden>· <a href="admin.html">Halaman admin</a></span></div>
     </div>
@@ -86,7 +86,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
-  const ke = new URLSearchParams(location.search).get('ke') || 'index.html';
+  const ke = new URLSearchParams(location.search).get('ke') || 'dasbor.html';
   let mode = 'masuk';
 
   const pesan = (teks, jenis) => { const p = $('pesan'); p.textContent = teks; p.className = 'pesan ' + jenis; };
@@ -151,6 +151,8 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     pesan('', '');
   }));
 
+  // ?daftar di alamat (dari halaman langganan): langsung buka tab Daftar.
+  if (new URLSearchParams(location.search).has('daftar')) document.querySelector('.tab button[data-mode="daftar"]').click();
   try { const ingat = localStorage.getItem('email-terakhir'); if (ingat && !$('email').value) $('email').value = ingat; } catch {}
   $('form').addEventListener('submit', async e => {
     e.preventDefault();

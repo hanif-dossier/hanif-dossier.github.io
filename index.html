@@ -3,227 +3,237 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Pusat laporan Hanif Dossier Crypto: briefing harian, radar portofolio, peringatan, dan screening altcoin — satu pintu, dengan tenang.">
-<title>Hanif Dossier Crypto — Pusat Laporan</title>
+<title>Hanif Dossier Crypto — riset crypto dengan bear case</title>
+<meta name="description" content="Riset dan edukasi crypto yang selalu menyertakan bear case: briefing pasar tiap pagi, radar portofolio, peringatan, screening 750 altcoin, dan pustaka dossier token. Riset, bukan nasihat investasi.">
+<meta property="og:title" content="Hanif Dossier Crypto — riset crypto dengan bear case">
+<meta property="og:description" content="Sebelum beli, baca dulu argumen lawannya. Briefing harian, radar, peringatan, screening, dan 12 dossier token — satu langganan.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#4f7a68">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
 <style>
-:root{color-scheme:light;
- --bg:#f6f5f0;--bg2:#eef2ec;--kartu:#ffffff;--tx:#2b3330;--tx2:#58635e;--lb:#7b8781;--redup:#a3aca7;--gr:#e6e9e4;--lembut:#eef2ec;
- --sage:#4f7a68;--sage-tua:#365446;--sage-lembut:#dfe9e1;--kabut:#9fb8c9;--pasir:#f3e9d8;--pasir-tua:#8a6a2e;--emas:#c9a961;--bata:#b86b5c;
- --bayang:0 10px 30px rgba(43,51,48,.06)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--tx);font:16px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif;-webkit-text-size-adjust:100%;min-height:100vh}
-a{color:var(--sage);text-decoration:none}a:hover{color:var(--sage-tua)}
-main{max-width:1080px;margin:0 auto;padding:22px 20px 56px}
-.serif{font-family:"DM Serif Display",Georgia,"Times New Roman",serif;font-weight:400}
-
-/* kepala */
-.atas{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.merek{display:flex;align-items:center;gap:12px}
-.merek .daun{width:40px;height:40px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center;flex:none}
-.merek b{display:block;font-size:15px}.merek small{color:var(--lb);font-size:12px}
-nav.menu{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--lb)}
-nav.menu a{color:var(--lb)}nav.menu a.aktif{color:var(--tx);font-weight:700;border-bottom:2px solid var(--sage);padding-bottom:3px}
-nav.menu a:hover{color:var(--sage-tua)}
-
-/* sambutan + grafik bitcoin */
-.sambut{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:stretch;margin-top:26px}
-.sapa{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:6px 0}
-.sapa .tgl{font-size:13px;color:var(--lb);letter-spacing:.06em;text-transform:uppercase}
-.sapa h1{font-size:clamp(2.1rem,4.6vw,3.3rem);line-height:1.05;margin:0;letter-spacing:-.01em;color:var(--tx)}
-.sapa h1 span{color:var(--sage)}
-.sapa p{margin:0;color:var(--tx2);max-width:480px}
-.tombol{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
-.tombol a{padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px}
-.tombol a.utama{background:var(--sage);color:#fff}.tombol a.utama:hover{background:var(--sage-tua)}
-.tombol a.kedua{background:var(--kartu);border:1px solid #d9dfda;color:var(--tx)}
-.kartu{background:var(--kartu);border-radius:24px;padding:20px 22px;box-shadow:var(--bayang)}
-.btc .kepala{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.btc .label{font-size:12px;color:var(--lb)}
-.btc .harga{font-size:2rem;line-height:1.1}
-.btc .kanan{text-align:right;font-size:13px;color:var(--lb)}
-.sambut>*,.tengah>*,.kartu{min-width:0}
-.bingkai-indeks{height:300px;margin-top:8px;border-radius:12px;overflow:hidden;border:1px solid var(--gr);background:#fff}
-@media(max-width:640px){.bingkai-indeks{height:260px}}
-.gulir-grafik{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;max-width:100%}
-.gulir-grafik svg{display:block;width:100%;height:auto;min-width:520px}
-.petunjuk{display:none;font-size:11px;color:var(--redup);text-align:center;margin-top:4px}
-@media(max-width:640px){.petunjuk{display:block}.gulir-grafik svg{min-width:440px}.btc .harga{font-size:1.6rem}}
-.bursa{margin-top:16px}
-.bursa .keping{margin-top:0}
-.bursa .pil{cursor:pointer;border:0;font-family:inherit}
-.bursa .pil.aktif{background:var(--sage);color:#fff}
-.bursa .bingkai{position:relative;margin-top:12px;min-height:120px}
-.bursa .bingkai svg{display:block;width:100%;height:auto}
-.bursa .tip{position:absolute;pointer-events:none;background:var(--tx);color:#fff;font-size:12px;padding:4px 8px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-130%);display:none}
-.bursa .keping .pil.rentang{background:var(--lembut);color:var(--tx2)}
-.bursa .keping .pil.rentang.aktif{background:var(--tx);color:#fff}
-
-/* tiga ubin */
-.ubin{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
-.ubin .kartu{display:flex;align-items:center;gap:16px;border-radius:20px;padding:18px 20px}
-.ubin .teks{font-size:13px;line-height:1.5;color:var(--tx2)}.ubin .teks b{display:block;color:var(--tx)}
-.ubin svg{flex:none;display:block}
-.ubin .besar{font-size:1.85rem;line-height:1.1}
-
-/* koinmu + dua kartu */
-.tengah{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px}
-.judul{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.judul h2{font-size:1.45rem;margin:0}
-.judul a{font-size:13px;font-weight:700}
-.koin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:13px;margin-top:12px}
-.koin .baris{display:flex;align-items:center;gap:10px}
-.koin .sim{width:52px;font-weight:700}
-.koin .rel{flex-grow:1;height:6px;background:var(--lembut);border-radius:3px;overflow:hidden}
-.koin .isi{height:6px;border-radius:3px;background:var(--sage)}
-.koin .turun .isi{background:var(--bata)}
-.koin .nilai{width:62px;text-align:right;font-weight:700;color:var(--sage);font-variant-numeric:tabular-nums}
-.koin .turun .nilai{color:var(--bata)}
-.catatan{font-size:13px;color:var(--lb);margin-top:12px}
-.tumpuk{display:flex;flex-direction:column;gap:16px}
-.tumpuk .kartu{flex-grow:1}
-.ringkas{font-size:14px;line-height:1.6;color:var(--tx2);margin-top:8px}
-.keping{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.pil{padding:4px 11px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua);font-size:12px;font-weight:700}
-.pil.hangat{background:var(--pasir);color:var(--pasir-tua)}
-.pil.jenis{background:var(--lembut);color:var(--lb)}
-.memuat{color:var(--redup);font-style:italic;font-size:13px}
-.naik{color:var(--sage)}.turun{color:var(--bata)}
-
-/* peringatan */
-.peringatan{display:flex;align-items:center;gap:16px;margin-top:16px;border-radius:20px;padding:16px 22px}
-.peringatan .lonceng{width:38px;height:38px;border-radius:50%;background:var(--pasir);display:grid;place-items:center;flex:none}
-.peringatan .isi{flex-grow:1;display:flex;flex-direction:column;gap:2px;min-width:0}
-.peringatan .kapan{font-size:12px;color:var(--lb)}
-.peringatan a.semua{font-size:13px;font-weight:700;white-space:nowrap}
-
-/* tautan kecil */
-h3.bagian{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);margin:34px 0 10px;font-weight:700}
-h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left:8px}
-.daftar{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-.daftar a{display:flex;align-items:center;gap:12px;background:var(--kartu);border-radius:16px;padding:12px 14px;color:var(--tx);box-shadow:var(--bayang)}
-.daftar a:hover{outline:1px solid var(--sage)}
-.daftar .ikon{width:36px;height:36px;border-radius:50%;background:var(--lembut);display:grid;place-items:center;flex:none;color:var(--lb)}
-.daftar b{display:block;font-size:14px}.daftar small{color:var(--lb);font-size:12px}
-.pil-peran{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;background:var(--lembut);color:var(--lb)}
-.pil-peran.owner{background:#2b3330;color:#f3e9d8}.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
-.spanduk{margin-top:18px;background:var(--pasir);color:var(--pasir-tua);border-radius:14px;padding:12px 16px;font-size:14px}
-.terkunci{color:var(--lb);font-style:italic;font-size:13px}
-body.tamu .daftar-laptop{display:none}
-.kaki{margin-top:40px;padding-top:14px;border-top:1px solid var(--gr);font-size:12px;color:var(--redup);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-@media(max-width:860px){.sambut,.tengah{grid-template-columns:1fr}.ubin{grid-template-columns:1fr}.koin{grid-template-columns:1fr}}
-@media(max-width:480px){main{padding:16px 14px 48px}.kartu{padding:18px 18px;border-radius:20px}.peringatan{flex-wrap:wrap}}
+.masalah{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+.masalah .kartu b{display:block;margin-bottom:4px}
+.masalah .kartu p{font-size:14px;color:var(--tx2)}
+.cuplik{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+@media(max-width:860px){.cuplik{grid-template-columns:1fr}}
+.paket-mini{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.paket-mini .harga .nominal{font-size:2rem}
+/* tumpukan arsitektur Web3: aplikasi di atas, lapisan dasar di bawah */
+.tumpukan-web3{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.lapis{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--kartu);border-radius:18px;padding:16px 20px;box-shadow:var(--bayang);border-left:6px solid var(--sage-lembut)}
+.lapis:nth-child(2){border-left-color:var(--kabut)}.lapis:nth-child(3){border-left-color:var(--emas)}.lapis.dasar{border-left-color:var(--sage);background:var(--sage-lembut)}
+.lapis b{display:block;margin-bottom:2px}.lapis span{font-size:13.5px;color:var(--tx2)}
+.lapis .koin{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:240px}
+.lapis .koin a{font-size:12px;font-weight:800;letter-spacing:.04em;background:var(--lembut);color:var(--sage-tua);padding:4px 10px;border-radius:8px}
+.lapis.dasar .koin a{background:#fff}
+.lapis .koin a:hover{background:var(--sage);color:#fff}
+@media(max-width:640px){.lapis{grid-template-columns:1fr}.lapis .koin{justify-content:flex-start;max-width:none}}
 </style>
 </head>
 <body>
 <main>
 
 <header class="atas">
-  <div class="merek">
+  <a class="merek" href="index.html">
     <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
-    <div><b>Hanif Dossier Crypto <span id="peran" class="pil-peran"></span></b><small>pusat laporan pasar crypto</small></div>
-  </div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
   <nav class="menu">
-    <a class="aktif" href="https://hanif-dossier.github.io/">Beranda</a>
-    <a href="laporan.html?h=briefing">Briefing</a>
-    <a href="laporan.html?h=radar">Radar</a>
-    <a href="laporan.html?h=peringatan">Peringatan</a>
-    <a href="laporan.html?h=screening">Screening</a>
-    <a href="admin.html" id="tautan-admin" hidden>Anggota</a>
-    <a href="#" id="tautan-keluar">Keluar</a>
+    <a class="aktif" href="index.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a href="langganan.html">Langganan</a>
+    <a href="dasbor.html" data-anggota hidden>Laporan</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
   </nav>
 </header>
 
-<div class="spanduk" id="spanduk-tamu" hidden>Akun Anda sedang menunggu konfirmasi kami. Sementara menunggu, Anda bisa melihat keadaan pasar di halaman ini; laporan lengkap terbuka begitu akun dikonfirmasi, dan kami mengabari lewat email.</div>
+<div class="spanduk hijau" data-anggota hidden>Anda sudah masuk sebagai anggota. <a href="dasbor.html">Buka laporan hari ini →</a></div>
+<div class="spanduk" data-menunggu hidden>Akun Anda terdaftar dan sedang menunggu konfirmasi. <a href="langganan.html">Lihat cara menyelesaikan langganan →</a></div>
 
 <section class="sambut">
   <div class="sapa">
-    <div class="tgl" id="tgl">memuat…</div>
-    <h1 class="serif">Pagi, <span id="sapa-nama">…</span>.<br><span>Ini pasar hari ini.</span></h1>
-    <p>Empat laporan terbit sendiri setiap pagi di server GitHub. Bacalah yang paling penting dulu, sisanya menunggu tanpa berisik.</p>
+    <div class="lencana"><span>Riset independen</span><span>Bear case selalu disertakan</span><span>Bukan rekomendasi beli/jual</span></div>
+    <h1 class="serif">Sebelum beli,<br><span>baca dulu argumen lawannya.</span></h1>
+    <p>Setiap pagi terbit briefing pasar, radar portofolio, peringatan, dan screening 750 altcoin — disusun mesin, diperiksa manusia. Ditambah pustaka dossier token yang menulis alasan paling kuat untuk <em>tidak</em> membeli. Supaya keputusan Anda diambil dengan mata terbuka, bukan karena ikut ramai di grup.</p>
     <div class="tombol">
-      <a class="utama" href="laporan.html?h=briefing">Baca briefing hari ini</a>
-      <a class="kedua" href="laporan.html?h=radar">Lihat koinku</a>
+      <a class="utama" href="langganan.html">Lihat paket langganan</a>
+      <a class="kedua" href="riset.html">Lihat daftar dossier</a>
     </div>
+    <div class="catatan">Saya bukan Penasihat Investasi berizin OJK. Yang dijual di sini adalah riset dan edukasi, bukan perintah beli atau jual.</div>
   </div>
 
-  <div class="kartu btc">
-    <div class="kepala">
-      <div><div class="label">Pasar crypto global · kapitalisasi total</div><div class="serif harga" id="btc-harga">…</div></div>
-      <div class="kanan" id="btc-kanan"></div>
+  <div class="kartu">
+    <div class="mata">Pasar hari ini · terbuka untuk semua</div>
+    <div class="judul"><h2 class="serif" style="font-size:1.3rem">Angka yang dibaca anggota tiap pagi</h2><span class="catatan" id="tgl">…</span></div>
+    <div class="ubin" style="grid-template-columns:1fr;gap:10px;margin-top:12px">
+      <div class="kartu" style="box-shadow:none;background:var(--lembut)">
+        <svg viewBox="0 0 100 100" width="64" height="64"><circle cx="50" cy="50" r="40" fill="none" stroke="#fff" stroke-width="11"/><circle id="dom-btc" cx="50" cy="50" r="40" fill="none" stroke="#4f7a68" stroke-width="11" stroke-dasharray="0 251.3" transform="rotate(-90 50 50)"/><circle id="dom-eth" cx="50" cy="50" r="40" fill="none" stroke="#9fb8c9" stroke-width="11" stroke-dasharray="0 251.3" transform="rotate(-90 50 50)"/><text id="dom-teks" x="50" y="55" text-anchor="middle" font-family="DM Serif Display, Georgia, serif" font-size="17" fill="#2b3330">…</text></svg>
+        <div class="teks"><b>Dominasi Bitcoin</b><span id="dom-ket">Porsi Bitcoin di seluruh pasar.</span></div>
+      </div>
+      <div class="kartu" style="box-shadow:none;background:var(--lembut)">
+        <svg viewBox="0 0 120 70" width="90" height="52"><path d="M10,60 A50,50 0 0 1 110,60" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/><path id="fg-busur" d="M10,60 A50,50 0 0 1 110,60" fill="none" stroke="#c9a961" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 157.1"/><text id="fg-angka" x="60" y="56" text-anchor="middle" font-family="DM Serif Display, Georgia, serif" font-size="24" fill="#2b3330">…</text></svg>
+        <div class="teks"><b id="fg-judul">Fear &amp; Greed</b><span id="fg-ket">Suasana hati pasar hari ini.</span></div>
+      </div>
+      <div class="kartu" style="box-shadow:none;background:var(--lembut);flex-direction:column;align-items:flex-start;gap:2px">
+        <div class="catatan">Kapitalisasi seluruh pasar crypto</div>
+        <div class="serif besar" id="cap-angka">…</div>
+        <div class="teks" id="cap-ket">dalam 24 jam</div>
+      </div>
     </div>
-    <div class="bingkai-indeks" id="indeks-bingkai"></div>
-    <div class="catatan" style="margin-top:6px">Garis = nilai seluruh pasar crypto (indeks TOTAL, TradingView). Rentang waktu di bawah grafik: 1 hari sampai semua.</div>
+    <div class="catatan" style="margin-top:10px">Sumber: CoinGecko dan alternative.me, diambil saat halaman dibuka. Anggota mendapat tafsirannya — apa artinya untuk koin yang mereka pegang.</div>
   </div>
 </section>
 
-<section class="kartu bursa">
-  <div class="judul"><h2 class="serif" style="font-size:1.3rem">Grafik harga</h2><span style="font-size:13px;color:var(--lb)">pilih koin dan rentang waktu</span></div>
-  <div class="keping" id="bursa-koin" style="margin-top:10px"></div>
-  <div class="keping" id="bursa-rentang" style="margin-top:6px"></div>
-  <div class="bingkai" id="bursa-bingkai"><span class="memuat">Memuat grafik…</span></div>
-  <div class="catatan" id="bursa-catatan">Data dari CoinGecko, diperbarui saat halaman dibuka. Sentuh atau arahkan kursor ke grafik untuk melihat harga pada tanggal tertentu.</div>
-</section>
-
-<section class="ubin">
-  <div class="kartu">
-    <svg viewBox="0 0 100 100" width="84" height="84"><circle cx="50" cy="50" r="40" fill="none" stroke="#eef2ec" stroke-width="11"/><circle id="dom-btc" cx="50" cy="50" r="40" fill="none" stroke="#4f7a68" stroke-width="11" stroke-dasharray="0 251.3" transform="rotate(-90 50 50)"/><circle id="dom-eth" cx="50" cy="50" r="40" fill="none" stroke="#9fb8c9" stroke-width="11" stroke-dasharray="0 251.3" transform="rotate(-90 50 50)"/><text id="dom-teks" x="50" y="55" text-anchor="middle" font-family="DM Serif Display, Georgia, serif" font-size="17" fill="#2b3330">…</text></svg>
-    <div class="teks"><b>Dominasi Bitcoin</b><span id="dom-ket">Porsi Bitcoin di seluruh pasar.</span></div>
-  </div>
-  <div class="kartu">
-    <svg viewBox="0 0 120 70" width="110" height="64"><path d="M10,60 A50,50 0 0 1 110,60" fill="none" stroke="#eef2ec" stroke-width="10" stroke-linecap="round"/><path id="fg-busur" d="M10,60 A50,50 0 0 1 110,60" fill="none" stroke="#c9a961" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 157.1"/><text id="fg-angka" x="60" y="56" text-anchor="middle" font-family="DM Serif Display, Georgia, serif" font-size="24" fill="#2b3330">…</text></svg>
-    <div class="teks"><b id="fg-judul">Fear &amp; Greed</b><span id="fg-ket">Suasana hati pasar hari ini.</span></div>
-  </div>
-  <div class="kartu" style="flex-direction:column;align-items:flex-start;justify-content:center;gap:4px">
-    <div class="label" style="font-size:12px;color:var(--lb)">Kapitalisasi total</div>
-    <div class="serif besar" id="cap-angka">…</div>
-    <div class="teks" id="cap-ket">Nilai seluruh pasar crypto.</div>
+<section class="bagian">
+  <div class="mata">Yang biasanya terjadi</div>
+  <h2 class="serif">Tiga hal yang bikin keputusan crypto jadi mahal</h2>
+  <div class="masalah">
+    <div class="kartu"><b>Beli karena ramai, bukan karena paham proyeknya</b><p>Nama yang sedang dibicarakan terasa seperti peluang yang akan hilang. Padahal saat sebuah nama sudah ramai, orang yang tahu duluan sudah selesai membeli.</p></div>
+    <div class="kartu"><b>Whitepaper dibuka, tapi tidak tahu harus lihat apa duluan</b><p>Puluhan halaman dan angka on-chain, dan tidak jelas mana yang menentukan. Analisis yang mulai dari grafik harga menyimpulkan hal yang berbeda dari analisis yang mulai dari siapa yang memegang tokennya.</p></div>
+    <div class="kartu"><b>Semua analisis yang dibaca terdengar meyakinkan</b><p>Karena hampir tidak ada yang menuliskan sisi buruknya dengan sungguh-sungguh. Riset yang semua temuannya searah bukan berarti asetnya bagus — biasanya berarti pencariannya kurang keras.</p></div>
   </div>
 </section>
 
-<section class="tengah">
-  <div class="kartu">
-    <div class="judul"><h2 class="serif">Koin yang kamu pegang</h2><a href="laporan.html?h=radar">Radar Portofolio →</a></div>
-    <div class="koin" id="koin"><span class="memuat">Memuat koin…</span></div>
-    <div class="catatan" id="koin-catatan">Hijau naik, merah turun; angkanya perubahan 24 jam. Sentuh untuk 7 dan 30 hari.</div>
-  </div>
-  <div class="tumpuk">
+<section class="bagian">
+  <div class="mata">Yang Anda dapat sebagai anggota</div>
+  <div class="judul"><h2 class="serif">Empat laporan tiap pagi, satu pustaka dossier</h2><a href="langganan.html">Lihat paket →</a></div>
+  <p class="pengantar">Semua terbit sendiri pukul 06.00 WIB di server, jadi tetap datang walau laptop saya mati. Dibaca lewat HP, tanpa aplikasi tambahan.</p>
+  <div class="kisi">
     <div class="kartu">
-      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Briefing Harian</h2><a href="laporan.html?h=briefing">Baca →</a></div>
-      <div class="ringkas" id="c-briefing"><span class="memuat">Memuat cuplikan…</span></div>
+      <div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div>
+      <h3 class="serif">Briefing Harian</h3>
+      <p>Harga, sentimen, berita kebijakan, agenda makro, dan satu bagian "yang paling penting hari ini" — cukup dibaca lima menit.</p>
+      <div class="jam">Tiap pagi 06.00 WIB</div>
     </div>
     <div class="kartu">
-      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Screening Altcoin</h2><a href="laporan.html?h=screening">Buka →</a></div>
-      <div class="ringkas" id="c-screening"><span class="memuat">Memuat daftar pendek…</span></div>
+      <div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+      <h3 class="serif">Radar Portofolio</h3>
+      <p>Koin yang dipantau, perubahan 24 jam / 7 hari / 30 hari, dan rotasi sektor: ke mana modal sedang pindah.</p>
+      <div class="jam">Tiap pagi, diperbarui siang</div>
+    </div>
+    <div class="kartu">
+      <div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+      <h3 class="serif">Peringatan</h3>
+      <p>Unlock token, keputusan FOMC, data tenaga kerja, dan pergerakan tajam — dicatat dengan jam kejadiannya, bukan sesudah ramai.</p>
+      <div class="jam">Saat terjadi</div>
+    </div>
+    <div class="kartu">
+      <div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <h3 class="serif">Screening 750 Altcoin</h3>
+      <p>Sembilan lapis sinyal termasuk keramaian di Reddit dan berita, disaring jadi daftar pendek 3–6 nama beserta pemicu dan syarat batalnya.</p>
+      <div class="jam">Tiap pagi</div>
+    </div>
+    <div class="kartu" style="background:var(--sage-lembut)">
+      <div class="ikon" style="background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <h3 class="serif">Pustaka Dossier</h3>
+      <p>Seluruh dossier token yang sudah tersusun — PDF berdiagram, 6.000–10.000 kata per token — plus setiap dossier baru yang terbit.</p>
+      <div class="jam" id="pustaka-jumlah">Belasan dossier</div>
     </div>
   </div>
 </section>
 
-<section class="kartu peringatan">
-  <div class="lonceng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-  <div class="isi" id="c-peringatan"><span class="memuat">Memuat peringatan…</span></div>
-  <a class="semua" href="laporan.html?h=peringatan">Semua peringatan →</a>
+<section class="bagian">
+  <div class="mata">Riset</div>
+  <div class="judul"><h2 class="serif">Dossier terbaru</h2><a href="riset.html">Semua dossier &amp; daftar isinya →</a></div>
+  <p class="pengantar">Daftar isi dan kutipan pembukanya terbuka untuk siapa saja, jadi kedalamannya bisa Anda nilai sebelum membayar apa pun. Isi penuhnya untuk anggota.</p>
+  <div class="kisi" id="dossier-terbaru"><span class="memuat">Memuat daftar dossier…</span></div>
 </section>
 
-<h3 class="bagian daftar-laptop">Alat di laptop <small>hanya hidup saat laptop menyala</small></h3>
-<div class="daftar daftar-laptop">
-  <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/7a229dd9-e597-44e9-90e0-89ebf542b9bb/chat"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg></div><span><b>Chat asisten</b><small>Tanya apa saja soal laporan dan pasar</small></span></a>
-  <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/laporan"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div><span><b>Laporan harian versi laptop</b><small>Halaman dari n8n</small></span></a>
-</div>
+<section class="bagian">
+  <div class="mata">Langganan</div>
+  <h2 class="serif">Satu harga untuk semuanya</h2>
+  <div class="kartu paket-mini" style="margin-top:18px">
+    <div>
+      <div class="harga"><span class="serif nominal">Rp 250.000</span><span class="per">/ bulan</span></div>
+      <div class="catatan" style="margin-top:6px">Empat laporan tiap pagi, pustaka dossier lengkap, dan dossier baru selama Anda berlangganan. Berhenti kapan saja.</div>
+    </div>
+    <div class="tombol" style="margin:0"><a class="utama" href="langganan.html">Lihat rinciannya</a></div>
+  </div>
+</section>
 
-<h3 class="bagian">Arsip &amp; sumber</h3>
-<div class="daftar">
-  <a href="laporan.html?h=briefing"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Briefing hari ini</b><small>Versi lengkap untuk anggota</small></span></a>
-  <a href="laporan.html?h=screening"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Screening hari ini</b><small>Laporan mesin dan daftar pendek final</small></span></a>
-  <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/portofolio.json"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><span><b>Ubah daftar koin</b><small>Koin yang dipantau radar</small></span></a>
-  <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/agenda.json"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><span><b>Ubah kalender</b><small>FOMC, data tenaga kerja, unlock token</small></span></a>
-</div>
+<section class="bagian">
+  <div class="mata">Kerangka analisis</div>
+  <h2 class="serif">Crypto dibaca sebagai arsitektur Web3</h2>
+  <p class="pengantar">Sebuah token tidak hidup sendirian. Ia duduk di satu lapisan arsitektur Web3, bergantung pada lapisan di bawahnya, dan dipakai (atau tidak dipakai) oleh lapisan di atasnya. Karena itu setiap dossier mulai dari peta ini: di lapisan mana proyek ini hidup, siapa yang bergantung padanya, dan apa yang terjadi kalau lapisan di bawahnya goyah. Baru setelah itu tokenomics, tim, dan valuasi dibahas.</p>
+  <div class="tumpukan-web3">
+    <div class="lapis"><div><b>Aplikasi</b><span>DeFi, RWA, PayFi — tempat pengguna benar-benar membayar fee. Di sinilah "jantung protokol" paling mudah diukur.</span></div><div class="koin"><a href="riset.html#ASTER">ASTER</a><a href="riset.html#ENA">ENA</a><a href="riset.html#ONDO">ONDO</a><a href="riset.html#CFG">CFG</a><a href="riset.html#HUMA">HUMA</a></div></div>
+    <div class="lapis"><div><b>Infrastruktur &amp; data</b><span>Privasi, komputasi terenkripsi, intelijen on-chain — perkakas yang dipakai aplikasi di atasnya, dinilai dari siapa yang benar-benar memakainya.</span></div><div class="koin"><a href="riset.html#ZAMA">ZAMA</a><a href="riset.html#ARKM">ARKM</a></div></div>
+    <div class="lapis"><div><b>Lapisan skala (L2) &amp; chain khusus</b><span>Rollup yang menumpang lapisan dasar dan chain yang dibangun untuk satu jenis aplikasi. Pertanyaannya: apakah tokennya punya alasan ekonomi untuk ada?</span></div><div class="koin"><a href="riset.html#ARB">ARB</a><a href="riset.html#INJ">INJ</a></div></div>
+    <div class="lapis dasar"><div><b>Lapisan dasar (L1) — penyelesaian</b><span>Tempat transaksi akhirnya dicatat; keamanan yang ditumpangi semua lapisan lain. Dinilai dari keamanan, desentralisasi, dan siapa yang membayar validatornya.</span></div><div class="koin"><a href="riset.html#BTC">BTC</a><a href="riset.html#TRX">TRX</a></div></div>
+  </div>
+  <div class="catatan" style="margin-top:10px">Nama koin di tiap lapisan adalah dossier yang sudah ada — sentuh untuk membuka daftar isinya. Dossier komparatif membandingkan aset lintas lapisan.</div>
+</section>
 
-<footer class="kaki"><span>Menyajikan situasi pasar, bukan nasihat investasi.</span><span>Hanif Dossier Crypto · riset dan analisis, bukan nasihat investasi berizin</span></footer>
+<section class="bagian">
+  <div class="mata">Metode</div>
+  <h2 class="serif">Jantung dulu, baru aliran darah</h2>
+  <p class="pengantar">Setiap protokol punya satu atau dua metrik yang jadi jantungnya. Kalau jantungnya sehat, harga cepat atau lambat menyusul; kalau sakit, semua narasi lain cuma menunda kabar buruk. Urutan ini tidak pernah saya balik, karena urutan menentukan kesimpulan.</p>
+  <ol class="metode">
+    <li><b>Jantung</b><span>Metrik inti sektornya: sehat atau sakit, dan arahnya ke mana.</span></li>
+    <li><b>Aliran darah</b><span>Bagaimana jantung itu mengalir ke pendapatan protokol, insentif yang dibayar, dan nilai yang benar-benar sampai ke pemegang token.</span></li>
+    <li><b>Kerangka</b><span>Tokenomics dan treasury: pasokan, jadwal unlock, kas — kuat menahan tekanan jual, atau roboh begitu unlock besar tiba.</span></li>
+    <li><b>Otak</b><span>Tim: apa yang mereka janjikan di roadmap tahun lalu, dan apa yang benar-benar dirilis.</span></li>
+    <li><b>Lingkungan</b><span>Sektor, makro, pesaing, regulasi, sentimen — yang di luar kendali proyek.</span></li>
+  </ol>
+  <div class="catatan">Menilai murah atau mahal sebelum mengenali jantungnya menghasilkan angka yang presisi untuk pertanyaan yang salah.</div>
+</section>
+
+<section class="bagian">
+  <div class="mata">Aturan yang saya pegang</div>
+  <h2 class="serif">Empat hal yang tidak bisa ditawar</h2>
+  <div class="kisi">
+    <div class="kartu"><h3 class="serif">Tidak pernah mengarang angka</h3><p>Metrik yang tidak ketemu ditulis "tidak tersedia". Analisis dengan 8 angka nyata lebih berguna daripada 15 angka yang 7-nya ditebak.</p></div>
+    <div class="kartu"><h3 class="serif">Fakta, tafsiran, spekulasi dipisah</h3><p>Setiap angka membawa sumber dan tanggalnya. Skenario ditandai sebagai skenario, dan hitungan saya ditandai sebagai hitungan saya.</p></div>
+    <div class="kartu"><h3 class="serif">Bear case ditulis seserius bull case</h3><p>Kalau bagian ini terasa lemah, artinya risetnya belum selesai — bukan artinya asetnya bagus.</p></div>
+    <div class="kartu"><h3 class="serif">Sumber yang bertentangan dilaporkan</h3><p>Kedua angka disebut, beserta kemungkinan penyebab selisihnya, lalu diarahkan ke sumber primernya.</p></div>
+  </div>
+  <div class="batas">
+    <h3 class="serif">Batas layanan ini — tolong dibaca sebelum berlangganan</h3>
+    <ul>
+      <li><strong>Saya bukan Penasihat Investasi berizin OJK.</strong> Yang dijual adalah riset dan edukasi, bukan nasihat investasi personal.</li>
+      <li><strong>Tidak ada perintah beli atau jual.</strong> Laporan menyajikan fakta, tafsiran, dan skenario. Keputusan — berikut seluruh risikonya — tetap sepenuhnya di tangan Anda.</li>
+      <li><strong>Saya tidak menerima, mengelola, atau menampung dana siapa pun.</strong> Tidak sekarang, tidak nanti. Kalau ada yang mengatasnamakan saya untuk meminta transfer dana investasi, itu penipuan.</li>
+      <li><strong>Tidak ada janji imbal hasil.</strong> Riset yang baik memperkecil kemungkinan salah, tapi tidak menghapusnya. Investasi selalu bisa rugi.</li>
+      <li><strong>Analisis punya tanggal kedaluwarsa.</strong> Setiap laporan menggambarkan keadaan pada tanggal penyusunannya; keadaan bisa berubah seminggu kemudian.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="bagian faq">
+  <div class="mata">Pertanyaan yang sering muncul</div>
+  <h2 class="serif">Jawaban jujur, termasuk yang tidak enak</h2>
+  <div style="margin-top:18px">
+    <details><summary>Jadi saya dikasih tahu beli apa, tidak?</summary><p>Tidak. Yang Anda terima adalah bahan untuk memutuskan: apa yang membuat proyek ini hidup, apa yang bisa membunuhnya, angka mana yang bisa diverifikasi dan mana yang tidak berhasil saya temukan. Kalau yang Anda cari adalah seseorang yang menyebut nama dan tanggal, saya bukan orangnya — dan orang yang bersedia melakukan itu tanpa izin OJK sebaiknya Anda hindari.</p></details>
+    <details><summary>Katanya pakai AI. Nanti angkanya ngarang, dong?</summary><p>Itu risiko nyata, dan cara saya menanganinya berlapis: setiap angka wajib punya sumber dan tanggal, angka yang tidak ketemu ditulis "tidak tersedia" alih-alih ditebak, lalu ada tahap pemeriksaan terpisah yang membandingkan tulisan jadi dengan bahan mentahnya. Laporan harian disusun mesin dari data publik; dossier ditulis dengan proses riset bertahap dan diperiksa sebelum terbit.</p></details>
+    <details><summary>Bagaimana cara berlangganan dan bisa berhenti kapan saja?</summary><p>Daftar akun di situs ini, bayar untuk satu bulan, dan akun Anda kami konfirmasi paling lambat 24 jam. Tidak ada kontrak: kalau bulan berikutnya tidak diperpanjang, akses berhenti sendiri, tanpa perlu menghubungi siapa pun. Rinciannya ada di <a href="langganan.html">halaman langganan</a>.</p></details>
+    <details><summary>Bisa titip dana untuk dikelola?</summary><p>Tidak, dan ini bukan soal harga atau kesiapan. Mengelola dana orang lain adalah kegiatan yang harus berizin, dan saya tidak punya izin itu. Pembayaran yang saya terima hanya untuk langganan riset dan penyusunan dossier.</p></details>
+    <details><summary>Kenapa bear case selalu ada? Bikin ragu saja.</summary><p>Justru itu gunanya. Anda pasti akan menemukan alasan untuk membeli — itu bagian yang mudah dan tersedia di mana-mana. Yang mahal adalah menemukan alasan untuk tidak membeli sebelum uangnya masuk, bukan sesudahnya.</p></details>
+    <details><summary>Koin yang saya pegang tidak ada di radar. Bisa ditambah?</summary><p>Bisa. Kirim nama koinnya lewat DM; koin yang dipegang beberapa anggota masuk ke daftar pantauan radar. Untuk dossier lengkap satu token yang belum ada di pustaka, ada layanan dossier pesanan di halaman langganan.</p></details>
+  </div>
+</section>
+
+<section class="penutup">
+  <h2 class="serif">Mulai dari membaca daftar isinya</h2>
+  <p>Dua belas dossier sudah tersusun dan daftar isinya terbuka. Kalau setelah membaca Anda merasa caranya tidak cocok dengan cara Anda berpikir, Anda hemat uang — dan itu tetap hasil yang baik.</p>
+  <div class="tombol" style="justify-content:center">
+    <a class="utama" href="riset.html">Lihat daftar dossier</a>
+    <a class="kedua" href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Tanya dulu lewat DM</a>
+  </div>
+</section>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Seluruh isi situs ini dan dokumen yang dihasilkan dari layanan di dalamnya bersifat riset dan edukasi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil dalam bentuk apa pun. Setiap keputusan investasi beserta risikonya sepenuhnya menjadi tanggung jawab pembaca. Angka pasar di halaman ini diambil dari sumber publik saat halaman dibuka dan bukan kutipan harga untuk transaksi.</p>
+  </div>
+</footer>
 
 </main>
 
@@ -232,263 +242,46 @@ body.tamu .daftar-laptop{display:none}
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
-  // Gerbang: hanya anggota yang disetujui. Yang lain dialihkan ke masuk.html.
-  const profil = await akun.wajibMasuk({ bolehTamu: true });
-  const namaLengkap = (profil.anggota && profil.anggota.nama) || (profil.pengguna.user_metadata && profil.pengguna.user_metadata.nama) || '';
-  const namaDepan = namaLengkap.trim().split(/\s+/)[0];
-  $('sapa-nama').textContent = namaDepan || 'kawan';
-  if (profil.admin) $('tautan-admin').hidden = false;
-  $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
-  $('peran').className = 'pil-peran ' + profil.peran;
-  const tamu = !profil.disetujui;
-  if (tamu) {
-    // Tamu: boleh melihat pasar (angka publik dan grafik), tapi laporan terkunci.
-    document.body.classList.add('tamu');
-    $('spanduk-tamu').hidden = false;
-    for (const id of ['c-briefing', 'c-screening', 'koin', 'c-peringatan']) $(id).innerHTML = '<span class="terkunci">Terbuka setelah akun Anda kami konfirmasi.</span>';
-    document.querySelectorAll('a[href^="laporan.html"]').forEach(x => { x.href = 'masuk.html#status'; });
-  }
-  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const AKAR = 'https://hanif-dossier.github.io';
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  akun.pasangMenu();
 
-  const wib = new Date(Date.now() + 7 * 3600 * 1000);
-  const iso = d => d.toISOString().slice(0, 10);
-  const hariIni = iso(wib), kemarin = iso(new Date(wib.getTime() - 86400000));
-  $('tgl').textContent = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())
-    + ' · ' + new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }).format(new Date()).replace('.', ':') + ' WIB';
+  $('tgl').textContent = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: 'numeric', month: 'long' }).format(new Date());
 
-  // Nama berkas di gudang privat (diunggah GitHub Actions tiap laporan terbit).
-  const NAMA = { '/laporan-harian/harian/terbaru.md': 'terbaru.md', '/laporan-harian/harian/radar.md': 'radar.md',
-    '/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md': 'daftar-pendek-terbaru.md', '/potret-pasar-crypto/laporan/terbaru.md': 'screening-terbaru.md' };
-  const ambil = async jalur => akun.unduh(NAMA[jalur] || jalur.replace(/^\/laporan-harian\/peringatan\//, 'peringatan-').replace(/^.*\//, ''));
-  const bacaPersen = s => { const m = String(s || '').match(/([+\-−]?\d[\d.,]*)\s*%/); if (!m) return null; let t = m[1].replace('−', '-'); if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.'); const v = Number(t); return Number.isFinite(v) ? v : null; };
-  const arah = v => v == null ? 'datar' : v > 0 ? 'naik' : v < 0 ? 'turun' : 'datar';
-  // Akhir bagian = judul ## berikutnya atau akhir berkas (JavaScript tidak punya \Z).
-  const bagian = (md, judul) => { const m = md.match(new RegExp('^##\\s+' + judul + '[^\\n]*\\n([\\s\\S]*?)(?=^##\\s|(?![\\s\\S]))', 'm')); return m ? m[1].trim() : ''; };
-  const barisTabel = teks => teks.split('\n').filter(b => b.trim().startsWith('|')).slice(2).map(b => b.trim().replace(/^\||\|$/g, '').split('|').map(x => x.trim()));
-  const polos = s => s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '$1').replace(/[*`_]/g, '').replace(/!\[[^\]]*\]\([^)]*\)/g, '').trim();
-  const gagal = (id, pesan) => { $(id).innerHTML = `<span class="memuat">${esc(pesan)}</span>`; };
-
-  // Grafik SVG dari repo briefing dibuat dengan palet violet; di sini
-  // diwarnai ulang ke palet sage supaya satu nada dengan halaman.
-  const warnaSage = svg => svg
-    .replace(/#4A3AA7/gi, '#4f7a68').replace(/#1BAF7A/gi, '#9fb8c9').replace(/#EDA100/gi, '#c9a961').replace(/#E87BA4/gi, '#b86b5c')
-    .replace(/#0CA30C/gi, '#4f7a68').replace(/#D03B3B/gi, '#b86b5c').replace(/#0b0b0b/gi, '#2b3330').replace(/#5b6472/gi, '#7b8781')
-    .replace(/#e3e6ea/gi, '#e6e9e4').replace(/#fbfbfc/gi, '#f6f5f0');
-
-  // 1. Briefing Harian: cuplikan, angka pasar, grafik Bitcoin
-  if (!tamu) ambil('/laporan-harian/harian/terbaru.md').then(async md => {
-    const tglIso = (md.match(/pada (\d{4}-\d{2}-\d{2}) \d{2}:\d{2} WIB/) || [])[1];
-    const tgl = (md.match(/^# Briefing Harian — (.+)$/m) || [])[1] || '';
-    const jam = (md.match(/Disusun otomatis (\d{2}:\d{2}) WIB/) || [])[1];
-    const inti = polos(bagian(md, 'Yang Paling Penting Hari Ini')).split('\n').find(b => b.trim()) || '';
-    const kalimat = inti.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
-    $('c-briefing').innerHTML = `<div style="font-size:12px;color:var(--lb);margin-bottom:4px">${esc(tgl)}${jam ? ` · ${jam} WIB` : ''}</div>${esc(kalimat)}`;
-
-    const btc = barisTabel(bagian(md, 'Pasar Crypto')).find(r => /^BTC/.test(r[0]));
-    // (harga BTC tetap dipakai di kartu Grafik harga di bawah)
-    const pekan = md.match(/harga Bitcoin bergerak (?:naik|turun) dari \$[\d.,]+ ke \$[\d.,]+ atau (?:menguat|melemah|naik|turun)[^0-9+\-−]*([+\-−]?\d[\d.,]*%)/);
-
-
-    const fg = md.match(/Fear & Greed hari ini berada di angka (\d+) \(([^)]+)\)/);
-    if (fg) {
-      const n = Number(fg[1]);
-      $('fg-busur').setAttribute('stroke-dasharray', `${(n / 100 * 157.1).toFixed(1)} 157.1`);
-      $('fg-angka').textContent = n; $('fg-judul').textContent = `Fear & Greed · ${fg[2]}`;
-      const kemarinFg = md.match(/kemarin di angka (\d+)/);
-      $('fg-ket').textContent = (n >= 75 ? 'Serakah ekstrem' : n >= 55 ? 'Masih di zona serakah' : n >= 45 ? 'Netral' : n >= 25 ? 'Zona takut' : 'Takut ekstrem') + (kemarinFg ? `, kemarin ${kemarinFg[1]}.` : '.');
-    }
-    const kalimatCap = (md.match(/[^.\n]*kapitalisasi pasar[^.\n]*\$[\d.,]+ (?:triliun|miliar)[^.\n]*/i) || [])[0];
-    if (kalimatCap && $('cap-angka').textContent === '…') {
-      const nilai = kalimatCap.match(/\$[\d.,]+ (?:triliun|miliar)/)[0], pct = kalimatCap.match(/([+\-−]?\d[\d,]*%)/);
-      let v = pct ? bacaPersen(pct[1]) : null;
-      if (v != null && !/[+\-−]/.test(pct[1]) && /menyusut|turun|penurunan|melemah|terkoreksi|anjlok|tergerus/i.test(kalimatCap)) v = -v;
-      $('cap-angka').textContent = nilai; $('btc-harga').textContent = nilai;
-      $('cap-ket').innerHTML = v == null ? 'dalam 24 jam' : `<span class="${arah(v)}" style="font-weight:700">${(v > 0 ? '+' : '') + String(v).replace('.', ',')}%</span> dalam 24 jam`;
-      $('btc-kanan').innerHTML = $('cap-ket').innerHTML;
-    }
-    const dom = md.match(/Dominasi Bitcoin[^.]*?(\d[\d,]*)%/), eth = md.match(/Ethereum[^.%]{0,40}?(\d[\d,]*)%/);
-    if (dom) {
-      const b = bacaPersen(dom[1] + '%'), e = eth ? bacaPersen(eth[1] + '%') : null;
-      $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`);
-      if (e != null) { $('dom-eth').setAttribute('stroke-dasharray', `${(e / 100 * 251.3).toFixed(1)} 251.3`); $('dom-eth').setAttribute('stroke-dashoffset', `-${(b / 100 * 251.3).toFixed(1)}`); }
-      $('dom-teks').textContent = `${dom[1]}%`;
-      $('dom-ket').textContent = e != null ? `Bitcoin ${dom[1]}%, Ethereum ${eth[1]}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.` : `Bitcoin ${dom[1]}% dari seluruh pasar.`;
-    }
-
-  }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); });
-
-  // 2. Radar: koinmu hari ini, diurutkan dari yang paling naik
-  if (!tamu) ambil('/laporan-harian/harian/radar.md').then(md => {
-    const jam = (md.match(/Diperbarui (\d{2}:\d{2}) WIB/) || [])[1];
-    const tgl = (md.match(/^# Radar Portofolio — (.+)$/m) || [])[1] || '';
-    const koin = barisTabel(bagian(md, 'Koin Kamu Hari Ini')).map(r => ({ sim: r[0], h24: r[2], h7: r[3], h30: r[4], v: bacaPersen(r[2]) })).filter(k => k.v != null);
-    if (!koin.length) return gagal('koin', 'Belum ada tabel koin di radar hari ini.');
-    koin.sort((a, b) => b.v - a.v);
-    const maks = Math.max(...koin.map(k => Math.abs(k.v)), 0.01);
-    $('koin').innerHTML = koin.map(k => `<div class="baris ${arah(k.v)}" title="${esc(k.sim)}: 24 jam ${esc(k.h24)}, 7 hari ${esc(k.h7)}, 30 hari ${esc(k.h30)}"><span class="sim">${esc(k.sim)}</span><div class="rel"><div class="isi" style="width:${Math.max(Math.abs(k.v) / maks * 100, 2).toFixed(1)}%"></div></div><span class="nilai">${esc(k.h24)}</span></div>`).join('');
-    const jumlahPeringatan = bagian(md, 'Peringatan Hari Ini').split('\n').filter(b => /^[-*]\s/.test(b.trim())).length;
-    const masuk = [...bagian(md, 'Rotasi Sektor vs Portofolio').matchAll(/^[-*]\s+\*\*([A-Z0-9]+)\*\*\s*—\s*modal masuk/gm)].map(m => m[1]);
-    $('koin-catatan').textContent = `${tgl}${jam ? ` · ${jam} WIB` : ''} · ${jumlahPeringatan} peringatan hari ini.` + (masuk.length ? ` Sektor ${masuk.join(', ')} sedang menarik modal.` : '') + ' Angka = perubahan 24 jam; sentuh untuk 7 dan 30 hari.';
-  }).catch(() => gagal('koin', 'Cuplikan belum bisa dimuat — buka Radar Portofolio langsung.'));
-
-  // 3. Peringatan terbaru (hari ini, atau kemarin kalau hari ini masih kosong)
-  if (!tamu) (async () => {
-    let md = '', tgl = hariIni;
-    try { md = await ambil(`/laporan-harian/peringatan/${hariIni}.md`); }
-    catch { try { md = await ambil(`/laporan-harian/peringatan/${kemarin}.md`); tgl = kemarin; } catch { return gagal('c-peringatan', 'Belum ada peringatan dua hari terakhir.'); } }
-    const blok = [...md.matchAll(/^### (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) WIB\n([\s\S]*?)(?=^### |(?![\s\S]))/gm)];
-    const item = blok.flatMap(b => b[2].split('\n').filter(x => /^[-*]\s/.test(x.trim())).map(x => ({ jam: b[1].slice(11), teks: x.trim().replace(/^[-*]\s+/, '') })));
-    if (!item.length) return gagal('c-peringatan', 'Belum ada peringatan baru.');
-    const t = item[item.length - 1];
-    const m = t.teks.match(/^(Kebijakan|Internal|Makro|H-\d+|Hari-H|hari-H)\s*(?:·\s*([A-Z0-9, ]+?)\s*)?—\s*(.*)$/);
-    const label = m ? `<span class="pil jenis">${esc(m[1])}</span> ${m[2] ? `<span class="pil">${esc(m[2])}</span> ` : ''}` : '';
-    $('c-peringatan').innerHTML = `<div class="kapan">Peringatan terbaru · ${esc(tgl)} ${esc(t.jam)} WIB · ${item.length} hari ini</div><div>${label}${esc(polos(m ? m[3] : t.teks))}</div>`;
-  })();
-
-  // 4. Screening: daftar pendek final + narasi yang menghangat
-  if (!tamu) Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
-    if (!final && !mesin) throw new Error('kosong');
-    const tgl = (final.match(/^# Daftar pendek final — (.+)$/m) || mesin.match(/^# Screening altcoin — (.+)$/m) || [])[1] || '';
-    const nama = [...final.matchAll(/^\*\*([A-Z0-9]{1,12}) \((.+?)\)\*\*\s*—\s*(.*)$/gm)].map(m => `<span class="pil" title="${esc(polos(m[3]))}">${esc(m[1])} <span style="font-weight:600;opacity:.8">${esc(m[2])}</span></span>`);
-    const kandidatMesin = [...mesin.matchAll(/^### \d+\. ([A-Z0-9]+) \(/gm)].map(m => `<span class="pil">${esc(m[1])}</span>`);
-    const hangat = barisTabel(bagian(mesin, 'Narasi hari ini')).filter(r => /menghangat/.test(r[3] || '')).map(r => `<span class="pil hangat">${esc(r[0])}</span>`);
-    const keping = nama.length ? nama : kandidatMesin;
-    const pasar = barisTabel(bagian(mesin, 'Keadaan pasar hari ini'))[0];
-    if (pasar && pasar.length >= 5) {
-      const v24 = bacaPersen(pasar[4]);
-      $('cap-angka').textContent = pasar[0].replace(/ T$/, ' triliun').replace(/ M$/, ' miliar'); $('btc-harga').textContent = $('cap-angka').textContent;
-      $('cap-ket').innerHTML = `<span class="${arah(v24)}" style="font-weight:700">${esc(pasar[4])}</span> dalam 24 jam`; $('btc-kanan').innerHTML = $('cap-ket').innerHTML;
-      const b = bacaPersen(pasar[1]);
-      if (b != null) { $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`); $('dom-teks').textContent = pasar[1]; if (!/Ethereum/.test($('dom-ket').textContent)) $('dom-ket').textContent = `Bitcoin ${pasar[1]} dari seluruh pasar.`; }
-    }
-    $('c-screening').innerHTML = `<div style="font-size:12px;color:var(--lb)">${esc(tgl)} · ${nama.length ? 'daftar pendek final' : 'kandidat mesin, final belum terbit'}</div><div class="keping">${keping.join('') || 'Belum ada kandidat.'}</div>${hangat.length ? `<div style="margin-top:8px;font-size:13px;color:var(--lb)">Narasi yang menghangat: ${hangat.join(' ')}</div>` : ''}`;
-  }).catch(() => gagal('c-screening', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
-
-  // Angka pasar dari sumber publik (tanpa laporan): dipakai tamu, dan cadangan kalau
-  // laporan belum terbaca. Format ringkas: $2,65 triliun.
+  // Angka pasar dari sumber publik — sama dengan yang dipakai dasbor untuk tamu.
+  const arah = v => v == null ? '' : v > 0 ? 'naik' : v < 0 ? 'turun' : '';
   const uangRingkas = n => n >= 1e12 ? `$${(n / 1e12).toFixed(2).replace('.', ',')} triliun` : `$${(n / 1e9).toFixed(1).replace('.', ',')} miliar`;
-  async function angkaPublik() {
-    try {
-      const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
-      const cap = g.total_market_cap.usd, ubah = g.market_cap_change_percentage_24h_usd, domBtc = g.market_cap_percentage.btc, domEth = g.market_cap_percentage.eth;
-      const teksUbah = `${ubah >= 0 ? '+' : ''}${ubah.toFixed(2).replace('.', ',')}%`;
-      if ($('btc-harga').textContent === '…' || $('btc-harga').textContent === 'n/a') { $('btc-harga').textContent = uangRingkas(cap); $('btc-kanan').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
-      if ($('cap-angka').textContent === '…' || $('cap-angka').textContent === 'n/a') { $('cap-angka').textContent = uangRingkas(cap); $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
-      if ($('dom-teks').textContent === '…' || $('dom-teks').textContent === 'n/a') {
-        $('dom-btc').setAttribute('stroke-dasharray', `${(domBtc / 100 * 251.3).toFixed(1)} 251.3`);
-        $('dom-eth').setAttribute('stroke-dasharray', `${(domEth / 100 * 251.3).toFixed(1)} 251.3`); $('dom-eth').setAttribute('stroke-dashoffset', `-${(domBtc / 100 * 251.3).toFixed(1)}`);
-        $('dom-teks').textContent = `${domBtc.toFixed(1).replace('.', ',')}%`;
-        $('dom-ket').textContent = `Bitcoin ${domBtc.toFixed(1).replace('.', ',')}%, Ethereum ${domEth.toFixed(1).replace('.', ',')}%, sisanya ${(100 - domBtc - domEth).toFixed(1).replace('.', ',')}%.`;
-      }
-    } catch {}
-    try {
-      if ($('fg-angka').textContent === '…' || $('fg-angka').textContent === 'n/a') {
-        const f = (await (await fetch('https://api.alternative.me/fng/?limit=1')).json()).data[0];
-        const n = Number(f.value), label = { 'Extreme Fear': 'Extreme Fear', 'Fear': 'Fear', 'Neutral': 'Neutral', 'Greed': 'Greed', 'Extreme Greed': 'Extreme Greed' }[f.value_classification] || f.value_classification;
-        $('fg-busur').setAttribute('stroke-dasharray', `${(n / 100 * 157.1).toFixed(1)} 157.1`);
-        $('fg-angka').textContent = n; $('fg-judul').textContent = `Fear & Greed · ${label}`;
-        $('fg-ket').textContent = n >= 75 ? 'Serakah ekstrem.' : n >= 55 ? 'Masih di zona serakah.' : n >= 45 ? 'Netral.' : n >= 25 ? 'Zona takut.' : 'Takut ekstrem.';
-      }
-    } catch {}
-  }
-  if (tamu) angkaPublik(); else setTimeout(angkaPublik, 6000);
-  setTimeout(() => { for (const id of ['btc-harga', 'cap-angka', 'dom-teks', 'fg-angka']) if ($(id).textContent === '…') $(id).textContent = 'n/a'; }, 12000);
+  try {
+    const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
+    const cap = g.total_market_cap.usd, ubah = g.market_cap_change_percentage_24h_usd, b = g.market_cap_percentage.btc, e = g.market_cap_percentage.eth;
+    $('cap-angka').textContent = uangRingkas(cap);
+    $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${(ubah >= 0 ? '+' : '') + ubah.toFixed(2).replace('.', ',')}%</span> dalam 24 jam`;
+    $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`);
+    $('dom-eth').setAttribute('stroke-dasharray', `${(e / 100 * 251.3).toFixed(1)} 251.3`); $('dom-eth').setAttribute('stroke-dashoffset', `-${(b / 100 * 251.3).toFixed(1)}`);
+    $('dom-teks').textContent = `${b.toFixed(1).replace('.', ',')}%`;
+    $('dom-ket').textContent = `Bitcoin ${b.toFixed(1).replace('.', ',')}%, Ethereum ${e.toFixed(1).replace('.', ',')}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.`;
+  } catch { $('cap-angka').textContent = 'n/a'; $('dom-teks').textContent = 'n/a'; }
+  try {
+    const f = (await (await fetch('https://api.alternative.me/fng/?limit=1')).json()).data[0];
+    const n = Number(f.value);
+    $('fg-busur').setAttribute('stroke-dasharray', `${(n / 100 * 157.1).toFixed(1)} 157.1`);
+    $('fg-angka').textContent = n; $('fg-judul').textContent = `Fear & Greed · ${f.value_classification}`;
+    $('fg-ket').textContent = n >= 75 ? 'Serakah ekstrem.' : n >= 55 ? 'Masih di zona serakah.' : n >= 45 ? 'Netral.' : n >= 25 ? 'Zona takut.' : 'Takut ekstrem.';
+  } catch { $('fg-angka').textContent = 'n/a'; }
 
-  // 5. Grafik harga: garis sederhana, koin dan rentang bisa dipilih.
-  //    Data dari CoinGecko (gratis, tanpa kunci); tiap kombinasi diambil sekali lalu disimpan.
-  const KOIN_GRAFIK = [['BTC', 'bitcoin'], ['ETH', 'ethereum'], ['ZAMA', 'zama'], ['INJ', 'injective-protocol'], ['CFG', 'centrifuge-2'], ['ARB', 'arbitrum'],
-    ['ASTER', 'aster-2'], ['ONDO', 'ondo-finance'], ['ENA', 'ethena'], ['HUMA', 'huma-finance'], ['TRX', 'tron'], ['ARKM', 'arkham']];
-  const RENTANG = [['1 hari', 1], ['7 hari', 7], ['30 hari', 30], ['90 hari', 90], ['1 tahun', 365], ['Semua', 'max']];
-  const simpanan = new Map();
-  let pilihan = { id: 'bitcoin', sim: 'BTC', hari: 7 };
-  const fmtHarga = v => v >= 1000 ? '$' + Math.round(v).toLocaleString('id-ID') : v >= 1 ? '$' + v.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '$' + v.toLocaleString('id-ID', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
-  const fmtTgl = (ts, hari) => new Intl.DateTimeFormat('id-ID', hari <= 1 ? { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' } : hari <= 90 ? { day: 'numeric', month: 'short', timeZone: 'Asia/Jakarta' } : { month: 'short', year: '2-digit', timeZone: 'Asia/Jakarta' }).format(new Date(ts)).replace('.', ':');
-  const fmtTglPenuh = ts => new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }).format(new Date(ts)).replace('.', ':');
-
-  async function ambilHarga(id, hari) {
-    const kunci = `${id}:${hari}`;
-    if (simpanan.has(kunci)) return simpanan.get(kunci);
-    const r = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${hari}`);
-    if (!r.ok) throw new Error(r.status);
-    let titik = (await r.json()).prices || [];
-    if (titik.length > 400) { const langkah = Math.ceil(titik.length / 400); titik = titik.filter((_, i) => i % langkah === 0 || i === titik.length - 1); }
-    simpanan.set(kunci, titik);
-    return titik;
-  }
-
-  function gambarGaris(titik, hari) {
-    const W = 640, H = 220, ml = 8, mr = 58, mt = 14, mb = 26;
-    const ys = titik.map(t => t[1]), lo = Math.min(...ys), hi = Math.max(...ys), pad = (hi - lo) * 0.08 || lo * 0.01 || 1;
-    const yLo = lo - pad, yHi = hi + pad;
-    const x0 = titik[0][0], x1 = titik[titik.length - 1][0];
-    const sx = t => ml + (t - x0) / (x1 - x0 || 1) * (W - ml - mr), sy = v => mt + (yHi - v) / (yHi - yLo) * (H - mt - mb);
-    const d = titik.map((t, i) => `${i ? 'L' : 'M'}${sx(t[0]).toFixed(1)},${sy(t[1]).toFixed(1)}`).join(' ');
-    const naik = titik[titik.length - 1][1] >= titik[0][1], warna = naik ? '#4f7a68' : '#b86b5c';
-    const iHi = ys.indexOf(hi), iLo = ys.indexOf(lo);
-    let out = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="grafik harga"><defs><linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${warna}" stop-opacity=".22"/><stop offset="1" stop-color="${warna}" stop-opacity="0"/></linearGradient></defs>`;
-    for (let k = 0; k <= 3; k++) { const v = yLo + (yHi - yLo) * k / 3, y = sy(v); out += `<line x1="${ml}" y1="${y.toFixed(1)}" x2="${W - mr}" y2="${y.toFixed(1)}" stroke="#e6e9e4" stroke-dasharray="2 3"/><text x="${W - mr + 6}" y="${(y + 4).toFixed(1)}" font-size="10" fill="#7b8781">${fmtHarga(v)}</text>`; }
-    for (let k = 0; k <= 4; k++) { const i = Math.round((titik.length - 1) * k / 4); out += `<text x="${sx(titik[i][0]).toFixed(1)}" y="${H - 8}" font-size="10" fill="#a3aca7" text-anchor="${k === 0 ? 'start' : k === 4 ? 'end' : 'middle'}">${fmtTgl(titik[i][0], hari)}</text>`; }
-    out += `<path d="${d} L${sx(x1).toFixed(1)},${(H - mb).toFixed(1)} L${sx(x0).toFixed(1)},${(H - mb).toFixed(1)} Z" fill="url(#gh)"/><path d="${d}" fill="none" stroke="${warna}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
-    out += `<circle cx="${sx(titik[iHi][0]).toFixed(1)}" cy="${sy(hi).toFixed(1)}" r="3.5" fill="#fff" stroke="#4f7a68" stroke-width="2"/><text x="${sx(titik[iHi][0]).toFixed(1)}" y="${(sy(hi) - 8).toFixed(1)}" font-size="10" fill="#4f7a68" font-weight="700" text-anchor="middle">${fmtHarga(hi)}</text>`;
-    out += `<circle cx="${sx(titik[iLo][0]).toFixed(1)}" cy="${sy(lo).toFixed(1)}" r="3.5" fill="#fff" stroke="#b86b5c" stroke-width="2"/><text x="${sx(titik[iLo][0]).toFixed(1)}" y="${(sy(lo) + 16).toFixed(1)}" font-size="10" fill="#b86b5c" font-weight="700" text-anchor="middle">${fmtHarga(lo)}</text>`;
-    out += `<circle cx="${sx(x1).toFixed(1)}" cy="${sy(titik[titik.length - 1][1]).toFixed(1)}" r="4" fill="${warna}" stroke="#fff" stroke-width="2"/>`;
-    out += `<line id="gh-garis" x1="0" y1="${mt}" x2="0" y2="${H - mb}" stroke="#2b3330" stroke-dasharray="3 3" style="display:none"/><circle id="gh-titik" r="4" fill="#2b3330" style="display:none"/></svg><div class="tip" id="gh-tip"></div>`;
-    return { html: out, sx, sy, W, H };
-  }
-
-  async function tampilkanGrafik() {
-    const { id, sim, hari } = pilihan;
-    const bingkai = $('bursa-bingkai');
-    try {
-      const titik = await ambilHarga(id, hari);
-      if (!titik.length) throw new Error('kosong');
-      const g = gambarGaris(titik, hari);
-      bingkai.innerHTML = g.html;
-      const awal = titik[0][1], akhir = titik[titik.length - 1][1], ubah = (akhir / awal - 1) * 100;
-      $('bursa-catatan').innerHTML = `<b>${esc(sim)}</b> ${fmtHarga(akhir)} · <span class="${arah(ubah)}" style="font-weight:700">${(ubah >= 0 ? '+' : '') + ubah.toFixed(2).replace('.', ',')}%</span> dalam ${RENTANG.find(r => r[1] === hari)[0].toLowerCase()} · data CoinGecko, diperbarui saat halaman dibuka. Sentuh grafik untuk melihat harga per tanggal.`;
-      const svg = bingkai.querySelector('svg'), tip = $('gh-tip'), garis = $('gh-garis'), bulat = $('gh-titik');
-      const gerak = ev => {
-        const kotak = svg.getBoundingClientRect(), x = ((ev.touches ? ev.touches[0].clientX : ev.clientX) - kotak.left) / kotak.width * g.W;
-        let terdekat = 0, jarak = Infinity;
-        titik.forEach((t, i) => { const dj = Math.abs(g.sx(t[0]) - x); if (dj < jarak) { jarak = dj; terdekat = i; } });
-        const t = titik[terdekat], px = g.sx(t[0]), py = g.sy(t[1]);
-        garis.setAttribute('x1', px); garis.setAttribute('x2', px); garis.style.display = '';
-        bulat.setAttribute('cx', px); bulat.setAttribute('cy', py); bulat.style.display = '';
-        tip.style.display = 'block'; tip.style.left = `${px / g.W * kotak.width}px`; tip.style.top = `${py / g.H * kotak.height}px`;
-        tip.textContent = `${fmtHarga(t[1])} · ${fmtTglPenuh(t[0])}`;
-      };
-      const sembunyi = () => { tip.style.display = 'none'; garis.style.display = 'none'; bulat.style.display = 'none'; };
-      svg.addEventListener('mousemove', gerak); svg.addEventListener('touchmove', gerak, { passive: true });
-      svg.addEventListener('mouseleave', sembunyi); svg.addEventListener('touchend', sembunyi);
-    } catch (e) {
-      bingkai.innerHTML = `<span class="memuat">Grafik ${esc(sim)} belum bisa dimuat (CoinGecko membatasi permintaan, coba lagi sebentar).</span>`;
-    }
-  }
-
-  const segarkanKeping = () => {
-    $('bursa-koin').innerHTML = KOIN_GRAFIK.map(([n, id]) => `<button class="pil${id === pilihan.id ? ' aktif' : ''}" data-id="${id}" data-sim="${n}">${n}</button>`).join('');
-    $('bursa-rentang').innerHTML = RENTANG.map(([n, h]) => `<button class="pil rentang${h === pilihan.hari ? ' aktif' : ''}" data-hari="${h}">${n}</button>`).join('');
-  };
-  $('bursa-koin').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; pilihan = { ...pilihan, id: b.dataset.id, sim: b.dataset.sim }; segarkanKeping(); tampilkanGrafik(); });
-  $('bursa-rentang').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; pilihan = { ...pilihan, hari: b.dataset.hari === 'max' ? 'max' : Number(b.dataset.hari) }; segarkanKeping(); tampilkanGrafik(); });
-  segarkanKeping();
-  tampilkanGrafik();
-
-  // 6. Indeks pasar crypto global: kapitalisasi total semua koin (CRYPTOCAP:TOTAL),
-  //    gaya garis, tombol rentang 1 hari sampai semua di bawah grafik.
-  (() => {
-    const bingkai = $('indeks-bingkai');
-    bingkai.innerHTML = '<div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget" style="height:100%"></div></div>';
-    const skrip = document.createElement('script');
-    skrip.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-    skrip.async = true;
-    skrip.textContent = JSON.stringify({ autosize: true, symbol: 'CRYPTOCAP:TOTAL', interval: 'D', timezone: 'Asia/Jakarta', theme: 'light', style: '2', locale: 'id',
-      backgroundColor: '#ffffff', gridColor: 'rgba(230,233,228,0.7)', withdateranges: true, range: '3M', allow_symbol_change: false, hide_side_toolbar: true,
-      hide_top_toolbar: window.innerWidth < 640, hide_legend: true, hide_volume: true, save_image: false, calendar: false, support_host: 'https://www.tradingview.com' });
-    bingkai.firstChild.appendChild(skrip);
-  })();
-  $('tautan-keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
+  // Tiga dossier terbaru dari pustaka.json (dibuat skrip penyusun halaman riset).
+  try {
+    const p = await (await fetch('pustaka.json', { cache: 'no-cache' })).json();
+    const daftar = p.dossier.filter(d => d.tick !== '_komparatif').sort((a, b) => b.tanggal.localeCompare(a.tanggal)).slice(0, 3);
+    const rapi = t => { const [y, m, d] = t.split('-'); return `${Number(d)} ${['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][Number(m) - 1]} ${y}`; };
+    $('dossier-terbaru').innerHTML = daftar.map(d => `<article class="kartu dos">
+      <div class="kepala"><span class="tick">${esc(d.nama)}</span><span class="tgl">${esc(rapi(d.tanggal))}</span></div>
+      <h3 class="serif">${esc(d.judul)}</h3>
+      <p class="kutip">${esc(d.kutipan)}</p>
+      <ul class="angka"><li><b>${d.kata.toLocaleString('id-ID')}</b> kata</li><li><b>${d.bagian}</b> bagian</li><li><b>${d.grafik}</b> grafik</li></ul>
+      <div class="aksi"><a href="riset.html#${esc(d.tick)}">Daftar isi →</a></div>
+    </article>`).join('');
+    $('pustaka-jumlah').textContent = `${p.dossier.length} dossier · ${p.totalKata.toLocaleString('id-ID')} kata`;
+  } catch { $('dossier-terbaru').innerHTML = '<span class="memuat">Daftar dossier belum bisa dimuat — buka <a href="riset.html">halaman riset</a>.</span>'; }
 })();
 </script>
 </body>

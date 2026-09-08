@@ -3,7 +3,9 @@
 //
 // Cara pakai di halaman:
 //   const p = await akun.wajibMasuk();      // memaksa masuk + disetujui, kalau tidak dialihkan
-//   const teks = await akun.unduh('terbaru.md');   // berkas dari gudang privat "laporan"
+//   const teks = await akun.unduh('terbaru.md');   // berkas teks dari gudang privat "laporan"
+//   const url = await akun.tautanUnduh('dossier/X.pdf'); // tautan sementara untuk PDF
+//   await akun.pasangMenu();                 // halaman publik: sesuaikan menu dengan sesi
 //
 // Kunci di bawah adalah kunci PUBLIK (publishable). Aman terlihat di browser:
 // ia hanya bisa membaca apa yang diizinkan kebijakan RLS di Supabase.
@@ -35,7 +37,7 @@
     const p = await profil();
     const tujuan = encodeURIComponent(location.pathname.split('/').pop() + location.search);
     if (!p) { location.replace(`masuk.html?ke=${tujuan}`); return new Promise(() => {}); }
-    if (hanyaAdmin && !p.admin) { location.replace('index.html'); return new Promise(() => {}); }
+    if (hanyaAdmin && !p.admin) { location.replace('dasbor.html'); return new Promise(() => {}); }
     if (!p.disetujui && !bolehTamu) { location.replace('masuk.html#status'); return new Promise(() => {}); }
     return p;
   }
@@ -47,7 +49,31 @@
     return await data.text();
   }
 
+  // Tautan unduh sementara untuk berkas biner (PDF dossier) di gudang privat.
+  // Berlaku `detik` detik; setelah itu tombolnya harus diklik lagi.
+  async function tautanUnduh(nama, detik = 120) {
+    const { data, error } = await sb.storage.from('laporan').createSignedUrl(nama, detik);
+    if (error) throw new Error(`${nama}: ${error.message || error}`);
+    return data.signedUrl;
+  }
+
+  // Menu halaman publik (index, riset, langganan, privasi): elemen bertanda
+  // data-tamu tampil untuk yang belum masuk, data-anggota untuk yang disetujui,
+  // data-menunggu untuk yang sudah daftar tapi belum dikonfirmasi, data-admin untuk admin,
+  // data-sesi untuk siapa pun yang sudah masuk (tombol Keluar).
+  async function pasangMenu() {
+    const p = await profil().catch(() => null);
+    const atur = (tanda, tampil) => document.querySelectorAll(`[${tanda}]`).forEach(el => { el.hidden = !tampil; });
+    atur('data-tamu', !p);
+    atur('data-sesi', !!p);
+    atur('data-anggota', p && p.disetujui);
+    atur('data-menunggu', p && !p.disetujui);
+    atur('data-admin', p && p.admin);
+    document.querySelectorAll('[data-keluar]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); keluar(); }));
+    return p;
+  }
+
   async function keluar() { await sb.auth.signOut(); location.href = 'masuk.html'; }
 
-  window.akun = { sb, sesi, profil, wajibMasuk, unduh, keluar, ADMIN, OWNER };
+  window.akun = { sb, sesi, profil, wajibMasuk, unduh, tautanUnduh, pasangMenu, keluar, ADMIN, OWNER };
 })();

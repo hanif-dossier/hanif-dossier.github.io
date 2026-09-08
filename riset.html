@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riset — Hanif Dossier Crypto</title>
+<meta name="description" content="12 dossier analisis token crypto, dikelompokkan menurut lapisan arsitektur Web3. Daftar isi dan kutipan pembukanya terbuka; isi penuh untuk anggota.">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+.lapisan{margin-top:34px}
+.lapisan .judul h2{font-size:1.35rem}
+.lapisan .ket{font-size:14px;color:var(--tx2);max-width:64ch}
+.loncat{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.loncat a{font-size:13px;font-weight:700;background:var(--kartu);border:1px solid var(--gr);padding:6px 12px;border-radius:999px;color:var(--tx2)}
+.loncat a:hover{border-color:var(--sage);color:var(--sage-tua)}
+.btc .kepala{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.btc .harga-btc{font-size:1.9rem;line-height:1.1}
+.btc svg{display:block;width:100%;height:auto;margin-top:8px}
+.btc .tip{position:absolute;pointer-events:none;background:var(--tx);color:#fff;font-size:12px;padding:4px 8px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-130%);display:none}
+.btc .bingkai{position:relative}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="index.html">Beranda</a>
+    <a class="aktif" href="riset.html">Riset</a>
+    <a href="langganan.html">Langganan</a>
+    <a href="dasbor.html" data-anggota hidden>Laporan</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<section class="sambut">
+  <div class="sapa">
+    <div class="mata">Riset yang sudah tersusun</div>
+    <h1 class="serif">Lihat isinya dulu,<br><span>baru putuskan.</span></h1>
+    <p>Di bawah ini seluruh dossier yang sudah saya susun — daftar isi lengkapnya terbuka, kutipan pembukanya bisa dibaca, dan jumlah katanya bukan klaim kosong. Setiap dossier ditempatkan pada lapisan arsitektur Web3 tempat proyeknya hidup, karena pertanyaan pertama sebelum menilai token adalah: siapa yang bergantung padanya, dan ia bergantung pada siapa.</p>
+    <div class="catatan">12 dossier · 101.296 kata · setara sekitar 225 halaman A4 · yang berbayar adalah isi penuhnya.</div>
+    <div class="loncat"><a href="#lapisan-0">Aplikasi — DeFi · 2</a><a href="#lapisan-1">Aplikasi — RWA &amp; PayFi · 3</a><a href="#lapisan-2">Infrastruktur &amp; data · 2</a><a href="#lapisan-3">Lapisan skala (L2) &amp; chain khusus · 2</a><a href="#lapisan-4">Lapisan dasar (L1) — penyelesaian · 2</a><a href="#lapisan-5">Lintas lapisan · 1</a></div>
+  </div>
+  <div class="kartu btc">
+    <div class="kepala"><div><div class="catatan">Bitcoin · 30 hari terakhir (USD)</div><div class="serif harga-btc" id="harga-btc">memuat…</div></div><div id="delta-btc" style="font-weight:700;font-size:14px"></div></div>
+    <div class="bingkai"><svg id="chart" role="img" aria-label="Grafik harga Bitcoin 30 hari terakhir dalam dolar AS"></svg><div class="tip" id="tip"></div></div>
+    <div class="catatan" id="kaki-btc">Sumber: CoinGecko, diambil langsung saat halaman dibuka. Sentuh grafik untuk melihat harga per tanggal.</div>
+  </div>
+</section>
+
+<div class="spanduk" style="margin-top:22px"><b>Kenapa hanya pratinjau?</b> Dossier penuh adalah produk yang dijual ke anggota, jadi isinya tidak dibagikan gratis. Yang terbuka di sini sudah cukup untuk menilai kedalamannya: struktur bab, cara argumen dibuka, dan seberapa jauh bahasannya. Kalau setelah membaca ini Anda merasa caranya tidak cocok dengan cara Anda berpikir, Anda hemat uang — dan itu tetap hasil yang baik.</div>
+
+<section class="lapisan" id="lapisan-0">
+  <div class="judul"><h2 class="serif">Aplikasi — DeFi</h2><span class="catatan">2 dossier</span></div>
+  <div class="ket">Bursa, stablecoin, derivatif: tempat pengguna benar-benar membayar fee, dan dari situ jantung protokol dinilai.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="ASTER">
+        <div class="kepala"><span class="tick">ASTER</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Aster (ASTER)</h3>
+        <p class="kutip">Aster adalah aset paling membingungkan di seluruh seri ini, karena ia melakukan satu hal jauh lebih baik daripada semua aset lain yang saya analisis, dan satu hal jauh lebih buruk. Yang jauh lebih baik: aliran fee ke pemegang…</p>
+        <ul class="angka"><li><b>10.328</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Perusahaan Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Kontroversi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ASTER" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="ENA">
+        <div class="kepala"><span class="tick">ENA</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Ethena (ENA)</h3>
+        <p class="kutip">Ethena adalah aset yang paling banyak berubah diam-diam di seluruh seri ini. Untuk menilainya dengan benar, tiga hal harus dipisahkan: produknya, tokennya, dan narasinya — karena ketiganya kini menunjuk ke arah yang berbeda. Pertama, produknya sudah berganti…</p>
+        <ul class="angka"><li><b>7.974</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Riwayat Depeg — dan mengapa ia risiko permanen, bukan bug yang sudah diperbaiki</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ENA" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="lapisan" id="lapisan-1">
+  <div class="judul"><h2 class="serif">Aplikasi — RWA &amp; PayFi</h2><span class="catatan">3 dossier</span></div>
+  <div class="ket">Aset dunia nyata dan pembiayaan pembayaran yang ditokenisasi; nilainya bergantung pada aset di luar rantai.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="CFG">
+        <div class="kepala"><span class="tick">CFG</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Centrifuge (CFG)</h3>
+        <p class="kutip">Centrifuge pada 2026 bukan lagi protokol yang sama dengan yang dijual di whitepaper aslinya. Tiga transformasi besar sudah atau sedang terjadi, dan ketiganya berjalan ke arah yang sama: Pertama, dari Polkadot ke Ethereum. Parachain Polkadot kehilangan slot…</p>
+        <ul class="angka"><li><b>7.160</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#CFG" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="HUMA">
+        <div class="kepala"><span class="tick">HUMA</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Huma Finance (HUMA)</h3>
+        <p class="kutip">Huma adalah laporan penutup dari sepuluh aset di seri ini, dan ia mengulang satu pola yang sudah saya temukan berkali-kali — tapi dengan versi yang paling murni. Bisnisnya bekerja. Tokennya tidak menerima apa pun dari bisnis…</p>
+        <ul class="angka"><li><b>9.776</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Perusahaan Ini</li><li>Whitepaper Dibedah</li><li>Kontroversi</li><li>Tokenomics — Penyaring</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#HUMA" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="ONDO">
+        <div class="kepala"><span class="tick">ONDO</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Ondo Finance (ONDO)</h3>
+        <p class="kutip">Ondo menjalankan bisnis RWA yang paling nyata di antara sepuluh aset dalam seri laporan ini. USDY-nya menampung $2,19 miliar dan tumbuh +16,6% dalam 30 hari — satu-satunya dari empat besar Treasury tokenisasi global yang sedang naik, sementara BUIDL milik…</p>
+        <ul class="angka"><li><b>8.357</b> kata</li><li><b>18</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (17 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Sengketa Kendali Korporat</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ONDO" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="lapisan" id="lapisan-2">
+  <div class="judul"><h2 class="serif">Infrastruktur &amp; data</h2><span class="catatan">2 dossier</span></div>
+  <div class="ket">Privasi, komputasi terenkripsi, intelijen on-chain — perkakas yang dipakai aplikasi di atasnya.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="ARKM">
+        <div class="kepala"><span class="tick">ARKM</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Arkham Intelligence (ARKM)</h3>
+        <p class="kutip">ARKM adalah aset paling sederhana untuk dijelaskan di seluruh seri ini, dan sekaligus yang paling sulit dinilai — karena hampir semua angka yang dibutuhkan untuk menilainya tidak dipublikasikan. Yang sederhana: ARKM bukan token dari sebuah protokol. Ia token…</p>
+        <ul class="angka"><li><b>6.969</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Perusahaan Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Kontroversi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ARKM" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="ZAMA">
+        <div class="kepala"><span class="tick">ZAMA</span><span class="tgl">29 Agustus 2026</span></div>
+        <h3 class="serif">Zama Protocol (ZAMA)</h3>
+        <p class="kutip">Zama menjual satu hal yang sangat spesifik: kemampuan menjalankan smart contract di atas data yang tetap terenkripsi, memakai Fully Homomorphic Encryption (FHE). Ia bukan blockchain sendiri melainkan lapisan kerahasiaan yang menempel pada rantai yang sudah…</p>
+        <ul class="angka"><li><b>8.160</b> kata</li><li><b>18</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (17 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Model Bisnis &amp; Mekanisme Token</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ZAMA" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="lapisan" id="lapisan-3">
+  <div class="judul"><h2 class="serif">Lapisan skala (L2) &amp; chain khusus</h2><span class="catatan">2 dossier</span></div>
+  <div class="ket">Rollup yang menumpang lapisan dasar, dan chain yang dibangun untuk satu jenis aplikasi.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="ARB">
+        <div class="kepala"><span class="tick">ARB</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Arbitrum (ARB)</h3>
+        <p class="kutip">Arbitrum adalah kasus yang paling jelas di seluruh seri ini tentang protokol yang bagus dengan token yang tidak punya alasan ekonomi untuk ada. Mari mulai dari yang bagus, karena bagiannya nyata dan pantas disebut lebih dulu. Arbitrum memublikasikan seluruh…</p>
+        <ul class="angka"><li><b>7.775</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#ARB" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="INJ">
+        <div class="kepala"><span class="tick">INJ</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">Injective (INJ)</h3>
+        <p class="kutip">Injective adalah aset dengan skor terendah di seluruh seri sepuluh laporan ini, dan alasannya bukan satu hal melainkan tiga hal yang saling menguatkan. Pertama, narasi deflasinya tidak benar secara faktual — dan ini bisa dibuktikan dengan satu…</p>
+        <ul class="angka"><li><b>7.545</b> kata</li><li><b>18</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (17 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Traksi — angka yang harus dilihat berdampingan</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#INJ" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="lapisan" id="lapisan-4">
+  <div class="judul"><h2 class="serif">Lapisan dasar (L1) — penyelesaian</h2><span class="catatan">2 dossier</span></div>
+  <div class="ket">Tempat transaksi akhirnya dicatat; keamanan yang ditumpangi semua lapisan lain.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="TRX">
+        <div class="kepala"><span class="tick">TRX</span><span class="tgl">4 September 2026</span></div>
+        <h3 class="serif">TRON (TRX)</h3>
+        <p class="kutip">TRON adalah aset yang paling sulit dinilai di seluruh seri sepuluh laporan ini, karena bisnisnya nyata tapi tokennya tidak menangkap nilai bisnis itu. Dua hal itu biasanya datang bersamaan. Di sini keduanya terpisah, dan pemisahan itulah seluruh isi laporan…</p>
+        <ul class="angka"><li><b>9.318</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Protokol Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#TRX" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+      <article class="kartu dos" id="BTC">
+        <div class="kepala"><span class="tick">BTC</span><span class="tgl">3 September 2026</span></div>
+        <h3 class="serif">Bitcoin (BTC)</h3>
+        <p class="kutip">Bitcoin adalah satu-satunya aset di seluruh laporan seri ini yang whitepaper-nya sudah diuji selama 17 tahun oleh dunia nyata, bukan dijanjikan untuk kuartal depan. Itu mengubah cara membacanya. Untuk proyek baru, whitepaper adalah dokumen janji dan tugas…</p>
+        <ul class="angka"><li><b>10.251</b> kata</li><li><b>17</b> bagian</li><li><b>2</b> grafik</li><li>diperbarui <b>6 September 2026</b></li></ul>
+        <details><summary>Daftar isi lengkap (16 bagian)</summary><ol><li>Langkah −1 — Kebutuhan dulu, baru token</li><li>Jantung Aset Ini</li><li>Whitepaper Dibedah</li><li>Tokenomics — Penyaring</li><li>Keamanan &amp; Desentralisasi</li><li>Distribusi &amp; Likuiditas</li><li>Valuasi</li><li>Tesis Bull</li><li>Tesis Bear</li><li>Lingkungan Eksternal</li><li>Berita Terbaru &amp; Katalis</li><li>Checklist Red Flag</li><li>Risiko Utama</li><li>Apa yang Harus Dipantau</li><li>Yang Tidak Bisa Saya Nilai</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#BTC" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="lapisan" id="lapisan-5">
+  <div class="judul"><h2 class="serif">Lintas lapisan</h2><span class="catatan">1 dossier</span></div>
+  <div class="ket">Perbandingan beberapa aset sekaligus, lintas lapisan.</div>
+  <div class="kisi">
+      <article class="kartu dos" id="_komparatif">
+        <div class="kepala"><span class="tick">Komparatif</span><span class="tgl">1 September 2026</span></div>
+        <h3 class="serif">Sepuluh Aset Kripto — Analisis Fundamental Komparatif</h3>
+        <p class="kutip">…</p>
+        <ul class="angka"><li><b>7.683</b> kata</li><li><b>21</b> bagian</li><li><b>2</b> grafik</li></ul>
+        <details><summary>Daftar isi lengkap (21 bagian)</summary><ol><li>Nyatakan rezimnya dulu</li><li>Temuan yang paling menentukan</li><li>Skor lengkap</li><li>Whitepaper: apa yang sebenarnya ditulis Satoshi</li><li>Kondisi 2026 — apakah asumsinya masih berlaku?</li><li>TRX (TRON) — $30,64 miliar · Skor 3,0</li><li>ONDO (Ondo Finance) — $1,66 miliar · Skor 3,2</li><li>CFG (Centrifuge) — $42–64 juta · Skor 3,2</li><li>ARB (Arbitrum) — $746 juta · Skor 3,2</li><li>INJ (Injective) — $485 juta · Skor 2,8 ⚠ BERISIKO TINGGI</li><li>ENA (Ethena) — $1,55 miliar · Skor 1,9 ⚠ BERISIKO TINGGI</li><li>ARKM (Arkham) — $75 juta · Skor 2,2</li><li>ASTER — $1,87 miliar · Skor 2,1 ⚠ BERISIKO TINGGI</li><li>HUMA (Huma Finance) — $74 juta · Skor 2,1 ⚠ BERISIKO TINGGI</li><li>Peringkat kualitas dokumen primer</li><li>Temuan per aset</li><li>Pola yang muncul, dan ini yang paling berguna</li><li>Tabel metrik yang benar-benar sebanding</li><li>Tiga pola yang muncul</li><li>Kalau dibaca lewat kerangka Akademi Crypto</li><li>Sumber</li></ol></details>
+        <div class="aksi">
+          <a href="langganan.html" data-tamu>Baca lengkap sebagai anggota →</a>
+          <a href="pustaka.html#_komparatif" data-anggota hidden>Unduh di pustaka →</a>
+          <a href="masuk.html#status" data-menunggu hidden>Terbuka setelah akun dikonfirmasi</a>
+        </div>
+      </article>
+  </div>
+</section>
+
+<section class="penutup">
+  <h2 class="serif">Sebutkan satu nama yang sedang Anda pertimbangkan</h2>
+  <p>Kalau namanya sudah ada di daftar atas, dossier-nya terbuka begitu Anda jadi anggota. Kalau belum, dossier pesanan disusun 5–7 hari kerja dan masuk pustaka untuk semua anggota.</p>
+  <div class="tombol" style="justify-content:center">
+    <a class="utama" href="langganan.html">Lihat paket langganan</a>
+    <a class="kedua" href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Tanya lewat DM Instagram</a>
+  </div>
+</section>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Seluruh isi halaman ini dan dokumen yang dihasilkan dari layanan di dalamnya bersifat riset dan edukasi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil dalam bentuk apa pun. Setiap keputusan investasi beserta risikonya sepenuhnya menjadi tanggung jawab pembaca. Harga Bitcoin di halaman ini diambil dari CoinGecko saat halaman dibuka dan bukan kutipan harga untuk transaksi. Data dalam setiap dossier menggambarkan keadaan pada tanggal penyusunannya dan dapat berubah sewaktu-waktu.</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+akun.pasangMenu();
+(function(){
+  // Grafik Bitcoin 30 hari: SVG digambar sendiri dari CoinGecko, tanpa pustaka.
+  var W=640,H=200,PL=8,PR=58,PT=14,PB=26,DATA=null;
+  var svg=document.getElementById('chart'), tip=document.getElementById('tip');
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  var uang=function(v){return '$'+Math.round(v).toLocaleString('id-ID');};
+  var tgl=function(ms){return new Date(ms).toLocaleDateString('id-ID',{day:'numeric',month:'short'});};
+  fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily')
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(j){ var t=(j.prices||[]).map(function(p){return {x:p[0],y:p[1]};}); if(t.length<2) throw new Error('data kurang'); gambar(t); })
+    .catch(function(){ document.getElementById('harga-btc').textContent='—'; document.getElementById('kaki-btc').textContent='Harga Bitcoin gagal dimuat — CoinGecko sedang membatasi permintaan. Muat ulang untuk mencoba lagi.'; });
+  function gambar(t){
+    DATA=t; svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var ys=t.map(function(p){return p.y;}), lo=Math.min.apply(null,ys), hi=Math.max.apply(null,ys);
+    var pad=(hi-lo)*0.1||hi*0.02; lo-=pad; hi+=pad;
+    var X=function(i){return PL+(W-PL-PR)*i/(t.length-1);}, Y=function(v){return PT+(H-PT-PB)*(1-(v-lo)/(hi-lo));};
+    var akhir=t[t.length-1].y, awal=t[0].y, pct=(akhir-awal)/awal*100, naik=pct>=0, warna=naik?'#4f7a68':'#b86b5c';
+    document.getElementById('harga-btc').textContent=uang(akhir);
+    var de=document.getElementById('delta-btc'); de.textContent=(naik?'▲ +':'▼ ')+pct.toFixed(1).replace('.',',')+'% dalam 30 hari'; de.className=naik?'naik':'turun';
+    for(var g=0; g<4; g++){ var v=lo+(hi-lo)*g/3, y=Y(v); svg.appendChild(el('line',{x1:PL,x2:W-PR,y1:y,y2:y,stroke:'#e6e9e4','stroke-dasharray':'2 3'})); var lb=el('text',{x:W-PR+6,y:y+4,'font-size':10,fill:'#7b8781'}); lb.textContent=uang(v); svg.appendChild(lb); }
+    [0,Math.floor((t.length-1)/2),t.length-1].forEach(function(i){ var lb=el('text',{x:X(i),y:H-8,'text-anchor':i===0?'start':(i===t.length-1?'end':'middle'),'font-size':10,fill:'#a3aca7'}); lb.textContent=tgl(t[i].x); svg.appendChild(lb); });
+    var d=t.map(function(p,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(p.y).toFixed(1);}).join(' ');
+    var defs=el('defs',{}); var gr=el('linearGradient',{id:'gh',x1:0,y1:0,x2:0,y2:1}); gr.appendChild(el('stop',{offset:0,'stop-color':warna,'stop-opacity':.22})); gr.appendChild(el('stop',{offset:1,'stop-color':warna,'stop-opacity':0})); defs.appendChild(gr); svg.appendChild(defs);
+    svg.appendChild(el('path',{d:d+' L'+X(t.length-1)+' '+(H-PB)+' L'+PL+' '+(H-PB)+' Z',fill:'url(#gh)'}));
+    svg.appendChild(el('path',{d:d,fill:'none',stroke:warna,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+    svg.appendChild(el('circle',{cx:X(t.length-1),cy:Y(akhir),r:4,fill:warna,stroke:'#fff','stroke-width':2}));
+    var garis=el('line',{y1:PT,y2:H-PB,stroke:'#2b3330','stroke-dasharray':'3 3',opacity:0}), titik=el('circle',{r:4,fill:'#2b3330',opacity:0});
+    svg.appendChild(garis); svg.appendChild(titik);
+    function sorot(ev){ var r=svg.getBoundingClientRect(); var cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left; var i=Math.round((cx/r.width*W-PL)/((W-PL-PR)/(t.length-1))); i=Math.max(0,Math.min(t.length-1,i)); var px=X(i), py=Y(t[i].y);
+      garis.setAttribute('x1',px); garis.setAttribute('x2',px); garis.setAttribute('opacity',1); titik.setAttribute('cx',px); titik.setAttribute('cy',py); titik.setAttribute('opacity',1);
+      tip.textContent=uang(t[i].y)+' · '+tgl(t[i].x); tip.style.display='block'; tip.style.left=(px/W*r.width)+'px'; tip.style.top=(py/H*r.height)+'px'; }
+    function lepas(){ garis.setAttribute('opacity',0); titik.setAttribute('opacity',0); tip.style.display='none'; }
+    svg.addEventListener('mousemove',sorot); svg.addEventListener('mouseleave',lepas);
+    svg.addEventListener('touchstart',sorot,{passive:true}); svg.addEventListener('touchmove',sorot,{passive:true}); svg.addEventListener('touchend',lepas);
+  }
+  if (location.hash) { var el2=document.querySelector(location.hash); if (el2) setTimeout(function(){ el2.scrollIntoView({block:'center'}); }, 50); }
+})();
+</script>
+</body>
+</html>

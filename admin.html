@@ -64,7 +64,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   <div class="atas">
     <div class="daun"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
     <div><b>Hanif Dossier Crypto</b><small>halaman admin</small></div>
-    <div class="kanan"><a href="index.html">Beranda</a><a href="#" id="keluar">Keluar</a></div>
+    <div class="kanan"><a href="dasbor.html">Laporan</a><a href="pustaka.html">Pustaka</a><a href="#" id="keluar">Keluar</a></div>
   </div>
 
   <h1 class="serif">Anggota</h1>
@@ -168,7 +168,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
       if (status === 'disetujui') {
         // Email pemberitahuan berisi tombol Masuk: memakai tautan masuk sekali pakai (magic link)
         // dari Supabase, sehingga anggota langsung masuk tanpa mengetik kata sandi.
-        const kirim = await akun.sb.auth.signInWithOtp({ email: anggota.email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + '/index.html' } });
+        const kirim = await akun.sb.auth.signInWithOtp({ email: anggota.email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + '/dasbor.html' } });
         pesan(anggota.email + ' disetujui. ' + (kirim.error ? 'Email pemberitahuan belum terkirim (' + kirim.error.message + ') — kabari lewat WhatsApp.' : 'Email berisi tombol Masuk sudah dikirim.'), kirim.error ? 'salah' : 'baik');
       } else pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
       await muat();
