@@ -12,8 +12,9 @@ Satu situs untuk semuanya, tanpa build tool: halaman statis + `akun.js`
 | `masuk.html`, `sandi.html` | semua | Daftar / masuk / lupa sandi, halaman status akun |
 | `dasbor.html` | anggota disetujui (tamu boleh lihat pasar) | Cuplikan hidup empat laporan |
 | `laporan.html?h=…` | anggota disetujui | Penampil laporan dari gudang privat |
-| `pustaka.html` | anggota disetujui | Katalog gaya aplikasi riset: riset terbaru bersampul logo koin + daftar semua riset, penyaring lapisan Web3 |
-| `baca.html?b=…` | anggota disetujui | Pembaca PDF di dalam halaman (pdf.js dari cdnjs) — dossier terbuka tanpa unduh; tautan sementara 5 menit |
+| `modul.html` | publik (modul 1–2), anggota (3–8) | Delapan modul edukasi format kelas; isinya di dalam berkas (larik `MODUL`) |
+| `pustaka.html` | **owner & admin saja** | Katalog gaya aplikasi riset: riset terbaru bersampul logo koin + daftar semua riset, penyaring lapisan Web3. Anggota **tidak** melihatnya — dossier dikirim ke anggota lewat DM/email |
+| `baca.html?b=…` | owner & admin saja | Pembaca PDF di dalam halaman (pdf.js dari cdnjs) — dossier terbuka tanpa unduh; tautan sementara 5 menit |
 | `admin.html` | admin | Setujui / tolak anggota |
 
 `gaya.css` dipakai semua halaman publik; `dasbor.html` masih memakai CSS-nya
