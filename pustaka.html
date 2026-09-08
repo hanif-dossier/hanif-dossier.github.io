@@ -10,13 +10,38 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="gaya.css">
 <style>
-.lapisan{margin-top:30px}
-.lapisan h2{font-size:1.35rem;margin:0}
-.lapisan .ket{font-size:14px;color:var(--tx2);margin-top:2px}
-.dos .aksi a.unduh{display:inline-flex;align-items:center;gap:6px;background:var(--sage);color:#fff;padding:9px 14px;border-radius:999px}
-.dos .aksi a.unduh:hover{background:var(--sage-tua)}
-.dos .aksi a.unduh.sibuk{opacity:.6;pointer-events:none}
-.dos .aksi a.catatan-pdf{background:var(--pasir);color:var(--pasir-tua);padding:9px 14px;border-radius:999px}
+/* Riset terbaru: sampul gelap dengan logo koin besar, seperti kartu "Newest Research". */
+.unggulan{display:grid;grid-template-columns:1.2fr 1fr;gap:0;margin-top:22px;border-radius:24px;overflow:hidden;background:#1d2320;color:#eef2ec;box-shadow:var(--bayang);text-decoration:none;min-height:230px}
+.unggulan:hover{color:#fff}
+.unggulan .teks{padding:26px 28px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.unggulan .label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9fd0b9}
+.unggulan .jenis{display:inline-block;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:3px 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;width:max-content;color:#dfe9e1}
+.unggulan h2{font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.1;margin:2px 0 0;color:#fff}
+.unggulan .sub{color:#b7c4bd;font-size:14px}
+.unggulan .meta{font-size:12px;color:#8fa198;margin-top:10px}
+.unggulan .meta b{color:#c9a961}
+.unggulan .sampul{position:relative;display:grid;place-items:center;background:radial-gradient(circle at 60% 40%,#2f4a3d 0,#1d2320 70%);min-height:200px;overflow:hidden}
+.unggulan .sampul::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(127,179,156,.35) 0,rgba(127,179,156,0) 65%)}
+.unggulan .sampul img,.unggulan .sampul .huruf{position:relative;width:150px;height:150px;border-radius:50%;object-fit:cover;background:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.unggulan .sampul .huruf{display:grid;place-items:center;font-size:56px;font-family:"DM Serif Display",Georgia,serif;color:#365446;background:#dfe9e1}
+@media(max-width:700px){.unggulan{grid-template-columns:1fr}.unggulan .sampul{order:-1;min-height:180px}.unggulan .sampul img,.unggulan .sampul .huruf{width:120px;height:120px}}
+
+/* Daftar semua riset: satu baris per dossier. */
+.saring{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.saring button{border:1px solid var(--gr);background:var(--kartu);color:var(--tx2);font:inherit;font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;cursor:pointer}
+.saring button.aktif{background:var(--sage);border-color:var(--sage);color:#fff}
+.daftar-riset{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.baris{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--kartu);border-radius:18px;padding:14px 16px;box-shadow:var(--bayang);color:var(--tx);text-decoration:none}
+.baris{cursor:pointer}.baris:hover{outline:1px solid var(--sage)}
+.baris h3 a{color:var(--tx)}
+.baris .koin-gbr{width:48px;height:48px}
+.baris h3{font-size:1.05rem;letter-spacing:.01em;margin:0}
+.baris .meta{font-size:12px;color:var(--lb);margin-top:2px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.baris .meta b{color:var(--sage)}
+.baris .meta a{color:var(--pasir-tua);font-weight:700}
+.baris .ikon{color:var(--lb)}
+.baris[hidden]{display:none}
+.kosong{color:var(--lb);font-style:italic;font-size:13px;padding:10px 0}
 </style>
 </head>
 <body>
@@ -25,7 +50,7 @@
 <header class="atas">
   <a class="merek" href="index.html">
     <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
-    <div><b>Hanif Dossier Crypto</b><small>pustaka dossier · khusus anggota</small></div>
+    <div><b>Hanif Dossier Crypto</b><small>pustaka riset · khusus anggota</small></div>
   </a>
   <nav class="menu">
     <a href="index.html">Beranda</a>
@@ -37,18 +62,19 @@
   </nav>
 </header>
 
-<section class="sambut" style="grid-template-columns:1fr;margin-top:26px">
-  <div class="sapa">
-    <div class="mata">Pustaka dossier</div>
-    <h1 class="serif" style="font-size:clamp(1.8rem,4vw,2.6rem)">Semua dossier, <span>utuh.</span></h1>
-    <p>Tiap tombol unduh membuat tautan sementara yang berlaku dua menit — cukup untuk mengunduh, tidak cukup untuk disebarkan. Dossier baru muncul di sini begitu terbit. <span id="ringkas" class="catatan"></span></p>
-  </div>
+<div class="judul" style="margin-top:26px"><h1 class="serif" style="font-size:clamp(1.6rem,3.6vw,2.2rem)">Riset</h1><span class="catatan" id="ringkas"></span></div>
+<p class="pengantar" style="font-size:15px">Sentuh judulnya: dossier terbuka langsung di halaman ini, tanpa unduh. Dossier baru muncul di sini begitu terbit.</p>
+
+<div id="unggulan"></div>
+
+<section class="bagian" style="margin-top:32px">
+  <div class="judul"><h2 class="serif">Semua riset</h2><span class="catatan" id="jumlah"></span></div>
+  <div class="saring" id="saring"></div>
+  <div class="daftar-riset" id="daftar"><span class="memuat">Memuat pustaka…</span></div>
 </section>
 
-<div id="isi"><span class="memuat">Memuat pustaka…</span></div>
-
 <footer class="kaki">
-  <span>Riset dan edukasi, bukan nasihat investasi berizin. Dossier untuk dibaca sendiri, bukan untuk disebarkan ulang.</span>
+  <span>Riset dan edukasi, bukan nasihat investasi berizin. Dossier untuk dibaca sendiri, bukan untuk disebarkan ulang. Logo koin milik proyek masing-masing (CoinGecko).</span>
   <span>Hanif Dossier Crypto</span>
 </footer>
 
@@ -64,42 +90,58 @@
   if (p.admin) document.querySelector('[data-admin]').hidden = false;
   document.querySelector('[data-keluar]').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
 
-  const rapi = t => { const [y, m, d] = t.split('-'); return `${Number(d)} ${['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][Number(m) - 1]} ${y}`; };
+  const BLN = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  const rapi = t => { const [y, m, d] = t.split('-'); return `${Number(d)} ${BLN[Number(m) - 1]} ${y}`; };
+  const baca = berkas => `baca.html?b=${encodeURIComponent(berkas)}`;
+  const avatar = (d, kelas = 'koin-gbr') => d.gambar ? `<img class="${kelas}" src="${esc(d.gambar)}" alt="" loading="lazy">` : `<span class="${kelas} huruf">${esc(d.nama[0])}</span>`;
+
   let pk;
   try { pk = await (await fetch('pustaka.json', { cache: 'no-cache' })).json(); }
-  catch { $('isi').innerHTML = '<span class="memuat">Daftar pustaka belum bisa dimuat. Muat ulang halaman ini.</span>'; return; }
+  catch { $('daftar').innerHTML = '<span class="memuat">Daftar pustaka belum bisa dimuat. Muat ulang halaman ini.</span>'; return; }
+  const semua = pk.dossier.filter(d => d.pdf).sort((a, b) => b.tanggal.localeCompare(a.tanggal));
+  $('ringkas').textContent = `${semua.length} dossier · ${pk.totalKata.toLocaleString('id-ID')} kata`;
 
-  $('ringkas').textContent = `${pk.dossier.length} dossier · ${pk.totalKata.toLocaleString('id-ID')} kata · diperbarui ${rapi(pk.diperbarui)}.`;
-
-  // Kelompokkan menurut lapisan Web3, urutan seperti di pustaka.json.
-  const urutan = pk.lapisan.map(l => l.nama);
-  const kelompok = new Map(urutan.map(n => [n, []]));
-  for (const d of pk.dossier) { if (!kelompok.has(d.lapisan)) kelompok.set(d.lapisan, []); kelompok.get(d.lapisan).push(d); }
-
-  const kartu = d => `<article class="kartu dos" id="${esc(d.tick)}">
-    <div class="kepala"><span class="tick">${esc(d.nama)}</span><span class="tgl">${esc(rapi(d.tanggal))}</span></div>
-    <h3 class="serif">${esc(d.judul)}</h3>
-    <p class="kutip">${esc(d.kutipan)}</p>
-    <ul class="angka"><li><b>${d.kata.toLocaleString('id-ID')}</b> kata</li><li><b>${d.bagian}</b> bagian</li><li><b>${d.grafik}</b> grafik</li></ul>
-    <div class="aksi">
-      <a href="#" class="unduh" data-berkas="${esc(d.pdf)}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Unduh PDF dossier</a>
-      ${d.catatan ? `<a href="#" class="unduh catatan-pdf" data-berkas="${esc(d.catatan)}">Catatan pembaruan ${esc(rapi(d.catatanTanggal))}</a>` : ''}
+  // Riset terbaru = dossier dengan tanggal terbit paling baru.
+  const u = semua[0];
+  if (u) $('unggulan').innerHTML = `<a class="unggulan" href="${baca(u.pdf)}">
+    <div class="teks">
+      <span class="label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>Riset terbaru</span>
+      <span class="jenis">${esc(u.jenis)}</span>
+      <h2 class="serif">${esc(u.tampil)}</h2>
+      <span class="sub">Analisis mendalam · ${u.kata.toLocaleString('id-ID')} kata · ${u.bagian} bagian</span>
+      <span class="meta"><b>${esc(rapi(u.tanggal))}</b> · Hanif Dossier Crypto Research · ${esc(u.lapisan)}</span>
     </div>
-  </article>`;
+    <div class="sampul">${avatar(u, '')}</div>
+  </a>`;
 
-  $('isi').innerHTML = [...kelompok.entries()].filter(([, arr]) => arr.length).map(([nama, arr]) => {
-    const info = pk.lapisan.find(l => l.nama === nama);
-    return `<section class="lapisan"><h2 class="serif">${esc(nama)}</h2>${info ? `<div class="ket">${esc(info.ket)}</div>` : ''}<div class="kisi">${arr.map(kartu).join('')}</div></section>`;
-  }).join('');
+  // Penyaring per lapisan Web3.
+  const lapisanAda = pk.lapisan.map(l => l.nama).filter(n => semua.some(d => d.lapisan === n));
+  let saring = 'Semua';
+  const gambarSaring = () => { $('saring').innerHTML = ['Semua', ...lapisanAda].map(n => `<button class="${n === saring ? 'aktif' : ''}" data-n="${esc(n)}">${esc(n)}</button>`).join(''); };
+  $('saring').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; saring = b.dataset.n; gambarSaring(); terapkan(); });
+  gambarSaring();
 
-  // Klik unduh: minta tautan sementara ke gudang privat, lalu buka di tab baru.
-  document.querySelectorAll('a.unduh').forEach(a => a.addEventListener('click', async e => {
-    e.preventDefault();
-    const asli = a.innerHTML; a.classList.add('sibuk'); a.textContent = 'Menyiapkan tautan…';
-    try { const url = await akun.tautanUnduh(a.dataset.berkas, 120); window.open(url, '_blank', 'noopener'); }
-    catch (err) { alert('Berkas belum tersedia di gudang: ' + err.message); }
-    finally { a.classList.remove('sibuk'); a.innerHTML = asli; }
-  }));
+  // Baris = <div> yang bisa diklik, bukan <a>, karena di dalamnya ada tautan lain
+  // (catatan pembaruan) — <a> di dalam <a> tidak sah dan dipecah peramban.
+  $('daftar').innerHTML = semua.map(d => `<div class="baris" data-href="${baca(d.pdf)}" data-lapisan="${esc(d.lapisan)}" id="${esc(d.tick)}" role="link" tabindex="0">
+    ${avatar(d)}
+    <div>
+      <h3><a href="${baca(d.pdf)}">${esc(d.tampil)}</a></h3>
+      <div class="meta"><b>HDC Research</b><span>${esc(rapi(d.tanggal))}</span><span>${esc(d.lapisan)}</span>${d.catatan ? `<a href="${baca(d.catatan)}">Catatan pembaruan ${esc(rapi(d.catatanTanggal))} →</a>` : ''}</div>
+    </div>
+    <svg class="ikon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+  </div>`).join('');
+  document.querySelectorAll('.baris').forEach(b => {
+    const buka = () => { location.href = b.dataset.href; };
+    b.addEventListener('click', e => { if (e.target.closest('a')) return; buka(); });
+    b.addEventListener('keydown', e => { if (e.key === 'Enter') buka(); });
+  });
+  function terapkan() {
+    let n = 0;
+    document.querySelectorAll('.baris').forEach(b => { const tampil = saring === 'Semua' || b.dataset.lapisan === saring; b.hidden = !tampil; if (tampil) n++; });
+    $('jumlah').textContent = `${n} dari ${semua.length}`;
+  }
+  terapkan();
 
   if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'center' }); }
 })();

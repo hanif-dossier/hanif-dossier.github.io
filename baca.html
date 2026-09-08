@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Membaca — Hanif Dossier Crypto</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+/* Halaman baca: latar gelap supaya halaman PDF yang putih jadi fokus, seperti aplikasi pembaca. */
+:root{color-scheme:dark;--bg:#1d2320;--bar:#151a17;--tx:#eef2ec;--lb:#9fb0a8;--sage:#7fb39c;--sage-tua:#4f7a68;--gr:#2c3531}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sans","Segoe UI",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bar);border-bottom:1px solid var(--gr)}
+.bar a{color:var(--tx);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px}
+.bar a.kembali{color:var(--lb)}
+.bar .judul{flex:1;min-width:0;font-family:"DM Serif Display",Georgia,serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .hal{font-size:12px;color:var(--lb);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar .tab-baru{background:var(--sage-tua);color:#fff;padding:6px 10px;border-radius:999px;font-size:12px}
+.isi{max-width:900px;margin:0 auto;padding:12px 8px 60px}
+.halaman{position:relative;background:#fff;margin:0 auto 10px;box-shadow:0 8px 24px rgba(0,0,0,.35);border-radius:4px;overflow:hidden}
+.halaman canvas{display:block;width:100%;height:auto}
+.halaman .nomor{position:absolute;right:8px;bottom:6px;font-size:11px;color:#7b8781;background:rgba(255,255,255,.8);padding:1px 6px;border-radius:6px}
+.pesan{max-width:520px;margin:18vh auto;text-align:center;padding:0 20px;color:var(--lb)}
+.pesan .putar{width:40px;height:40px;border:4px solid var(--gr);border-top-color:var(--sage);border-radius:50%;margin:0 auto 16px;animation:p 1s linear infinite}
+@keyframes p{to{transform:rotate(360deg)}}
+.pesan a{color:var(--sage);font-weight:700}
+.kaki{text-align:center;font-size:12px;color:var(--lb);padding:20px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="kembali" href="pustaka.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>Pustaka</a>
+  <div class="judul" id="judul">Membuka dossier…</div>
+  <div class="hal" id="hal"></div>
+  <a class="tab-baru" id="tab-baru" href="#" hidden>Buka di tab baru</a>
+</div>
+<div class="isi" id="isi">
+  <div class="pesan" id="pesan"><div class="putar"></div><p id="teks">Mengambil berkas dari gudang…</p></div>
+</div>
+<div class="kaki">Riset dan edukasi, bukan nasihat investasi berizin. Dossier ini untuk dibaca sendiri, bukan untuk disebarkan ulang.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// Pembaca PDF di dalam halaman (pdf.js), supaya dossier terbuka langsung di HP
+// tanpa diunduh. Berkasnya diambil utuh lewat tautan sementara dari gudang
+// privat, lalu tiap halaman digambar ke canvas saat mendekati layar.
+(async () => {
+  const $ = id => document.getElementById(id);
+  const q = new URLSearchParams(location.search);
+  const berkas = q.get('b') || '';
+  const gagal = pesan => { $('pesan').innerHTML = `<p>${pesan}</p><p><a href="pustaka.html">Kembali ke pustaka</a></p>`; };
+
+  await akun.wajibMasuk();
+  if (!berkas) return gagal('Berkas tidak disebutkan.');
+
+  // Judul dari pustaka.json (cocokkan nama berkas), supaya bilah atas tidak menampilkan nama berkas mentah.
+  try {
+    const pk = await (await fetch('pustaka.json', { cache: 'no-cache' })).json();
+    const d = pk.dossier.find(x => x.pdf === berkas || x.catatan === berkas);
+    if (d) { const catatan = d.catatan === berkas; $('judul').textContent = (catatan ? 'Catatan pembaruan · ' : '') + d.tampil; document.title = `${d.tampil} — Hanif Dossier Crypto`; }
+  } catch {}
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  let data;
+  try {
+    const url = await akun.tautanUnduh(berkas, 300);
+    $('tab-baru').href = url; $('tab-baru').hidden = false; $('tab-baru').target = '_blank'; $('tab-baru').rel = 'noopener';
+    $('teks').textContent = 'Mengunduh ke memori…';
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    data = await r.arrayBuffer();
+  } catch (e) { return gagal('Berkas belum bisa diambil dari gudang (' + e.message + '). Coba muat ulang.'); }
+
+  let pdf;
+  try { pdf = await pdfjsLib.getDocument({ data }).promise; }
+  catch (e) { return gagal('PDF tidak bisa dibuka di peramban ini. Coba tombol "Buka di tab baru" di atas.'); }
+
+  $('pesan').remove();
+  const isi = $('isi'), N = pdf.numPages;
+  $('hal').textContent = `1 / ${N}`;
+
+  // Lebar gambar mengikuti lebar kolom; rasio tinggi dari halaman pertama.
+  const lebar = Math.min(isi.clientWidth - 16, 900);
+  const p1 = await pdf.getPage(1);
+  const v1 = p1.getViewport({ scale: 1 });
+  const rasio = v1.height / v1.width;
+  const kotak = [];
+  for (let i = 1; i <= N; i++) {
+    const div = document.createElement('div');
+    div.className = 'halaman'; div.style.width = lebar + 'px'; div.style.height = Math.round(lebar * rasio) + 'px';
+    div.dataset.hal = i; div.innerHTML = `<span class="nomor">${i}</span>`;
+    isi.appendChild(div); kotak.push(div);
+  }
+
+  const sudah = new Set();
+  async function gambar(i) {
+    if (sudah.has(i)) return; sudah.add(i);
+    const page = i === 1 ? p1 : await pdf.getPage(i);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const v = page.getViewport({ scale: lebar / page.getViewport({ scale: 1 }).width * dpr });
+    const c = document.createElement('canvas'); c.width = v.width; c.height = v.height;
+    await page.render({ canvasContext: c.getContext('2d'), viewport: v }).promise;
+    const div = kotak[i - 1]; div.style.height = ''; div.prepend(c);
+  }
+  // Gambar halaman yang mendekati layar (dan satu-dua halaman setelahnya).
+  const pengamat = new IntersectionObserver(entri => {
+    for (const e of entri) if (e.isIntersecting) { const i = Number(e.target.dataset.hal); gambar(i); if (i < N) gambar(i + 1); }
+  }, { rootMargin: '600px 0px' });
+  kotak.forEach(k => pengamat.observe(k));
+  gambar(1); if (N > 1) gambar(2);
+
+  // Nomor halaman di bilah atas mengikuti halaman yang paling terlihat.
+  const tengah = new IntersectionObserver(entri => {
+    const terlihat = entri.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (terlihat) $('hal').textContent = `${terlihat.target.dataset.hal} / ${N}`;
+  }, { threshold: [0.25, 0.5, 0.75] });
+  kotak.forEach(k => tengah.observe(k));
+})();
+</script>
+</body>
+</html>

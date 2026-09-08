@@ -72,8 +72,14 @@ a.kedua{background:var(--kartu);border:1px solid #d9dfda;color:var(--tx)}a.kedua
 .kisi p{font-size:14px;color:var(--tx2)}
 .kisi .jam{font-size:12px;color:var(--lb);margin-top:auto;padding-top:6px}
 
+/* logo koin (dari CoinGecko; cadangan huruf pertama) */
+.koin-gbr{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#fff;border:1px solid var(--gr);flex:none}
+.koin-gbr.huruf{display:grid;place-items:center;font-weight:800;color:var(--sage-tua);background:var(--sage-lembut)}
+.koin-kepala{display:flex;align-items:center;gap:10px}
+
 /* kartu dossier */
 .dos{display:flex;flex-direction:column;gap:8px}
+.dos .kepala .koin-gbr{width:36px;height:36px}
 .dos .kepala{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .dos .tick{font-weight:800;font-size:12px;letter-spacing:.06em;background:var(--sage-lembut);color:var(--sage-tua);padding:4px 10px;border-radius:8px}
 .dos .tgl{font-size:12px;color:var(--lb)}

@@ -151,7 +151,7 @@
   <h2 class="serif">Satu harga untuk semuanya</h2>
   <div class="kartu paket-mini" style="margin-top:18px">
     <div>
-      <div class="harga"><span class="serif nominal">Rp 250.000</span><span class="per">/ bulan</span></div>
+      <div class="harga"><span class="serif nominal">Rp 500.000</span><span class="per">/ bulan</span></div>
       <div class="catatan" style="margin-top:6px">Empat laporan tiap pagi, pustaka dossier lengkap, dan dossier baru selama Anda berlangganan. Berhenti kapan saja.</div>
     </div>
     <div class="tombol" style="margin:0"><a class="utama" href="langganan.html">Lihat rinciannya</a></div>
@@ -274,7 +274,7 @@
     const daftar = p.dossier.filter(d => d.tick !== '_komparatif').sort((a, b) => b.tanggal.localeCompare(a.tanggal)).slice(0, 3);
     const rapi = t => { const [y, m, d] = t.split('-'); return `${Number(d)} ${['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][Number(m) - 1]} ${y}`; };
     $('dossier-terbaru').innerHTML = daftar.map(d => `<article class="kartu dos">
-      <div class="kepala"><span class="tick">${esc(d.nama)}</span><span class="tgl">${esc(rapi(d.tanggal))}</span></div>
+      <div class="kepala"><span class="koin-kepala">${d.gambar ? `<img class="koin-gbr" src="${esc(d.gambar)}" alt="" loading="lazy">` : `<span class="koin-gbr huruf">${esc(d.nama[0])}</span>`}<span class="tick">${esc(d.nama)}</span></span><span class="tgl">${esc(rapi(d.tanggal))}</span></div>
       <h3 class="serif">${esc(d.judul)}</h3>
       <p class="kutip">${esc(d.kutipan)}</p>
       <ul class="angka"><li><b>${d.kata.toLocaleString('id-ID')}</b> kata</li><li><b>${d.bagian}</b> bagian</li><li><b>${d.grafik}</b> grafik</li></ul>
