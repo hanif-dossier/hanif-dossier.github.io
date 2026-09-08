@@ -82,8 +82,8 @@ end $$;
 revoke all on function public.hapus_akun(uuid) from public;
 grant execute on function public.hapus_akun(uuid) to authenticated;
 
--- 9. UNDANGAN: hanya email yang sudah dimasukkan admin yang boleh membuat akun.
---    Email yang diundang langsung berstatus disetujui; email lain ditolak saat mendaftar.
+-- 9. UNDANGAN (opsional): email yang dimasukkan admin di sini langsung disetujui
+--    saat mendaftar. Email lain tetap boleh mendaftar, tapi menunggu persetujuan.
 create table if not exists public.undangan (
   email text primary key,
   nama text,
@@ -102,19 +102,19 @@ returns boolean language sql stable security definer set search_path = public as
 $$;
 grant execute on function public.cek_undangan(text) to anon, authenticated;
 
--- Trigger akun baru versi undangan: diundang -> disetujui, tidak diundang -> pendaftaran gagal.
+-- Trigger akun baru: diundang -> disetujui, lainnya -> menunggu persetujuan admin.
 create or replace function public.tangani_akun_baru()
 returns trigger language plpgsql security definer set search_path = public as $$
 declare diundang boolean;
 begin
+  -- Email yang diundang admin (atau admin sendiri) langsung disetujui;
+  -- pendaftar lain diterima dulu sebagai "menunggu" sampai admin menyetujui.
   diundang := public.cek_undangan(new.email);
-  if not diundang then
-    raise exception 'Email % belum diundang.', new.email;
-  end if;
   insert into public.anggota (id, email, nama, status, diputuskan_pada)
   values (new.id, new.email,
           coalesce(new.raw_user_meta_data ->> 'nama', (select nama from public.undangan where lower(email) = lower(new.email)), ''),
-          'disetujui', now())
+          case when diundang then 'disetujui' else 'menunggu' end,
+          case when diundang then now() else null end)
   on conflict (id) do nothing;
   return new;
 end $$;

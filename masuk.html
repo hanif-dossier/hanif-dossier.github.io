@@ -85,11 +85,11 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   const terjemah = m => {
     m = String(m || '');
     if (/Invalid login credentials/i.test(m)) return 'Email atau kata sandi salah.';
-    if (/Email not confirmed/i.test(m)) return 'Email belum dikonfirmasi. Buka tautan di email yang kami kirim, lalu masuk lagi.';
+    if (/Email not confirmed/i.test(m)) return 'Email belum dikonfirmasi. Buka tautan di email konfirmasi yang kami kirim, lalu masuk lagi.';
     if (/already registered|already exists/i.test(m)) return 'Email ini sudah terdaftar. Silakan masuk.';
     if (/Password should be/i.test(m)) return 'Kata sandi minimal 6 karakter.';
     if (/rate limit|too many/i.test(m)) return 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
-    if (/belum diundang|Database error saving new user/i.test(m)) return 'Email ini belum diundang. Minta Hanif memasukkan emailmu dulu, lalu daftar lagi.';
+    if (/Database error saving new user/i.test(m)) return 'Pendaftaran belum bisa diproses saat ini. Silakan coba beberapa menit lagi.';
     return m || 'Terjadi kesalahan. Coba lagi.';
   };
 
@@ -99,8 +99,8 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     const st = p.anggota ? p.anggota.status : 'menunggu';
     const ikon = st === 'ditolak' ? '✕' : '⏳';
     $('status-ikon').innerHTML = `<span style="font-size:28px">${ikon}</span>`;
-    if (st === 'ditolak') { $('status-judul').textContent = 'Pendaftaran ditolak'; $('status-teks').textContent = 'Akun ini tidak diberi akses. Hubungi Hanif kalau menurutmu ini keliru.'; }
-    else { $('status-judul').textContent = 'Menunggu persetujuan'; $('status-teks').textContent = `Terima kasih sudah mendaftar${p.pengguna.email ? ` dengan ${p.pengguna.email}` : ''}. Hanif akan meninjau dan menyetujui akunmu; setelah itu semua laporan terbuka.`; }
+    if (st === 'ditolak') { $('status-judul').textContent = 'Pendaftaran tidak disetujui'; $('status-teks').textContent = 'Mohon maaf, akun ini belum dapat kami berikan akses. Hubungi kami melalui Instagram atau WhatsApp bila Anda merasa ini keliru.'; }
+    else { $('status-judul').textContent = 'Menunggu persetujuan kami'; $('status-teks').textContent = `Terima kasih, pendaftaran Anda${p.pengguna.email ? ` dengan ${p.pengguna.email}` : ''} sedang kami tinjau. Begitu disetujui, kami mengirim email berisi tombol Masuk; setelah itu seluruh laporan terbuka untuk Anda.`; }
     $('admin-tautan').hidden = !p.admin;
   }
 
@@ -113,7 +113,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     document.querySelectorAll('.tab button').forEach(x => x.classList.toggle('aktif', x === b));
     $('kolom-nama').hidden = mode !== 'daftar';
     $('judul').textContent = mode === 'daftar' ? 'Daftar' : 'Masuk';
-    $('sub').textContent = mode === 'daftar' ? 'Hanya email yang sudah diundang Hanif yang bisa membuat akun.' : 'Laporan hanya untuk anggota yang sudah disetujui.';
+    $('sub').textContent = mode === 'daftar' ? 'Setelah mendaftar dan mengonfirmasi email, akun Anda kami tinjau terlebih dahulu.' : 'Laporan hanya untuk anggota yang sudah disetujui.';
     $('kirim').textContent = mode === 'daftar' ? 'Buat akun' : 'Masuk';
     $('sandi').autocomplete = mode === 'daftar' ? 'new-password' : 'current-password';
     $('lupa').hidden = mode === 'daftar';
@@ -126,12 +126,10 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     $('kirim').disabled = true; pesan('', '');
     try {
       if (mode === 'daftar') {
-        const cek = await akun.sb.rpc('cek_undangan', { e: email });
-        if (cek.error || cek.data !== true) throw new Error('Email ini belum diundang. Minta Hanif memasukkan emailmu dulu, lalu daftar lagi.');
         const { data, error } = await akun.sb.auth.signUp({ email, password: sandi, options: { data: { nama } } });
         if (error) throw error;
         if (data.session) { location.replace('masuk.html#status'); location.reload(); return; }
-        pesan('Akun dibuat. Cek email untuk konfirmasi (lihat juga folder spam), lalu masuk. Setelah itu akunmu menunggu persetujuan Hanif.', 'baik');
+        pesan(`Pendaftaran diterima. Kami telah mengirim email konfirmasi ke ${email} — buka tautan di dalamnya (periksa juga folder spam). Setelah itu akun Anda kami tinjau; begitu disetujui, kami kirim email berisi tombol Masuk.`, 'baik');
       } else {
         const { error } = await akun.sb.auth.signInWithPassword({ email, password: sandi });
         if (error) throw error;

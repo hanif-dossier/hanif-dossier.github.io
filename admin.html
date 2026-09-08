@@ -68,13 +68,13 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   </div>
 
   <h1 class="serif">Anggota</h1>
-  <p class="sub">Setujui siapa yang boleh membaca laporan. Yang belum disetujui tetap bisa masuk, tapi tidak bisa mengunduh apa pun.</p>
+  <p class="sub">Pendaftar baru masuk ke daftar Menunggu. Klik Setujui: statusnya berubah dan ia menerima email berisi tombol Masuk.</p>
 
   <div class="pesan" id="pesan"></div>
 
   <div class="undang">
-    <h2 class="serif">Undang anggota</h2>
-    <p class="sub">Hanya email di daftar ini yang bisa membuat akun. Masukkan email orangnya, lalu kirimkan tautan masuk.html kepadanya.</p>
+    <h2 class="serif">Undangan (opsional)</h2>
+    <p class="sub">Email di daftar ini langsung disetujui saat mendaftar, tanpa menunggu. Pendaftar lain tetap masuk ke daftar Menunggu di bawah.</p>
     <form id="form-undang" class="baris-undang">
       <input id="undang-email" type="email" required placeholder="email@contoh.com">
       <input id="undang-nama" type="text" placeholder="nama (boleh kosong)">
@@ -165,7 +165,12 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
         .update({ status: status, diputuskan_pada: new Date().toISOString() })
         .eq('id', anggota.id);
       if (error) { pesan('Gagal menyimpan: ' + error.message); b.disabled = false; return; }
-      pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
+      if (status === 'disetujui') {
+        // Email pemberitahuan berisi tombol Masuk: memakai tautan masuk sekali pakai (magic link)
+        // dari Supabase, sehingga anggota langsung masuk tanpa mengetik kata sandi.
+        const kirim = await akun.sb.auth.signInWithOtp({ email: anggota.email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + '/index.html' } });
+        pesan(anggota.email + ' disetujui. ' + (kirim.error ? 'Email pemberitahuan belum terkirim (' + kirim.error.message + ') — kabari lewat WhatsApp.' : 'Email berisi tombol Masuk sudah dikirim.'), kirim.error ? 'salah' : 'baik');
+      } else pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
       await muat();
     });
     return b;
@@ -227,7 +232,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
     const email = $('undang-email').value.trim().toLowerCase(), nama = $('undang-nama').value.trim();
     const { error } = await akun.sb.from('undangan').insert({ email, nama: nama || null });
     if (error) { pesan(/duplicate/i.test(error.message) ? email + ' sudah ada di daftar undangan.' : 'Gagal mengundang: ' + error.message); return; }
-    pesan(email + ' diundang. Kirimkan tautan masuk.html kepadanya untuk membuat akun.', 'baik');
+    pesan(email + ' diundang. Saat ia mendaftar dengan email ini, akunnya langsung aktif.', 'baik');
     $('undang-email').value = ''; $('undang-nama').value = '';
     await muatUndangan();
   });
