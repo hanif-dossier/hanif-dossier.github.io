@@ -1,13 +1,15 @@
-<!-- Templat "Confirm signup" di Supabase (Authentication → Email Templates → Confirm signup).
-     Dikirim saat seseorang mendaftar. Setelah konfirmasi, akun menunggu persetujuan. -->
+<!-- Templat "Confirm signup" di Supabase (Authentication → Emails → Confirm sign up).
+     Email PERTAMA: pendaftaran diterima, menunggu konfirmasi (jam pasir bergerak).
+     Tombolnya mengaktifkan email di Supabase lalu membuka halaman status. -->
 <div style="margin:0;padding:32px 16px;background:#f6f5f0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#2b3330">
-  <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:20px;padding:32px 28px;box-shadow:0 10px 30px rgba(43,51,48,.06)">
-    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7b8781">Hanif Dossier Crypto</p>
-    <h1 style="margin:0 0 14px;font-size:24px;line-height:1.25;font-family:Georgia,'Times New Roman',serif;font-weight:400">Konfirmasi email Anda</h1>
-    <p style="margin:0 0 12px;font-size:15px;line-height:1.6">Terima kasih telah mendaftar. Klik tombol di bawah untuk mengonfirmasi bahwa alamat email ini milik Anda.</p>
-    <p style="margin:0 0 22px;font-size:15px;line-height:1.6">Setelah konfirmasi, pendaftaran Anda kami tinjau. Begitu disetujui, kami mengirim email lain berisi tombol Masuk.</p>
-    <p style="margin:0 0 22px;text-align:center"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#4f7a68;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px">Konfirmasi email</a></p>
-    <p style="margin:0;font-size:12px;line-height:1.6;color:#7b8781">Jika tombol tidak berfungsi, salin alamat ini ke browser Anda:<br><a href="{{ .ConfirmationURL }}" style="color:#4f7a68;word-break:break-all">{{ .ConfirmationURL }}</a></p>
+  <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:20px;padding:32px 28px;box-shadow:0 10px 30px rgba(43,51,48,.06);text-align:center">
+    <p style="margin:0 0 14px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7b8781">Hanif Dossier Crypto</p>
+    <img src="https://hanif-dossier.github.io/jam-pasir.gif" width="96" height="96" alt="Menunggu konfirmasi" style="display:block;margin:0 auto 14px;border-radius:50%">
+    <h1 style="margin:0 0 14px;font-size:24px;line-height:1.25;font-family:Georgia,'Times New Roman',serif;font-weight:400">Pendaftaran diterima, menunggu konfirmasi</h1>
+    <p style="margin:0 0 12px;font-size:15px;line-height:1.6;text-align:left">Terima kasih telah mendaftar. Pendaftaran Anda sedang kami konfirmasi. Anda tidak perlu melakukan apa pun selain menunggu.</p>
+    <p style="margin:0 0 22px;font-size:15px;line-height:1.6;text-align:left">Begitu akun dikonfirmasi, kami mengirim email berikutnya berisi tombol untuk masuk. Sementara itu, tombol di bawah membuka halaman status pendaftaran Anda.</p>
+    <p style="margin:0 0 22px"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#4f7a68;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px">Lihat status pendaftaran</a></p>
+    <p style="margin:0;font-size:12px;line-height:1.6;color:#7b8781;text-align:left">Jika tombol tidak berfungsi, salin alamat ini ke browser Anda:<br><a href="{{ .ConfirmationURL }}" style="color:#4f7a68;word-break:break-all">{{ .ConfirmationURL }}</a></p>
   </div>
   <p style="max-width:520px;margin:18px auto 0;font-size:12px;line-height:1.6;color:#a3aca7;text-align:center">Jika Anda tidak merasa mendaftar, abaikan email ini. Riset dan analisis, bukan nasihat investasi berizin.</p>
 </div>
