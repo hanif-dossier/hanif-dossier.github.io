@@ -81,3 +81,42 @@ begin
 end $$;
 revoke all on function public.hapus_akun(uuid) from public;
 grant execute on function public.hapus_akun(uuid) to authenticated;
+
+-- 9. UNDANGAN: hanya email yang sudah dimasukkan admin yang boleh membuat akun.
+--    Email yang diundang langsung berstatus disetujui; email lain ditolak saat mendaftar.
+create table if not exists public.undangan (
+  email text primary key,
+  nama text,
+  dibuat_pada timestamptz not null default now()
+);
+alter table public.undangan enable row level security;
+drop policy if exists "admin kelola undangan" on public.undangan;
+create policy "admin kelola undangan" on public.undangan
+  for all to authenticated using (public.adalah_admin()) with check (public.adalah_admin());
+
+-- Dipanggil halaman daftar sebelum membuat akun (boleh oleh siapa pun, hanya menjawab ya/tidak).
+create or replace function public.cek_undangan(e text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select lower(e) in ('abdullahhanif033@gmail.com', 'abdhanif033@gmail.com')
+      or exists (select 1 from public.undangan u where lower(u.email) = lower(e));
+$$;
+grant execute on function public.cek_undangan(text) to anon, authenticated;
+
+-- Trigger akun baru versi undangan: diundang -> disetujui, tidak diundang -> pendaftaran gagal.
+create or replace function public.tangani_akun_baru()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare diundang boolean;
+begin
+  diundang := public.cek_undangan(new.email);
+  if not diundang then
+    raise exception 'Email % belum diundang.', new.email;
+  end if;
+  insert into public.anggota (id, email, nama, status, diputuskan_pada)
+  values (new.id, new.email,
+          coalesce(new.raw_user_meta_data ->> 'nama', (select nama from public.undangan where lower(email) = lower(new.email)), ''),
+          'disetujui', now())
+  on conflict (id) do nothing;
+  return new;
+end $$;
+drop trigger if exists akun_baru on auth.users;
+create trigger akun_baru after insert on auth.users for each row execute function public.tangani_akun_baru();

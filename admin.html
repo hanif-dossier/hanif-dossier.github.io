@@ -48,6 +48,14 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
 .pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
 .pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
 .kaki{text-align:center;font-size:12px;color:#a3aca7;padding:10px 16px 24px}
+.undang{background:var(--kartu);border-radius:18px;padding:18px;box-shadow:var(--bayang);margin-bottom:22px}
+.undang h2{margin:0 0 4px;font-size:1.3rem}
+.baris-undang{display:flex;gap:8px;flex-wrap:wrap}
+.baris-undang input{flex:1 1 200px;padding:10px 12px;border:1px solid #d9dfda;border-radius:10px;font:inherit;font-size:14px}
+.baris-undang button{border:0;background:var(--sage);color:#fff;font:inherit;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer}
+.keping-undangan{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.keping-undangan span{display:inline-flex;align-items:center;gap:6px;background:var(--lembut);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
+.keping-undangan button{border:0;background:transparent;color:var(--bata);font-weight:700;cursor:pointer;padding:0 6px;font-size:14px}
 @media(max-width:520px){.angka{grid-template-columns:1fr;gap:8px}.angka strong{font-size:1.6rem}}
 </style>
 </head>
@@ -63,6 +71,17 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   <p class="sub">Setujui siapa yang boleh membaca laporan. Yang belum disetujui tetap bisa masuk, tapi tidak bisa mengunduh apa pun.</p>
 
   <div class="pesan" id="pesan"></div>
+
+  <div class="undang">
+    <h2 class="serif">Undang anggota</h2>
+    <p class="sub">Hanya email di daftar ini yang bisa membuat akun. Masukkan email orangnya, lalu kirimkan tautan masuk.html kepadanya.</p>
+    <form id="form-undang" class="baris-undang">
+      <input id="undang-email" type="email" required placeholder="email@contoh.com">
+      <input id="undang-nama" type="text" placeholder="nama (boleh kosong)">
+      <button type="submit">Undang</button>
+    </form>
+    <div id="daftar-undangan" class="keping-undangan"></div>
+  </div>
 
   <div class="angka">
     <div><span>Menunggu</span><strong id="n-menunggu">–</strong></div>
@@ -184,6 +203,35 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
     return b;
   }
 
+  // Daftar undangan: email yang boleh membuat akun.
+  async function muatUndangan() {
+    const { data, error } = await akun.sb.from('undangan').select('*').order('dibuat_pada', { ascending: false });
+    const wadah = $('daftar-undangan'); wadah.textContent = '';
+    if (error) { pesan('Daftar undangan belum bisa dimuat: ' + error.message + ' (SQL undangan sudah dijalankan?)'); return; }
+    if (!data.length) { const k = document.createElement('span'); k.textContent = 'Belum ada undangan.'; wadah.append(k); return; }
+    for (const u of data) {
+      const k = document.createElement('span');
+      const t = document.createElement('b'); t.textContent = u.email;
+      const n = document.createElement('small'); n.textContent = u.nama ? ' \u00b7 ' + u.nama : '';
+      const x = document.createElement('button'); x.textContent = '\u00d7'; x.title = 'Cabut undangan';
+      x.addEventListener('click', async () => {
+        if (!confirm('Cabut undangan untuk ' + u.email + '?')) return;
+        const { error } = await akun.sb.from('undangan').delete().eq('email', u.email);
+        if (error) pesan('Gagal mencabut: ' + error.message); else await muatUndangan();
+      });
+      k.append(t, n, x); wadah.append(k);
+    }
+  }
+  $('form-undang').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('undang-email').value.trim().toLowerCase(), nama = $('undang-nama').value.trim();
+    const { error } = await akun.sb.from('undangan').insert({ email, nama: nama || null });
+    if (error) { pesan(/duplicate/i.test(error.message) ? email + ' sudah ada di daftar undangan.' : 'Gagal mengundang: ' + error.message); return; }
+    pesan(email + ' diundang. Kirimkan tautan masuk.html kepadanya untuk membuat akun.', 'baik');
+    $('undang-email').value = ''; $('undang-nama').value = '';
+    await muatUndangan();
+  });
+
   $('saring').addEventListener('click', e => {
     const b = e.target.closest('button[data-f]');
     if (!b) return;
@@ -194,6 +242,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   $('keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
 
   await muat();
+  await muatUndangan();
 })();
 </script>
 </body>
