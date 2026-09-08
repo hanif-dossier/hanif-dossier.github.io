@@ -122,21 +122,23 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   </div>
   <nav class="menu">
     <a class="aktif" href="https://hanif-dossier.github.io/">Beranda</a>
-    <a href="https://hanif-dossier.github.io/laporan-harian/">Briefing</a>
-    <a href="https://hanif-dossier.github.io/laporan-harian/radar.html">Radar</a>
-    <a href="https://hanif-dossier.github.io/laporan-harian/peringatan.html">Peringatan</a>
-    <a href="https://hanif-dossier.github.io/potret-pasar-crypto/">Screening</a>
+    <a href="laporan.html?h=briefing">Briefing</a>
+    <a href="laporan.html?h=radar">Radar</a>
+    <a href="laporan.html?h=peringatan">Peringatan</a>
+    <a href="laporan.html?h=screening">Screening</a>
+    <a href="admin.html" id="tautan-admin" hidden>Anggota</a>
+    <a href="#" id="tautan-keluar">Keluar</a>
   </nav>
 </header>
 
 <section class="sambut">
   <div class="sapa">
     <div class="tgl" id="tgl">memuat…</div>
-    <h1 class="serif">Pasar pagi ini,<br><span>dengan tenang.</span></h1>
+    <h1 class="serif">Pagi, <span id="sapa-nama">…</span>.<br><span>Ini pasar hari ini.</span></h1>
     <p>Empat laporan terbit sendiri setiap pagi di server GitHub. Bacalah yang paling penting dulu, sisanya menunggu tanpa berisik.</p>
     <div class="tombol">
-      <a class="utama" href="https://hanif-dossier.github.io/laporan-harian/">Baca briefing hari ini</a>
-      <a class="kedua" href="https://hanif-dossier.github.io/laporan-harian/radar.html">Lihat koinku</a>
+      <a class="utama" href="laporan.html?h=briefing">Baca briefing hari ini</a>
+      <a class="kedua" href="laporan.html?h=radar">Lihat koinku</a>
     </div>
   </div>
 
@@ -176,17 +178,17 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 
 <section class="tengah">
   <div class="kartu">
-    <div class="judul"><h2 class="serif">Koin yang kamu pegang</h2><a href="https://hanif-dossier.github.io/laporan-harian/radar.html">Radar Portofolio →</a></div>
+    <div class="judul"><h2 class="serif">Koin yang kamu pegang</h2><a href="laporan.html?h=radar">Radar Portofolio →</a></div>
     <div class="koin" id="koin"><span class="memuat">Memuat koin…</span></div>
     <div class="catatan" id="koin-catatan">Hijau naik, merah turun; angkanya perubahan 24 jam. Sentuh untuk 7 dan 30 hari.</div>
   </div>
   <div class="tumpuk">
     <div class="kartu">
-      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Briefing Harian</h2><a href="https://hanif-dossier.github.io/laporan-harian/">Baca →</a></div>
+      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Briefing Harian</h2><a href="laporan.html?h=briefing">Baca →</a></div>
       <div class="ringkas" id="c-briefing"><span class="memuat">Memuat cuplikan…</span></div>
     </div>
     <div class="kartu">
-      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Screening Altcoin</h2><a href="https://hanif-dossier.github.io/potret-pasar-crypto/">Buka →</a></div>
+      <div class="judul"><h2 class="serif" style="font-size:1.3rem">Screening Altcoin</h2><a href="laporan.html?h=screening">Buka →</a></div>
       <div class="ringkas" id="c-screening"><span class="memuat">Memuat daftar pendek…</span></div>
     </div>
   </div>
@@ -195,7 +197,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 <section class="kartu peringatan">
   <div class="lonceng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
   <div class="isi" id="c-peringatan"><span class="memuat">Memuat peringatan…</span></div>
-  <a class="semua" href="https://hanif-dossier.github.io/laporan-harian/peringatan.html">Semua peringatan →</a>
+  <a class="semua" href="laporan.html?h=peringatan">Semua peringatan →</a>
 </section>
 
 <h3 class="bagian">Alat di laptop <small>hanya hidup saat laptop menyala</small></h3>
@@ -206,8 +208,8 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 
 <h3 class="bagian">Arsip &amp; sumber</h3>
 <div class="daftar">
-  <a href="https://github.com/hanif-dossier/laporan-harian/tree/main/harian"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Arsip briefing &amp; radar</b><small>Satu berkas per hari</small></span></a>
-  <a href="https://github.com/hanif-dossier/potret-pasar-crypto/tree/main/laporan"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Arsip screening</b><small>Laporan mesin dan daftar pendek final</small></span></a>
+  <a href="laporan.html?h=briefing"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Briefing hari ini</b><small>Versi lengkap untuk anggota</small></span></a>
+  <a href="laporan.html?h=screening"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><span><b>Screening hari ini</b><small>Laporan mesin dan daftar pendek final</small></span></a>
   <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/portofolio.json"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><span><b>Ubah daftar koin</b><small>Koin yang dipantau radar</small></span></a>
   <a href="https://github.com/hanif-dossier/laporan-harian/blob/main/data/agenda.json"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><span><b>Ubah kalender</b><small>FOMC, data tenaga kerja, unlock token</small></span></a>
 </div>
@@ -216,9 +218,15 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
 <script>
-(() => {
+(async () => {
   const $ = id => document.getElementById(id);
+  // Gerbang: hanya anggota yang disetujui. Yang lain dialihkan ke masuk.html.
+  const profil = await akun.wajibMasuk();
+  $('sapa-nama').textContent = profil.anggota && profil.anggota.nama ? profil.anggota.nama.split(' ')[0] : (profil.pengguna.email || '').split('@')[0];
+  if (profil.admin) $('tautan-admin').hidden = false;
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const AKAR = 'https://hanif-dossier.github.io';
 
@@ -228,7 +236,10 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   $('tgl').textContent = new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())
     + ' · ' + new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }).format(new Date()).replace('.', ':') + ' WIB';
 
-  const ambil = async jalur => { const r = await fetch(AKAR + jalur, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); return r.text(); };
+  // Nama berkas di gudang privat (diunggah GitHub Actions tiap laporan terbit).
+  const NAMA = { '/laporan-harian/harian/terbaru.md': 'terbaru.md', '/laporan-harian/harian/radar.md': 'radar.md',
+    '/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md': 'daftar-pendek-terbaru.md', '/potret-pasar-crypto/laporan/terbaru.md': 'screening-terbaru.md' };
+  const ambil = async jalur => akun.unduh(NAMA[jalur] || jalur.replace(/^\/laporan-harian\/peringatan\//, 'peringatan-').replace(/^.*\//, ''));
   const bacaPersen = s => { const m = String(s || '').match(/([+\-−]?\d[\d.,]*)\s*%/); if (!m) return null; let t = m[1].replace('−', '-'); if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.'); const v = Number(t); return Number.isFinite(v) ? v : null; };
   const arah = v => v == null ? 'datar' : v > 0 ? 'naik' : v < 0 ? 'turun' : 'datar';
   // Akhir bagian = judul ## berikutnya atau akhir berkas (JavaScript tidak punya \Z).
@@ -283,7 +294,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
       $('dom-ket').textContent = e != null ? `Bitcoin ${dom[1]}%, Ethereum ${eth[1]}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.` : `Bitcoin ${dom[1]}% dari seluruh pasar.`;
     }
     if (tglIso) {
-      try { $('btc-grafik').innerHTML = warnaSage(await ambil(`/laporan-harian/harian/aset/${tglIso}-bitcoin-7-hari.svg`)); }
+      try { $('btc-grafik').innerHTML = warnaSage(await akun.unduh('bitcoin-7-hari.svg')); }
       catch { gagal('btc-grafik', 'Grafik hari ini belum tersedia.'); }
     }
   }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); gagal('btc-grafik', 'Grafik belum bisa dimuat.'); });
@@ -416,6 +427,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   $('bursa-rentang').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; pilihan = { ...pilihan, hari: b.dataset.hari === 'max' ? 'max' : Number(b.dataset.hari) }; segarkanKeping(); tampilkanGrafik(); });
   segarkanKeping();
   tampilkanGrafik();
+  $('tautan-keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
 })();
 </script>
 </body>

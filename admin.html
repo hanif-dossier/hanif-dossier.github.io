@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anggota — Hanif Dossier Crypto</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light;--bg:#f6f5f0;--bg2:#eef2ec;--kartu:#fff;--tx:#2b3330;--tx2:#58635e;--lb:#7b8781;--gr:#e6e9e4;--lembut:#eef2ec;--sage:#4f7a68;--sage-tua:#365446;--sage-lembut:#dfe9e1;--pasir:#f3e9d8;--pasir-tua:#8a6a2e;--bata:#b86b5c;--bata-lembut:#f6e4df;--bayang:0 10px 30px rgba(43,51,48,.06)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--tx);font:16px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif}
+.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+main{max-width:860px;margin:0 auto;padding:28px 16px 40px}
+.atas{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.atas .daun{width:44px;height:44px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center;flex:none}
+.atas b{display:block;font-size:16px}.atas small{color:var(--lb);font-size:12px}
+.atas .kanan{margin-left:auto;font-size:13px}
+.atas .kanan a{color:var(--sage);font-weight:700;text-decoration:none;margin-left:14px}
+h1{font-size:1.7rem;margin:0 0 4px}
+p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
+.angka{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.angka div{background:var(--kartu);border-radius:18px;padding:16px;box-shadow:var(--bayang)}
+.angka span{display:block;font-size:12px;color:var(--lb);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.angka strong{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:2rem;line-height:1.1}
+.saring{display:flex;background:var(--lembut);border-radius:999px;padding:4px;margin-bottom:16px;max-width:440px}
+.saring button{flex:1;border:0;background:transparent;padding:9px;border-radius:999px;font:inherit;font-weight:700;font-size:14px;color:var(--lb);cursor:pointer}
+.saring button.aktif{background:var(--kartu);color:var(--tx);box-shadow:0 2px 8px rgba(43,51,48,.08)}
+.baris{background:var(--kartu);border-radius:18px;padding:16px 18px;box-shadow:var(--bayang);margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.baris .isi{flex:1;min-width:210px}
+.baris .nama{font-weight:700}
+.baris .email{font-size:13px;color:var(--tx2);word-break:break-all}
+.baris .kapan{font-size:12px;color:var(--lb);margin-top:2px}
+.cap{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.cap.menunggu{background:var(--pasir);color:var(--pasir-tua)}
+.cap.disetujui{background:var(--sage-lembut);color:var(--sage-tua)}
+.cap.ditolak{background:var(--bata-lembut);color:var(--bata)}
+.aksi{display:flex;gap:8px}
+.aksi button{border:1px solid #d9dfda;background:#fff;color:var(--tx2);font:inherit;font-weight:700;font-size:13px;padding:8px 14px;border-radius:10px;cursor:pointer}
+.aksi button.setuju{background:var(--sage);border-color:var(--sage);color:#fff}
+.aksi button.tolak:hover{border-color:var(--bata);color:var(--bata)}
+.aksi button:disabled{opacity:.5;cursor:wait}
+.kosong{background:var(--kartu);border-radius:18px;padding:34px;text-align:center;color:var(--lb);box-shadow:var(--bayang)}
+.pesan{margin:0 0 14px;padding:10px 12px;border-radius:12px;font-size:14px;display:none}
+.pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
+.pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
+.kaki{text-align:center;font-size:12px;color:#a3aca7;padding:10px 16px 24px}
+@media(max-width:520px){.angka{grid-template-columns:1fr;gap:8px}.angka strong{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<main>
+  <div class="atas">
+    <div class="daun"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>halaman admin</small></div>
+    <div class="kanan"><a href="index.html">Beranda</a><a href="#" id="keluar">Keluar</a></div>
+  </div>
+
+  <h1 class="serif">Anggota</h1>
+  <p class="sub">Setujui siapa yang boleh membaca laporan. Yang belum disetujui tetap bisa masuk, tapi tidak bisa mengunduh apa pun.</p>
+
+  <div class="pesan" id="pesan"></div>
+
+  <div class="angka">
+    <div><span>Menunggu</span><strong id="n-menunggu">–</strong></div>
+    <div><span>Disetujui</span><strong id="n-disetujui">–</strong></div>
+    <div><span>Ditolak</span><strong id="n-ditolak">–</strong></div>
+  </div>
+
+  <div class="saring" id="saring">
+    <button data-f="menunggu" class="aktif">Menunggu</button>
+    <button data-f="disetujui">Disetujui</button>
+    <button data-f="ditolak">Ditolak</button>
+    <button data-f="semua">Semua</button>
+  </div>
+
+  <div id="daftar"><div class="kosong">Memuat…</div></div>
+</main>
+<div class="kaki">Hanif Dossier Crypto</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const pesan = (teks, jenis) => { const p = $('pesan'); p.textContent = teks; p.className = 'pesan ' + (jenis || 'salah'); };
+
+  // Hanya pemilik situs yang boleh melihat halaman ini; sisanya dilempar ke beranda.
+  await akun.wajibMasuk({ hanyaAdmin: true });
+
+  let semua = [], saringan = 'menunggu';
+
+  const tanggal = t => t ? new Date(t).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+
+  async function muat() {
+    const { data, error } = await akun.sb.from('anggota').select('*').order('dibuat_pada', { ascending: false });
+    if (error) { pesan('Gagal memuat daftar anggota: ' + error.message); return; }
+    semua = data || [];
+    ['menunggu', 'disetujui', 'ditolak'].forEach(s => { $('n-' + s).textContent = semua.filter(a => a.status === s).length; });
+    gambar();
+  }
+
+  function gambar() {
+    const daftar = saringan === 'semua' ? semua : semua.filter(a => a.status === saringan);
+    const wadah = $('daftar');
+    wadah.textContent = '';
+    if (!daftar.length) {
+      const k = document.createElement('div');
+      k.className = 'kosong';
+      k.textContent = saringan === 'semua' ? 'Belum ada yang mendaftar.' : 'Tidak ada anggota berstatus ' + saringan + '.';
+      wadah.append(k);
+      return;
+    }
+    // Isi baris ditulis lewat textContent, bukan innerHTML: nama dan email datang
+    // dari orang lain, jadi tidak boleh ditafsirkan sebagai HTML.
+    for (const a of daftar) {
+      const baris = document.createElement('div');
+      baris.className = 'baris';
+      const isi = document.createElement('div');
+      isi.className = 'isi';
+      const nama = document.createElement('div'); nama.className = 'nama'; nama.textContent = a.nama || '(tanpa nama)';
+      const email = document.createElement('div'); email.className = 'email'; email.textContent = a.email;
+      const kapan = document.createElement('div'); kapan.className = 'kapan'; kapan.textContent = 'Daftar ' + tanggal(a.dibuat_pada);
+      isi.append(nama, email, kapan);
+      const cap = document.createElement('span'); cap.className = 'cap ' + a.status; cap.textContent = a.status;
+      const aksi = document.createElement('div'); aksi.className = 'aksi';
+      if (a.status !== 'disetujui') aksi.append(tombol('Setujui', 'setuju', a, 'disetujui'));
+      if (a.status !== 'ditolak') aksi.append(tombol('Tolak', 'tolak', a, 'ditolak'));
+      baris.append(isi, cap, aksi);
+      wadah.append(baris);
+    }
+  }
+
+  function tombol(teks, kelas, anggota, status) {
+    const b = document.createElement('button');
+    b.className = kelas;
+    b.textContent = teks;
+    b.addEventListener('click', async () => {
+      b.disabled = true;
+      const { error } = await akun.sb.from('anggota')
+        .update({ status: status, diputuskan_pada: new Date().toISOString() })
+        .eq('id', anggota.id);
+      if (error) { pesan('Gagal menyimpan: ' + error.message); b.disabled = false; return; }
+      pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
+      await muat();
+    });
+    return b;
+  }
+
+  $('saring').addEventListener('click', e => {
+    const b = e.target.closest('button[data-f]');
+    if (!b) return;
+    saringan = b.dataset.f;
+    Array.from($('saring').children).forEach(x => x.classList.toggle('aktif', x === b));
+    gambar();
+  });
+  $('keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
+
+  await muat();
+})();
+</script>
+</body>
+</html>

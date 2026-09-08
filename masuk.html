@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masuk — Hanif Dossier Crypto</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light;--bg:#f6f5f0;--bg2:#eef2ec;--kartu:#fff;--tx:#2b3330;--tx2:#58635e;--lb:#7b8781;--gr:#e6e9e4;--lembut:#eef2ec;--sage:#4f7a68;--sage-tua:#365446;--sage-lembut:#dfe9e1;--pasir:#f3e9d8;--pasir-tua:#8a6a2e;--bata:#b86b5c;--bata-lembut:#f6e4df;--bayang:0 10px 30px rgba(43,51,48,.06)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--tx);font:16px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column}
+.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+.kotak{width:100%;max-width:440px}
+.merek{display:flex;align-items:center;gap:12px;margin-bottom:22px;justify-content:center}
+.merek .daun{width:44px;height:44px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center}
+.merek b{display:block;font-size:16px}.merek small{color:var(--lb);font-size:12px}
+.kartu{background:var(--kartu);border-radius:24px;padding:26px 26px 22px;box-shadow:var(--bayang)}
+h1{font-size:1.7rem;margin:0 0 4px;line-height:1.15}
+p.sub{margin:0 0 18px;color:var(--tx2);font-size:14px}
+.tab{display:flex;background:var(--lembut);border-radius:999px;padding:4px;margin-bottom:18px}
+.tab button{flex:1;border:0;background:transparent;padding:9px;border-radius:999px;font:inherit;font-weight:700;color:var(--lb);cursor:pointer}
+.tab button.aktif{background:var(--kartu);color:var(--tx);box-shadow:0 2px 8px rgba(43,51,48,.08)}
+label{display:block;font-size:13px;font-weight:700;color:var(--tx2);margin:12px 0 5px}
+input{width:100%;padding:12px 14px;border:1px solid #d9dfda;border-radius:12px;font:inherit;font-size:15px;background:#fff;color:var(--tx)}
+input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
+button.utama{width:100%;margin-top:18px;padding:13px;border:0;border-radius:12px;background:var(--sage);color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;cursor:wait}
+.pesan{margin-top:14px;padding:10px 12px;border-radius:12px;font-size:14px;display:none}
+.pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
+.pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
+.pesan.info{display:block;background:var(--pasir);color:var(--pasir-tua)}
+.status{text-align:center;padding:10px 0 4px}
+.status .ikon{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--pasir)}
+.status h2{margin:0 0 6px;font-size:1.4rem}
+.status p{margin:0;color:var(--tx2);font-size:14px}
+.tautan{margin-top:16px;font-size:13px;color:var(--lb);text-align:center}
+.tautan a{color:var(--sage);font-weight:700;text-decoration:none}
+.kaki{text-align:center;font-size:12px;color:#a3aca7;padding:16px}
+</style>
+</head>
+<body>
+<main>
+  <div class="kotak">
+    <div class="merek">
+      <div class="daun"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+      <div><b>Hanif Dossier Crypto</b><small>pusat laporan pasar crypto · khusus anggota</small></div>
+    </div>
+
+    <div class="kartu" id="formulir">
+      <h1 class="serif" id="judul">Masuk</h1>
+      <p class="sub" id="sub">Laporan hanya untuk anggota yang sudah disetujui.</p>
+      <div class="tab"><button class="aktif" data-mode="masuk">Masuk</button><button data-mode="daftar">Daftar</button></div>
+      <form id="form" autocomplete="on">
+        <div id="kolom-nama" hidden><label for="nama">Nama</label><input id="nama" name="nama" autocomplete="name" placeholder="Nama lengkap"></div>
+        <label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="nama@email.com">
+        <label for="sandi">Kata sandi</label><input id="sandi" name="sandi" type="password" required minlength="6" autocomplete="current-password" placeholder="minimal 6 karakter">
+        <button class="utama" id="kirim" type="submit">Masuk</button>
+      </form>
+      <div class="pesan" id="pesan"></div>
+      <div class="tautan" id="lupa"><a href="#" id="tautan-lupa">Lupa kata sandi?</a></div>
+    </div>
+
+    <div class="kartu status" id="status" hidden>
+      <div class="ikon" id="status-ikon"></div>
+      <h2 class="serif" id="status-judul"></h2>
+      <p id="status-teks"></p>
+      <div class="tautan"><a href="#" id="keluar">Keluar</a> <span id="admin-tautan" hidden>· <a href="admin.html">Halaman admin</a></span></div>
+    </div>
+  </div>
+</main>
+<div class="kaki">Riset dan analisis, bukan nasihat investasi berizin.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const ke = new URLSearchParams(location.search).get('ke') || 'index.html';
+  let mode = 'masuk';
+
+  const pesan = (teks, jenis) => { const p = $('pesan'); p.textContent = teks; p.className = 'pesan ' + jenis; };
+  const terjemah = m => {
+    m = String(m || '');
+    if (/Invalid login credentials/i.test(m)) return 'Email atau kata sandi salah.';
+    if (/Email not confirmed/i.test(m)) return 'Email belum dikonfirmasi. Buka tautan di email yang kami kirim, lalu masuk lagi.';
+    if (/already registered|already exists/i.test(m)) return 'Email ini sudah terdaftar. Silakan masuk.';
+    if (/Password should be/i.test(m)) return 'Kata sandi minimal 6 karakter.';
+    if (/rate limit|too many/i.test(m)) return 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
+    return m || 'Terjadi kesalahan. Coba lagi.';
+  };
+
+  // Tampilkan halaman status untuk akun yang belum disetujui.
+  function tampilkanStatus(p) {
+    $('formulir').hidden = true; $('status').hidden = false;
+    const st = p.anggota ? p.anggota.status : 'menunggu';
+    const ikon = st === 'ditolak' ? '✕' : '⏳';
+    $('status-ikon').innerHTML = `<span style="font-size:28px">${ikon}</span>`;
+    if (st === 'ditolak') { $('status-judul').textContent = 'Pendaftaran ditolak'; $('status-teks').textContent = 'Akun ini tidak diberi akses. Hubungi Hanif kalau menurutmu ini keliru.'; }
+    else { $('status-judul').textContent = 'Menunggu persetujuan'; $('status-teks').textContent = `Terima kasih sudah mendaftar${p.pengguna.email ? ` dengan ${p.pengguna.email}` : ''}. Hanif akan meninjau dan menyetujui akunmu; setelah itu semua laporan terbuka.`; }
+    $('admin-tautan').hidden = !p.admin;
+  }
+
+  // Sudah masuk? Langsung arahkan.
+  const p = await akun.profil();
+  if (p) { if (p.disetujui && location.hash !== '#status') { location.replace(ke); return; } tampilkanStatus(p); }
+
+  document.querySelectorAll('.tab button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('.tab button').forEach(x => x.classList.toggle('aktif', x === b));
+    $('kolom-nama').hidden = mode !== 'daftar';
+    $('judul').textContent = mode === 'daftar' ? 'Daftar' : 'Masuk';
+    $('sub').textContent = mode === 'daftar' ? 'Setelah mendaftar, akunmu ditinjau dulu sebelum bisa membuka laporan.' : 'Laporan hanya untuk anggota yang sudah disetujui.';
+    $('kirim').textContent = mode === 'daftar' ? 'Buat akun' : 'Masuk';
+    $('sandi').autocomplete = mode === 'daftar' ? 'new-password' : 'current-password';
+    $('lupa').hidden = mode === 'daftar';
+    pesan('', '');
+  }));
+
+  $('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('email').value.trim(), sandi = $('sandi').value, nama = $('nama').value.trim();
+    $('kirim').disabled = true; pesan('', '');
+    try {
+      if (mode === 'daftar') {
+        const { data, error } = await akun.sb.auth.signUp({ email, password: sandi, options: { data: { nama } } });
+        if (error) throw error;
+        if (data.session) { location.replace('masuk.html#status'); location.reload(); return; }
+        pesan('Akun dibuat. Cek email untuk konfirmasi (lihat juga folder spam), lalu masuk. Setelah itu akunmu menunggu persetujuan Hanif.', 'baik');
+      } else {
+        const { error } = await akun.sb.auth.signInWithPassword({ email, password: sandi });
+        if (error) throw error;
+        const p2 = await akun.profil();
+        if (p2 && p2.disetujui) location.replace(ke); else { tampilkanStatus(p2); }
+      }
+    } catch (err) { pesan(terjemah(err.message), 'salah'); }
+    finally { $('kirim').disabled = false; }
+  });
+
+  $('tautan-lupa').addEventListener('click', async e => {
+    e.preventDefault();
+    const email = $('email').value.trim();
+    if (!email) return pesan('Isi email dulu, lalu klik lupa kata sandi.', 'info');
+    const { error } = await akun.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname.replace(/[^/]*$/, '') + 'masuk.html' });
+    pesan(error ? terjemah(error.message) : 'Tautan ganti kata sandi sudah dikirim ke emailmu.', error ? 'salah' : 'baik');
+  });
+
+  $('keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
+})();
+</script>
+</body>
+</html>

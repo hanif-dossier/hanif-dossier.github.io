@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan — Hanif Dossier Crypto</title>
+<style>
+body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif}
+.memuat{max-width:520px;margin:18vh auto;text-align:center;padding:0 20px}
+.memuat .putar{width:40px;height:40px;border:4px solid #dfe9e1;border-top-color:#4f7a68;border-radius:50%;margin:0 auto 16px;animation:p 1s linear infinite}
+@keyframes p{to{transform:rotate(360deg)}}
+.memuat p{color:#7b8781}
+.memuat a{color:#4f7a68;font-weight:700}
+</style>
+</head>
+<body>
+<div class="memuat" id="memuat"><div class="putar"></div><p id="teks">Membuka laporan…</p></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+// Penampil laporan untuk anggota. Halaman laporan (briefing, radar,
+// peringatan, screening) dibangun GitHub Actions lalu disimpan di gudang
+// privat Supabase; di sini diunduh dengan sesi anggota dan digambar utuh.
+// Tautan antarhalaman di dalamnya diarahkan kembali ke penampil ini.
+(async () => {
+  const PETA = { briefing: 'briefing.html', radar: 'radar.html', peringatan: 'peringatan.html', screening: 'screening.html' };
+  const h = new URLSearchParams(location.search).get('h') || 'briefing';
+  const nama = PETA[h] || PETA.briefing;
+  await akun.wajibMasuk();
+  try {
+    let html = await akun.unduh(nama);
+    html = html
+      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?index\.html"/g, 'href="laporan.html?h=briefing"')
+      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?radar\.html"/g, 'href="laporan.html?h=radar"')
+      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?peringatan\.html"/g, 'href="laporan.html?h=peringatan"')
+      .replace(/href="https:\/\/hanif-dossier\.github\.io\/potret-pasar-crypto\/?"/g, 'href="laporan.html?h=screening"')
+      .replace(/href="https:\/\/hanif-dossier\.github\.io\/laporan-harian\/?"/g, 'href="laporan.html?h=briefing"');
+    document.open(); document.write(html); document.close();
+  } catch (e) {
+    document.getElementById('teks').innerHTML = `Laporan belum tersedia di gudang (${e.message}).<br>Biasanya terbit tiap pagi. <a href="index.html">Kembali ke beranda</a>`;
+    document.querySelector('.putar').style.display = 'none';
+  }
+})();
+</script>
+</body>
+</html>
