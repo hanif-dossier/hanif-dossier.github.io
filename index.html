@@ -46,6 +46,8 @@ nav.menu a:hover{color:var(--sage-tua)}
 .btc .harga{font-size:2rem;line-height:1.1}
 .btc .kanan{text-align:right;font-size:13px;color:var(--lb)}
 .sambut>*,.tengah>*,.kartu{min-width:0}
+.bingkai-indeks{height:300px;margin-top:8px;border-radius:12px;overflow:hidden;border:1px solid var(--gr);background:#fff}
+@media(max-width:640px){.bingkai-indeks{height:260px}}
 .gulir-grafik{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;max-width:100%}
 .gulir-grafik svg{display:block;width:100%;height:auto;min-width:520px}
 .petunjuk{display:none;font-size:11px;color:var(--redup);text-align:center;margin-top:4px}
@@ -144,11 +146,11 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 
   <div class="kartu btc">
     <div class="kepala">
-      <div><div class="label">Bitcoin · 7 hari terakhir</div><div class="serif harga" id="btc-harga">…</div></div>
+      <div><div class="label">Pasar crypto global · kapitalisasi total</div><div class="serif harga" id="btc-harga">…</div></div>
       <div class="kanan" id="btc-kanan"></div>
     </div>
-    <div class="gulir-grafik" id="btc-grafik"><span class="memuat">Memuat grafik…</span></div>
-    <div class="petunjuk">Geser grafik ke samping untuk melihat penuh</div>
+    <div class="bingkai-indeks" id="indeks-bingkai"></div>
+    <div class="catatan" style="margin-top:6px">Garis = nilai seluruh pasar crypto (indeks TOTAL, TradingView). Rentang waktu di bawah grafik: 1 hari sampai semua.</div>
   </div>
 </section>
 
@@ -265,9 +267,9 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
     $('c-briefing').innerHTML = `<div style="font-size:12px;color:var(--lb);margin-bottom:4px">${esc(tgl)}${jam ? ` · ${jam} WIB` : ''}</div>${esc(kalimat)}`;
 
     const btc = barisTabel(bagian(md, 'Pasar Crypto')).find(r => /^BTC/.test(r[0]));
-    if (btc) { const v = bacaPersen(btc[2]); $('btc-harga').textContent = btc[1]; $('btc-kanan').innerHTML = `<span class="${arah(v)}" style="font-weight:700">${esc(btc[2])}</span> hari ini`; }
+    // (harga BTC tetap dipakai di kartu Grafik harga di bawah)
     const pekan = md.match(/harga Bitcoin bergerak (?:naik|turun) dari \$[\d.,]+ ke \$[\d.,]+ atau (?:menguat|melemah|naik|turun)[^0-9+\-−]*([+\-−]?\d[\d.,]*%)/);
-    if (pekan) { const v = bacaPersen(pekan[1]); $('btc-kanan').innerHTML = `<span class="${arah(v)}" style="font-weight:700">${esc(pekan[1])}</span> sepekan<br>${$('btc-kanan').innerHTML}`; }
+
 
     const fg = md.match(/Fear & Greed hari ini berada di angka (\d+) \(([^)]+)\)/);
     if (fg) {
@@ -282,8 +284,9 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
       const nilai = kalimatCap.match(/\$[\d.,]+ (?:triliun|miliar)/)[0], pct = kalimatCap.match(/([+\-−]?\d[\d,]*%)/);
       let v = pct ? bacaPersen(pct[1]) : null;
       if (v != null && !/[+\-−]/.test(pct[1]) && /menyusut|turun|penurunan|melemah|terkoreksi|anjlok|tergerus/i.test(kalimatCap)) v = -v;
-      $('cap-angka').textContent = nilai;
+      $('cap-angka').textContent = nilai; $('btc-harga').textContent = nilai;
       $('cap-ket').innerHTML = v == null ? 'dalam 24 jam' : `<span class="${arah(v)}" style="font-weight:700">${(v > 0 ? '+' : '') + String(v).replace('.', ',')}%</span> dalam 24 jam`;
+      $('btc-kanan').innerHTML = $('cap-ket').innerHTML;
     }
     const dom = md.match(/Dominasi Bitcoin[^.]*?(\d[\d,]*)%/), eth = md.match(/Ethereum[^.%]{0,40}?(\d[\d,]*)%/);
     if (dom) {
@@ -293,11 +296,8 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
       $('dom-teks').textContent = `${dom[1]}%`;
       $('dom-ket').textContent = e != null ? `Bitcoin ${dom[1]}%, Ethereum ${eth[1]}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.` : `Bitcoin ${dom[1]}% dari seluruh pasar.`;
     }
-    if (tglIso) {
-      try { $('btc-grafik').innerHTML = warnaSage(await akun.unduh('bitcoin-7-hari.svg')); }
-      catch { gagal('btc-grafik', 'Grafik hari ini belum tersedia.'); }
-    }
-  }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); gagal('btc-grafik', 'Grafik belum bisa dimuat.'); });
+
+  }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); });
 
   // 2. Radar: koinmu hari ini, diurutkan dari yang paling naik
   ambil('/laporan-harian/harian/radar.md').then(md => {
@@ -338,8 +338,8 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
     const pasar = barisTabel(bagian(mesin, 'Keadaan pasar hari ini'))[0];
     if (pasar && pasar.length >= 5) {
       const v24 = bacaPersen(pasar[4]);
-      $('cap-angka').textContent = pasar[0].replace(/ T$/, ' triliun').replace(/ M$/, ' miliar');
-      $('cap-ket').innerHTML = `<span class="${arah(v24)}" style="font-weight:700">${esc(pasar[4])}</span> dalam 24 jam`;
+      $('cap-angka').textContent = pasar[0].replace(/ T$/, ' triliun').replace(/ M$/, ' miliar'); $('btc-harga').textContent = $('cap-angka').textContent;
+      $('cap-ket').innerHTML = `<span class="${arah(v24)}" style="font-weight:700">${esc(pasar[4])}</span> dalam 24 jam`; $('btc-kanan').innerHTML = $('cap-ket').innerHTML;
       const b = bacaPersen(pasar[1]);
       if (b != null) { $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`); $('dom-teks').textContent = pasar[1]; if (!/Ethereum/.test($('dom-ket').textContent)) $('dom-ket').textContent = `Bitcoin ${pasar[1]} dari seluruh pasar.`; }
     }
@@ -427,6 +427,20 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   $('bursa-rentang').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; pilihan = { ...pilihan, hari: b.dataset.hari === 'max' ? 'max' : Number(b.dataset.hari) }; segarkanKeping(); tampilkanGrafik(); });
   segarkanKeping();
   tampilkanGrafik();
+
+  // 6. Indeks pasar crypto global: kapitalisasi total semua koin (CRYPTOCAP:TOTAL),
+  //    gaya garis, tombol rentang 1 hari sampai semua di bawah grafik.
+  (() => {
+    const bingkai = $('indeks-bingkai');
+    bingkai.innerHTML = '<div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget" style="height:100%"></div></div>';
+    const skrip = document.createElement('script');
+    skrip.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+    skrip.async = true;
+    skrip.textContent = JSON.stringify({ autosize: true, symbol: 'CRYPTOCAP:TOTAL', interval: 'D', timezone: 'Asia/Jakarta', theme: 'light', style: '2', locale: 'id',
+      backgroundColor: '#ffffff', gridColor: 'rgba(230,233,228,0.7)', withdateranges: true, range: '3M', allow_symbol_change: false, hide_side_toolbar: true,
+      hide_top_toolbar: window.innerWidth < 640, hide_legend: true, hide_volume: true, save_image: false, calendar: false, support_host: 'https://www.tradingview.com' });
+    bingkai.firstChild.appendChild(skrip);
+  })();
   $('tautan-keluar').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
 })();
 </script>
