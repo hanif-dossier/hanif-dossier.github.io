@@ -16,10 +16,10 @@ create table if not exists public.anggota (
 );
 alter table public.anggota enable row level security;
 
--- 2. Siapa admin: pemilik situs. Ganti email di sini kalau berpindah akun.
+-- 2. Siapa admin: dua email pemilik situs. Tambah/ganti di daftar ini (dan di akun.js).
 create or replace function public.adalah_admin()
 returns boolean language sql stable security definer set search_path = public as $$
-  select coalesce((auth.jwt() ->> 'email') = 'abdullahhanif033@gmail.com', false);
+  select coalesce(lower(auth.jwt() ->> 'email') in ('abdullahhanif033@gmail.com', 'abdhanif033@gmail.com'), false);
 $$;
 
 -- 3. Apakah orang yang sedang masuk sudah disetujui (admin selalu boleh).
@@ -47,8 +47,8 @@ begin
     new.id,
     new.email,
     coalesce(new.raw_user_meta_data ->> 'nama', ''),
-    case when new.email = 'abdullahhanif033@gmail.com' then 'disetujui' else 'menunggu' end,
-    case when new.email = 'abdullahhanif033@gmail.com' then now() else null end
+    case when lower(new.email) in ('abdullahhanif033@gmail.com', 'abdhanif033@gmail.com') then 'disetujui' else 'menunggu' end,
+    case when lower(new.email) in ('abdullahhanif033@gmail.com', 'abdhanif033@gmail.com') then now() else null end
   )
   on conflict (id) do nothing;
   return new;

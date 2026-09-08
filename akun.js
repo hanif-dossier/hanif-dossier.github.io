@@ -10,7 +10,7 @@
 (() => {
   const SUPABASE_URL = 'https://fqpktykrkpqaztnpqgxz.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_UcFfp0XqHZWMZ2jpSRlDvg_vySECBzo';
-  const ADMIN = 'abdullahhanif033@gmail.com';
+  const ADMIN = ['abdullahhanif033@gmail.com', 'abdhanif033@gmail.com'];
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -21,7 +21,7 @@
     const s = await sesi();
     if (!s) return null;
     const { data } = await sb.from('anggota').select('*').eq('id', s.user.id).maybeSingle();
-    const admin = (s.user.email || '').toLowerCase() === ADMIN;
+    const admin = ADMIN.includes((s.user.email || '').toLowerCase());
     return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui: admin || (data && data.status === 'disetujui') };
   }
 
