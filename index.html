@@ -109,7 +109,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 .daftar .ikon{width:36px;height:36px;border-radius:50%;background:var(--lembut);display:grid;place-items:center;flex:none;color:var(--lb)}
 .daftar b{display:block;font-size:14px}.daftar small{color:var(--lb);font-size:12px}
 .pil-peran{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;background:var(--lembut);color:var(--lb)}
-.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
+.pil-peran.owner{background:#2b3330;color:#f3e9d8}.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
 .spanduk{margin-top:18px;background:var(--pasir);color:var(--pasir-tua);border-radius:14px;padding:12px 16px;font-size:14px}
 .terkunci{color:var(--lb);font-style:italic;font-size:13px}
 body.tamu .daftar-laptop{display:none}
@@ -236,7 +236,7 @@ body.tamu .daftar-laptop{display:none}
   const profil = await akun.wajibMasuk({ bolehTamu: true });
   $('sapa-nama').textContent = profil.anggota && profil.anggota.nama ? profil.anggota.nama.split(' ')[0] : (profil.pengguna.email || '').split('@')[0];
   if (profil.admin) $('tautan-admin').hidden = false;
-  $('peran').textContent = profil.peran === 'admin' ? 'Admin' : profil.peran === 'anggota' ? 'Anggota' : 'Tamu';
+  $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
   const tamu = !profil.disetujui;
   if (tamu) {

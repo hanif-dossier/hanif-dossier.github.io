@@ -10,7 +10,8 @@
 (() => {
   const SUPABASE_URL = 'https://fqpktykrkpqaztnpqgxz.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_UcFfp0XqHZWMZ2jpSRlDvg_vySECBzo';
-  const ADMIN = ['abdullahhanif033@gmail.com', 'abdhanif033@gmail.com'];
+  const OWNER = 'abdullahhanif033@gmail.com';            // pemilik: label Owner
+  const ADMIN = [OWNER, 'abdhanif033@gmail.com'];        // admin: akses sama dengan owner (untuk sekarang)
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -24,7 +25,8 @@
     const admin = ADMIN.includes((s.user.email || '').toLowerCase());
     const disetujui = admin || !!(data && data.status === 'disetujui');
     // peran: admin (pemilik), anggota (disetujui), tamu (sudah daftar, belum disetujui)
-    return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui, peran: admin ? 'admin' : disetujui ? 'anggota' : 'tamu' };
+    const email = (s.user.email || '').toLowerCase();
+    return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui, peran: email === OWNER ? 'owner' : admin ? 'admin' : disetujui ? 'anggota' : 'tamu' };
   }
 
   // Halaman anggota: kalau belum masuk -> masuk.html; kalau belum disetujui -> masuk.html#status,
@@ -47,5 +49,5 @@
 
   async function keluar() { await sb.auth.signOut(); location.href = 'masuk.html'; }
 
-  window.akun = { sb, sesi, profil, wajibMasuk, unduh, keluar, ADMIN };
+  window.akun = { sb, sesi, profil, wajibMasuk, unduh, keluar, ADMIN, OWNER };
 })();
