@@ -1,0 +1,13 @@
+<!-- Templat "Magic Link" di Supabase (Authentication → Email Templates → Magic Link).
+     Dikirim saat admin menyetujui akun. Tombolnya membuka beranda dan langsung masuk. -->
+<div style="margin:0;padding:32px 16px;background:#f6f5f0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#2b3330">
+  <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:20px;padding:32px 28px;box-shadow:0 10px 30px rgba(43,51,48,.06)">
+    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7b8781">Hanif Dossier Crypto</p>
+    <h1 style="margin:0 0 14px;font-size:24px;line-height:1.25;font-family:Georgia,'Times New Roman',serif;font-weight:400">Akun Anda telah disetujui</h1>
+    <p style="margin:0 0 12px;font-size:15px;line-height:1.6">Terima kasih telah mendaftar. Akun Anda sudah kami setujui, dan seluruh laporan kini terbuka untuk Anda: briefing harian, radar portofolio, peringatan, dan screening altcoin.</p>
+    <p style="margin:0 0 22px;font-size:15px;line-height:1.6">Klik tombol di bawah untuk masuk. Tautan ini berlaku satu kali; setelah itu Anda bisa masuk seperti biasa dengan email dan kata sandi.</p>
+    <p style="margin:0 0 22px;text-align:center"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#4f7a68;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px">Masuk ke laporan</a></p>
+    <p style="margin:0;font-size:12px;line-height:1.6;color:#7b8781">Jika tombol tidak berfungsi, salin alamat ini ke browser Anda:<br><a href="{{ .ConfirmationURL }}" style="color:#4f7a68;word-break:break-all">{{ .ConfirmationURL }}</a></p>
+  </div>
+  <p style="max-width:520px;margin:18px auto 0;font-size:12px;line-height:1.6;color:#a3aca7;text-align:center">Riset dan analisis, bukan nasihat investasi berizin. Anda menerima email ini karena mendaftar di hanif-dossier.github.io.</p>
+</div>
