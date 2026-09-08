@@ -108,6 +108,11 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 .daftar a:hover{outline:1px solid var(--sage)}
 .daftar .ikon{width:36px;height:36px;border-radius:50%;background:var(--lembut);display:grid;place-items:center;flex:none;color:var(--lb)}
 .daftar b{display:block;font-size:14px}.daftar small{color:var(--lb);font-size:12px}
+.pil-peran{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;background:var(--lembut);color:var(--lb)}
+.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
+.spanduk{margin-top:18px;background:var(--pasir);color:var(--pasir-tua);border-radius:14px;padding:12px 16px;font-size:14px}
+.terkunci{color:var(--lb);font-style:italic;font-size:13px}
+body.tamu .daftar-laptop{display:none}
 .kaki{margin-top:40px;padding-top:14px;border-top:1px solid var(--gr);font-size:12px;color:var(--redup);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 @media(max-width:860px){.sambut,.tengah{grid-template-columns:1fr}.ubin{grid-template-columns:1fr}.koin{grid-template-columns:1fr}}
@@ -120,7 +125,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 <header class="atas">
   <div class="merek">
     <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
-    <div><b>Hanif Dossier Crypto</b><small>pusat laporan pasar crypto</small></div>
+    <div><b>Hanif Dossier Crypto <span id="peran" class="pil-peran"></span></b><small>pusat laporan pasar crypto</small></div>
   </div>
   <nav class="menu">
     <a class="aktif" href="https://hanif-dossier.github.io/">Beranda</a>
@@ -132,6 +137,8 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
     <a href="#" id="tautan-keluar">Keluar</a>
   </nav>
 </header>
+
+<div class="spanduk" id="spanduk-tamu" hidden>Akun Anda sedang kami tinjau. Sementara menunggu, Anda bisa melihat keadaan pasar di halaman ini; laporan lengkap terbuka begitu akun disetujui, dan kami mengabari lewat email.</div>
 
 <section class="sambut">
   <div class="sapa">
@@ -202,8 +209,8 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   <a class="semua" href="laporan.html?h=peringatan">Semua peringatan →</a>
 </section>
 
-<h3 class="bagian">Alat di laptop <small>hanya hidup saat laptop menyala</small></h3>
-<div class="daftar">
+<h3 class="bagian daftar-laptop">Alat di laptop <small>hanya hidup saat laptop menyala</small></h3>
+<div class="daftar daftar-laptop">
   <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/7a229dd9-e597-44e9-90e0-89ebf542b9bb/chat"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg></div><span><b>Chat asisten</b><small>Tanya apa saja soal laporan dan pasar</small></span></a>
   <a href="https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/laporan"><div class="ikon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div><span><b>Laporan harian versi laptop</b><small>Halaman dari n8n</small></span></a>
 </div>
@@ -226,9 +233,19 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
 (async () => {
   const $ = id => document.getElementById(id);
   // Gerbang: hanya anggota yang disetujui. Yang lain dialihkan ke masuk.html.
-  const profil = await akun.wajibMasuk();
+  const profil = await akun.wajibMasuk({ bolehTamu: true });
   $('sapa-nama').textContent = profil.anggota && profil.anggota.nama ? profil.anggota.nama.split(' ')[0] : (profil.pengguna.email || '').split('@')[0];
   if (profil.admin) $('tautan-admin').hidden = false;
+  $('peran').textContent = profil.peran === 'admin' ? 'Admin' : profil.peran === 'anggota' ? 'Anggota' : 'Tamu';
+  $('peran').className = 'pil-peran ' + profil.peran;
+  const tamu = !profil.disetujui;
+  if (tamu) {
+    // Tamu: boleh melihat pasar (angka publik dan grafik), tapi laporan terkunci.
+    document.body.classList.add('tamu');
+    $('spanduk-tamu').hidden = false;
+    for (const id of ['c-briefing', 'c-screening', 'koin', 'c-peringatan']) $(id).innerHTML = '<span class="terkunci">Terbuka setelah akun Anda kami setujui.</span>';
+    document.querySelectorAll('a[href^="laporan.html"]').forEach(x => { x.href = 'masuk.html#status'; });
+  }
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const AKAR = 'https://hanif-dossier.github.io';
 
@@ -258,7 +275,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
     .replace(/#e3e6ea/gi, '#e6e9e4').replace(/#fbfbfc/gi, '#f6f5f0');
 
   // 1. Briefing Harian: cuplikan, angka pasar, grafik Bitcoin
-  ambil('/laporan-harian/harian/terbaru.md').then(async md => {
+  if (!tamu) ambil('/laporan-harian/harian/terbaru.md').then(async md => {
     const tglIso = (md.match(/pada (\d{4}-\d{2}-\d{2}) \d{2}:\d{2} WIB/) || [])[1];
     const tgl = (md.match(/^# Briefing Harian — (.+)$/m) || [])[1] || '';
     const jam = (md.match(/Disusun otomatis (\d{2}:\d{2}) WIB/) || [])[1];
@@ -300,7 +317,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); });
 
   // 2. Radar: koinmu hari ini, diurutkan dari yang paling naik
-  ambil('/laporan-harian/harian/radar.md').then(md => {
+  if (!tamu) ambil('/laporan-harian/harian/radar.md').then(md => {
     const jam = (md.match(/Diperbarui (\d{2}:\d{2}) WIB/) || [])[1];
     const tgl = (md.match(/^# Radar Portofolio — (.+)$/m) || [])[1] || '';
     const koin = barisTabel(bagian(md, 'Koin Kamu Hari Ini')).map(r => ({ sim: r[0], h24: r[2], h7: r[3], h30: r[4], v: bacaPersen(r[2]) })).filter(k => k.v != null);
@@ -314,7 +331,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   }).catch(() => gagal('koin', 'Cuplikan belum bisa dimuat — buka Radar Portofolio langsung.'));
 
   // 3. Peringatan terbaru (hari ini, atau kemarin kalau hari ini masih kosong)
-  (async () => {
+  if (!tamu) (async () => {
     let md = '', tgl = hariIni;
     try { md = await ambil(`/laporan-harian/peringatan/${hariIni}.md`); }
     catch { try { md = await ambil(`/laporan-harian/peringatan/${kemarin}.md`); tgl = kemarin; } catch { return gagal('c-peringatan', 'Belum ada peringatan dua hari terakhir.'); } }
@@ -328,7 +345,7 @@ h3.bagian small{font-weight:400;text-transform:none;letter-spacing:0;margin-left
   })();
 
   // 4. Screening: daftar pendek final + narasi yang menghangat
-  Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
+  if (!tamu) Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
     if (!final && !mesin) throw new Error('kosong');
     const tgl = (final.match(/^# Daftar pendek final — (.+)$/m) || mesin.match(/^# Screening altcoin — (.+)$/m) || [])[1] || '';
     const nama = [...final.matchAll(/^\*\*([A-Z0-9]{1,12}) \((.+?)\)\*\*\s*—\s*(.*)$/gm)].map(m => `<span class="pil" title="${esc(polos(m[3]))}">${esc(m[1])} <span style="font-weight:600;opacity:.8">${esc(m[2])}</span></span>`);

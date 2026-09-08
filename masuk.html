@@ -144,7 +144,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     e.preventDefault();
     const email = $('email').value.trim();
     if (!email) return pesan('Isi email dulu, lalu klik lupa kata sandi.', 'info');
-    const { error } = await akun.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname.replace(/[^/]*$/, '') + 'masuk.html' });
+    const { error } = await akun.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname.replace(/[^/]*$/, '') + 'sandi.html' });
     pesan(error ? terjemah(error.message) : 'Tautan ganti kata sandi sudah dikirim ke emailmu.', error ? 'salah' : 'baik');
   });
 

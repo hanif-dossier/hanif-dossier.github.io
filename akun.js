@@ -22,16 +22,19 @@
     if (!s) return null;
     const { data } = await sb.from('anggota').select('*').eq('id', s.user.id).maybeSingle();
     const admin = ADMIN.includes((s.user.email || '').toLowerCase());
-    return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui: admin || (data && data.status === 'disetujui') };
+    const disetujui = admin || !!(data && data.status === 'disetujui');
+    // peran: admin (pemilik), anggota (disetujui), tamu (sudah daftar, belum disetujui)
+    return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui, peran: admin ? 'admin' : disetujui ? 'anggota' : 'tamu' };
   }
 
-  // Halaman anggota: kalau belum masuk -> masuk.html; kalau belum disetujui -> masuk.html#status.
-  async function wajibMasuk({ hanyaAdmin = false } = {}) {
+  // Halaman anggota: kalau belum masuk -> masuk.html; kalau belum disetujui -> masuk.html#status,
+  // kecuali halaman itu menerima tamu (bolehTamu: beranda dalam mode melihat-lihat).
+  async function wajibMasuk({ hanyaAdmin = false, bolehTamu = false } = {}) {
     const p = await profil();
     const tujuan = encodeURIComponent(location.pathname.split('/').pop() + location.search);
     if (!p) { location.replace(`masuk.html?ke=${tujuan}`); return new Promise(() => {}); }
     if (hanyaAdmin && !p.admin) { location.replace('index.html'); return new Promise(() => {}); }
-    if (!p.disetujui) { location.replace('masuk.html#status'); return new Promise(() => {}); }
+    if (!p.disetujui && !bolehTamu) { location.replace('masuk.html#status'); return new Promise(() => {}); }
     return p;
   }
 

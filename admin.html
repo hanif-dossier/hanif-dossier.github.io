@@ -73,12 +73,12 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   <div class="pesan" id="pesan"></div>
 
   <div class="undang">
-    <h2 class="serif">Undangan (opsional)</h2>
-    <p class="sub">Email di daftar ini langsung disetujui saat mendaftar, tanpa menunggu. Pendaftar lain tetap masuk ke daftar Menunggu di bawah.</p>
+    <h2 class="serif">Undang anggota lewat email</h2>
+    <p class="sub">Ketik email orangnya. Ia menerima email berisi tombol masuk, membuat kata sandi, dan langsung menjadi anggota tanpa antre.</p>
     <form id="form-undang" class="baris-undang">
       <input id="undang-email" type="email" required placeholder="email@contoh.com">
       <input id="undang-nama" type="text" placeholder="nama (boleh kosong)">
-      <button type="submit">Undang</button>
+      <button type="submit">Undang lewat email</button>
     </form>
     <div id="daftar-undangan" class="keping-undangan"></div>
   </div>
@@ -185,7 +185,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
     b.addEventListener('click', async () => {
       if (!confirm('Kirim tautan ganti kata sandi ke ' + anggota.email + '?')) return;
       b.disabled = true;
-      const { error } = await akun.sb.auth.resetPasswordForEmail(anggota.email, { redirectTo: location.origin + '/masuk.html' });
+      const { error } = await akun.sb.auth.resetPasswordForEmail(anggota.email, { redirectTo: location.origin + '/sandi.html' });
       pesan(error ? 'Gagal mengirim: ' + error.message : 'Tautan ganti kata sandi dikirim ke ' + anggota.email + '.', error ? 'salah' : 'baik');
       b.disabled = false;
     });
@@ -231,8 +231,12 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
     e.preventDefault();
     const email = $('undang-email').value.trim().toLowerCase(), nama = $('undang-nama').value.trim();
     const { error } = await akun.sb.from('undangan').insert({ email, nama: nama || null });
-    if (error) { pesan(/duplicate/i.test(error.message) ? email + ' sudah ada di daftar undangan.' : 'Gagal mengundang: ' + error.message); return; }
-    pesan(email + ' diundang. Saat ia mendaftar dengan email ini, akunnya langsung aktif.', 'baik');
+    if (error && !/duplicate/i.test(error.message)) { pesan('Gagal mengundang: ' + error.message); return; }
+    // Buat akunnya sekarang dan kirim tautan masuk sekali pakai; trigger di Supabase
+    // membaca daftar undangan sehingga akun itu langsung berstatus disetujui.
+    const kirim = await akun.sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, data: { nama: nama || '' }, emailRedirectTo: location.origin + '/sandi.html' } });
+    if (kirim.error) { pesan(email + ' tercatat, tapi email undangan belum terkirim: ' + kirim.error.message); return; }
+    pesan('Undangan dikirim ke ' + email + '. Setelah ia klik tombol di email dan membuat kata sandi, ia langsung jadi anggota.', 'baik');
     $('undang-email').value = ''; $('undang-nama').value = '';
     await muatUndangan();
   });
