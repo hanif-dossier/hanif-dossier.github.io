@@ -234,7 +234,9 @@ body.tamu .daftar-laptop{display:none}
   const $ = id => document.getElementById(id);
   // Gerbang: hanya anggota yang disetujui. Yang lain dialihkan ke masuk.html.
   const profil = await akun.wajibMasuk({ bolehTamu: true });
-  $('sapa-nama').textContent = profil.anggota && profil.anggota.nama ? profil.anggota.nama.split(' ')[0] : (profil.pengguna.email || '').split('@')[0];
+  const namaLengkap = (profil.anggota && profil.anggota.nama) || (profil.pengguna.user_metadata && profil.pengguna.user_metadata.nama) || '';
+  const namaDepan = namaLengkap.trim().split(/\s+/)[0];
+  $('sapa-nama').textContent = namaDepan || 'kawan';
   if (profil.admin) $('tautan-admin').hidden = false;
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
@@ -363,7 +365,35 @@ body.tamu .daftar-laptop{display:none}
     $('c-screening').innerHTML = `<div style="font-size:12px;color:var(--lb)">${esc(tgl)} · ${nama.length ? 'daftar pendek final' : 'kandidat mesin, final belum terbit'}</div><div class="keping">${keping.join('') || 'Belum ada kandidat.'}</div>${hangat.length ? `<div style="margin-top:8px;font-size:13px;color:var(--lb)">Narasi yang menghangat: ${hangat.join(' ')}</div>` : ''}`;
   }).catch(() => gagal('c-screening', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
 
-  setTimeout(() => { for (const id of ['btc-harga', 'cap-angka', 'dom-teks', 'fg-angka']) if ($(id).textContent === '…') $(id).textContent = 'n/a'; }, 8000);
+  // Angka pasar dari sumber publik (tanpa laporan): dipakai tamu, dan cadangan kalau
+  // laporan belum terbaca. Format ringkas: $2,65 triliun.
+  const uangRingkas = n => n >= 1e12 ? `$${(n / 1e12).toFixed(2).replace('.', ',')} triliun` : `$${(n / 1e9).toFixed(1).replace('.', ',')} miliar`;
+  async function angkaPublik() {
+    try {
+      const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
+      const cap = g.total_market_cap.usd, ubah = g.market_cap_change_percentage_24h_usd, domBtc = g.market_cap_percentage.btc, domEth = g.market_cap_percentage.eth;
+      const teksUbah = `${ubah >= 0 ? '+' : ''}${ubah.toFixed(2).replace('.', ',')}%`;
+      if ($('btc-harga').textContent === '…' || $('btc-harga').textContent === 'n/a') { $('btc-harga').textContent = uangRingkas(cap); $('btc-kanan').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
+      if ($('cap-angka').textContent === '…' || $('cap-angka').textContent === 'n/a') { $('cap-angka').textContent = uangRingkas(cap); $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
+      if ($('dom-teks').textContent === '…' || $('dom-teks').textContent === 'n/a') {
+        $('dom-btc').setAttribute('stroke-dasharray', `${(domBtc / 100 * 251.3).toFixed(1)} 251.3`);
+        $('dom-eth').setAttribute('stroke-dasharray', `${(domEth / 100 * 251.3).toFixed(1)} 251.3`); $('dom-eth').setAttribute('stroke-dashoffset', `-${(domBtc / 100 * 251.3).toFixed(1)}`);
+        $('dom-teks').textContent = `${domBtc.toFixed(1).replace('.', ',')}%`;
+        $('dom-ket').textContent = `Bitcoin ${domBtc.toFixed(1).replace('.', ',')}%, Ethereum ${domEth.toFixed(1).replace('.', ',')}%, sisanya ${(100 - domBtc - domEth).toFixed(1).replace('.', ',')}%.`;
+      }
+    } catch {}
+    try {
+      if ($('fg-angka').textContent === '…' || $('fg-angka').textContent === 'n/a') {
+        const f = (await (await fetch('https://api.alternative.me/fng/?limit=1')).json()).data[0];
+        const n = Number(f.value), label = { 'Extreme Fear': 'Extreme Fear', 'Fear': 'Fear', 'Neutral': 'Neutral', 'Greed': 'Greed', 'Extreme Greed': 'Extreme Greed' }[f.value_classification] || f.value_classification;
+        $('fg-busur').setAttribute('stroke-dasharray', `${(n / 100 * 157.1).toFixed(1)} 157.1`);
+        $('fg-angka').textContent = n; $('fg-judul').textContent = `Fear & Greed · ${label}`;
+        $('fg-ket').textContent = n >= 75 ? 'Serakah ekstrem.' : n >= 55 ? 'Masih di zona serakah.' : n >= 45 ? 'Netral.' : n >= 25 ? 'Zona takut.' : 'Takut ekstrem.';
+      }
+    } catch {}
+  }
+  if (tamu) angkaPublik(); else setTimeout(angkaPublik, 6000);
+  setTimeout(() => { for (const id of ['btc-harga', 'cap-angka', 'dom-teks', 'fg-angka']) if ($(id).textContent === '…') $(id).textContent = 'n/a'; }, 12000);
 
   // 5. Grafik harga: garis sederhana, koin dan rentang bisa dipilih.
   //    Data dari CoinGecko (gratis, tanpa kunci); tiap kombinasi diambil sekali lalu disimpan.
