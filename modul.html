@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul — Hanif Dossier Crypto</title>
+<meta name="description" content="Modul edukasi Hanif Dossier Crypto: cara membaca token dari kebutuhan, peta arsitektur Web3, jantung protokol, rumus nilai intrinsik, FDV × float, tiga tahap altcoin, rantai transmisi makro, dan bias yang menggerakkan pasar.">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+.daftar-modul{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:18px}
+.modul-kartu{display:flex;flex-direction:column;gap:6px;text-align:left;border:0;font:inherit;cursor:pointer;color:var(--tx)}
+.modul-kartu .nomor{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:700}
+.modul-kartu h3{font-size:1.1rem}
+.modul-kartu p{font-size:14px;color:var(--tx2)}
+.modul-kartu .status{margin-top:auto;padding-top:6px;font-size:12px;font-weight:700;color:var(--sage)}
+.modul-kartu.terkunci .status{color:var(--pasir-tua)}
+.modul-kartu.aktif{outline:2px solid var(--sage)}
+.baca-modul{margin-top:26px;max-width:76ch}
+.baca-modul h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:4px}
+.baca-modul .sub{color:var(--lb);font-size:13px;margin-bottom:14px}
+.baca-modul h3{font-size:1.05rem;margin:22px 0 6px;color:var(--sage-tua)}
+.baca-modul p,.baca-modul li{font-size:15.5px;color:var(--tx2);line-height:1.7}
+.baca-modul p{margin:0 0 10px}
+.baca-modul ol,.baca-modul ul{padding-left:22px;margin:0 0 10px}
+.baca-modul li{margin-bottom:4px}
+.baca-modul table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 12px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.baca-modul th,.baca-modul td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--gr);vertical-align:top}
+.baca-modul th{color:var(--lb);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.baca-modul pre{background:var(--kartu);border-radius:14px;padding:14px 16px;font-size:13.5px;overflow-x:auto;box-shadow:var(--bayang);white-space:pre-wrap}
+.baca-modul .batas-berlaku{background:var(--pasir);color:var(--pasir-tua);border-radius:14px;padding:12px 16px;font-size:14px;margin:14px 0}
+.baca-modul .sumber{font-size:12px;color:var(--lb);border-top:1px solid var(--gr);padding-top:10px;margin-top:18px}
+.baca-modul .kunci{background:var(--sage-lembut);border-radius:20px;padding:26px;text-align:center}
+.baca-modul .kunci h3{margin-top:0;color:var(--sage-tua)}
+.nav-modul{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="index.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a class="aktif" href="modul.html">Modul</a>
+    <a href="langganan.html">Langganan</a>
+    <a href="dasbor.html" data-anggota hidden>Laporan</a>
+    <a href="pustaka.html" data-admin hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<section class="sambut" style="grid-template-columns:1fr">
+  <div class="sapa" style="max-width:720px">
+    <div class="mata">Modul edukasi</div>
+    <h1 class="serif">Cara membaca token,<br><span>satu konsep per modul.</span></h1>
+    <p>Delapan kelas pendek — tiap modul satu konsep, istilahnya didefinisikan dulu, ada aturan bacanya, ada contohnya, dan selalu ada batas keberlakuannya. Ini kerangka yang dipakai setiap dossier dan setiap laporan pagi. Dua modul pertama terbuka untuk semua; sisanya untuk anggota.</p>
+  </div>
+</section>
+
+<div class="daftar-modul" id="daftar"></div>
+
+<section class="baca-modul" id="baca" hidden></section>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Modul ini edukasi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil. Contoh angka di dalam modul adalah ilustrasi cara menghitung, bukan penilaian atas aset tertentu.</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+// Isi modul ditulis langsung di sini (HTML biasa) supaya halaman tetap statis.
+// Format tiap modul mengikuti kelas Akademi Crypto era 2024: konsep → istilah →
+// aturan baca → contoh → batas keberlakuan → sumber.
+const MODUL = [
+{ nomor: 1, terbuka: true, judul: 'Langkah −1: kebutuhan dulu, baru token', ringkas: 'Kenapa analisis yang mulai dari token selalu menyimpulkan hal yang salah, dan urutan lima langkah yang dipakai pemodal besar.', isi: `
+<h3>Konsepnya</h3>
+<p>Sebuah token tidak punya nilai karena ia ada. Ia punya nilai kalau ada <b>kebutuhan</b> yang dipenuhi protokolnya, dan kalau token itu memang perlu ada untuk memenuhi kebutuhan itu. Karena itu analisis tidak pernah dimulai dari harga, dari grafik, atau bahkan dari whitepaper — ia dimulai dari pertanyaan: <em>siapa yang butuh ini, dan seberapa besar kebutuhannya?</em></p>
+<h3>Istilah yang dipakai</h3>
+<ol>
+<li><b>Tesis</b> — satu kalimat tentang fungsi yang belum selesai di teknologi lama dan disempurnakan oleh teknologi baru. Contoh tesis DeFi 2020: "menukar dan menyimpan dana tanpa perantara adalah fungsi yang tidak selesai di Bitcoin dan disempurnakan smart contract Ethereum."</li>
+<li><b>Thesis-driven</b> — memilih aset karena ia mendukung tesis, bukan memilih tesis untuk membenarkan aset yang sudah dibeli.</li>
+<li><b>Token-driven</b> — kebalikannya: mulai dari nama koin yang ramai, lalu mencari alasan.</li>
+</ol>
+<h3>Aturan bacanya: lima langkah, urutannya tidak boleh dibalik</h3>
+<ol>
+<li><b>Observasi sosial</b> — kebutuhan apa yang sedang muncul? Bukan narasi apa yang sedang ramai.</li>
+<li><b>Hipotesis sektor</b> — sektor mana yang akan tumbuh karena kebutuhan itu, dan <em>seberapa besar</em>? Ukur potensinya dengan angka.</li>
+<li><b>Peluang</b> — baru sekarang: adakah aset yang benar-benar menangkap pertumbuhan sektor itu? Sering jawabannya "sektornya tumbuh, tapi tokennya tidak ikut" — itu temuan yang sah.</li>
+<li><b>Eksekusi</b> — soal waktu dan ukuran, dan ini di luar cakupan riset.</li>
+<li><b>Pemantauan</b> — apakah tesisnya masih berlaku? Kalau tidak, semua langkah setelahnya gugur.</li>
+</ol>
+<h3>Contoh</h3>
+<p>Dua analisis atas rollup yang sama. Yang mulai dari grafik menyimpulkan "harga sudah turun 90% dari puncak, murah". Yang mulai dari kebutuhan menemukan bahwa fee jaringannya dibayar dalam ETH, mengalir ke treasury DAO, dan tokennya hanya dipakai untuk voting — jadi pertumbuhan jaringan tidak otomatis jadi pertumbuhan token. Dua kesimpulan berlawanan dari data yang sama; yang membedakan adalah titik mulainya.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Langkah −1 menyaring, bukan memilih. Lolos langkah ini hanya berarti tokennya punya alasan untuk ada — belum berarti harganya masuk akal (itu modul 4) atau strukturnya sehat (modul 5).</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber kerangka: strategi thesis-driven Multicoin Capital sebagaimana dibahas komunitas Akademi Crypto (Mei 2024); dossier Hanif Dossier Crypto bab "Langkah −1".</div>` },
+
+{ nomor: 2, terbuka: true, judul: 'Peta arsitektur Web3: di lapisan mana token ini hidup', ringkas: 'Empat lapisan dari aplikasi sampai penyelesaian, siapa bergantung pada siapa, dan kenapa pertanyaan itu menentukan metrik mana yang dibaca.', isi: `
+<h3>Konsepnya</h3>
+<p>Crypto bukan daftar koin; ia tumpukan lapisan yang saling menumpang. Sebelum membaca satu token, tempatkan dulu proyeknya di lapisan yang benar — karena tiap lapisan punya "jantung" yang berbeda, pesaing yang berbeda, dan cara gagal yang berbeda.</p>
+<h3>Empat lapisan, dari atas ke bawah</h3>
+<table>
+<tr><th>Lapisan</th><th>Isinya</th><th>Yang harus diukur</th><th>Cara gagalnya</th></tr>
+<tr><td><b>Aplikasi</b></td><td>DeFi (bursa, lending, stablecoin), RWA, PayFi, game</td><td>Pengguna yang membayar fee; berapa yang sampai ke token</td><td>Pengguna pindah ke pesaing dalam hitungan hari — biaya pindah nol</td></tr>
+<tr><td><b>Infrastruktur &amp; data</b></td><td>Oracle, privasi/komputasi terenkripsi, indeks, intelijen on-chain</td><td>Siapa aplikasi yang benar-benar memakainya, dan apakah mereka membayar</td><td>Dipakai luas tapi gratis — nilai mengalir ke pengguna, bukan ke token</td></tr>
+<tr><td><b>Skala (L2) &amp; chain khusus</b></td><td>Rollup, app-chain</td><td>Fee sequencer, aktivitas, dan apakah tokennya punya fungsi ekonomi</td><td>Jaringan ramai, token tidak menerima apa-apa</td></tr>
+<tr><td><b>Dasar (L1) — penyelesaian</b></td><td>Bitcoin, Ethereum, Tron, dan lain-lain</td><td>Keamanan, desentralisasi, siapa membayar validator, biaya menyerang</td><td>Keamanan bergantung pada subsidi inflasi yang suatu hari habis</td></tr>
+</table>
+<h3>Aturan bacanya</h3>
+<ol>
+<li><b>Ke bawah:</b> apa yang terjadi pada token ini kalau lapisan di bawahnya goyah? Rollup di atas Ethereum mewarisi keamanan Ethereum — dan juga masalahnya.</li>
+<li><b>Ke atas:</b> siapa yang membayar untuk memakai lapisan ini? Kalau jawabannya "belum ada", nilainya sepenuhnya janji.</li>
+<li><b>Ke samping:</b> pesaing yang sebenarnya ada di lapisan yang sama, bukan di seluruh pasar. Bursa perpetual bersaing dengan bursa perpetual lain, bukan dengan Bitcoin.</li>
+</ol>
+<h3>Contoh</h3>
+<p>Token intelijen on-chain (lapisan infrastruktur &amp; data) dinilai dengan metrik aplikasi — jumlah pengguna, volume — dan tampak lemah. Dibaca dari lapisannya sendiri, pertanyaannya berubah: siapa yang membayar untuk datanya, dan berapa? Jawabannya mungkin tetap mengecewakan, tapi setidaknya itu pertanyaan yang benar.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Beberapa proyek hidup di dua lapisan (L1 yang juga punya DEX bawaan). Pilih lapisan tempat <em>pendapatannya</em> berasal, bukan tempat pemasarannya.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: peta lapisan yang dipakai katalog riset Hanif Dossier Crypto; pembagian lapisan umum di literatur arsitektur Web3.</div>` },
+
+{ nomor: 3, terbuka: false, judul: 'Jantung dulu, baru aliran darah', ringkas: 'Tiap sektor punya satu-dua metrik yang menentukan hidup-matinya. Kalau itu sehat, harga menyusul; kalau sakit, narasi cuma menunda kabar buruk.', isi: `
+<h3>Konsepnya</h3>
+<p>Dari puluhan angka di dashboard, hampir semuanya turunan. Yang menentukan hanya satu-dua: <b>jantung</b> protokol. Aturan Akademi Crypto soal kualitas informasi berlaku di sini — satu faktor yang teruji mengalahkan lima faktor yang belum teruji. Menilai murah atau mahal sebelum tahu jantungnya menghasilkan angka yang presisi untuk pertanyaan yang salah.</p>
+<h3>Jantung per sektor</h3>
+<table>
+<tr><th>Sektor</th><th>Jantung</th><th>Aliran darah (ke mana nilainya mengalir)</th></tr>
+<tr><td>Bursa perpetual / DEX</td><td>Volume yang membayar fee, dan fee per pengguna</td><td>Fee → LP / treasury / buyback token?</td></tr>
+<tr><td>Lending</td><td>Pinjaman aktif (bukan TVL) dan selisih bunga</td><td>Selisih → treasury → token?</td></tr>
+<tr><td>Stablecoin</td><td>Pasokan beredar dan imbal hasil cadangannya</td><td>Imbal hasil → pemegang stablecoin vs pemegang token governance</td></tr>
+<tr><td>RWA / PayFi</td><td>Aset nyata yang benar-benar ditokenisasi dan pembiayaan yang dilunasi</td><td>Fee originasi → protokol → token?</td></tr>
+<tr><td>L1 / L2</td><td>Fee jaringan yang dibayar pengguna nyata (bukan bot)</td><td>Fee → validator / sequencer → burn atau treasury?</td></tr>
+<tr><td>Infrastruktur / data</td><td>Pelanggan yang membayar</td><td>Langganan → perusahaan pengembang vs token</td></tr>
+</table>
+<h3>Aturan bacanya</h3>
+<ol>
+<li>Cari jantungnya dulu; tulis angkanya dan arahnya 90 hari terakhir.</li>
+<li>Ikuti aliran darahnya sampai ke token. Kalau alirannya berhenti sebelum sampai ke token, tulis itu — banyak protokol bagus dengan token yang tidak menerima apa-apa.</li>
+<li>Baru bahas kerangka (tokenomics), otak (tim), dan lingkungan (makro, pesaing).</li>
+</ol>
+<h3>Contoh</h3>
+<p>Protokol lending dengan TVL besar tapi pinjaman aktif kecil: jantungnya lemah, TVL cuma uang parkir yang menunggu insentif. Sebaliknya, bursa kecil dengan volume yang membayar fee tinggi per pengguna punya jantung kuat walau kapitalisasinya kecil.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Jantung yang sehat tidak menjamin harga naik dalam waktu dekat — pasar bisa mengabaikannya berbulan-bulan. Yang dijamin hanya: jantung yang sakit cepat atau lambat terlihat di harga.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: metode "jantung dulu" Hanif Dossier Crypto; prinsip kualitas &gt; kuantitas informasi, Akademi Crypto (September 2024).</div>` },
+
+{ nomor: 4, terbuka: false, judul: 'Nilai intrinsik token: rumus, tiga tingkat, dan kapan rumusnya berbohong', ringkas: 'V = CF × (1 + g) ÷ (r − g). Apa yang boleh disebut arus kas, tingkat diskonto berapa yang masuk akal, dan kenapa hasilnya harus selalu tiga skenario.', isi: `
+<h3>Konsepnya</h3>
+<p>Nilai intrinsik adalah nilai yang tersisa kalau semua narasi dihapus: berapa uang yang benar-benar <b>sampai ke pemegang token</b>, didiskontokan dengan risiko. Bukan fee yang dibayar pengguna (itu milik LP atau validator), bukan pendapatan protokol (itu milik treasury) — hanya yang sampai ke token.</p>
+<h3>Istilah yang dipakai</h3>
+<ol>
+<li><b>CF (arus kas ke pemegang)</b> — buyback, bagi fee, burn yang dibiayai pendapatan nyata. Staking yield yang dibayar dari inflasi <em>bukan</em> arus kas; itu pengenceran yang dibagikan.</li>
+<li><b>r (tingkat diskonto)</b> — imbal hasil yang Anda tuntut untuk memegang aset yang bisa jatuh 80% dalam setahun. Rentang yang jujur: 20% untuk protokol yang sudah menghasilkan lebih dari setahun, 25–30% untuk yang lebih muda.</li>
+<li><b>g (pertumbuhan lestari)</b> — pertumbuhan yang bisa bertahan bertahun-tahun, bukan pertumbuhan bulan lalu. Batas atas 10%; 0 kalau pendapatannya turun atau baru ada kurang dari dua kuartal.</li>
+<li><b>FDV</b> — kapitalisasi kalau semua token beredar. Dipakai, bukan market cap, karena pembeli hari ini menanggung dilusi besok.</li>
+</ol>
+<h3>Rumusnya</h3>
+<pre>V = CF × (1 + g) ÷ (r − g)
+
+Rasio harga/nilai = FDV ÷ V
+
+Contoh (angka ilustrasi):
+  CF = $60 juta/tahun ke pemegang (12 × $5 juta sebulan)
+  r  = 20%, g = 0      →  V = 60 ÷ 0,20 = $300 juta
+  r  = 20%, g = 5%     →  V = 60 × 1,05 ÷ 0,15 = $420 juta
+  r  = 25%, g = 0      →  V = 60 ÷ 0,25 = $240 juta
+  FDV = $900 juta       →  rasio 3,0x · 2,1x · 3,75x</pre>
+<p>Tiga skenario itu wajib ditampilkan. Satu angka tunggal menyesatkan karena hasilnya sangat peka terhadap r dan g.</p>
+<h3>Aturan bacanya</h3>
+<table>
+<tr><th>FDV ÷ V</th><th>Bacaan</th></tr>
+<tr><td>≤ 1</td><td>Harga di bawah nilai intrinsik — jarang, dan biasanya ada alasan (risiko regulasi, unlock besar, pendapatan satu kali)</td></tr>
+<tr><td>1 – 3</td><td>Wajar untuk aset yang masih tumbuh</td></tr>
+<tr><td>3 – 10</td><td>Harga sudah memuat pertumbuhan besar yang belum terjadi</td></tr>
+<tr><td>&gt; 10</td><td>Yang dibayar adalah narasi, bukan arus kas</td></tr>
+</table>
+<h3>Tiga tingkat — dan tingkatnya tidak boleh dinaikkan dengan asumsi</h3>
+<ol>
+<li><b>Tingkat A</b> — ada arus kas ke pemegang: rumus di atas berlaku penuh.</li>
+<li><b>Tingkat B</b> — protokol punya pendapatan, tapi tidak dialirkan ke token: hitung V dengan pendapatan protokol, lalu beri label <em>nilai bersyarat</em>. Nilai itu hanya terwujud kalau governance memutuskan mengalirkannya. Contoh klasiknya rollup yang fee-nya masuk treasury DAO.</li>
+<li><b>Tingkat C</b> — tidak ada fee yang bisa diukur: tulis "nilai intrinsik tidak dapat dihitung; nilai token sepenuhnya spekulatif." Boleh ditambah pengukur jaringan (NVT, Metcalfe, untuk Bitcoin MVRV) dengan label "nilai jaringan, bukan nilai intrinsik".</li>
+</ol>
+<div class="batas-berlaku"><b>Kapan rumusnya berbohong.</b> (1) CF 30 hari terakhir berasal dari satu kejadian — airdrop, likuidasi besar, program insentif — lalu dikalikan 12. Cek tiga bulan terakhir. (2) Pendapatan dalam token proyek sendiri dihitung dengan harga yang sedang tinggi. (3) g diambil dari pertumbuhan bulan lalu. Screening harian Hanif Dossier Crypto memakai r = 20% dan g = 0 (Lapis 8) supaya angkanya bisa dicocokkan dengan dossier.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: model diskonto arus kas (Gordon growth) diterapkan pada arus kas ke pemegang token; data fee/pendapatan/holders revenue dari DefiLlama; framework-crypto Dimensi 5, Hanif Dossier Crypto.</div>` },
+
+{ nomor: 5, terbuka: false, judul: 'FDV × float, unlock, dan siapa yang memegang', ringkas: 'Kenapa FDV sendirian menyesatkan, kombinasi mana yang cenderung tidak bisa naik, dan cara memeriksa apakah insider benar-benar menjual.', isi: `
+<h3>Konsepnya</h3>
+<p>Struktur suplai menentukan siapa yang bisa menjual, kapan, dan seberapa sakit dampaknya. Momentum sebagus apa pun tidak menyelamatkan struktur yang menekan.</p>
+<h3>Istilah yang dipakai</h3>
+<ol>
+<li><b>Float</b> — porsi suplai yang benar-benar beredar dan bisa diperdagangkan.</li>
+<li><b>FDV / market cap</b> — berapa kali lipat dilusi yang masih menunggu. 1,15× hampir penuh; 2–5× sedang; &gt;5× berat.</li>
+<li><b>Unlock</b> — jadwal pelepasan token yang dikunci untuk tim, investor, ekosistem. Yang penting bukan tanggalnya saja, tapi <em>berapa persen dari suplai beredar</em> yang dilepas dalam 90 hari ke depan. Batas peringatan: 5%.</li>
+</ol>
+<h3>Aturan bacanya: FDV × float bersama, bukan FDV sendirian</h3>
+<table>
+<tr><th>Kombinasi</th><th>Kecenderungan</th><th>Mekanismenya</th></tr>
+<tr><td>FDV rendah + float tinggi</td><td>Cenderung bisa naik</td><td>Pasar menganggap masih undervalued, dan perdagangannya ramai</td></tr>
+<tr><td>FDV tinggi + float rendah</td><td>Cenderung <b>tidak</b> bisa naik</td><td>Dua lapis: persepsi valuasi terlalu tinggi, dan likuiditas tipis sehingga price impact besar</td></tr>
+</table>
+<h3>Siapa yang memegang — dua pandangan yang harus ditulis apa adanya</h3>
+<p>Pandangan pertama: token yang mayoritas dipegang tim dan VC justru cenderung perform, karena pemegang besar yang sudah kaya jarang menjual (posisi itu kecil bagi mereka). Pandangan kedua: konsentrasi insider adalah risiko, karena perilaku itu bisa berubah. Keduanya benar dari sudut berbeda — yang satu bicara perilaku, yang lain bicara risiko kalau perilakunya berubah.</p>
+<p>Cara menyelesaikannya bukan dengan asumsi, tapi dengan <b>memeriksa</b>: lacak dompet penerima unlock, hitung berapa yang benar-benar dicairkan dibanding total yang diterima. Pengembang yang menerima $27 juta token dan mencairkan $1,3 juta berperilaku beda dari yang mencairkan semuanya.</p>
+<h3>Contoh</h3>
+<p>Token dengan FDV 6× market cap dan unlock 8% suplai beredar bulan depan: apa pun narasinya, ada penjual yang sudah pasti datang. Sebaliknya, token dengan FDV 1,1× dan unlock selesai: naik-turunnya murni soal permintaan.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Unlock tidak selalu bearish — di beberapa sektor harga justru naik sebelum unlock karena investor mengantisipasi. Bukti historisnya per sektor ada di dossier; jangan memakai satu aturan untuk semua sektor.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: Akademi Crypto, "Altcoins yang perform dan tidak perform" (Agustus 2024), kasus ENS (Juli 2024), tabel dampak unlock per sektor (Mei 2024); Lapis 5 screening Hanif Dossier Crypto.</div>` },
+
+{ nomor: 6, terbuka: false, judul: 'Tiga tahap altcoin: di mana posisi aset ini dalam siklusnya', ringkas: 'Banjir rilis, kapitulasi berbasis waktu, short squeeze. Tahapnya mengubah arti hampir semua metrik lain.', isi: `
+<h3>Konsepnya</h3>
+<p>Metrik yang sama berarti berbeda pada tahap siklus yang berbeda. Volume mengering di tahap 2 adalah kelelahan penjual; volume mengering di tahap 1 adalah pembeli yang pergi. Karena itu posisi dalam siklus wajib disebut sebelum metrik lain dibaca.</p>
+<h3>Tiga tahap</h3>
+<ol>
+<li><b>Banjir rilis di fase euforia.</b> Pengembang berlomba merilis memanfaatkan narasi. Ciri era terakhir: FDV tinggi, float rendah, airdrop sebagai senjata utama — lalu dihajar setelah rilis, hampir semua turun 50–80%.</li>
+<li><b>Kapitulasi berbasis waktu.</b> Harga sudah jenuh turun, tidak ada likuiditas untuk dijual, pembeli belum percaya diri. Semua lelah, semua sudah terlanjur masuk, semua menunggu "angka psikologis". Tahap ini diukur dengan waktu, bukan harga.</li>
+<li><b>Bottom seller ter-short squeeze.</b> Likuiditas tipis membuat harga bergerak jauh lebih cepat dari yang dibayangkan; FOMO menyusul. Kenaikan 50% seminggu masih dianggap murah.</li>
+</ol>
+<h3>Aturan bacanya</h3>
+<ul>
+<li>Tahap 1: struktur suplai (modul 5) mengalahkan semua sinyal lain.</li>
+<li>Tahap 2: yang dicari adalah <em>akumulasi diam-diam</em> — volume naik sementara harga datar — karena uang besar tidak mengejar harga, ia menyerap penawaran.</li>
+<li>Tahap 3: momentum adalah alasan untuk menoleh, bukan untuk membeli. Yang tahu duluan sudah selesai membeli.</li>
+</ul>
+<h3>Contoh</h3>
+<p>Dua token sama-sama turun 85% dari puncak. Yang satu dirilis tiga bulan lalu dengan float 12% (tahap 1 — unlock masih menunggu). Yang lain sudah 14 bulan di bawah, float 90%, volume tinggal seperlima (tahap 2). Angka "turun 85%" identik; artinya bertolak belakang.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Tahap tidak bisa ditentukan dari satu hari; butuh riwayat harga, volume, dan unlock minimal beberapa bulan. Dan tahap 2 bisa berlangsung jauh lebih lama dari kesabaran siapa pun — "sudah murah" bukan pemicu.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: Akademi Crypto, "Tiga tahap Altcoins" (Agustus 2024); Lapis 4 screening Hanif Dossier Crypto (akumulasi diam-diam).</div>` },
+
+{ nomor: 7, terbuka: false, judul: 'Rantai transmisi makro: berita AS → SPX → Bitcoin → altcoin', ringkas: 'Kenapa hanya berita AS yang perlu dipantau, kapan makro tidak relevan, dan rantai kedua lewat ETF dan Ethereum.', isi: `
+<h3>Konsepnya</h3>
+<p>Altcoin tidak membaca berita; ia membaca Bitcoin, dan Bitcoin membaca pasar saham AS, yang membaca data ekonomi AS. Kalau rantainya dipahami, sebagian besar berita bisa diabaikan dengan tenang.</p>
+<h3>Dua rantai</h3>
+<ol>
+<li><b>Berita AS → SPX → Bitcoin → altcoin.</b> Berita dari negara lain dampaknya kecil sampai tidak ada. Yang dipantau: rilis berkepentingan 2–3 bintang di kalender ekonomi (FOMC, inflasi, tenaga kerja).</li>
+<li><b>Aliran ETF → Ethereum → altcoin.</b> Aliran dana masuk/keluar ETF hari per hari dicocokkan dengan harga; setelah ETH berbalik positif, altcoin cenderung mengikuti.</li>
+</ol>
+<h3>Aturan bacanya: bobot makro bersyarat pada rezim</h3>
+<p>Dalam bull market yang normal, berita makro relatif tidak relevan — harga digerakkan aliran dana ke aset berisiko. Dalam kondisi anomali (likuiditas mengetat, ketidakpastian kebijakan), makro menentukan. Jadi sebutkan rezimnya dulu, baru putuskan seberapa serius membaca kalender.</p>
+<ul>
+<li>Menjelang, selama, dan sesudah rilis besar selalu ada pergolakan — bukan untuk ditebak arahnya, tapi untuk disiapkan ukuran posisinya.</li>
+<li>Transfer besar ke bursa menjelang katalis yang sudah diketahui publik = persiapan jual ("sell the news"). Penarikan dari bursa saat harga jatuh = akumulasi. Satu variabel, dua tanda.</li>
+</ul>
+<h3>Contoh</h3>
+<p>Peringatan pagi menyebut "FOMC 02.00 WIB, bintang tiga". Yang perlu dilakukan bukan menebak hasilnya, melainkan memastikan tidak ada posisi yang ukurannya membuat pergolakan 8% jadi masalah. Setelah rilis, yang dibaca adalah reaksi SPX, lalu BTC — altcoin datang belakangan.</p>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Rantai ini bekerja pada horizon hari sampai minggu. Pada horizon jam, arahnya sering acak; pada horizon tahun, yang menentukan adalah jantung protokol (modul 3), bukan makro.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: Akademi Crypto, Economic Calendar (Juni 2024), pelacakan aliran ETF dan dompet (Juli–Agustus 2024); briefing dan peringatan harian Hanif Dossier Crypto.</div>` },
+
+{ nomor: 8, terbuka: false, judul: 'Bias yang menggerakkan Anda: loss aversion, break-even syndrome, dan mengukur dalam unit aset', ringkas: 'Kenapa drawdown kecil terasa lebih sakit dari kenaikan sebesar yang sama, aritmetika yang membuat "jual lalu beli lagi" merugikan, dan pengukur yang tidak bisa ditipu.', isi: `
+<h3>Konsepnya</h3>
+<p>Analisis terbaik gagal bukan karena salah hitung, tapi karena orangnya berubah rencana di tengah jalan. Bias kognitif adalah bagian dari analisis, bukan hiasan — dan bias yang paling mahal di crypto ada dua.</p>
+<h3>Dua bias</h3>
+<ol>
+<li><b>Loss aversion.</b> Kerugian sebesar X terasa jauh lebih sakit daripada keuntungan sebesar X terasa menyenangkan. Akibatnya: drawdown kecil memicu keputusan besar.</li>
+<li><b>Break-even syndrome.</b> Tujuan berubah dari "menang" jadi "balik modal". Begitu harga kembali ke titik masuk, dijual — lalu dibeli lagi lebih tinggi karena FOMO.</li>
+</ol>
+<h3>Aritmetikanya — dihitung dalam jumlah koin, bukan harga</h3>
+<pre>Beli $100 di harga $1        → 100 koin
+Turun 50%, jual di $0,50     → $50
+Beli lagi di $2 dengan $50   → 25 koin
+
+Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga perempat.</pre>
+<p>Mengukur hasil dalam <b>unit aset</b> — bukan nilai rupiah — adalah pengukur yang tidak bisa ditipu oleh naik-turun harga.</p>
+<h3>Aturan bacanya</h3>
+<ul>
+<li>Persen tanpa basis nominal adalah angka yang menipu: "+100%" dari Rp10 juta dan dari Rp100 juta adalah dua cerita berbeda.</li>
+<li>Untung kecil tetap untung. Firma dengan aset kelolaan miliaran dolar tetap menutup posisi dengan profit 0,008% dari AUM — karena profit lebih baik daripada rugi.</li>
+<li>Kalau niatnya investasi: masuk bertahap, keluar bertahap, dan tulis di jurnal <em>kenapa</em> masuk — supaya tahu kapan tesisnya gugur, bukan kapan perasaannya berubah.</li>
+</ul>
+<div class="batas-berlaku"><b>Batas keberlakuan.</b> Modul ini bukan nasihat alokasi. Ukuran posisi, kapan masuk, dan kapan keluar adalah keputusan Anda dan risikonya milik Anda. Yang bisa diberikan riset hanyalah bahan supaya keputusan itu diambil dengan bias yang disadari.</div>
+<p>Semoga bermanfaat.</p>
+<div class="sumber">Sumber: Akademi Crypto, "Pain of losing vs joy of winning", "Break Even Syndrome", "Bias angka" (Agustus 2024), Spartan Group (Juli 2024).</div>` },
+];
+
+(async () => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const p = await akun.pasangMenu();
+  const anggota = !!(p && p.disetujui);
+  const bolehBaca = m => m.terbuka || anggota;
+
+  $('daftar').innerHTML = MODUL.map(m => `<button class="kartu modul-kartu${bolehBaca(m) ? '' : ' terkunci'}" data-n="${m.nomor}">
+    <span class="nomor">Modul ${m.nomor}</span>
+    <h3 class="serif">${esc(m.judul)}</h3>
+    <p>${esc(m.ringkas)}</p>
+    <span class="status">${bolehBaca(m) ? 'Baca →' : 'Untuk anggota'}</span>
+  </button>`).join('');
+
+  function buka(n, gulir = true) {
+    const m = MODUL.find(x => x.nomor === n); if (!m) return;
+    document.querySelectorAll('.modul-kartu').forEach(k => k.classList.toggle('aktif', Number(k.dataset.n) === n));
+    const sebelum = MODUL.find(x => x.nomor === n - 1), sesudah = MODUL.find(x => x.nomor === n + 1);
+    const navigasi = `<div class="nav-modul">${sebelum ? `<a class="kedua tbl" href="#modul-${sebelum.nomor}">← Modul ${sebelum.nomor}</a>` : '<span></span>'}${sesudah ? `<a class="utama tbl" href="#modul-${sesudah.nomor}">Modul ${sesudah.nomor} →</a>` : ''}</div>`;
+    $('baca').hidden = false;
+    $('baca').innerHTML = bolehBaca(m)
+      ? `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><div class="sub">Format kelas: konsep → istilah → aturan baca → contoh → batas keberlakuan.</div>${m.isi}${navigasi}`
+      : `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><p>${esc(m.ringkas)}</p><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–8 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">${p ? '<a class="utama" href="langganan.html">Selesaikan langganan</a>' : '<a class="utama" href="langganan.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=modul.html">Sudah anggota? Masuk</a>'}</div></div>${navigasi}`;
+    history.replaceState(null, '', `#modul-${n}`);
+    if (gulir) $('baca').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('daftar').addEventListener('click', e => { const b = e.target.closest('.modul-kartu'); if (b) buka(Number(b.dataset.n)); });
+  window.addEventListener('hashchange', () => { const n = Number((location.hash.match(/modul-(\d+)/) || [])[1]); if (n) buka(n); });
+  const awal = Number((location.hash.match(/modul-(\d+)/) || [])[1]);
+  buka(awal || 1, !!awal);
+})();
+</script>
+</body>
+</html>

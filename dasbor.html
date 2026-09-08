@@ -134,7 +134,8 @@ body.tamu .daftar-laptop{display:none}
     <a href="laporan.html?h=radar">Radar</a>
     <a href="laporan.html?h=peringatan">Peringatan</a>
     <a href="laporan.html?h=screening">Screening</a>
-    <a href="pustaka.html">Pustaka</a>
+    <a href="modul.html">Modul</a>
+    <a href="pustaka.html" id="tautan-pustaka" hidden>Pustaka</a>
     <a href="admin.html" id="tautan-admin" hidden>Anggota</a>
     <a href="#" id="tautan-keluar">Keluar</a>
   </nav>
@@ -239,7 +240,7 @@ body.tamu .daftar-laptop{display:none}
   const namaLengkap = (profil.anggota && profil.anggota.nama) || (profil.pengguna.user_metadata && profil.pengguna.user_metadata.nama) || '';
   const namaDepan = namaLengkap.trim().split(/\s+/)[0];
   $('sapa-nama').textContent = namaDepan || 'kawan';
-  if (profil.admin) $('tautan-admin').hidden = false;
+  if (profil.admin) { $('tautan-admin').hidden = false; $('tautan-pustaka').hidden = false; }
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
   const tamu = !profil.disetujui;
