@@ -33,7 +33,12 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
 .pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
 .pesan.info{display:block;background:var(--pasir);color:var(--pasir-tua)}
 .status{text-align:center;padding:10px 0 4px}
-.status .ikon{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--pasir)}
+.status .ikon{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--pasir)}
+.status .ikon.ok{background:var(--sage-lembut)}.status .ikon.gagal{background:var(--bata-lembut)}
+@keyframes putar{0%{transform:rotate(0)}20%{transform:rotate(180deg)}50%{transform:rotate(180deg)}70%{transform:rotate(360deg)}100%{transform:rotate(360deg)}}
+.status .ikon svg.pasir{animation:putar 2.4s ease-in-out infinite}
+.status .tombol{display:inline-block;margin-top:18px;padding:13px 26px;border-radius:12px;background:var(--sage);color:#fff;font-weight:700;text-decoration:none;font-size:15px}
+.status .kecil{margin-top:10px;font-size:12px;color:var(--redup,#a3aca7)}
 .status h2{margin:0 0 6px;font-size:1.4rem}
 .status p{margin:0;color:var(--tx2);font-size:14px}
 .tautan{margin-top:16px;font-size:13px;color:var(--lb);text-align:center}
@@ -67,6 +72,8 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       <div class="ikon" id="status-ikon"></div>
       <h2 class="serif" id="status-judul"></h2>
       <p id="status-teks"></p>
+      <a class="tombol" id="status-tombol" href="index.html" hidden>Masuk ke laporan</a>
+      <p class="kecil" id="status-kecil"></p>
       <div class="tautan"><a href="#" id="keluar">Keluar</a> <span id="admin-tautan" hidden>· <a href="admin.html">Halaman admin</a></span></div>
     </div>
   </div>
@@ -93,15 +100,38 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     return m || 'Terjadi kesalahan. Coba lagi.';
   };
 
-  // Tampilkan halaman status untuk akun yang belum disetujui.
+  // Halaman status: menunggu verifikasi (jam pasir), sudah diverifikasi (tombol masuk),
+  // atau tidak disetujui. Tidak menyebut alamat email siapa pun.
+  const PASIR = '<svg class="pasir" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8a6a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M7 2v4a5 5 0 0 0 10 0V2M7 22v-4a5 5 0 0 1 10 0v4"/><path d="M9 6.5h6M10 18h4" stroke="#c9a961"/></svg>';
+  const CENTANG = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  const SILANG = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b86b5c" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+  let pemantau = null;
   function tampilkanStatus(p) {
     $('formulir').hidden = true; $('status').hidden = false;
-    const st = p.anggota ? p.anggota.status : 'menunggu';
-    const ikon = st === 'ditolak' ? '✕' : '⏳';
-    $('status-ikon').innerHTML = `<span style="font-size:28px">${ikon}</span>`;
-    if (st === 'ditolak') { $('status-judul').textContent = 'Pendaftaran tidak disetujui'; $('status-teks').textContent = 'Mohon maaf, akun ini belum dapat kami berikan akses. Hubungi kami melalui Instagram atau WhatsApp bila Anda merasa ini keliru.'; }
-    else { $('status-judul').textContent = 'Menunggu persetujuan kami'; $('status-teks').textContent = `Terima kasih, pendaftaran Anda${p.pengguna.email ? ` dengan ${p.pengguna.email}` : ''} sedang kami tinjau. Begitu disetujui, kami mengirim email berisi tombol Masuk; setelah itu seluruh laporan terbuka untuk Anda.`; }
     $('admin-tautan').hidden = !p.admin;
+    const st = p.disetujui ? 'disetujui' : (p.anggota ? p.anggota.status : 'menunggu');
+    const ikon = $('status-ikon'); ikon.className = 'ikon';
+    $('status-tombol').hidden = true; $('status-kecil').textContent = '';
+    if (st === 'disetujui') {
+      ikon.classList.add('ok'); ikon.innerHTML = CENTANG;
+      $('status-judul').textContent = 'Akun Anda sudah diverifikasi';
+      $('status-teks').textContent = 'Selamat datang. Seluruh laporan sudah terbuka untuk Anda.';
+      $('status-tombol').hidden = false;
+      $('status-kecil').textContent = 'Anda sudah masuk; tidak perlu mengetik apa pun lagi.';
+      if (pemantau) { clearInterval(pemantau); pemantau = null; }
+    } else if (st === 'ditolak') {
+      ikon.classList.add('gagal'); ikon.innerHTML = SILANG;
+      $('status-judul').textContent = 'Pendaftaran tidak disetujui';
+      $('status-teks').textContent = 'Mohon maaf, akun ini belum dapat kami berikan akses. Hubungi kami melalui Instagram atau WhatsApp bila Anda merasa ini keliru.';
+      if (pemantau) { clearInterval(pemantau); pemantau = null; }
+    } else {
+      ikon.innerHTML = PASIR;
+      $('status-judul').textContent = 'Menunggu verifikasi';
+      $('status-teks').textContent = 'Pendaftaran Anda sedang kami verifikasi. Halaman ini akan berubah sendiri begitu selesai; Anda tidak perlu memuat ulang.';
+      $('status-kecil').innerHTML = 'Kami juga mengabari lewat email. Sementara menunggu, Anda bisa <a href="index.html">melihat keadaan pasar</a>.';
+      // Periksa tiap 8 detik: begitu disetujui, halaman berganti ke tombol masuk.
+      if (!pemantau) pemantau = setInterval(async () => { const q = await akun.profil(); if (q && (q.disetujui || (q.anggota && q.anggota.status === 'ditolak'))) tampilkanStatus(q); }, 8000);
+    }
   }
 
   // Sudah masuk? Langsung arahkan.
@@ -120,16 +150,18 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     pesan('', '');
   }));
 
+  try { const ingat = localStorage.getItem('email-terakhir'); if (ingat && !$('email').value) $('email').value = ingat; } catch {}
   $('form').addEventListener('submit', async e => {
     e.preventDefault();
     const email = $('email').value.trim(), sandi = $('sandi').value, nama = $('nama').value.trim();
+    try { localStorage.setItem('email-terakhir', email); } catch {}
     $('kirim').disabled = true; pesan('', '');
     try {
       if (mode === 'daftar') {
         const { data, error } = await akun.sb.auth.signUp({ email, password: sandi, options: { data: { nama } } });
         if (error) throw error;
         if (data.session) { location.replace('masuk.html#status'); location.reload(); return; }
-        pesan(`Pendaftaran diterima. Kami telah mengirim email konfirmasi ke ${email} — buka tautan di dalamnya (periksa juga folder spam). Setelah itu akun Anda kami tinjau; begitu disetujui, kami kirim email berisi tombol Masuk.`, 'baik');
+        pesan('Pendaftaran diterima. Kami telah mengirim email konfirmasi ke alamat Anda; buka tautan di dalamnya (periksa juga folder spam), lalu masuk. Setelah itu akun Anda menunggu verifikasi kami.', 'baik');
       } else {
         const { error } = await akun.sb.auth.signInWithPassword({ email, password: sandi });
         if (error) throw error;
