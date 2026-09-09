@@ -68,7 +68,15 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   </div>
 
   <h1 class="serif">Anggota</h1>
-  <p class="sub">Pendaftar baru masuk ke daftar Menunggu. Klik Setujui: statusnya berubah dan ia menerima email berisi tombol Masuk.</p>
+  <p class="sub">Pendaftar baru masuk ke daftar Menunggu. Bukti transfer masuk lewat bot Telegram; setujui di sana, atau klik Setujui di sini kalau pembayarannya lewat jalur lain.</p>
+
+  <div class="undang" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+    <div>
+      <h2 class="serif" style="margin:0 0 4px">Bot Telegram @HanifDossierBot</h2>
+      <p class="sub" style="margin:0" id="tg-status">Memeriksa sambungan…</p>
+    </div>
+    <a class="tombol-tg" id="tg-tautan" href="https://t.me/HanifDossierBot" target="_blank" rel="noopener" style="display:inline-block;padding:11px 18px;border-radius:12px;background:#2AABEE;color:#fff;font-weight:700;text-decoration:none;white-space:nowrap">Buka bot Telegram</a>
+  </div>
 
   <div class="pesan" id="pesan"></div>
 
@@ -108,7 +116,11 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   const pesan = (teks, jenis) => { const p = $('pesan'); p.textContent = teks; p.className = 'pesan ' + (jenis || 'salah'); };
 
   // Hanya pemilik situs yang boleh melihat halaman ini; sisanya dilempar ke beranda.
-  await akun.wajibMasuk({ hanyaAdmin: true });
+  const profilTg = await akun.wajibMasuk({ hanyaAdmin: true });
+  $('tg-tautan').href = akun.tautanLangganan(profilTg);
+  $('tg-status').textContent = profilTg.anggota && profilTg.anggota.telegram_chat_id
+    ? 'Telegram Anda sudah terhubung: setiap bukti transfer dikirim ke chat Anda dengan tombol Setujui / Tolak. Perintah di bot: /menunggu untuk melihat antrean.'
+    : 'Belum terhubung. Tekan tombol, lalu Start di Telegram — sesudah itu bukti transfer dari calon anggota dikirim ke chat Anda.';
 
   let semua = [], saringan = 'menunggu';
 

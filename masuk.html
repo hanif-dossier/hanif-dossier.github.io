@@ -20,10 +20,14 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 
 .kiri .mata{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:700}
 .kiri h2{font-size:2.35rem;line-height:1.1;margin:0;letter-spacing:-.01em}.kiri h2 span{color:var(--sage)}
 .kiri .pengantar{margin:0;color:var(--tx2);font-size:16px;max-width:52ch}
-.harga-kartu{background:var(--kartu);border-radius:22px;padding:20px 22px;box-shadow:var(--bayang);border:1px solid var(--gr);display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
-.harga-kartu .nominal{font-size:2.1rem;line-height:1;white-space:nowrap}.harga-kartu .nominal small{font-size:14px;color:var(--lb);font-family:"Nunito Sans",sans-serif;margin-left:4px}
-.harga-kartu .alt{font-size:13px;color:var(--tx2)}.harga-kartu .alt b{color:var(--tx)}
-.harga-kartu .catat{grid-column:1/-1;font-size:12.5px;color:var(--lb);border-top:1px dashed var(--gr);padding-top:10px;margin-top:4px}
+.paket{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.paket .kartu-p{background:var(--kartu);border-radius:18px;padding:16px 18px;box-shadow:var(--bayang);border:1px solid var(--gr);position:relative}
+.paket .kartu-p.utama-p{border-color:var(--sage);box-shadow:0 10px 30px rgba(79,122,104,.14)}
+.paket .kartu-p .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700}
+.paket .kartu-p .pita{position:absolute;top:12px;right:12px;font-size:10.5px;font-weight:700;background:var(--sage-lembut);color:var(--sage-tua);padding:3px 9px;border-radius:999px}
+.paket .nominal{font-size:1.6rem;line-height:1.1;margin-top:6px;white-space:nowrap}.paket .nominal small{font-size:13px;color:var(--lb);font-family:"Nunito Sans",sans-serif;margin-left:3px}
+.paket .ket{font-size:12.5px;color:var(--tx2);margin-top:6px;line-height:1.45}
+.jaminan{font-size:12.5px;color:var(--tx2);background:var(--pasir);border-radius:14px;padding:10px 14px;margin:0}
 .manfaat{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;margin:0;padding:0;list-style:none}
 .manfaat li{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:var(--tx2)}
 .manfaat li b{color:var(--tx);font-weight:700}
@@ -32,7 +36,7 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 
 .alur span{font-size:12.5px;background:var(--sage-lembut);color:var(--sage-tua);padding:5px 11px;border-radius:999px;font-weight:700}
 .alur span i{font-style:normal;opacity:.6;margin-right:4px}
 .kiri .kecil{font-size:12.5px;color:var(--lb);margin:0}
-@media(max-width:860px){.panel{grid-template-columns:minmax(0,1fr);gap:26px}.kiri{min-width:0}.kotak{order:-1;max-width:480px}.kiri h2{font-size:1.8rem}.manfaat{grid-template-columns:1fr}.merek{justify-content:center}.harga-kartu{grid-template-columns:1fr;gap:8px}.harga-kartu .nominal{font-size:1.8rem}}
+@media(max-width:860px){.paket{grid-template-columns:1fr}.panel{grid-template-columns:minmax(0,1fr);gap:26px}.kiri{min-width:0}.kotak{order:-1;max-width:480px}.kiri h2{font-size:1.8rem}.manfaat{grid-template-columns:1fr}.merek{justify-content:center}.harga-kartu{grid-template-columns:1fr;gap:8px}.harga-kartu .nominal{font-size:1.8rem}}
 .merek .daun{width:44px;height:44px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center}
 .merek b{display:block;font-size:16px}.merek small{color:var(--lb);font-size:12px}
 .kartu{background:var(--kartu);border-radius:24px;padding:26px 26px 22px;box-shadow:var(--bayang)}
@@ -71,11 +75,12 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   <section class="kiri">
     <div class="mata">Riset crypto, dua sisi</div>
     <h2 class="serif">Sebelum beli, baca dulu <span>argumen lawannya.</span></h2>
-    <p class="pengantar">Empat laporan tiap pagi, belasan dossier token yang dibaca langsung di situs, dan modul edukasi — satu langganan, tanpa paket bertingkat.</p>
-    <div class="harga-kartu">
-      <div class="serif nominal">Rp 500.000<small>/ bulan</small></div>
-      <div class="alt">atau <b>Rp 5.000.000 / tahun</b> — dua bulan gratis.<br>Berhenti kapan saja; tidak ada perpanjangan otomatis.</div>
-      <div class="catat">Dibeli satuan, dossier-nya Rp 750.000 per token. Dengan langganan, semuanya termasuk.</div>
+    <p class="pengantar">Empat laporan tiap pagi, belasan dossier token yang dibaca langsung di situs, dan modul edukasi — satu langganan untuk semuanya, ditambah dua layanan satuan kalau perlu.</p>
+    <div class="paket">
+      <div class="kartu-p utama-p"><div class="lbl">Langganan bulanan</div><div class="serif nominal">Rp 500.000<small>/ bulan</small></div><div class="ket">Semua laporan pagi, seluruh dossier, modul edukasi, data pasar. Berhenti kapan saja; tidak ada perpanjangan otomatis.</div></div>
+      <div class="kartu-p"><span class="pita">2 bulan gratis</span><div class="lbl">Langganan tahunan</div><div class="serif nominal">Rp 5.000.000<small>/ tahun</small></div><div class="ket">Isi yang sama, setara Rp 417.000 per bulan. Cocok kalau Anda memang memantau pasar tiap hari.</div></div>
+      <div class="kartu-p"><div class="lbl">Dossier pesanan</div><div class="serif nominal">Rp 750.000<small>/ token</small></div><div class="ket">Token pilihan Anda yang belum ada di pustaka, 6.000–10.000 kata, selesai 5–7 hari kerja. <b>Anggota: Rp 500.000.</b></div></div>
+      <div class="kartu-p"><div class="lbl">Second opinion</div><div class="serif nominal">Rp 350.000<small>/ tesis</small></div><div class="ket">Anda punya alasan membeli; tugas kami mencari lubangnya. Selesai 2–3 hari kerja.</div></div>
     </div>
     <ul class="manfaat">
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Briefing Harian</b> 06.00 WIB — pasar, kebijakan, satu hal yang paling penting</span></li>
@@ -86,6 +91,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Data pasar harian</b> — RWA, stablecoin, papan peringkat fee</span></li>
     </ul>
     <div class="alur"><span><i>1</i>Daftar akun</span><span><i>2</i>Lanjut ke Telegram, bayar</span><span><i>3</i>Kami konfirmasi</span><span><i>4</i>Semua terbuka</span></div>
+    <p class="jaminan"><b>Kalau tidak cocok:</b> dalam 7 hari pertama, sisa bulan pertama dikembalikan tanpa tanya-tanya. Pembayaran lewat transfer bank yang diberikan bot Telegram kami setelah Anda mendaftar — kami tidak pernah memulai chat meminta transfer.</p>
     <p class="kecil">Daftar isi tiap dossier dan data pasar bisa dilihat gratis di <a href="riset.html" style="color:var(--sage);font-weight:700;text-decoration:none">halaman Riset</a> dan <a href="pasar.html" style="color:var(--sage);font-weight:700;text-decoration:none">Pasar</a>. Diundang langsung oleh pemilik? Daftar dengan email yang diundang — akun langsung aktif.</p>
   </section>
   <div class="kotak">

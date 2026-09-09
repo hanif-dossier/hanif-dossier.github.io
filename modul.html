@@ -51,7 +51,7 @@
     <a href="riset.html">Riset</a>
     <a href="pasar.html">Pasar</a>
     <a class="aktif" href="modul.html">Modul</a>
-    <a href="langganan.html">Langganan</a>
+    <a href="masuk.html">Langganan</a>
     <a href="dasbor.html" data-anggota hidden>Laporan</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
@@ -313,7 +313,7 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
     $('baca').hidden = false;
     $('baca').innerHTML = bolehBaca(m)
       ? `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><div class="sub">Format kelas: konsep → istilah → aturan baca → contoh → batas keberlakuan.</div>${m.isi}${navigasi}`
-      : `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><p>${esc(m.ringkas)}</p><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–8 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">${p ? '<a class="utama" href="langganan.html">Selesaikan langganan</a>' : '<a class="utama" href="langganan.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=modul.html">Sudah anggota? Masuk</a>'}</div></div>${navigasi}`;
+      : `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><p>${esc(m.ringkas)}</p><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–8 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">${p ? '<a class="utama" href="masuk.html">Selesaikan langganan</a>' : '<a class="utama" href="masuk.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=modul.html">Sudah anggota? Masuk</a>'}</div></div>${navigasi}`;
     history.replaceState(null, '', `#modul-${n}`);
     if (gulir) $('baca').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
