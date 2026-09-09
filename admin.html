@@ -142,7 +142,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
       isi.className = 'isi';
       const nama = document.createElement('div'); nama.className = 'nama'; nama.textContent = a.nama || '(tanpa nama)';
       const email = document.createElement('div'); email.className = 'email'; email.textContent = a.email;
-      const kapan = document.createElement('div'); kapan.className = 'kapan'; kapan.textContent = 'Daftar ' + tanggal(a.dibuat_pada);
+      const kapan = document.createElement('div'); kapan.className = 'kapan'; kapan.textContent = 'Daftar ' + tanggal(a.dibuat_pada) + (a.langganan_sampai ? ' · langganan sampai ' + a.langganan_sampai + (a.paket ? ' (' + a.paket + ')' : '') : (a.status === 'disetujui' ? ' · tanpa batas waktu' : ''));
       isi.append(nama, email, kapan);
       const cap = document.createElement('span'); cap.className = 'cap ' + a.status; cap.textContent = a.status;
       const aksi = document.createElement('div'); aksi.className = 'aksi';
