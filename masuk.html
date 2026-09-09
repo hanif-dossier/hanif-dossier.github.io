@@ -118,7 +118,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       $('status-judul').textContent = 'Akun Anda sudah dikonfirmasi';
       $('status-teks').textContent = 'Mohon klik tombol di bawah untuk masuk. Seluruh laporan sudah terbuka untuk Anda.';
       $('status-tombol').textContent = 'Masuk ke laporan'; $('status-tombol').href = 'dasbor.html'; $('status-tombol').removeAttribute('target'); $('status-tombol').hidden = false;
-      $('status-kecil').textContent = 'Anda sudah masuk; tidak perlu mengetik apa pun lagi.';
+      $('status-kecil').innerHTML = 'Anda sudah masuk; tidak perlu mengetik apa pun lagi.' + (akun.BOT_TELEGRAM ? ' · <a href="' + akun.tautanLangganan(p) + '" target="_blank" rel="noopener">Hubungkan Telegram</a>' + (p.admin ? ' (admin: untuk menerima bukti transfer)' : ' (untuk perpanjangan)') : '');
       if (pemantau) { clearInterval(pemantau); pemantau = null; }
     } else if (st === 'ditolak') {
       ikon.classList.add('gagal'); ikon.innerHTML = SILANG;
