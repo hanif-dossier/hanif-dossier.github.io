@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasar — Hanif Dossier Crypto</title>
+<meta name="description" content="Data pasar crypto yang diperbarui tiap pagi: kapitalisasi aset dunia nyata (RWA), stablecoin, papan peringkat fee dan pendapatan, dan ekosistem per koin.">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+.angka-besar{font-size:2rem;line-height:1.05}
+.ubin-pasar{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:12px;margin-top:16px}
+.ubin-pasar .kartu{padding:16px 18px}
+.ubin-pasar .lbl{font-size:12px;color:var(--lb);letter-spacing:.04em;text-transform:uppercase}
+.ubin-pasar .nil{font-size:1.45rem;margin-top:4px}
+.ubin-pasar .sub{font-size:13px;margin-top:2px;color:var(--tx2)}
+.dua{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-top:18px}
+@media(max-width:800px){.dua{grid-template-columns:1fr}}
+.baris{display:grid;grid-template-columns:minmax(120px,38%) 1fr auto;gap:10px;align-items:center;font-size:14px;padding:5px 0}
+.baris .nama{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.baris .nama small{color:var(--lb);font-size:12px;margin-left:4px}
+.baris .palang{height:10px;border-radius:999px;background:var(--lembut);overflow:hidden}.baris .palang i{display:block;height:100%;border-radius:999px;background:var(--sage)}
+.baris.k2 .palang i{background:var(--emas,#c9a961)}.baris.k3 .palang i{background:var(--bata)}
+.baris .nil{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.grafik svg{display:block;width:100%;height:auto}
+.tab{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 6px}
+.tab button{font:inherit;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;border:1px solid var(--gr);background:var(--kartu);color:var(--tx2);cursor:pointer}
+.tab button.aktif{background:var(--sage);border-color:var(--sage);color:#fff}
+table.papan{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+table.papan th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--lb);text-align:left;padding:8px 6px;border-bottom:1px solid var(--gr)}
+table.papan td{padding:8px 6px;border-bottom:1px solid var(--gr);vertical-align:middle}
+table.papan td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.papan td.no{color:var(--lb);width:28px}
+table.papan .mini{height:8px;border-radius:999px;background:var(--lembut);min-width:80px}.mini i{display:block;height:100%;border-radius:999px;background:var(--sage)}
+.gulir{overflow-x:auto}
+.koin-kisi{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:16px}
+.koin-kartu .kepala{display:flex;align-items:center;gap:10px}
+.koin-kartu .kepala b{font-size:16px}.koin-kartu .kepala small{display:block;color:var(--lb);font-size:12px}
+.koin-kartu .harga{font-size:1.4rem;margin-top:8px;align-items:baseline}
+.koin-kartu .metrik{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:10px;font-size:13px}
+.koin-kartu .metrik span{color:var(--lb)}.koin-kartu .metrik b{display:block;font-variant-numeric:tabular-nums}
+.koin-kartu .fee-mini{display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:10px}
+.koin-kartu .fee-mini i{flex:1;background:var(--sage-lembut);border-radius:4px 4px 0 0;position:relative}.koin-kartu .fee-mini i:last-child{background:var(--sage)}
+.koin-kartu .fee-mini i::after{content:attr(data-l);position:absolute;top:100%;left:0;right:0;text-align:center;font-size:10px;color:var(--lb);font-style:normal}
+.koin-kartu .top{font-size:12px;color:var(--tx2);margin-top:22px;line-height:1.5}
+.koin-kartu .aksi{margin-top:10px;font-size:13px}.koin-kartu .aksi a{color:var(--sage);font-weight:700}
+.jelas{font-size:13px;color:var(--tx2);margin-top:8px;max-width:70ch}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="index.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a class="aktif" href="pasar.html">Pasar</a>
+    <a href="modul.html">Modul</a>
+    <a href="langganan.html">Langganan</a>
+    <a href="dasbor.html" data-anggota hidden>Laporan</a>
+    <a href="pustaka.html" data-admin hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<section class="bagian" style="margin-top:28px">
+  <div class="mata">Pasar hari ini · <span id="waktu">memuat…</span></div>
+  <h1 class="serif" style="font-size:2.2rem;margin:6px 0 4px">Angka yang dipakai <span style="color:var(--sage)">dossier</span>, diperbarui tiap pagi.</h1>
+  <p class="pengantar">Sumber yang sama dengan riset profesional — DefiLlama, CoinGecko, Coinbase — ditarik otomatis dan disajikan tanpa dipoles. Fee dan pendapatan di sini adalah uang yang benar-benar dibayar pengguna, bukan klaim proyek.</p>
+  <div class="ubin-pasar" id="ubin"></div>
+  <p class="jelas" id="premium-jelas"></p>
+</section>
+
+<section class="bagian" id="rwa">
+  <div class="mata">Aset dunia nyata (RWA)</div>
+  <div class="judul"><h2 class="serif">Kapitalisasi RWA on-chain</h2><span class="catatan" id="rwa-ringkas"></span></div>
+  <p class="pengantar">Surat utang, emas, saham, dan kredit yang ditokenisasi — nilai yang benar-benar terkunci di kontrak, tanpa stablecoin. Ini pasar yang sedang dimasuki keuangan tradisional, aset demi aset.</p>
+  <div class="dua">
+    <div class="kartu grafik"><div class="catatan">Riwayat 36 bulan · US$ miliar · jumlah 12 protokol RWA terbesar hari ini</div><svg id="rwa-garis" role="img" aria-label="Riwayat kapitalisasi RWA 36 bulan"></svg></div>
+    <div class="kartu"><div class="catatan" style="margin-bottom:8px">Menurut jenis aset</div><div id="rwa-jenis"></div></div>
+  </div>
+  <div class="kartu" style="margin-top:14px"><div class="catatan" style="margin-bottom:8px">12 protokol RWA terbesar</div><div id="rwa-teratas"></div></div>
+</section>
+
+<section class="bagian" id="stablecoin">
+  <div class="mata">Stablecoin</div>
+  <div class="judul"><h2 class="serif">Dolar on-chain</h2><span class="catatan" id="stable-ringkas"></span></div>
+  <p class="pengantar">Stablecoin adalah produk crypto yang paling dipakai. Rantai yang menampungnya mendapat fee yang lengket, dan itu sebabnya angka ini muncul di hampir setiap dossier.</p>
+  <div class="dua">
+    <div class="kartu grafik"><div class="catatan">Riwayat 36 bulan · US$ miliar · semua rantai</div><svg id="stable-garis" role="img" aria-label="Riwayat stablecoin 36 bulan"></svg></div>
+    <div class="kartu"><div class="catatan" style="margin-bottom:8px">Per rantai</div><div id="stable-rantai"></div></div>
+  </div>
+</section>
+
+<section class="bagian" id="papan">
+  <div class="mata">Papan peringkat</div>
+  <div class="judul"><h2 class="serif">Siapa yang benar-benar dibayar</h2><span class="catatan">30 hari terakhir · DefiLlama</span></div>
+  <p class="pengantar">Fee = yang dibayar pengguna. Pendapatan = bagian yang sampai ke protokol atau pemegang tokennya. Selisih keduanya adalah uang yang mengalir ke penyedia likuiditas dan validator.</p>
+  <div class="tab" id="tab"></div>
+  <div class="kartu gulir"><table class="papan" id="papan-tabel"></table></div>
+</section>
+
+<section class="bagian" id="ekosistem">
+  <div class="mata">Ekosistem per koin</div>
+  <div class="judul"><h2 class="serif">Koin yang sudah punya dossier</h2><a href="riset.html">Baca dossier-nya →</a></div>
+  <p class="pengantar">Untuk rantai: TVL, fee jaringan, stablecoin, volume DEX, dan jumlah protokol yang hidup di atasnya. Untuk aplikasi: TVL dan fee protokolnya sendiri. Grafik kecil = fee bulanan enam bulan terakhir; tanda * = bulan berjalan, belum penuh.</p>
+  <div class="koin-kisi" id="koin"></div>
+</section>
+
+<div class="kaki">
+  <div class="penafian" id="sumber">Sumber: DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
+</div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  akun.pasangMenu && akun.pasangMenu();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const id = n => Number(n).toLocaleString('id-ID');
+  const uang = n => n == null ? 'n/a' : Math.abs(n) >= 1e12 ? `$${(n / 1e12).toFixed(2).replace('.', ',')} T` : Math.abs(n) >= 1e9 ? `$${(n / 1e9).toFixed(n >= 1e10 ? 1 : 2).replace('.', ',')} M` : Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace('.', ',')} jt` : Math.abs(n) >= 1e3 ? `$${(n / 1e3).toFixed(0)} rb` : `$${Number(n).toFixed(0)}`;
+  const harga = n => n == null ? 'n/a' : n >= 1000 ? `$${id(Math.round(n))}` : n >= 1 ? `$${n.toFixed(2).replace('.', ',')}` : `$${n.toFixed(4).replace('.', ',')}`;
+  const persen = (v, d = 1) => v == null ? 'n/a' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(d).replace('.', ',')}%`;
+  const kelas = v => v == null ? '' : v > 0 ? 'naik' : v < 0 ? 'turun' : '';
+  const rapi = s => String(s).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace(/Bsc/, 'BSC').replace(/Off Chain/, 'Di luar rantai');
+  const bulanPendek = b => { const [t, m] = b.split('-'); return ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'][+m - 1] + ' ' + t.slice(2); };
+
+  let d;
+  try { d = await (await fetch('data/pasar.json', { cache: 'no-cache' })).json(); }
+  catch { $('ubin').innerHTML = '<span class="memuat">Data pasar belum tersedia. Coba lagi beberapa menit lagi.</span>'; return; }
+
+  const tgl = new Date(d.diperbarui);
+  $('waktu').textContent = 'diperbarui ' + tgl.toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) + ' WIB';
+
+  // ---- ubin pasar
+  const p = d.pasar || {}, prem = p.coinbasePremium;
+  const ubin = [
+    ['Kapitalisasi total', uang(p.kapTotal), `<span class="${kelas(p.ubah24)}">${persen(p.ubah24, 2)}</span> dalam 24 jam`],
+    ['Volume 24 jam', uang(p.volume24), 'seluruh pasar'],
+    ['Dominasi Bitcoin', persen(p.domBtc, 1).replace(/^[+−]/, ''), `Ethereum ${persen(p.domEth, 1).replace(/^[+−]/, '')}`],
+    ['Fear & Greed', p.fng ? p.fng.nilai : 'n/a', p.fng ? p.fng.label : ''],
+    ['Stablecoin beredar', uang(d.stable?.total), `${d.stable?.perRantai?.[0]?.nama || ''} terbesar`],
+    ['Aset dunia nyata', uang(d.rwa?.total), `${d.rwa?.jumlahProtokol || 0} protokol`],
+    ['Coinbase premium', prem ? persen(prem.persen, 3) : 'n/a', prem ? `Coinbase ${harga(prem.coinbase)} vs Binance ${harga(prem.binance)}` : 'tidak tersedia'],
+  ];
+  $('ubin').innerHTML = ubin.map(([l, n, s], i) => `<div class="kartu"><div class="lbl">${l}</div><div class="serif nil ${i === 6 && prem ? kelas(prem.persen) : ''}">${n}</div><div class="sub">${s}</div></div>`).join('');
+  if (prem) $('premium-jelas').innerHTML = `<b>Coinbase premium</b> adalah selisih harga Bitcoin di Coinbase (pembeli Amerika dan institusi) terhadap Binance. Hari ini ${persen(prem.persen, 3)}: ${Math.abs(prem.persen) < 0.05 ? 'netral, tidak ada dorongan beli atau jual yang berarti dari Amerika' : prem.persen > 0 ? 'permintaan dari Amerika lebih kuat daripada pasar global' : 'ada tekanan jual dari Amerika'}. Dihitung dari harga per bursa di CoinGecko.`;
+
+  // ---- baris palang
+  const palang = (items, nilaiDari, labelDari, { kelasKe = () => '', format = uang, sub = () => '' } = {}) => {
+    const maks = Math.max(...items.map(nilaiDari), 1);
+    return items.map(x => `<div class="baris ${kelasKe(x)}"><div class="nama" title="${esc(labelDari(x))}">${esc(labelDari(x))}${sub(x) ? `<small>${esc(sub(x))}</small>` : ''}</div><div class="palang"><i style="width:${(nilaiDari(x) / maks * 100).toFixed(1)}%"></i></div><div class="nil">${format(nilaiDari(x))}</div></div>`).join('');
+  };
+
+  // ---- grafik garis
+  const garis = (svg, deret, { satuan = 1e9 } = {}) => {
+    if (!deret?.length) { svg.outerHTML = '<div class="memuat">Riwayat belum tersedia.</div>'; return; }
+    const W = 640, H = 260, m = { a: 18, b: 34, k: 10, r: 14 }, ys = deret.map(x => x.nilai / satuan);
+    const yMaks = Math.max(...ys) * 1.08, yMin = 0;
+    const X = i => m.k + 40 + i / (deret.length - 1) * (W - m.k - 40 - m.r), Y = v => m.a + (1 - (v - yMin) / (yMaks - yMin)) * (H - m.a - m.b);
+    const pts = ys.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
+    const ticks = [0, 0.25, 0.5, 0.75, 1].map(f => yMin + f * (yMaks - yMin));
+    const fmt = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1).replace('.', ',') : v.toFixed(2).replace('.', ',');
+    const labelX = deret.map((x, i) => i % 6 === 0 || i === deret.length - 1 ? `<text x="${X(i).toFixed(1)}" y="${H - 12}" font-size="11" fill="#7b8781" text-anchor="middle">${bulanPendek(x.bulan)}</text>` : '').join('');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = `<defs><linearGradient id="g${svg.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f7a68" stop-opacity=".28"/><stop offset="1" stop-color="#4f7a68" stop-opacity="0"/></linearGradient></defs>
+      ${ticks.map(t => `<line x1="${m.k + 40}" x2="${W - m.r}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}" stroke="#e6e9e4"/><text x="${m.k + 34}" y="${(Y(t) + 4).toFixed(1)}" font-size="11" fill="#7b8781" text-anchor="end">${fmt(t)}</text>`).join('')}
+      <path d="M${pts[0]} L${pts.join(' L')} L${X(deret.length - 1).toFixed(1)},${Y(yMin).toFixed(1)} L${X(0).toFixed(1)},${Y(yMin).toFixed(1)} Z" fill="url(#g${svg.id})"/>
+      <path d="M${pts.join(' L')}" fill="none" stroke="#4f7a68" stroke-width="2.4" stroke-linejoin="round"/>
+      <circle cx="${X(deret.length - 1).toFixed(1)}" cy="${Y(ys.at(-1)).toFixed(1)}" r="4" fill="#4f7a68"/>
+      <text x="${(X(deret.length - 1) - 8).toFixed(1)}" y="${(Y(ys.at(-1)) - 10).toFixed(1)}" font-size="12" font-weight="700" fill="#2b3330" text-anchor="end">$${fmt(ys.at(-1))} M</text>
+      ${labelX}`;
+  };
+
+  // ---- RWA
+  if (d.rwa) {
+    const r = d.rwa, awal = r.riwayat?.[0]?.nilai, akhir = r.riwayat?.at(-1)?.nilai;
+    $('rwa-ringkas').textContent = `${uang(r.total)} · ${awal && akhir ? (akhir / awal).toFixed(1).replace('.', ',') + '× dalam 3 tahun (12 protokol terbesar)' : ''}`;
+    garis($('rwa-garis'), r.riwayat);
+    $('rwa-jenis').innerHTML = palang(r.perJenis, x => x.tvl, x => x.nama, { kelasKe: x => x.nama === 'Lainnya' ? 'k2' : '' });
+    $('rwa-teratas').innerHTML = palang(r.teratas, x => x.tvl, x => x.nama, { sub: x => x.jenis });
+  }
+
+  // ---- stablecoin
+  if (d.stable) {
+    const s = d.stable, awal = s.riwayat?.[0]?.nilai, akhir = s.riwayat?.at(-1)?.nilai;
+    $('stable-ringkas').textContent = `${uang(s.total)} · ${awal && akhir ? persen((akhir / awal - 1) * 100, 0) + ' dalam 3 tahun' : ''}`;
+    garis($('stable-garis'), s.riwayat);
+    $('stable-rantai').innerHTML = palang(s.perRantai, x => x.total, x => x.nama, { sub: x => `${x.pangsa.toFixed(1).replace('.', ',')}%` });
+  }
+
+  // ---- papan peringkat
+  const papan = d.papan || {};
+  const TAB = [
+    ['Fee protokol', papan.feeProtokol, ['Protokol', 'Kategori', 'Fee 30 hari', 'Pendapatan 30 hari'], x => [x.nama, x.kategori, x.fee30d, x.rev30d], x => x.fee30d],
+    ['Fee rantai', papan.feeRantai, ['Rantai', '', 'Fee 30 hari', 'Dibakar / ke protokol'], x => [x.nama, '', x.fee30d, x.rev30d], x => x.fee30d],
+    ['TVL rantai', papan.tvlRantai, ['Rantai', 'Token', 'TVL', ''], x => [x.nama, x.simbol || '', x.tvl, null], x => x.tvl],
+    ['DEX teramai', papan.dexProtokol, ['DEX', 'Rantai', 'Volume 30 hari', ''], x => [x.nama, (x.rantai || []).join(', '), x.volume30d, null], x => x.volume30d],
+    ['Volume DEX per rantai', papan.dexRantai, ['Rantai', '', 'Volume 30 hari', ''], x => [rapi(x.nama), '', x.volume30d, null], x => x.volume30d],
+    ['RWA terbesar', papan.rwaProtokol, ['Protokol', 'Jenis', 'TVL', ''], x => [x.nama, x.jenis, x.tvl, null], x => x.tvl],
+  ].filter(t => t[1]?.length);
+  const gambarTabel = i => {
+    const [, data, kepala, sel, nilai] = TAB[i], maks = Math.max(...data.map(nilai), 1);
+    $('papan-tabel').innerHTML = `<thead><tr><th>#</th><th>${kepala[0]}</th><th>${kepala[1]}</th><th style="text-align:right">${kepala[2]}</th><th></th>${kepala[3] ? `<th style="text-align:right">${kepala[3]}</th>` : ''}</tr></thead><tbody>` +
+      data.map((x, n) => { const [a, b, c, e] = sel(x); return `<tr><td class="no">${n + 1}</td><td><b>${esc(a)}</b></td><td class="catatan">${esc(b)}</td><td class="n">${uang(c)}</td><td><div class="mini"><i style="width:${(c / maks * 100).toFixed(1)}%"></i></div></td>${kepala[3] ? `<td class="n">${e == null ? '' : uang(e)}</td>` : ''}</tr>`; }).join('') + '</tbody>';
+    [...$('tab').children].forEach((b, j) => b.classList.toggle('aktif', j === i));
+  };
+  $('tab').innerHTML = TAB.map((t, i) => `<button type="button" data-i="${i}">${t[0]}</button>`).join('');
+  $('tab').addEventListener('click', e => { const b = e.target.closest('button'); if (b) gambarTabel(+b.dataset.i); });
+  if (TAB.length) gambarTabel(0);
+
+  // ---- ekosistem per koin
+  $('koin').innerHTML = (d.koin || []).map(k => {
+    const e = k.ekosistem || {}, fb = e.feeBulanan || [], fMaks = Math.max(...fb.map(x => x.nilai), 1);
+    const metrik = e.jenis === 'rantai'
+      ? [['TVL di rantai', uang(e.tvl)], ['Fee jaringan 30 hari', uang(e.fee30d)], ['Dibakar / ke protokol 30 hari', uang(e.rev30d)], ['Stablecoin di rantai', uang(e.stable)], ['Volume DEX 30 hari', uang(e.dex30d)], ['Protokol hidup', e.jumlahProtokol == null ? 'n/a' : id(e.jumlahProtokol)]]
+      : [['TVL protokol', uang(e.tvl)], ['Fee 30 hari', e.fee30d == null ? 'tidak ada data' : uang(e.fee30d)], ['Pendapatan 30 hari', e.rev30d == null ? 'tidak ada data' : uang(e.rev30d)], ['FDV / kapitalisasi', k.fdv && k.mcap ? (k.fdv / k.mcap).toFixed(1).replace('.', ',') + '×' : 'n/a']];
+    return `<article class="kartu koin-kartu">
+      <div class="kepala">${k.gambar ? `<img class="koin-gbr" src="${esc(k.gambar)}" alt="" loading="lazy">` : ''}<div><b>${esc(k.nama)} <span class="catatan">$${esc(k.tick)}</span></b><small>${esc(k.lapisan)} · peringkat #${k.peringkat ?? 'n/a'}</small></div></div>
+      <div class="harga serif">${harga(k.harga)} <span class="${kelas(k.ubah24)}" style="font-size:14px;font-family:inherit">${persen(k.ubah24)} · 24 jam</span></div>
+      <div class="metrik">
+        <div><span>7 hari / 30 hari</span><b><span class="${kelas(k.ubah7)}">${persen(k.ubah7)}</span> · <span class="${kelas(k.ubah30)}">${persen(k.ubah30)}</span></b></div>
+        <div><span>Kapitalisasi · FDV</span><b>${uang(k.mcap)} · ${uang(k.fdv)}</b></div>
+        <div><span>Token beredar</span><b>${k.float == null ? 'n/a' : k.float.toFixed(1).replace('.', ',') + '%'}</b></div>
+        <div><span>Dari puncak</span><b class="${kelas(k.dariAth)}">${persen(k.dariAth)}</b></div>
+        ${metrik.map(([l, v]) => `<div><span>${l}</span><b>${v}</b></div>`).join('')}
+      </div>
+      ${fb.length ? `<div class="fee-mini" title="Fee per bulan, 6 bulan terakhir">${fb.map(x => `<i style="height:${Math.max(4, x.nilai / fMaks * 100)}%" data-l="${bulanPendek(x.bulan).slice(0, 3)}${x.bulan === d.diperbarui.slice(0, 7) ? '*' : ''}" title="${bulanPendek(x.bulan)}${x.bulan === d.diperbarui.slice(0, 7) ? ' (bulan berjalan)' : ''}: ${uang(x.nilai)}"></i>`).join('')}</div>` : '<div style="height:10px"></div>'}
+      ${e.protokolTeratas?.length ? `<div class="top">${e.jenis === 'rantai' ? 'Terbesar di rantai: ' : 'Protokol: '}${e.protokolTeratas.map(x => `${esc(x.nama)} (${uang(x.tvl)})`).join(' · ')}</div>` : ''}
+      <div class="aksi"><a href="riset.html#${esc(k.tick)}">Dossier ${esc(k.tick)} →</a></div>
+    </article>`;
+  }).join('');
+})();
+</script>
+</body>
+</html>

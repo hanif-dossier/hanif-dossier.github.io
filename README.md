@@ -6,6 +6,7 @@ Satu situs untuk semuanya, tanpa build tool: halaman statis + `akun.js`
 | Halaman | Siapa | Isi |
 |---|---|---|
 | `index.html` | publik | Beranda: angka pasar hari ini, apa yang didapat anggota, dossier terbaru, kerangka arsitektur Web3, metode, batas layanan, FAQ |
+| `pasar.html` | publik | Data pasar harian: kapitalisasi RWA (jenis, protokol, riwayat 36 bulan), stablecoin, papan peringkat fee/pendapatan/TVL/DEX, ekosistem per koin dossier. Membaca `data/pasar.json` yang dibuat `scripts/data-pasar.mjs` lewat Actions `data-pasar.yml` tiap 06:40 WIB (secret `COINGECKO_API_KEY`) |
 | `riset.html` | publik | Katalog dossier per lapisan Web3 — daftar isi & kutipan terbuka. **Dibuat skrip**, jangan diedit tangan |
 | `langganan.html` | publik | Paket Rp 500.000/bulan (Rp 5.000.000/tahun), dossier pesanan, second opinion, cara bayar |
 | `privasi.html` | publik | Kebijakan privasi |
