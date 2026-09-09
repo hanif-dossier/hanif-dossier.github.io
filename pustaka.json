@@ -1,6 +1,6 @@
 {
- "diperbarui": "2026-09-08",
- "totalKata": 101296,
+ "diperbarui": "2026-09-09",
+ "totalKata": 109814,
  "lapisan": [
   {
    "nama": "Aplikasi — DeFi",
@@ -28,6 +28,42 @@
   }
  ],
  "dossier": [
+  {
+   "tick": "MON",
+   "nama": "MON",
+   "judul": "Monad (MON)",
+   "tanggal": "2026-09-09",
+   "tampil": "MONAD ($MON)",
+   "jenis": "Dossier token",
+   "lapisan": "Lapisan dasar (L1) — penyelesaian",
+   "koinId": "monad",
+   "gambar": "https://coin-images.coingecko.com/coins/images/38927/large/mon.png?1766029057",
+   "bagian": 17,
+   "isi": [
+    "Langkah −1 — Kebutuhan dulu, baru token",
+    "Jantung Protokol Ini",
+    "Whitepaper Dibedah",
+    "Tokenomics — Penyaring",
+    "Keamanan & Desentralisasi",
+    "Distribusi & Likuiditas",
+    "Valuasi",
+    "Tesis Bull",
+    "Tesis Bear",
+    "Lingkungan Eksternal",
+    "Berita Terbaru & Katalis",
+    "Checklist Red Flag",
+    "Risiko Utama",
+    "Apa yang Harus Dipantau",
+    "Yang Tidak Bisa Saya Nilai",
+    "Sumber"
+   ],
+   "kata": 8518,
+   "grafik": 4,
+   "kutipan": "Monad adalah kasus yang paling rapi di seri ini untuk satu pelajaran: jaringan yang berjalan sangat baik, dipakai dengan sungguh-sungguh, dan tokennya tetap tidak bisa dinilai dari apa pun selain harapan — karena sebelas dari dua belas dolar yang akan…",
+   "pdf": "dossier/MON-analisis-2026-09-09.pdf",
+   "catatan": null,
+   "catatanTanggal": null
+  },
   {
    "tick": "ARB",
    "nama": "ARB",
