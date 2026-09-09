@@ -14,6 +14,10 @@
   const SUPABASE_KEY = 'sb_publishable_UcFfp0XqHZWMZ2jpSRlDvg_vySECBzo';
   const OWNER = 'abdullahhanif033@gmail.com';            // pemilik: label Owner
   const ADMIN = [OWNER, 'abdhanif033@gmail.com'];        // admin: akses sama dengan owner (untuk sekarang)
+  // Bot Telegram yang memproses langganan (tanpa @). Kosong = bot belum dipasang,
+  // halaman memakai DM Instagram sebagai cadangan.
+  const BOT_TELEGRAM = '';
+  const IG = 'https://ig.me/m/hanif.dossiercrypto';
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -25,7 +29,9 @@
     if (!s) return null;
     const { data } = await sb.from('anggota').select('*').eq('id', s.user.id).maybeSingle();
     const admin = ADMIN.includes((s.user.email || '').toLowerCase());
-    const disetujui = admin || !!(data && data.status === 'disetujui');
+    // Disetujui = status 'disetujui' dan masa langganan belum lewat (kosong = tanpa batas: undangan pemilik).
+    const hariIni = new Date().toISOString().slice(0, 10);
+    const disetujui = admin || !!(data && data.status === 'disetujui' && (!data.langganan_sampai || data.langganan_sampai >= hariIni));
     // peran: admin (pemilik), anggota (disetujui), tamu (sudah daftar, belum disetujui)
     const email = (s.user.email || '').toLowerCase();
     return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui, peran: email === OWNER ? 'owner' : admin ? 'admin' : disetujui ? 'anggota' : 'tamu' };
@@ -75,5 +81,12 @@
 
   async function keluar() { await sb.auth.signOut(); location.href = 'masuk.html'; }
 
-  window.akun = { sb, sesi, profil, wajibMasuk, unduh, tautanUnduh, pasangMenu, keluar, ADMIN, OWNER };
+  // Tautan untuk melanjutkan langganan: bot Telegram dengan kode akun (id pengguna),
+  // supaya bot langsung tahu akun mana yang sedang diproses. Cadangan: DM Instagram.
+  function tautanLangganan(p) {
+    if (BOT_TELEGRAM && p && p.pengguna) return `https://t.me/${BOT_TELEGRAM}?start=${p.pengguna.id.replace(/-/g, '')}`;
+    return IG;
+  }
+
+  window.akun = { sb, sesi, profil, wajibMasuk, unduh, tautanUnduh, pasangMenu, keluar, tautanLangganan, ADMIN, OWNER, BOT_TELEGRAM, IG };
 })();

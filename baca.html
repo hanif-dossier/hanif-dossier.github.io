@@ -55,7 +55,7 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
   const berkas = q.get('b') || '';
   const gagal = pesan => { $('pesan').innerHTML = `<p>${pesan}</p><p><a href="pustaka.html">Kembali ke pustaka</a></p>`; };
 
-  await akun.wajibMasuk({ hanyaAdmin: true });
+  await akun.wajibMasuk();
   if (!berkas) return gagal('Berkas tidak disebutkan.');
 
   // Judul dari pustaka.json (cocokkan nama berkas), supaya bilah atas tidak menampilkan nama berkas mentah.

@@ -34,7 +34,7 @@
     <a href="modul.html">Modul</a>
     <a class="aktif" href="langganan.html">Langganan</a>
     <a href="dasbor.html" data-anggota hidden>Laporan</a>
-    <a href="pustaka.html" data-admin hidden>Pustaka</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="#" data-keluar data-sesi hidden>Keluar</a>
@@ -68,10 +68,10 @@
       <li><b>Radar Portofolio</b>&nbsp;— koin pantauan, perubahan 24 jam / 7 hari / 30 hari, rotasi sektor</li>
       <li><b>Peringatan</b>&nbsp;— unlock token, FOMC, data makro, pergerakan tajam, dicatat saat terjadi</li>
       <li><b>Screening 750 Altcoin</b>&nbsp;— daftar pendek 3–6 nama beserta pemicu dan syarat batalnya</li>
-      <li><b>Dossier token</b>&nbsp;— <span id="jumlah-dossier">belasan</span> judul yang sudah tersusun, PDF berdiagram; sebut judulnya lewat DM, dikirim ke email Anda</li>
+      <li><b>Dossier token</b>&nbsp;— <span id="jumlah-dossier">belasan</span> judul yang sudah tersusun, PDF berdiagram, dibaca langsung di situs</li>
       <li><b>Dossier baru</b>&nbsp;— setiap dossier yang terbit selama Anda berlangganan, dikabarkan lewat email</li>
       <li><b>Modul edukasi</b>&nbsp;&mdash; delapan kelas pendek cara membaca token, termasuk rumus nilai intrinsik; modul 3&ndash;8 khusus anggota</li>
-      <li><b>Tanya lewat DM</b>&nbsp;— pertanyaan soal isi laporan dijawab lewat Instagram, biasanya di hari yang sama</li>
+      <li><b>Tanya langsung</b>&nbsp;— pertanyaan soal isi laporan dijawab lewat Telegram atau DM, biasanya di hari yang sama</li>
     </ul>
     <div class="aksi tombol">
       <a class="utama" id="tombol-bayar" href="masuk.html?daftar&ke=langganan.html">Daftar akun, lalu bayar</a>
@@ -109,9 +109,9 @@
   <h2 class="serif">Empat langkah, tidak ada yang harus ditelepon</h2>
   <ol class="langkah">
     <li><b>Daftar akun</b><span>Nama, email, kata sandi. Cek email Anda dan klik tombol konfirmasinya.</span></li>
-    <li><b>Bayar satu bulan</b><span id="langkah-bayar">Lewat tautan pembayaran (QRIS, transfer bank, e-wallet). Pakai email yang sama dengan akun Anda.</span></li>
-    <li><b>Kami konfirmasi</b><span>Paling lambat 24 jam — biasanya jauh lebih cepat. Halaman status akun berubah sendiri, dan kami mengabari lewat email.</span></li>
-    <li><b>Semua terbuka</b><span>Laporan pagi dan modul edukasi dibaca lewat HP tanpa aplikasi tambahan; dossier dikirim lewat email begitu Anda minta.</span></li>
+    <li><b>Lanjut ke Telegram</b><span id="langkah-bayar">Dari halaman status akun, satu tombol membuka bot Telegram kami. Bot memberi cara bayar (QRIS / transfer bank) dan menerima bukti transfernya.</span></li>
+    <li><b>Kami konfirmasi</b><span>Begitu bukti transfer kami setujui di Telegram, akun aktif saat itu juga dan email konfirmasi terkirim. Paling lambat 24 jam.</span></li>
+    <li><b>Semua terbuka</b><span>Laporan pagi, modul edukasi, dan seluruh dossier dibaca langsung di situs lewat HP, tanpa aplikasi tambahan.</span></li>
   </ol>
 </section>
 
@@ -193,13 +193,14 @@
       $('langkah-bayar').textContent = 'Lewat tautan pembayaran resmi (QRIS, transfer bank, e-wallet). Pakai email yang sama dengan akun Anda.';
     } else {
       // Alur manual sementara tautan pembayaran belum ada.
-      if (sudahAkun) { tombol.textContent = 'Minta cara bayar lewat DM Instagram'; tombol.href = IG; tombol.target = '_blank'; tombol.rel = 'noopener'; }
-      else { tombol.textContent = 'Daftar akun, lalu bayar'; tombol.href = 'masuk.html?daftar&ke=langganan.html'; tombol.removeAttribute('target'); }
+      const pakaiBot = !!akun.BOT_TELEGRAM, tg = akun.tautanLangganan(p);
+      if (sudahAkun) { tombol.textContent = pakaiBot ? 'Lanjutkan ke Telegram' : 'Minta cara bayar lewat DM Instagram'; tombol.href = tg; tombol.target = '_blank'; tombol.rel = 'noopener'; }
+      else { tombol.textContent = 'Daftar akun, lalu lanjut ke Telegram'; tombol.href = 'masuk.html?daftar&ke=masuk.html%23status'; tombol.removeAttribute('target'); }
       $('cara-bayar').innerHTML = sudahAkun
-        ? `Kirim DM berisi kata <b>"langganan ${mode}"</b> dan email akun Anda (<b>${p.pengguna.email}</b>) ke <a href="${IG}" target="_blank" rel="noopener">@hanif.dossiercrypto</a>. Kami balas dengan cara bayar (QRIS / transfer). Begitu pembayaran masuk, akun dikonfirmasi.`
-        : `Setelah daftar, kirim DM berisi kata <b>"langganan ${mode}"</b> dan email akun Anda ke <a href="${IG}" target="_blank" rel="noopener">@hanif.dossiercrypto</a>. Kami balas dengan cara bayar (QRIS / transfer). Begitu pembayaran masuk, akun dikonfirmasi.`;
-      $('langkah-bayar').textContent = 'Kirim DM "langganan" beserta email akun Anda; kami balas dengan cara bayar (QRIS / transfer bank).';
-      $('faq-bayar').textContent = 'Saat ini lewat QRIS atau transfer bank yang kami kirimkan lewat DM setelah Anda mendaftar. Kami tidak pernah memulai DM meminta transfer — kalau ada yang begitu mengatasnamakan kami, abaikan.';
+        ? (pakaiBot ? `Tekan tombol di atas: bot Telegram kami sudah mengenali akun <b>${p.pengguna.email}</b>, memberi cara bayar ${mode} (QRIS / transfer), dan menerima bukti transfernya. Begitu kami setujui, akun aktif dan email konfirmasi terkirim.`
+                    : `Kirim DM berisi kata <b>"langganan ${mode}"</b> dan email akun Anda (<b>${p.pengguna.email}</b>) ke <a href="${IG}" target="_blank" rel="noopener">@hanif.dossiercrypto</a>. Kami balas dengan cara bayar (QRIS / transfer). Begitu pembayaran masuk, akun dikonfirmasi.`)
+        : `Setelah daftar, halaman status akun membuka bot Telegram kami dengan satu tombol. Bot memberi cara bayar ${mode} (QRIS / transfer) dan menerima bukti transfernya; begitu kami setujui, akun aktif dan email konfirmasi terkirim.`;
+      $('faq-bayar').textContent = 'Lewat QRIS atau transfer bank yang diberikan bot Telegram kami setelah Anda mendaftar akun. Kami tidak pernah memulai chat meminta transfer — kalau ada yang begitu mengatasnamakan kami, abaikan.';
     }
   }
   document.querySelectorAll('.saklar button').forEach(b => b.addEventListener('click', () => {

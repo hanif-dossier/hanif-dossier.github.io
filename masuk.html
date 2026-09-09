@@ -117,7 +117,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       ikon.classList.add('ok'); ikon.innerHTML = CENTANG;
       $('status-judul').textContent = 'Akun Anda sudah dikonfirmasi';
       $('status-teks').textContent = 'Mohon klik tombol di bawah untuk masuk. Seluruh laporan sudah terbuka untuk Anda.';
-      $('status-tombol').hidden = false;
+      $('status-tombol').textContent = 'Masuk ke laporan'; $('status-tombol').href = 'dasbor.html'; $('status-tombol').removeAttribute('target'); $('status-tombol').hidden = false;
       $('status-kecil').textContent = 'Anda sudah masuk; tidak perlu mengetik apa pun lagi.';
       if (pemantau) { clearInterval(pemantau); pemantau = null; }
     } else if (st === 'ditolak') {
@@ -127,9 +127,14 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       if (pemantau) { clearInterval(pemantau); pemantau = null; }
     } else {
       ikon.innerHTML = PASIR;
-      $('status-judul').textContent = 'Menunggu konfirmasi';
-      $('status-teks').textContent = 'Pendaftaran Anda sedang kami konfirmasi. Halaman ini akan berubah sendiri begitu selesai; Anda tidak perlu memuat ulang.';
-      $('status-kecil').innerHTML = 'Kami juga mengabari lewat email. Sementara menunggu, Anda bisa <a href="index.html">melihat keadaan pasar</a>.';
+      const tg = akun.tautanLangganan(p), pakaiBot = !!akun.BOT_TELEGRAM;
+      $('status-judul').textContent = 'Akun terdaftar. Tinggal berlangganan.';
+      $('status-teks').innerHTML = 'Langganan <b>Rp 500.000 / bulan</b> atau <b>Rp 5.000.000 / tahun</b> — semua laporan pagi, seluruh dossier dibaca langsung di situs, dan modul edukasi.<br>' +
+        (pakaiBot ? 'Tekan tombol di bawah: bot Telegram kami memandu pembayaran (QRIS / transfer), menerima bukti transfernya, dan begitu kami setujui, akun Anda aktif dan email konfirmasi terkirim.'
+                  : 'Tekan tombol di bawah untuk mendapat cara bayar (QRIS / transfer) lewat DM Instagram. Begitu pembayaran kami terima, akun Anda aktif dan email konfirmasi terkirim.');
+      $('status-tombol').textContent = pakaiBot ? 'Lanjutkan ke Telegram' : 'Lanjutkan lewat DM Instagram';
+      $('status-tombol').href = tg; $('status-tombol').target = '_blank'; $('status-tombol').rel = 'noopener'; $('status-tombol').hidden = false;
+      $('status-kecil').innerHTML = 'Halaman ini berubah sendiri begitu langganan dikonfirmasi. Sementara itu Anda bisa <a href="pasar.html">melihat data pasar</a> dan <a href="riset.html">daftar isi dossier</a>. Diundang langsung oleh pemilik? Akun Anda sudah aktif — muat ulang halaman ini.';
       // Periksa tiap 8 detik: begitu disetujui, halaman berganti ke tombol masuk.
       if (!pemantau) pemantau = setInterval(async () => { const q = await akun.profil(); if (q && (q.disetujui || (q.anggota && q.anggota.status === 'ditolak'))) tampilkanStatus(q); }, 8000);
     }
@@ -144,7 +149,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     document.querySelectorAll('.tab button').forEach(x => x.classList.toggle('aktif', x === b));
     $('kolom-nama').hidden = mode !== 'daftar';
     $('judul').textContent = mode === 'daftar' ? 'Daftar' : 'Masuk';
-    $('sub').textContent = mode === 'daftar' ? 'Setelah mendaftar, cek email Anda; akun kemudian menunggu konfirmasi kami.' : 'Laporan hanya untuk anggota yang sudah disetujui.';
+    $('sub').textContent = mode === 'daftar' ? 'Setelah mendaftar, cek email Anda, lalu selesaikan langganan lewat Telegram.' : 'Laporan dan dossier untuk anggota yang berlangganan.';
     $('kirim').textContent = mode === 'daftar' ? 'Buat akun' : 'Masuk';
     $('sandi').autocomplete = mode === 'daftar' ? 'new-password' : 'current-password';
     $('lupa').hidden = mode === 'daftar';
@@ -164,7 +169,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
         const { data, error } = await akun.sb.auth.signUp({ email, password: sandi, options: { data: { nama }, emailRedirectTo: location.origin + location.pathname.replace(/[^/]*$/, '') + 'masuk.html#status' } });
         if (error) throw error;
         if (data.session) { location.replace('masuk.html#status'); location.reload(); return; }
-        pesan('Pendaftaran diterima. Kami telah mengirim email ke alamat Anda; buka email itu dan klik tombolnya untuk melanjutkan. Setelah itu akun Anda menunggu konfirmasi kami.', 'baik');
+        pesan('Pendaftaran diterima. Kami telah mengirim email ke alamat Anda; buka email itu dan klik tombolnya. Setelah itu tinggal selesaikan langganan lewat Telegram.', 'baik');
       } else {
         const { error } = await akun.sb.auth.signInWithPassword({ email, password: sandi });
         if (error) throw error;

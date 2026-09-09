@@ -50,7 +50,7 @@
 <header class="atas">
   <a class="merek" href="index.html">
     <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
-    <div><b>Hanif Dossier Crypto</b><small>pustaka riset · khusus pengelola</small></div>
+    <div><b>Hanif Dossier Crypto</b><small>pustaka riset · khusus anggota</small></div>
   </a>
   <nav class="menu">
     <a href="index.html">Beranda</a>
@@ -65,7 +65,7 @@
 </header>
 
 <div class="judul" style="margin-top:26px"><h1 class="serif" style="font-size:clamp(1.6rem,3.6vw,2.2rem)">Riset</h1><span class="catatan" id="ringkas"></span></div>
-<p class="pengantar" style="font-size:15px">Halaman pengelola (owner &amp; admin). Sentuh judulnya: dossier terbuka langsung di halaman ini, tanpa unduh. Anggota menerima dossier lewat DM, bukan dari halaman ini.</p>
+<p class="pengantar" style="font-size:15px">Seluruh dossier untuk anggota. Sentuh judulnya: dossier terbuka langsung di halaman ini, tanpa unduh. Dossier baru muncul di sini begitu terbit.</p>
 
 <div id="unggulan"></div>
 
@@ -88,7 +88,7 @@
 (async () => {
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  const p = await akun.wajibMasuk({ hanyaAdmin: true });
+  const p = await akun.wajibMasuk();
   if (p.admin) document.querySelector('[data-admin]').hidden = false;
   document.querySelector('[data-keluar]').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
 

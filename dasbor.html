@@ -241,7 +241,8 @@ body.tamu .daftar-laptop{display:none}
   const namaLengkap = (profil.anggota && profil.anggota.nama) || (profil.pengguna.user_metadata && profil.pengguna.user_metadata.nama) || '';
   const namaDepan = namaLengkap.trim().split(/\s+/)[0];
   $('sapa-nama').textContent = namaDepan || 'kawan';
-  if (profil.admin) { $('tautan-admin').hidden = false; $('tautan-pustaka').hidden = false; }
+  if (profil.admin) $('tautan-admin').hidden = false;
+  if (profil.disetujui) $('tautan-pustaka').hidden = false;
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
   const tamu = !profil.disetujui;
