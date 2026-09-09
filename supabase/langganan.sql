@@ -39,3 +39,9 @@ returns boolean language sql stable security definer set search_path = public as
           and (a.langganan_sampai is null or a.langganan_sampai >= current_date)
       );
 $$;
+
+-- 13. Pengingat otomatis (dipanggil tiap jam lewat ?tugas=pengingat).
+alter table public.pembayaran
+  add column if not exists pengingat_pada timestamptz,
+  add column if not exists pengingat_pengirim_pada timestamptz;
+alter table public.anggota add column if not exists pengingat_pada timestamptz;

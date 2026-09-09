@@ -83,10 +83,16 @@
 
   // Tautan untuk melanjutkan langganan: bot Telegram dengan kode akun (id pengguna),
   // supaya bot langsung tahu akun mana yang sedang diproses. Cadangan: DM Instagram.
-  function tautanLangganan(p) {
-    if (BOT_TELEGRAM && p && p.pengguna) return `https://t.me/${BOT_TELEGRAM}?start=${p.pengguna.id.replace(/-/g, '')}`;
-    return IG;
+  // paket: 'bulanan' | 'tahunan' | '' — ikut dikirim ke bot supaya bot langsung
+  // menyebut harga paket itu. Tanpa akun pun bot tetap membuka chat (kode paket_<paket>).
+  function tautanLangganan(p, paket) {
+    if (!paket) { try { paket = localStorage.getItem('paket-dipilih') || ''; } catch { paket = ''; } }
+    paket = /^(bulanan|tahunan)$/.test(paket || '') ? paket : '';
+    if (!BOT_TELEGRAM) return IG;
+    if (p && p.pengguna) return `https://t.me/${BOT_TELEGRAM}?start=${p.pengguna.id.replace(/-/g, '')}${paket ? '_' + paket : ''}`;
+    return `https://t.me/${BOT_TELEGRAM}?start=paket_${paket || 'bulanan'}`;
   }
+  function pilihPaket(paket) { try { localStorage.setItem('paket-dipilih', paket); } catch {} }
 
-  window.akun = { sb, sesi, profil, wajibMasuk, unduh, tautanUnduh, pasangMenu, keluar, tautanLangganan, ADMIN, OWNER, BOT_TELEGRAM, IG };
+  window.akun = { sb, sesi, profil, wajibMasuk, unduh, tautanUnduh, pasangMenu, keluar, tautanLangganan, pilihPaket, ADMIN, OWNER, BOT_TELEGRAM, IG };
 })();

@@ -1,0 +1,17 @@
+# Memanggil bot langganan tiap jam supaya ia mengirim pengingat:
+# admin (bukti menunggu >2 jam), pengirim (>12 jam), akun belum bayar (>24 jam).
+name: pengingat-langganan
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+jobs:
+  ingatkan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Panggil bot
+        env:
+          RAHASIA: ${{ secrets.TELEGRAM_WEBHOOK_SECRET }}
+        run: |
+          curl -sS -m 120 "https://fqpktykrkpqaztnpqgxz.supabase.co/functions/v1/telegram-langganan?tugas=pengingat" \
+            -H "x-telegram-bot-api-secret-token: $RAHASIA"
