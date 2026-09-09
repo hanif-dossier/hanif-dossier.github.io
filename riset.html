@@ -33,17 +33,17 @@
     <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
   </a>
   <nav class="menu">
-    <a href="index.html">Beranda</a>
+    <a href="dasbor.html">Beranda</a>
     <a class="aktif" href="riset.html">Riset</a>
     <a href="pasar.html">Pasar</a>
     <a href="modul.html">Modul</a>
-    <a href="masuk.html">Langganan</a>
+    <a href="masuk.html#status" data-menunggu hidden>Langganan</a>
     <a href="dasbor.html" data-anggota hidden>Laporan</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="#" data-keluar data-sesi hidden>Keluar</a>
-    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+    <a href="tentang.html">Tentang</a>
   </nav>
 </header>
 
@@ -266,7 +266,7 @@
   <h2 class="serif">Sebutkan satu nama yang sedang Anda pertimbangkan</h2>
   <p>Kalau namanya sudah ada di daftar atas, dossier-nya terbuka begitu Anda jadi anggota — langsung di situs, tanpa diminta. Kalau belum, dossier pesanan disusun 5–7 hari kerja dan masuk pustaka untuk semua anggota.</p>
   <div class="tombol" style="justify-content:center">
-    <a class="utama" href="masuk.html">Lihat harga &amp; daftar</a>
+    <a class="utama" href="masuk.html#status" data-menunggu hidden>Lihat harga &amp; berlangganan</a>
     <a class="kedua" href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Baru kenal? Tanya lewat DM Instagram</a>
   </div>
 </section>
@@ -283,7 +283,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="akun.js"></script>
 <script>
-akun.pasangMenu();
+akun.wajibMasuk({ bolehTamu: true }).then(() => akun.pasangMenu());
 (function(){
   // Grafik Bitcoin 30 hari: SVG digambar sendiri dari CoinGecko, tanpa pustaka.
   var W=640,H=200,PL=8,PR=58,PT=14,PB=26,DATA=null;

@@ -5,15 +5,16 @@ Satu situs untuk semuanya, tanpa build tool: halaman statis + `akun.js`
 
 | Halaman | Siapa | Isi |
 |---|---|---|
-| `index.html` | publik | Beranda: angka pasar hari ini, apa yang didapat anggota, dossier terbaru, kerangka arsitektur Web3, metode, batas layanan, FAQ |
-| `pasar.html` | publik | Data pasar harian: kapitalisasi RWA (jenis, protokol, riwayat 36 bulan), stablecoin, papan peringkat fee/pendapatan/TVL/DEX, ekosistem per koin dossier. Membaca `data/pasar.json` yang dibuat `scripts/data-pasar.mjs` lewat Actions `data-pasar.yml` tiap 06:40 WIB (secret `COINGECKO_API_KEY`) |
-| `riset.html` | publik | Katalog dossier per lapisan Web3 — daftar isi & kutipan terbuka. **Dibuat skrip**, jangan diedit tangan |
+| `index.html` | publik | **Gerbang**: pengalihan ke `masuk.html` (query/hash ikut). Situs dibuka langsung ke layar masuk, seperti aplikasi Akademi Crypto |
+| `tentang.html` | publik | Beranda lama: angka pasar, apa yang didapat anggota, kerangka Web3, metode, FAQ — untuk yang baru kenal; semua tombol riset mengarah ke masuk/daftar |
+| `pasar.html` | punya akun (tamu boleh) | Data pasar harian: kapitalisasi RWA (jenis, protokol, riwayat 36 bulan), stablecoin, papan peringkat fee/pendapatan/TVL/DEX, ekosistem per koin dossier. Membaca `data/pasar.json` yang dibuat `scripts/data-pasar.mjs` lewat Actions `data-pasar.yml` tiap 06:40 WIB (secret `COINGECKO_API_KEY`) |
+| `riset.html` | punya akun (tamu boleh pratinjau) | Katalog dossier per lapisan Web3 — daftar isi & kutipan; "Baca dossier" untuk anggota berlangganan. **Dibuat skrip**, jangan diedit tangan |
 | `langganan.html` | publik | Paket Rp 500.000/bulan (Rp 5.000.000/tahun), dossier pesanan, second opinion, cara bayar |
 | `privasi.html` | publik | Kebijakan privasi |
 | `masuk.html`, `sandi.html` | semua | Daftar / masuk / lupa sandi, halaman status akun |
 | `dasbor.html` | anggota disetujui (tamu boleh lihat pasar) | Cuplikan hidup empat laporan |
 | `laporan.html?h=…` | anggota disetujui | Penampil laporan dari gudang privat |
-| `modul.html` | publik (modul 1–2), anggota (3–8) | Delapan modul edukasi format kelas; isinya di dalam berkas (larik `MODUL`) |
+| `modul.html` | punya akun: modul 1–2 untuk tamu, 3–8 untuk anggota | Delapan modul edukasi format kelas; isinya di dalam berkas (larik `MODUL`) |
 | `pustaka.html` | anggota berlangganan | Katalog gaya aplikasi riset: riset terbaru bersampul logo koin + daftar semua riset, penyaring lapisan Web3; dossier dibuka langsung di `baca.html` |
 | `baca.html?b=…` | anggota berlangganan | Pembaca PDF di dalam halaman (pdf.js dari cdnjs) — dossier terbuka tanpa unduh; tautan sementara 5 menit |
 | `admin.html` | admin | Setujui / tolak anggota |

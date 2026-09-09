@@ -58,17 +58,17 @@ table.papan .mini{height:8px;border-radius:999px;background:var(--lembut);min-wi
     <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
   </a>
   <nav class="menu">
-    <a href="index.html">Beranda</a>
+    <a href="dasbor.html">Beranda</a>
     <a href="riset.html">Riset</a>
     <a class="aktif" href="pasar.html">Pasar</a>
     <a href="modul.html">Modul</a>
-    <a href="masuk.html">Langganan</a>
+    <a href="masuk.html#status" data-menunggu hidden>Langganan</a>
     <a href="dasbor.html" data-anggota hidden>Laporan</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="#" data-keluar data-sesi hidden>Keluar</a>
-    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+    <a href="tentang.html">Tentang</a>
   </nav>
 </header>
 
@@ -125,7 +125,7 @@ table.papan .mini{height:8px;border-radius:999px;background:var(--lembut);min-wi
 <script src="akun.js"></script>
 <script>
 (async () => {
-  akun.pasangMenu && akun.pasangMenu();
+  await akun.wajibMasuk({ bolehTamu: true }); akun.pasangMenu();
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const id = n => Number(n).toLocaleString('id-ID');
