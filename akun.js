@@ -16,7 +16,7 @@
   const ADMIN = [OWNER, 'abdhanif033@gmail.com'];        // admin: akses sama dengan owner (untuk sekarang)
   // Bot Telegram yang memproses langganan (tanpa @). Kosong = bot belum dipasang,
   // halaman memakai DM Instagram sebagai cadangan.
-  const BOT_TELEGRAM = '';
+  const BOT_TELEGRAM = 'HanifDossierBot';
   const IG = 'https://ig.me/m/hanif.dossiercrypto';
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
