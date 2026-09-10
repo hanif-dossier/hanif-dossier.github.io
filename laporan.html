@@ -20,11 +20,12 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
 <script src="akun.js"></script>
 <script>
 // Penampil laporan untuk anggota. Halaman laporan (briefing, radar,
-// peringatan, screening) dibangun GitHub Actions lalu disimpan di gudang
+// schedule, screening) dibangun GitHub Actions lalu disimpan di gudang
 // privat Supabase; di sini diunduh dengan sesi anggota dan digambar utuh.
 // Tautan antarhalaman di dalamnya diarahkan kembali ke penampil ini.
 (async () => {
-  const PETA = { briefing: 'briefing.html', radar: 'radar.html', peringatan: 'peringatan.html', screening: 'screening.html' };
+  // 'peringatan' dipertahankan sebagai nama lama supaya tautan tersimpan tetap sampai ke Schedule.
+  const PETA = { briefing: 'briefing.html', radar: 'radar.html', schedule: 'schedule.html', peringatan: 'schedule.html', screening: 'screening.html' };
   const h = new URLSearchParams(location.search).get('h') || 'briefing';
   const nama = PETA[h] || PETA.briefing;
   await akun.wajibMasuk();
@@ -33,7 +34,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
     html = html
       .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?index\.html"/g, 'href="laporan.html?h=briefing"')
       .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?radar\.html"/g, 'href="laporan.html?h=radar"')
-      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?peringatan\.html"/g, 'href="laporan.html?h=peringatan"')
+      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?(?:schedule|peringatan)\.html"/g, 'href="laporan.html?h=schedule"')
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/potret-pasar-crypto\/?"/g, 'href="laporan.html?h=screening"')
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/laporan-harian\/?"/g, 'href="laporan.html?h=briefing"');
     document.open(); document.write(html); document.close();

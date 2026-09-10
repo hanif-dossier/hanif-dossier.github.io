@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Pusat laporan Hanif Dossier Crypto: briefing harian, radar portofolio, peringatan, dan screening altcoin — satu pintu, dengan tenang.">
+<meta name="description" content="Pusat laporan Hanif Dossier Crypto: briefing harian, radar portofolio, schedule, dan screening altcoin — satu pintu, dengan tenang.">
 <title>Laporan — Hanif Dossier Crypto</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,12 +93,14 @@ nav.menu a:hover{color:var(--sage-tua)}
 .memuat{color:var(--redup);font-style:italic;font-size:13px}
 .naik{color:var(--sage)}.turun{color:var(--bata)}
 
-/* peringatan */
-.peringatan{display:flex;align-items:center;gap:16px;margin-top:16px;border-radius:20px;padding:16px 22px}
-.peringatan .lonceng{width:38px;height:38px;border-radius:50%;background:var(--pasir);display:grid;place-items:center;flex:none}
-.peringatan .isi{flex-grow:1;display:flex;flex-direction:column;gap:2px;min-width:0}
-.peringatan .kapan{font-size:12px;color:var(--lb)}
-.peringatan a.semua{font-size:13px;font-weight:700;white-space:nowrap}
+/* schedule: tiga acara terjadwal terdekat */
+.jadwal{display:flex;align-items:center;gap:16px;margin-top:16px;border-radius:20px;padding:16px 22px}
+.jadwal .lonceng{width:38px;height:38px;border-radius:50%;background:var(--pasir);display:grid;place-items:center;flex:none}
+.jadwal .isi{flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.jadwal .kapan{font-size:12px;color:var(--lb)}
+.jadwal .acara{font-size:14px;line-height:1.45}
+.jadwal .acara .pil{margin-right:4px}
+.jadwal a.semua{font-size:13px;font-weight:700;white-space:nowrap}
 
 /* tautan kecil */
 h3.bagian{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);margin:34px 0 10px;font-weight:700}
@@ -116,7 +118,7 @@ body.tamu .daftar-laptop{display:none}
 .kaki{margin-top:40px;padding-top:14px;border-top:1px solid var(--gr);font-size:12px;color:var(--redup);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 @media(max-width:860px){.sambut,.tengah{grid-template-columns:1fr}.ubin{grid-template-columns:1fr}.koin{grid-template-columns:1fr}}
-@media(max-width:480px){main{padding:16px 14px 48px}.kartu{padding:18px 18px;border-radius:20px}.peringatan{flex-wrap:wrap}}
+@media(max-width:480px){main{padding:16px 14px 48px}.kartu{padding:18px 18px;border-radius:20px}.jadwal{flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -131,7 +133,7 @@ body.tamu .daftar-laptop{display:none}
     <a class="aktif" href="dasbor.html">Beranda</a>
     <a href="laporan.html?h=briefing">Briefing</a>
     <a href="laporan.html?h=radar">Radar</a>
-    <a href="laporan.html?h=peringatan">Peringatan</a>
+    <a href="laporan.html?h=schedule">Schedule</a>
     <a href="laporan.html?h=screening">Screening</a>
     <a href="pasar.html">Pasar</a>
     <a href="modul.html">Modul</a>
@@ -207,10 +209,10 @@ body.tamu .daftar-laptop{display:none}
   </div>
 </section>
 
-<section class="kartu peringatan">
-  <div class="lonceng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-  <div class="isi" id="c-peringatan"><span class="memuat">Memuat peringatan…</span></div>
-  <a class="semua" href="laporan.html?h=peringatan">Semua peringatan →</a>
+<section class="kartu jadwal">
+  <div class="lonceng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6a2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></div>
+  <div class="isi" id="c-jadwal"><span class="memuat">Memuat schedule…</span></div>
+  <a class="semua" href="laporan.html?h=schedule">Semua schedule →</a>
 </section>
 
 <h3 class="bagian daftar-laptop">Alat di laptop <small>hanya hidup saat laptop menyala</small></h3>
@@ -250,7 +252,7 @@ body.tamu .daftar-laptop{display:none}
     // Tamu: boleh melihat pasar (angka publik dan grafik), tapi laporan terkunci.
     document.body.classList.add('tamu');
     $('spanduk-tamu').hidden = false;
-    for (const id of ['c-briefing', 'c-screening', 'koin', 'c-peringatan']) $(id).innerHTML = '<span class="terkunci">Terbuka setelah akun Anda kami konfirmasi.</span>';
+    for (const id of ['c-briefing', 'c-screening', 'koin', 'c-jadwal']) $(id).innerHTML = '<span class="terkunci">Terbuka setelah akun Anda kami konfirmasi.</span>';
     document.querySelectorAll('a[href^="laporan.html"]').forEach(x => { x.href = 'masuk.html#status'; });
   }
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -263,7 +265,7 @@ body.tamu .daftar-laptop{display:none}
     + ' · ' + new Intl.DateTimeFormat('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }).format(new Date()).replace('.', ':') + ' WIB';
 
   // Nama berkas di gudang privat (diunggah GitHub Actions tiap laporan terbit).
-  const NAMA = { '/laporan-harian/harian/terbaru.md': 'terbaru.md', '/laporan-harian/harian/radar.md': 'radar.md',
+  const NAMA = { '/laporan-harian/harian/terbaru.md': 'terbaru.md', '/laporan-harian/harian/radar.md': 'radar.md', '/laporan-harian/harian/jadwal.md': 'jadwal.md',
     '/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md': 'daftar-pendek-terbaru.md', '/potret-pasar-crypto/laporan/terbaru.md': 'screening-terbaru.md' };
   const ambil = async jalur => akun.unduh(NAMA[jalur] || jalur.replace(/^\/laporan-harian\/peringatan\//, 'peringatan-').replace(/^.*\//, ''));
   const bacaPersen = s => { const m = String(s || '').match(/([+\-−]?\d[\d.,]*)\s*%/); if (!m) return null; let t = m[1].replace('−', '-'); if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.'); const v = Number(t); return Number.isFinite(v) ? v : null; };
@@ -337,19 +339,14 @@ body.tamu .daftar-laptop{display:none}
     $('koin-catatan').textContent = `${tgl}${jam ? ` · ${jam} WIB` : ''} · ${jumlahPeringatan} peringatan hari ini.` + (masuk.length ? ` Sektor ${masuk.join(', ')} sedang menarik modal.` : '') + ' Angka = perubahan 24 jam; sentuh untuk 7 dan 30 hari.';
   }).catch(() => gagal('koin', 'Cuplikan belum bisa dimuat — buka Radar Portofolio langsung.'));
 
-  // 3. Peringatan terbaru (hari ini, atau kemarin kalau hari ini masih kosong)
-  if (!tamu) (async () => {
-    let md = '', tgl = hariIni;
-    try { md = await ambil(`/laporan-harian/peringatan/${hariIni}.md`); }
-    catch { try { md = await ambil(`/laporan-harian/peringatan/${kemarin}.md`); tgl = kemarin; } catch { return gagal('c-peringatan', 'Belum ada peringatan dua hari terakhir.'); } }
-    const blok = [...md.matchAll(/^### (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) WIB\n([\s\S]*?)(?=^### |(?![\s\S]))/gm)];
-    const item = blok.flatMap(b => b[2].split('\n').filter(x => /^[-*]\s/.test(x.trim())).map(x => ({ jam: b[1].slice(11), teks: x.trim().replace(/^[-*]\s+/, '') })));
-    if (!item.length) return gagal('c-peringatan', 'Belum ada peringatan baru.');
-    const t = item[item.length - 1];
-    const m = t.teks.match(/^(Kebijakan|Internal|Makro|H-\d+|Hari-H|hari-H)\s*(?:·\s*([A-Z0-9, ]+?)\s*)?—\s*(.*)$/);
-    const label = m ? `<span class="pil jenis">${esc(m[1])}</span> ${m[2] ? `<span class="pil">${esc(m[2])}</span> ` : ''}` : '';
-    $('c-peringatan').innerHTML = `<div class="kapan">Peringatan terbaru · ${esc(tgl)} ${esc(t.jam)} WIB · ${item.length} hari ini</div><div>${label}${esc(polos(m ? m[3] : t.teks))}</div>`;
-  })();
+  // 3. Schedule: tiga acara terjadwal terdekat (unlock, rilis makro, agenda jaringan)
+  if (!tamu) ambil('/laporan-harian/harian/jadwal.md').then(md => {
+    const baris = barisTabel(bagian(md, 'Garis Waktu'));
+    if (!baris.length) return gagal('c-jadwal', 'Belum ada acara terjadwal dalam 45 hari.');
+    const pekan = baris.filter(r => /^(Hari ini|Besok|H-[1-7])$/.test(r[0])).length;
+    $('c-jadwal').innerHTML = `<div class="kapan">Schedule terdekat · ${pekan} acara dalam 7 hari · ${baris.length} dalam 45 hari</div>` +
+      baris.slice(0, 3).map(r => `<div class="acara"><span class="pil jenis">${esc(r[0])}</span>${r[4] && r[4] !== 'semua' ? `<span class="pil">${esc(r[4])}</span>` : ''}${esc(polos(r[2]).split(' — ')[0])}</div>`).join('');
+  }).catch(() => gagal('c-jadwal', 'Schedule belum bisa dimuat — buka halaman Schedule langsung.'));
 
   // 4. Screening: daftar pendek final + narasi yang menghangat
   if (!tamu) Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
