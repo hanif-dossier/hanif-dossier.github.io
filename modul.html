@@ -19,7 +19,37 @@
 .modul-kartu .status{margin-top:auto;padding-top:6px;font-size:12px;font-weight:700;color:var(--sage)}
 .modul-kartu.terkunci .status{color:var(--pasir-tua)}
 .modul-kartu.aktif{outline:2px solid var(--sage)}
-.baca-modul{margin-top:26px;max-width:76ch}
+.baca-modul{margin-top:26px;max-width:860px}
+/* Setiap bagian modul (Konsepnya, Istilah, Aturan baca, Contoh, ...) duduk di
+   kartunya sendiri, dengan strip warna di kiri yang menandai jenis bagiannya.
+   Sebelumnya semua isi menempel langsung di latar halaman. */
+.baca-modul .blok{background:var(--kartu);border:1px solid var(--gr);border-left:5px solid var(--sage);border-radius:18px;padding:18px 22px 14px;margin:14px 0;box-shadow:var(--bayang)}
+.baca-modul .blok.konsep{border-left-color:var(--sage)}
+.baca-modul .blok.istilah{border-left-color:#9fb8c9}
+.baca-modul .blok.aturan{border-left-color:#c9a961}
+.baca-modul .blok.contoh{border-left-color:#b86b5c}
+.baca-modul .blok.rumus{border-left-color:#6b5b95}
+.baca-modul .blok > h3:first-child{margin-top:0;display:flex;align-items:center;gap:10px}
+.baca-modul .blok > h3:first-child::before{content:attr(data-label);font-family:"Nunito Sans",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua);white-space:nowrap}
+.baca-modul .blok.istilah > h3:first-child::before{background:#e7eef3;color:#4d6b80}
+.baca-modul .blok.aturan > h3:first-child::before{background:#f3e9d8;color:#8a6a2e}
+.baca-modul .blok.contoh > h3:first-child::before{background:#f6e4df;color:#9a5144}
+.baca-modul .blok.rumus > h3:first-child::before{background:#ebe7f3;color:#5a4a82}
+.baca-modul .blok p{max-width:72ch}
+.baca-modul .blok > :last-child{margin-bottom:0}
+/* Daftar bernomor di dalam kartu: nomor dalam lingkaran, tiap butir diberi jarak. */
+.baca-modul .blok ol{list-style:none;padding-left:0;counter-reset:urut}
+.baca-modul .blok ol > li{counter-increment:urut;position:relative;padding:9px 0 9px 38px;border-top:1px solid var(--gr);margin:0}
+.baca-modul .blok ol > li:first-child{border-top:0}
+.baca-modul .blok ol > li::before{content:counter(urut);position:absolute;left:0;top:10px;width:24px;height:24px;border-radius:50%;background:var(--sage-lembut);color:var(--sage-tua);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.baca-modul .blok ul{padding-left:20px}
+/* Tabel di dalam kartu: tanpa garis tepi luar, baris berseling tipis. */
+.baca-modul .blok table{margin:8px 0 4px}
+.baca-modul .blok tr:nth-child(even) td{background:#fafbf8}
+.baca-modul .blok .batas-berlaku{margin:12px 0 4px}
+.baca-modul .blok pre{box-shadow:none;border:1px solid var(--gr)}
+.baca-modul > .sumber{margin-top:6px}
+@media(max-width:640px){.baca-modul .blok{padding:14px 15px 10px;border-radius:14px}.baca-modul .blok > h3:first-child{flex-direction:column;align-items:flex-start;gap:6px}}
 .baca-modul h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:4px}
 .baca-modul .sub{color:var(--lb);font-size:13px;margin-bottom:14px}
 .baca-modul h3{font-size:1.05rem;margin:22px 0 6px;color:var(--sage-tua)}
@@ -306,6 +336,40 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
     <span class="status">${bolehBaca(m) ? 'Baca →' : 'Untuk anggota'}</span>
   </button>`).join('');
 
+  // Isi modul ditulis sebagai HTML datar (h3, p, table, ol, ...). Fungsi ini
+  // mengelompokkan setiap <h3> beserta semua yang ada di bawahnya — sampai <h3>
+  // berikutnya — ke dalam satu kartu <section class="blok">. Jenis bagiannya
+  // ditebak dari kata di judul supaya warna penandanya konsisten di semua modul.
+  const JENIS = [
+    [/konsep/i, 'konsep', 'Konsep'],
+    [/istilah/i, 'istilah', 'Istilah'],
+    [/aturan|langkah|urutan|cara/i, 'aturan', 'Aturan baca'],
+    [/contoh|kasus/i, 'contoh', 'Contoh'],
+    [/rumus|hitung|tingkat/i, 'rumus', 'Rumus'],
+    [/lapisan|sektor|peta|perbandingan|jenis|kombinasi|tahap|rantai/i, 'istilah', 'Peta'],
+  ];
+  function blokkan(html) {
+    const t = document.createElement('template'); t.innerHTML = html;
+    const wadah = document.createElement('div');
+    let blok = null;
+    for (const node of [...t.content.childNodes]) {
+      const el = node.nodeType === 1 ? node : null;
+      if (el && el.tagName === 'H3') {
+        blok = document.createElement('section');
+        const judul = el.textContent || '';
+        const cocok = JENIS.find(([re]) => re.test(judul));
+        blok.className = 'blok ' + (cocok ? cocok[1] : 'konsep');
+        el.dataset.label = cocok ? cocok[2] : 'Bagian';
+        wadah.append(blok);
+      }
+      // Sumber dan salam penutup berdiri di luar kartu, sebagai kaki halaman.
+      if (el && (el.classList.contains('sumber') || /^semoga bermanfaat/i.test((el.textContent || '').trim()))) blok = null;
+      if (!blok && node.nodeType === 3 && !node.textContent.trim()) continue;
+      (blok || wadah).append(node);
+    }
+    return wadah.innerHTML;
+  }
+
   function buka(n, gulir = true) {
     const m = MODUL.find(x => x.nomor === n); if (!m) return;
     document.querySelectorAll('.modul-kartu').forEach(k => k.classList.toggle('aktif', Number(k.dataset.n) === n));
@@ -313,7 +377,7 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
     const navigasi = `<div class="nav-modul">${sebelum ? `<a class="kedua tbl" href="#modul-${sebelum.nomor}">← Modul ${sebelum.nomor}</a>` : '<span></span>'}${sesudah ? `<a class="utama tbl" href="#modul-${sesudah.nomor}">Modul ${sesudah.nomor} →</a>` : ''}</div>`;
     $('baca').hidden = false;
     $('baca').innerHTML = bolehBaca(m)
-      ? `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><div class="sub">Format kelas: konsep → istilah → aturan baca → contoh → batas keberlakuan.</div>${m.isi}${navigasi}`
+      ? `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><div class="sub">Format kelas: konsep → istilah → aturan baca → contoh → batas keberlakuan.</div>${blokkan(m.isi)}${navigasi}`
       : `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><p>${esc(m.ringkas)}</p><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–8 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">${p ? '<a class="utama" href="masuk.html">Selesaikan langganan</a>' : '<a class="utama" href="masuk.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=modul.html">Sudah anggota? Masuk</a>'}</div></div>${navigasi}`;
     history.replaceState(null, '', `#modul-${n}`);
     if (gulir) $('baca').scrollIntoView({ behavior: 'smooth', block: 'start' });
