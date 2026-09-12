@@ -292,7 +292,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     const tumbuh = [...tt.aplikasi].filter(x => x.fees_change != null).sort((a, b) => b.fees_change - a.fees_change)[0];
     const rantai1 = tt.rantai[0];
     $('tt-ringkas').innerHTML = [
-      `25 aplikasi teratas: <b>${uang(totalApp)}</b> fee dalam 30 hari`,
+      `${tt.aplikasi.length} aplikasi teratas: <b>${uang(totalApp)}</b> fee dalam 30 hari`,
       tumbuh ? `Fee tumbuh tercepat: <b>${esc(tumbuh.name)}</b> ${persen(tumbuh.fees_change * 100, 0)}` : '',
       rantai1 ? `Rantai #1: <b>${esc(rantai1.name)}</b> ${uang(rantai1.fees_30d)}` : '',
     ].filter(Boolean).map(t => `<span>${t}</span>`).join('');
