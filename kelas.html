@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelas Teknologi Blockchain — Hanif Dossier Crypto</title>
+<meta name="description" content="Kelas teknologi blockchain berbahasa Indonesia: dasar blockchain, Bitcoin, Ethereum & smart contract, keamanan Web3, DeFi, dan teknologi lanjutan. Setiap kelas berisi pelajaran bertahap dan kuis.">
+<meta property="og:title" content="Kelas Teknologi Blockchain — Hanif Dossier Crypto">
+<meta property="og:description" content="Belajar teknologi blockchain dari nol: pelajaran bertahap, tanda selesai, dan kuis di setiap kelas.">
+<meta property="og:url" content="https://hanif-dossier.github.io/kelas.html">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+.tbl-kuis{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:999px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.tbl-kuis.utama{background:var(--sage);color:#fff}.tbl-kuis.utama:hover{background:var(--sage-tua);color:#fff}
+.tbl-kuis.kedua{background:var(--kartu);border-color:#d9dfda;color:var(--tx)}.tbl-kuis.kedua:hover{border-color:var(--sage)}
+
+/* ── Katalog: kategori di kiri, kartu kelas di kanan ── */
+.katalog{display:grid;grid-template-columns:230px 1fr;gap:26px;margin-top:26px;align-items:start}
+.kategori{position:sticky;top:16px;display:flex;flex-direction:column;gap:6px}
+.kategori h2{font-size:1.1rem;margin:0 0 8px}
+.kategori button{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:1.5px solid transparent;background:transparent;font:inherit;font-size:14.5px;font-weight:700;color:var(--tx2);padding:10px 14px;border-radius:12px;cursor:pointer}
+.kategori button:hover{background:var(--kartu)}
+.kategori button.aktif{background:var(--kartu);border-color:var(--sage);color:var(--tx)}
+.kategori button small{font-weight:600;color:var(--lb);font-size:12px}
+.kisi-kelas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.kisi-kelas h2.judul-kat{grid-column:1/-1;font-size:1.25rem;margin:10px 0 -6px}
+.kartu-kelas{display:flex;flex-direction:column;gap:10px;border:0;background:none;padding:0;text-align:left;font:inherit;color:var(--tx);cursor:pointer}
+.kartu-kelas:hover .sampul{transform:translateY(-3px);box-shadow:0 14px 30px rgba(43,51,48,.18)}
+.sampul{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:16px;overflow:hidden;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;color:#fff;background:var(--warna);transition:transform .15s,box-shadow .15s;box-shadow:var(--bayang)}
+.sampul::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 30%,rgba(255,255,255,.28),transparent 45%),linear-gradient(135deg,transparent 30%,rgba(0,0,0,.32))}
+.sampul svg.ikon{position:absolute;right:-6px;bottom:-10px;width:46%;height:auto;opacity:.22}
+.sampul .lbl{position:relative;font-size:11.5px;font-weight:700;letter-spacing:.03em;opacity:.9}
+.sampul .jdl{position:relative;font-family:"DM Serif Display",Georgia,serif;font-size:1.45rem;line-height:1.12;margin-top:4px;max-width:88%;text-shadow:0 1px 8px rgba(0,0,0,.2)}
+.sampul .jumlah{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.45);padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.sampul .gembok{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.45);padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:700}
+.kartu-kelas .nama{font-weight:800;font-size:15.5px;line-height:1.35}
+.kemajuan-kecil{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--lb);font-weight:700}
+.kemajuan-kecil .b{flex:1;height:6px;border-radius:999px;background:var(--gr);overflow:hidden}
+.kemajuan-kecil .b span{display:block;height:100%;background:var(--sage)}
+@media(max-width:820px){.katalog{grid-template-columns:1fr}.kategori{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}.kategori h2{display:none}.kategori button{white-space:nowrap;flex:none}.kategori button small{display:none}}
+
+/* ── Halaman kelas: panel kiri + daftar pelajaran ── */
+.halaman-kelas{display:grid;grid-template-columns:300px 1fr;gap:26px;margin-top:22px;align-items:start}
+.panel-kelas{background:var(--kartu);border-radius:20px;padding:18px;box-shadow:var(--bayang);position:sticky;top:16px}
+.panel-kelas h1{font-size:1.4rem;margin:14px 0 8px;line-height:1.2}
+.panel-kelas p{font-size:14px;color:var(--tx2);margin-top:8px}
+.lencana-selesai{display:inline-block;background:var(--sage);color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em;padding:5px 11px;border-radius:6px}
+.lencana-selesai.nol{background:var(--lb)}
+.daftar-pelajaran h2{font-size:1.25rem;margin:0 0 12px}
+.item-pel{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--kartu);border:1.5px solid var(--gr);border-radius:14px;padding:15px 18px;margin-bottom:10px;font:inherit;color:var(--tx);cursor:pointer;transition:border-color .15s}
+.item-pel:hover{border-color:var(--sage)}
+.item-pel .cek{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--gr);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+.item-pel.selesai .cek{background:var(--sage);border-color:var(--sage)}
+.item-pel .t{flex:1;font-weight:700;font-size:15.5px}
+.item-pel .t small{display:block;font-weight:600;font-size:12px;color:var(--lb)}
+.item-pel .st{flex:none;font-size:12px;font-weight:800;padding:4px 10px;border-radius:6px;background:var(--lembut);color:var(--lb)}
+.item-pel.selesai .st{background:var(--sage);color:#fff}
+.item-pel.kuis .t{letter-spacing:.04em}
+@media(max-width:820px){.halaman-kelas{grid-template-columns:1fr}.panel-kelas{position:static}}
+
+/* ── Pembaca pelajaran (sama dengan gaya modul.html) ── */
+.baca{max-width:860px;margin:22px auto 0}
+.remah{font-size:13px;color:var(--lb);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.remah a{font-weight:700}
+.baca h1{font-size:clamp(1.6rem,3.4vw,2.2rem);margin:10px 0 4px}
+.baca .sub{color:var(--lb);font-size:13px;margin-bottom:14px}
+.baca .blok{background:var(--kartu);border:1px solid var(--gr);border-left:5px solid var(--sage);border-radius:18px;padding:18px 22px 14px;margin:14px 0;box-shadow:var(--bayang)}
+.baca .blok.istilah{border-left-color:#9fb8c9}.baca .blok.aturan{border-left-color:#c9a961}.baca .blok.contoh{border-left-color:#b86b5c}.baca .blok.rumus{border-left-color:#6b5b95}
+.baca .blok > h3:first-child{margin-top:0;display:flex;align-items:center;gap:10px}
+.baca .blok > h3:first-child::before{content:attr(data-label);font-family:"Nunito Sans",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua);white-space:nowrap}
+.baca .blok.istilah > h3:first-child::before{background:#e7eef3;color:#4d6b80}.baca .blok.aturan > h3:first-child::before{background:#f3e9d8;color:#8a6a2e}.baca .blok.contoh > h3:first-child::before{background:#f6e4df;color:#9a5144}.baca .blok.rumus > h3:first-child::before{background:#ebe7f3;color:#5a4a82}
+.baca .blok > :last-child{margin-bottom:0}
+.baca h3{font-size:1.05rem;margin:22px 0 6px;color:var(--sage-tua)}
+.baca p,.baca li{font-size:15.5px;color:var(--tx2);line-height:1.75}
+.baca p{margin:0 0 10px}
+.baca ol,.baca ul{padding-left:22px;margin:0 0 10px}
+.baca li{margin-bottom:4px}
+.baca table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 12px;display:block;overflow-x:auto}
+.baca th,.baca td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--gr);vertical-align:top}
+.baca th{color:var(--lb);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.baca pre{background:#f7f8f5;border:1px solid var(--gr);border-radius:12px;padding:12px 14px;font-size:13px;overflow-x:auto;white-space:pre-wrap}
+.baca .batas-berlaku{background:var(--pasir);color:var(--pasir-tua);border-radius:14px;padding:12px 16px;font-size:14.5px;margin:14px 0;line-height:1.65}
+.nav-pel{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.kunci-kelas{background:var(--sage-lembut);border-radius:20px;padding:26px;text-align:center;margin-top:18px}
+@media(max-width:640px){.baca .blok{padding:14px 15px 10px;border-radius:14px}.baca .blok > h3:first-child{flex-direction:column;align-items:flex-start;gap:6px}}
+
+/* ── Kuis kelas ── */
+.titik-titik{display:flex;gap:4px;margin:12px 0 14px}
+.titik-titik span{flex:1;height:8px;border-radius:999px;background:var(--gr)}
+.titik-titik span.kini{background:var(--sage-lembut);outline:2px solid var(--sage);outline-offset:-2px}
+.titik-titik span.ya{background:var(--sage)}.titik-titik span.tidak{background:var(--bata)}
+.soal h2{font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.3;margin-bottom:16px}
+.pilihan{display:flex;flex-direction:column;gap:10px}
+.opsi{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:var(--kartu);border:1.5px solid var(--gr);border-radius:16px;padding:13px 15px;font:inherit;font-size:15.5px;color:var(--tx);cursor:pointer;line-height:1.45}
+.opsi:hover:not(:disabled){border-color:var(--sage)}
+.opsi .huruf{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--lembut);color:var(--tx2);font-weight:700;font-size:13px}
+.opsi:disabled{cursor:default}
+.opsi.benar{border-color:var(--sage);background:var(--sage-lembut)}.opsi.benar .huruf{background:var(--sage);color:#fff}
+.opsi.salah{border-color:var(--bata);background:var(--bata-lembut)}.opsi.salah .huruf{background:var(--bata);color:#fff}
+.opsi.redup{opacity:.55}
+.penjelasan{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:15px;line-height:1.65;color:var(--tx2);background:var(--lembut);border-left:5px solid var(--sage)}
+.penjelasan.meleset{border-left-color:var(--bata)}
+.penjelasan b.vonis{display:block;color:var(--tx);margin-bottom:4px}
+.bawah-soal{display:flex;justify-content:flex-end;margin-top:16px}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="dasbor.html" data-sesi hidden>Beranda</a>
+    <a href="riset.html" data-sesi hidden>Riset</a>
+    <a href="pasar.html" data-sesi hidden>Pasar</a>
+    <a class="aktif" href="kelas.html">Kelas</a>
+    <a href="modul.html">Modul</a>
+    <a href="kuis.html">Kuis</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="tentang.html">Tentang</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<div id="layar"></div>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Kelas ini edukasi teknologi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil. Penyebutan proyek atau koin adalah contoh cara kerja teknologi, bukan rekomendasi.</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<!-- Data kelas: satu berkas per kategori. Menambah kategori = menambah satu baris di sini. -->
+<script src="kelas/dasar.js"></script>
+<script src="kelas/bitcoin.js"></script>
+<script src="kelas/ethereum.js"></script>
+<script src="kelas/keamanan.js"></script>
+<script src="kelas/defi.js"></script>
+<script src="kelas/lanjutan.js"></script>
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// PENGATURAN
+// ─────────────────────────────────────────────────────────────────────────────
+const PENGATURAN = {
+  kategoriTerbuka: ['dasar', 'bitcoin'],   // bisa dibaca tanpa akun; kategori lain butuh akun gratis
+  batasLulusKuis: 70,                      // persen benar supaya kuis kelas dianggap selesai
+  kunciSimpan: 'kelas-kemajuan',           // laci localStorage: { kodeKelas: { p: [nomor pelajaran selesai], kuis: skor% } }
+};
+
+// Ikon sampul per kategori (garis sederhana, digambar sebagai watermark di pojok kartu).
+const IKON = {
+  dasar:    '<path d="M20 44l10-10m14-14l10-10M24 30a8 8 0 0 1 0-11l5-5a8 8 0 0 1 11 11l-5 5M40 34a8 8 0 0 1 0 11l-5 5a8 8 0 0 1-11-11l5-5"/>',
+  bitcoin:  '<circle cx="32" cy="32" r="26"/><path d="M26 18v28M32 18v4M32 42v4M24 22h11a5 5 0 0 1 0 10H24h12a5 5 0 0 1 0 10H24"/>',
+  ethereum: '<path d="M32 6L16 33l16 9 16-9L32 6zM16 37l16 21 16-21-16 9-16-9z"/>',
+  keamanan: '<rect x="14" y="28" width="36" height="28" rx="4"/><path d="M22 28v-8a10 10 0 0 1 20 0v8M32 38v8"/>',
+  defi:     '<circle cx="20" cy="22" r="8"/><circle cx="44" cy="42" r="8"/><path d="M28 22h14l-4-4M36 42H22l4 4"/>',
+  lanjutan: '<path d="M32 6l6 18 18 8-18 8-6 18-6-18-18-8 18-8z"/>',
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA & KEMAJUAN
+// ─────────────────────────────────────────────────────────────────────────────
+const KATEGORI = (window.KELAS || []).slice().sort((a, b) => a.urut - b.urut);
+const semuaKelas = KATEGORI.flatMap(k => k.kursus.map(c => ({ ...c, kat: k })));
+const cariKelas = kode => semuaKelas.find(c => c.kode === kode);
+
+function bacaKemajuan() { try { return JSON.parse(localStorage.getItem(PENGATURAN.kunciSimpan)) || {}; } catch { return {}; } }
+function simpan(k) { try { localStorage.setItem(PENGATURAN.kunciSimpan, JSON.stringify(k)); } catch {} }
+function catatPelajaran(kode, i) { const k = bacaKemajuan(); const c = k[kode] || (k[kode] = { p: [] }); if (!c.p.includes(i)) c.p.push(i); simpan(k); }
+function catatKuis(kode, persen) { const k = bacaKemajuan(); const c = k[kode] || (k[kode] = { p: [] }); if (!(c.kuis >= persen)) c.kuis = persen; simpan(k); }
+// Persen selesai = (pelajaran selesai + kuis lulus) ÷ (jumlah pelajaran + 1 kuis).
+function persenKelas(c) {
+  const k = bacaKemajuan()[c.kode] || { p: [] };
+  const kuisLulus = (k.kuis ?? -1) >= PENGATURAN.batasLulusKuis ? 1 : 0;
+  return Math.round((k.p.filter(i => i < c.pelajaran.length).length + kuisLulus) / (c.pelajaran.length + 1) * 100);
+}
+
+let profil = null;                       // null = pengunjung tanpa akun
+const bolehBaca = c => PENGATURAN.kategoriTerbuka.includes(c.kat.kode) || !!profil;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAMPILAN
+// ─────────────────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const layar = html => { $('layar').innerHTML = html; };
+const svgIkon = kat => `<svg class="ikon" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${IKON[kat] || IKON.lanjutan}</svg>`;
+
+function sampul(c) {
+  return `<div class="sampul" style="--warna:${c.kat.warna}">${svgIkon(c.kat.kode)}
+    <span class="lbl">${esc(c.kat.nama)}</span><span class="jdl">${esc(c.judul)}</span>
+    <span class="jumlah">${c.pelajaran.length} Pelajaran</span>${bolehBaca(c) ? '' : '<span class="gembok">🔒 Akun gratis</span>'}</div>`;
+}
+
+// ── 1. Katalog ──
+function tampilKatalog(filter) {
+  const aktif = KATEGORI.find(k => k.kode === filter) ? filter : 'semua';
+  const tombol = [`<button data-kat="semua" class="${aktif === 'semua' ? 'aktif' : ''}">Semua kelas <small>${semuaKelas.length}</small></button>`]
+    .concat(KATEGORI.map(k => `<button data-kat="${k.kode}" class="${aktif === k.kode ? 'aktif' : ''}">${esc(k.nama)} <small>${k.kursus.length}</small></button>`)).join('');
+  const kelompok = (aktif === 'semua' ? KATEGORI : KATEGORI.filter(k => k.kode === aktif)).map(k =>
+    `<h2 class="serif judul-kat">${esc(k.nama)}</h2>` + k.kursus.map(c0 => {
+      const c = cariKelas(c0.kode), p = persenKelas(c);
+      return `<button class="kartu-kelas" data-kelas="${c.kode}">${sampul(c)}
+        <span class="nama">${esc(c.judul)}</span>
+        <span class="kemajuan-kecil"><span class="b"><span style="width:${p}%"></span></span>${p === 100 ? '✓ Selesai' : p + '%'}</span></button>`;
+    }).join('')).join('');
+  const totalPel = semuaKelas.reduce((n, c) => n + c.pelajaran.length, 0);
+  layar(`
+    <section class="sambut" style="grid-template-columns:1fr"><div class="sapa" style="max-width:780px">
+      <div class="mata">Kelas · teknologi blockchain</div>
+      <h1 class="serif">Pahami teknologinya,<br><span>sebelum membeli koinnya.</span></h1>
+      <p>${semuaKelas.length} kelas, ${totalPel} pelajaran, dari cara kerja blockchain sampai DeFi dan teknologi terbaru. Setiap kelas ditutup kuis. Kelas <b>Dasar Blockchain</b> dan <b>Bitcoin</b> terbuka untuk semua; kelas lain cukup dengan akun gratis.</p>
+    </div></section>
+    <div class="katalog"><nav class="kategori"><h2 class="serif">Kategori</h2>${tombol}</nav><div class="kisi-kelas">${kelompok}</div></div>`);
+  $('layar').querySelector('.kategori').onclick = e => { const b = e.target.closest('[data-kat]'); if (b) location.hash = b.dataset.kat === 'semua' ? '' : 'kategori/' + b.dataset.kat; };
+  $('layar').querySelector('.kisi-kelas').onclick = e => { const b = e.target.closest('[data-kelas]'); if (b) location.hash = 'kelas/' + b.dataset.kelas; };
+}
+
+// ── 2. Halaman satu kelas ──
+function tampilKelas(c) {
+  const k = bacaKemajuan()[c.kode] || { p: [] }, p = persenKelas(c);
+  const lulusKuis = (k.kuis ?? -1) >= PENGATURAN.batasLulusKuis;
+  const item = c.pelajaran.map((pl, i) => {
+    const s = k.p.includes(i);
+    return `<button class="item-pel ${s ? 'selesai' : ''}" data-buka="${i}"><span class="cek">${s ? '✓' : ''}</span><span class="t"><small>Pelajaran ${i + 1}</small>${esc(pl.judul)}</span><span class="st">${s ? 'Selesai' : 'Belum'}</span></button>`;
+  }).join('') + `<button class="item-pel kuis ${lulusKuis ? 'selesai' : ''}" data-buka="kuis"><span class="cek">${lulusKuis ? '✓' : ''}</span><span class="t"><small>Penutup · ${c.kuis.length} soal</small>KUIS</span><span class="st">${lulusKuis ? 'Lulus ' + k.kuis + '%' : k.kuis !== undefined ? 'Skor ' + k.kuis + '%' : 'Belum'}</span></button>`;
+  const lanjut = c.pelajaran.findIndex((_, i) => !k.p.includes(i));
+  layar(`
+    <div class="remah" style="margin-top:20px"><a href="#">Kelas</a> › <a href="#kategori/${c.kat.kode}">${esc(c.kat.nama)}</a></div>
+    <div class="halaman-kelas">
+      <aside class="panel-kelas">${sampul(c)}
+        <h1 class="serif">${esc(c.judul)}</h1>
+        <span class="lencana-selesai ${p ? '' : 'nol'}">${p}% SELESAI</span>
+        <p>${esc(c.ringkas)}</p>
+        <div class="tombol"><button class="tbl-kuis utama" data-buka="${lanjut >= 0 ? lanjut : (lulusKuis ? 0 : 'kuis')}">${p === 0 ? 'Mulai belajar →' : p === 100 ? 'Baca ulang' : 'Lanjutkan →'}</button></div>
+      </aside>
+      <section class="daftar-pelajaran"><h2 class="serif">Daftar pelajaran</h2>${item}</section>
+    </div>`);
+  $('layar').onclick = e => { const b = e.target.closest('[data-buka]'); if (b) location.hash = `kelas/${c.kode}/${b.dataset.buka === 'kuis' ? 'kuis' : Number(b.dataset.buka) + 1}`; };
+}
+
+// Isi pelajaran berupa HTML datar; setiap <h3> dan isinya dibungkus kartu (sama dengan modul.html).
+const JENIS = [[/konsep/i, 'konsep', 'Konsep'], [/istilah/i, 'istilah', 'Istilah'], [/cara kerja|mekanisme|langkah|yang harus|tanda/i, 'aturan', 'Cara kerja'], [/contoh|kasus/i, 'contoh', 'Contoh'], [/rumus|hitung/i, 'rumus', 'Hitungan']];
+function blokkan(html) {
+  const t = document.createElement('template'); t.innerHTML = html;
+  const wadah = document.createElement('div'); let blok = null;
+  for (const node of [...t.content.childNodes]) {
+    const el = node.nodeType === 1 ? node : null;
+    if (el && el.tagName === 'H3') {
+      blok = document.createElement('section');
+      const cocok = JENIS.find(([re]) => re.test(el.textContent || ''));
+      blok.className = 'blok ' + (cocok ? cocok[1] : 'konsep');
+      el.dataset.label = cocok ? cocok[2] : 'Bagian';
+      wadah.append(blok);
+    }
+    if (el && el.classList.contains('batas-berlaku')) blok = null;
+    if (!blok && node.nodeType === 3 && !node.textContent.trim()) continue;
+    (blok || wadah).append(node);
+  }
+  return wadah.innerHTML;
+}
+
+function kunciHtml(c) {
+  return `<div class="kunci-kelas"><h2 class="serif">Kelas ini untuk pemilik akun</h2><p>Daftar akun gratis — cukup email — untuk membuka semua kelas di luar Dasar Blockchain dan Bitcoin.</p>
+    <div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html?daftar">Daftar akun gratis</a><a class="kedua" href="masuk.html?ke=${encodeURIComponent('kelas.html')}">Sudah punya akun? Masuk</a></div></div>`;
+}
+
+// ── 3. Pembaca pelajaran ──
+function tampilPelajaran(c, i) {
+  const pl = c.pelajaran[i]; if (!pl) { location.hash = 'kelas/' + c.kode; return; }
+  const remah = `<div class="remah"><a href="#">Kelas</a> › <a href="#kategori/${c.kat.kode}">${esc(c.kat.nama)}</a> › <a href="#kelas/${c.kode}">${esc(c.judul)}</a></div>`;
+  if (!bolehBaca(c)) { layar(`<article class="baca">${remah}<h1 class="serif">${esc(pl.judul)}</h1>${kunciHtml(c)}</article>`); return; }
+  const terakhir = i === c.pelajaran.length - 1;
+  layar(`<article class="baca">${remah}
+    <h1 class="serif">${esc(pl.judul)}</h1>
+    <div class="sub">Pelajaran ${i + 1} dari ${c.pelajaran.length} · ${esc(c.judul)}</div>
+    ${blokkan(pl.isi)}
+    <div class="nav-pel">
+      ${i > 0 ? `<a class="tbl-kuis kedua" href="#kelas/${c.kode}/${i}">← Sebelumnya</a>` : `<a class="tbl-kuis kedua" href="#kelas/${c.kode}">← Daftar pelajaran</a>`}
+      <button class="tbl-kuis utama" id="selesai">${terakhir ? 'Tandai selesai & ke kuis →' : 'Tandai selesai & lanjut →'}</button>
+    </div></article>`);
+  $('selesai').onclick = () => { catatPelajaran(c.kode, i); location.hash = `kelas/${c.kode}/${terakhir ? 'kuis' : i + 2}`; };
+}
+
+// ── 4. Kuis kelas ──
+function acak(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function tampilKuis(c) {
+  const remah = `<div class="remah"><a href="#">Kelas</a> › <a href="#kelas/${c.kode}">${esc(c.judul)}</a> › Kuis</div>`;
+  if (!bolehBaca(c)) { layar(`<article class="baca">${remah}<h1 class="serif">Kuis</h1>${kunciHtml(c)}</article>`); return; }
+  const soal = c.kuis.map(s => ({ ...s, susunan: acak([0, 1, 2, 3]) }));
+  let ke = 0, benar = 0; const hasil = [];
+  layar(`<article class="baca">${remah}<h1 class="serif">Kuis: ${esc(c.judul)}</h1>
+    <div class="sub" id="hitung"></div><div class="titik-titik" id="titik"></div>
+    <div class="kartu soal"><h2 class="serif" id="tanya"></h2><div class="pilihan" id="pilihan"></div>
+    <div class="penjelasan" id="penjelasan" hidden></div><div class="bawah-soal"><button class="tbl-kuis utama" id="lanjut" hidden></button></div></div></article>`);
+  function gambar() {
+    const s = soal[ke];
+    $('hitung').textContent = `Soal ${ke + 1} dari ${soal.length} · lulus kalau benar minimal ${PENGATURAN.batasLulusKuis}%`;
+    $('titik').innerHTML = soal.map((_, i) => `<span class="${i < ke ? (hasil[i] ? 'ya' : 'tidak') : i === ke ? 'kini' : ''}"></span>`).join('');
+    $('tanya').textContent = s.tanya;
+    $('pilihan').innerHTML = s.susunan.map((asli, pos) => `<button class="opsi" data-i="${asli}"><span class="huruf">${'ABCD'[pos]}</span><span>${esc(s.pilihan[asli])}</span></button>`).join('');
+    $('penjelasan').hidden = true; $('lanjut').hidden = true;
+  }
+  $('pilihan').onclick = e => {
+    const b = e.target.closest('.opsi'); if (!b || !$('lanjut').hidden) return;
+    const s = soal[ke], i = Number(b.dataset.i), tepat = i === 0;
+    hasil[ke] = tepat; if (tepat) benar++;
+    $('pilihan').querySelectorAll('.opsi').forEach(x => { const n = Number(x.dataset.i); x.disabled = true; x.classList.add(n === 0 ? 'benar' : n === i ? 'salah' : 'redup'); });
+    $('penjelasan').className = 'penjelasan' + (tepat ? '' : ' meleset');
+    $('penjelasan').innerHTML = `<b class="vonis">${tepat ? 'Tepat.' : 'Belum tepat. Jawabannya: ' + esc(s.pilihan[0]) + '.'}</b>${s.jelas}`;
+    $('penjelasan').hidden = false;
+    $('lanjut').textContent = ke === soal.length - 1 ? 'Lihat hasil →' : 'Soal berikutnya →';
+    $('lanjut').hidden = false;
+  };
+  $('lanjut').onclick = () => { if (ke < soal.length - 1) { ke++; gambar(); } else selesai(); };
+  function selesai() {
+    const persen = Math.round(benar / soal.length * 100), lulus = persen >= PENGATURAN.batasLulusKuis;
+    catatKuis(c.kode, persen);
+    const idx = semuaKelas.indexOf(c), berikut = semuaKelas[idx + 1];
+    const meleset = soal.filter((_, i) => !hasil[i]);
+    layar(`<article class="baca">${remah}
+      <div class="kartu" style="text-align:center;padding:30px 24px">
+        <div class="mata">Hasil kuis</div><h1 class="serif" style="margin:6px 0">${benar}/${soal.length} · ${lulus ? 'Lulus' : 'Belum lulus'}</h1>
+        <p style="max-width:52ch;margin:0 auto">${lulus ? `Kelas <b>${esc(c.judul)}</b> sekarang ${persenKelas(c)}% selesai.` : `Butuh minimal ${PENGATURAN.batasLulusKuis}%. Baca ulang pelajaran yang terkait, lalu coba lagi.`}</p>
+        <div class="tombol" style="justify-content:center">
+          ${lulus && berikut ? `<a class="tbl-kuis utama" href="#kelas/${berikut.kode}">Kelas berikutnya: ${esc(berikut.judul)} →</a>` : `<a class="tbl-kuis utama" href="#kelas/${c.kode}/kuis" id="ulang">Ulangi kuis</a>`}
+          <a class="tbl-kuis kedua" href="#kelas/${c.kode}">Daftar pelajaran</a><a class="tbl-kuis kedua" href="kuis.html">Kuis jalur belajar</a>
+        </div></div>
+      ${meleset.length ? `<div class="blok contoh" style="margin-top:18px"><h3 data-label="Ulang">Yang perlu dibaca ulang</h3><ul>${meleset.map(s => `<li><b>${esc(s.tanya)}</b><br>Jawaban: ${esc(s.pilihan[0])}</li>`).join('')}</ul></div>` : ''}
+    </article>`);
+    const u = $('ulang'); if (u) u.onclick = e => { e.preventDefault(); tampilKuis(c); };
+  }
+  gambar();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PENGARAH (hash): #  ·  #kategori/<kode>  ·  #kelas/<kode>  ·  #kelas/<kode>/<n>  ·  #kelas/<kode>/kuis
+// ─────────────────────────────────────────────────────────────────────────────
+function arahkan() {
+  $('layar').onclick = null;
+  const [jenis, kode, sub] = location.hash.slice(1).split('/');
+  const c = jenis === 'kelas' ? cariKelas(kode) : null;
+  if (c && sub === 'kuis') tampilKuis(c);
+  else if (c && sub) tampilPelajaran(c, Number(sub) - 1);
+  else if (c) tampilKelas(c);
+  else tampilKatalog(jenis === 'kategori' ? kode : null);
+  window.scrollTo({ top: 0 });
+}
+window.addEventListener('hashchange', arahkan);
+arahkan();
+// Menu dan status akun; kalau ternyata sudah masuk, gambar ulang supaya gembok hilang.
+if (window.akun) akun.pasangMenu().then(p => { profil = p; if (p) arahkan(); }).catch(() => {});
+</script>
+</body>
+</html>

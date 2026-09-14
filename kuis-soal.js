@@ -185,7 +185,7 @@ window.KUIS_SOAL = [
   sumber: 'Messari via Akademi Crypto, Desember 2025' },
 { level: 'ethereum', tanya: 'Apa beda optimistic rollup dan ZK rollup?',
   pilihan: ['Optimistic menganggap transaksi sah kecuali dibantah dalam masa sanggah; ZK membuktikan kebenarannya dengan bukti kriptografis', 'Optimistic lebih mahal, ZK gratis', 'Optimistic untuk Bitcoin, ZK untuk Solana', 'Tidak ada bedanya'],
-  jelas: 'Karena ada masa sanggah, penarikan dari optimistic rollup (Arbitrum, Optimism, Base) ke Ethereum bisa memakan sekitar seminggu. ZK rollup (zkSync, Starknet) tidak perlu menunggu masa sanggah.' },
+  jelas: 'Karena ada masa sanggah, penarikan dari optimistic rollup seperti Arbitrum dan OP Mainnet ke Ethereum bisa memakan sekitar seminggu. ZK rollup (zkSync, Starknet) tidak perlu menunggu masa sanggah.' },
 { level: 'ethereum', tanya: 'Pembaruan EIP-4844 (2024) memperkenalkan "blob". Apa gunanya?',
   pilihan: ['Ruang data murah khusus untuk layer 2, sehingga biaya transaksi di L2 turun drastis', 'Jenis NFT baru', 'Koin baru pengganti ETH', 'Fitur privasi'],
   jelas: 'Peta jalannya berlanjut: Pectra, lalu PeerDAS (Fusaka), hingga full danksharding — semua untuk menambah kapasitas data bagi L2.',
@@ -201,15 +201,15 @@ window.KUIS_SOAL = [
   jelas: 'Makin banyak yang ikut staking, makin kecil bagian masing-masing. Ini sebabnya muncul usulan menurunkan penerbitan ETH saat rasio staking tinggi.',
   sumber: 'Messari via Akademi Crypto, Agustus 2026' },
 { level: 'ethereum', tanya: 'Base, salah satu L2 terbesar, dibangun oleh…',
-  pilihan: ['Coinbase, di atas OP Stack milik Optimism', 'Binance', 'Tim Solana', 'Pemerintah AS'],
-  jelas: 'Base tidak punya token sendiri saat diluncurkan. Pendapatannya dari fee sequencer sebagian besar mengalir ke Coinbase — contoh bagaimana aktivitas jaringan tidak otomatis menjadi nilai token.' },
+  pilihan: ['Coinbase — awalnya di atas OP Stack milik Optimism', 'Binance', 'Tim Solana', 'Pemerintah AS'],
+  jelas: 'Pada 2026 Base keluar dari Superchain Optimism dan beralih ke sistem bukti ganda (TEE dan ZK). Base tidak punya token sendiri saat diluncurkan. Pendapatannya dari fee sequencer sebagian besar mengalir ke Coinbase — contoh bagaimana aktivitas jaringan tidak otomatis menjadi nilai token.' },
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LEVEL 4 — KOIN LAYER 1 LAIN: TEKNOLOGI & KEGUNAAN
 // ═══════════════════════════════════════════════════════════════════════════
 { level: 'layer1', tanya: 'Solana dikenal cepat dan murah karena…',
   pilihan: ['Proof of Stake yang dibantu Proof of History (jam kriptografis) dan eksekusi transaksi paralel', 'Memakai Proof of Work seperti Bitcoin', 'Tidak memakai blockchain', 'Hanya punya satu validator'],
-  jelas: 'Kegunaan utamanya hari ini: DEX, memecoin, pembayaran stablecoin, dan aplikasi konsumen. Kompensasinya, menjalankan validator butuh perangkat keras mahal.' },
+  jelas: 'Kegunaan utamanya hari ini: DEX, memecoin, pembayaran stablecoin, dan aplikasi konsumen. Kompensasinya, menjalankan validator butuh perangkat keras mahal. Konsensus baru Solana, Alpenglow, dijadwalkan menggantikan Tower BFT dan Proof of History mulai Oktober 2026.' },
 { level: 'layer1', tanya: 'Dalam rantai memecoin Solana awal 2025, Pump.fun, Raydium, dan Jupiter berperan sebagai…',
   pilihan: ['Pump.fun = tempat meluncurkan koin; Raydium = DEX penyedia likuiditas; Jupiter = agregator yang mencari rute termurah', 'Ketiganya dompet', 'Ketiganya bursa terpusat', 'Ketiganya validator'],
   jelas: 'Aplikasi Solana saling bergantung. Satu mata rantai terganggu, seluruh alur perdagangan ikut terganggu. Sejak Maret 2025, koin yang lulus dari Pump.fun pindah ke DEX milik Pump.fun sendiri (PumpSwap).',
