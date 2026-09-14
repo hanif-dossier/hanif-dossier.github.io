@@ -80,6 +80,7 @@ const KOIN = [
   { tick: 'INJ',   gecko: 'injective-protocol', jenis: 'rantai',   rantai: 'Injective', feeSlug: 'injective', lapisan: 'Chain khusus' },
   { tick: 'ASTER', gecko: 'aster-2',            jenis: 'aplikasi', protokol: ['aster-usdf', 'aster-asbnb'],            feeSlug: 'aster',        lapisan: 'Aplikasi — DeFi' },
   { tick: 'ENA',   gecko: 'ethena',             jenis: 'aplikasi', protokol: ['ethena-usde', 'ethena-usdtb'],          feeSlug: 'ethena',       lapisan: 'Aplikasi — DeFi' },
+  { tick: 'REZ',   gecko: 'renzo',              jenis: 'aplikasi', protokol: ['renzo'],                                feeSlug: 'renzo',        lapisan: 'Aplikasi — Restaking' },
   { tick: 'ONDO',  gecko: 'ondo-finance',       jenis: 'aplikasi', protokol: ['ondo-yield-assets', 'ondo-global-markets'], feeSlug: 'ondo-finance', lapisan: 'Aplikasi — RWA' },
   { tick: 'CFG',   gecko: 'centrifuge-2',       jenis: 'aplikasi', protokol: ['centrifuge-protocol'],                  feeSlug: 'centrifuge',   lapisan: 'Aplikasi — RWA' },
   { tick: 'HUMA',  gecko: 'huma-finance',       jenis: 'aplikasi', protokol: ['huma-finance-v2'],                      feeSlug: null,           lapisan: 'Aplikasi — PayFi' },

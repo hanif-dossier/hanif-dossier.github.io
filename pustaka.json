@@ -1,6 +1,6 @@
 {
- "diperbarui": "2026-09-09",
- "totalKata": 109814,
+ "diperbarui": "2026-09-13",
+ "totalKata": 119632,
  "lapisan": [
   {
    "nama": "Aplikasi — DeFi",
@@ -28,6 +28,43 @@
   }
  ],
  "dossier": [
+  {
+   "tick": "REZ",
+   "nama": "REZ",
+   "judul": "Renzo (REZ)",
+   "tanggal": "2026-09-13",
+   "tampil": "RENZO ($REZ)",
+   "jenis": "Dossier token",
+   "lapisan": "Aplikasi — DeFi",
+   "koinId": "renzo",
+   "gambar": "https://coin-images.coingecko.com/coins/images/37327/large/renzo-avatar-dark-200.png?1789110122",
+   "bagian": 18,
+   "isi": [
+    "Langkah −1 — Kebutuhan dulu, baru token",
+    "Jantung Protokol Ini",
+    "Whitepaper Dibedah",
+    "Tokenomics — Penyaring",
+    "Keamanan & Desentralisasi",
+    "Distribusi & Likuiditas",
+    "Valuasi",
+    "Tesis Bull",
+    "Tesis Bear",
+    "Lingkungan Eksternal",
+    "Berita Terbaru & Katalis",
+    "Checklist Red Flag",
+    "Skor Naratif & Fase Distribusi",
+    "Risiko Utama",
+    "Apa yang Harus Dipantau",
+    "Yang Tidak Bisa Saya Nilai",
+    "Sumber"
+   ],
+   "kata": 9818,
+   "grafik": 5,
+   "kutipan": "Renzo adalah kasus yang paling jernih di seri ini untuk satu pelajaran: produk bisa terus berjalan dengan benar, sementara bisnis di belakangnya menyusut 97%, dan token yang katanya mewakili bisnis itu tidak menerima satu dolar pun dari yang tersisa. Mulai…",
+   "pdf": "dossier/REZ-analisis-2026-09-13.pdf",
+   "catatan": null,
+   "catatanTanggal": null
+  },
   {
    "tick": "MON",
    "nama": "MON",
