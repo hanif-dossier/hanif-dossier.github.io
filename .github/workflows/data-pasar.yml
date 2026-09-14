@@ -4,7 +4,10 @@
 name: data-pasar
 on:
   schedule:
-    - cron: '40 23 * * *'   # 06:40 WIB
+    # GitHub rutin menunda jadwal ±1¾ jam (06:40 → 08:25 WIB). Dimajukan supaya
+    # data sudah segar sebelum anggota membuka situs; 06:40 tinggal cadangan.
+    - cron: '47 21 * * *'   # 04:47 WIB
+    - cron: '40 23 * * *'   # 06:40 WIB - cadangan
   workflow_dispatch:
 permissions:
   contents: write
