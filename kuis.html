@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuis Crypto — Hanif Dossier Crypto</title>
+<meta name="description" content="Kuis crypto 10 soal dari Hanif Dossier Crypto: dasar crypto, cara membaca token, dan membaca pasar. Gratis, tanpa daftar, lengkap dengan penjelasan tiap jawaban.">
+<meta property="og:title" content="Kuis Crypto — Hanif Dossier Crypto">
+<meta property="og:description" content="10 soal, 5 menit. Seberapa tajam Anda membaca crypto? Gratis, tanpa daftar.">
+<meta property="og:url" content="https://hanif-dossier.github.io/kuis.html">
+<meta name="theme-color" content="#4f7a68">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+/* Tombol: gaya.css hanya menata <a class="utama">, jadi <button> diberi rupa yang sama di sini. */
+.tbl-kuis{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:999px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent}
+.tbl-kuis.utama{background:var(--sage);color:#fff}.tbl-kuis.utama:hover{background:var(--sage-tua)}
+.tbl-kuis.kedua{background:var(--kartu);border-color:#d9dfda;color:var(--tx)}.tbl-kuis.kedua:hover{border-color:var(--sage)}
+
+/* Layar 1 — pilih level. Warna strip atas mengikuti warna jenis bagian di modul. */
+.pilih-level{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:18px}
+.level{display:flex;flex-direction:column;gap:6px;text-align:left;border:0;border-top:5px solid var(--warna);font:inherit;cursor:pointer;color:var(--tx);transition:transform .15s}
+.level:hover{transform:translateY(-3px)}
+.level .nomor{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--lb)}
+.level h3{font-size:1.2rem}
+.level p{font-size:14px;color:var(--tx2)}
+.level .kaki-level{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;font-weight:700}
+.level .terbaik{color:var(--lb);font-weight:600}
+.level .mulai{color:var(--sage)}
+
+/* Layar 2 — arena soal */
+.arena{max-width:760px;margin:26px auto 0}
+.arena-atas{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--lb);font-weight:700}
+.titik-titik{display:flex;gap:6px;margin:12px 0 14px}
+.titik-titik span{flex:1;height:8px;border-radius:999px;background:var(--gr)}
+.titik-titik span.kini{background:var(--sage-lembut);outline:2px solid var(--sage);outline-offset:-2px}
+.titik-titik span.ya{background:var(--sage)}
+.titik-titik span.tidak{background:var(--bata)}
+.soal h2{font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.3;margin-bottom:16px}
+.pilihan{display:flex;flex-direction:column;gap:10px}
+.opsi{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:var(--kartu);border:1.5px solid var(--gr);border-radius:16px;padding:13px 15px;font:inherit;font-size:15.5px;color:var(--tx);cursor:pointer;line-height:1.45;transition:border-color .15s,background .15s}
+.opsi:hover:not(:disabled){border-color:var(--sage);background:#fbfcfa}
+.opsi .huruf{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--lembut);color:var(--tx2);font-weight:700;font-size:13px}
+.opsi:disabled{cursor:default}
+.opsi.benar{border-color:var(--sage);background:var(--sage-lembut)}
+.opsi.benar .huruf{background:var(--sage);color:#fff}
+.opsi.salah{border-color:var(--bata);background:var(--bata-lembut)}
+.opsi.salah .huruf{background:var(--bata);color:#fff}
+.opsi.redup{opacity:.55}
+.penjelasan{margin-top:16px;border-radius:16px;padding:14px 16px;font-size:15px;line-height:1.65;color:var(--tx2);background:var(--lembut);border-left:5px solid var(--sage)}
+.penjelasan.meleset{border-left-color:var(--bata)}
+.penjelasan b.vonis{display:block;color:var(--tx);margin-bottom:4px}
+.penjelasan a{font-weight:700}
+.bawah-soal{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.bawah-soal .catatan{font-size:12px}
+
+/* Layar 3 — hasil */
+.hasil-atas{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.hasil-atas svg{flex:none}
+.hasil-atas .isi{flex:1;min-width:240px}
+.hasil-atas h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:6px}
+.hasil-atas p{color:var(--tx2)}
+.ulasan{margin-top:18px}
+.ulasan h3{font-size:1.1rem;margin:0 0 10px}
+.ulasan ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ulasan li{background:var(--kartu);border-radius:16px;padding:14px 16px;box-shadow:var(--bayang);border-left:5px solid var(--bata);font-size:14.5px;color:var(--tx2)}
+.ulasan li b{color:var(--tx)}
+.ulasan li .jawab{margin-top:4px}
+.ulasan li a{font-weight:700;font-size:13px}
+.tersalin{font-size:13px;color:var(--sage-tua);font-weight:700}
+@media(max-width:480px){.hasil-atas{justify-content:center;text-align:center}.hasil-atas .tombol{justify-content:center}}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="dasbor.html" data-sesi hidden>Beranda</a>
+    <a href="riset.html" data-sesi hidden>Riset</a>
+    <a href="pasar.html" data-sesi hidden>Pasar</a>
+    <a href="modul.html">Modul</a>
+    <a class="aktif" href="kuis.html">Kuis</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="tentang.html">Tentang</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a class="masuk" href="masuk.html" data-tamu>Masuk</a>
+  </nav>
+</header>
+
+<!-- Layar 1: pilih level -->
+<section id="layar-pilih">
+  <section class="sambut" style="grid-template-columns:1fr">
+    <div class="sapa" style="max-width:720px">
+      <div class="mata">Kuis crypto · gratis, tanpa daftar</div>
+      <h1 class="serif">Seberapa tajam Anda<br><span>membaca crypto?</span></h1>
+      <p>Sepuluh soal, sekitar lima menit. Setiap jawaban langsung diberi penjelasan dan ditautkan ke modul yang membahasnya, jadi salah pun tetap dapat pelajaran.</p>
+    </div>
+  </section>
+  <div class="pilih-level" id="daftar-level"></div>
+</section>
+
+<!-- Layar 2: soal -->
+<section class="arena" id="layar-main" hidden>
+  <div class="arena-atas"><span class="pil" id="label-level"></span><span id="hitung"></span></div>
+  <div class="titik-titik" id="titik"></div>
+  <div class="kartu soal">
+    <h2 class="serif" id="tanya"></h2>
+    <div class="pilihan" id="pilihan"></div>
+    <div class="penjelasan" id="penjelasan" hidden></div>
+    <div class="bawah-soal">
+      <span class="catatan" id="petunjuk">Pilih satu jawaban (bisa juga tekan 1–4 di keyboard).</span>
+      <button class="tbl-kuis utama" id="lanjut" hidden>Soal berikutnya →</button>
+    </div>
+  </div>
+  <p class="catatan" style="margin-top:12px;text-align:center"><a href="#" id="berhenti">← Kembali ke pilihan level</a></p>
+</section>
+
+<!-- Layar 3: hasil -->
+<section class="arena" id="layar-hasil" hidden>
+  <div class="kartu hasil-atas">
+    <svg viewBox="0 0 100 100" width="130" height="130" aria-hidden="true">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#eef2ec" stroke-width="10"/>
+      <circle id="cincin" cx="50" cy="50" r="40" fill="none" stroke="#4f7a68" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 251.3" transform="rotate(-90 50 50)" style="transition:stroke-dasharray .9s ease"/>
+      <text id="angka-hasil" x="50" y="57" text-anchor="middle" font-family="DM Serif Display, Georgia, serif" font-size="22" fill="#2b3330"></text>
+    </svg>
+    <div class="isi">
+      <div class="mata" id="mata-hasil"></div>
+      <h2 class="serif" id="gelar"></h2>
+      <p id="kalimat"></p>
+      <div class="tombol">
+        <button class="tbl-kuis utama" id="ulangi">Main lagi</button>
+        <button class="tbl-kuis kedua" id="ganti-level">Pilih level lain</button>
+        <button class="tbl-kuis kedua" id="bagikan">Bagikan skor</button>
+      </div>
+      <div class="tersalin" id="tersalin" hidden></div>
+    </div>
+  </div>
+  <div class="ulasan" id="ulasan"></div>
+  <div class="penutup" id="ajakan"></div>
+</section>
+
+<footer class="kaki">
+  <div>
+    <div><b style="color:var(--tx)">Hanif Dossier Crypto</b> · riset &amp; edukasi crypto · Instagram <a href="https://instagram.com/hanif.dossiercrypto" target="_blank" rel="noopener">@hanif.dossiercrypto</a> · <a href="privasi.html">Kebijakan privasi</a></div>
+    <p class="penafian"><strong>Penafian.</strong> Kuis ini edukasi, bukan nasihat investasi personal. Hanif Dossier Crypto bukan Penasihat Investasi maupun Manajer Investasi berizin OJK, tidak menerima atau mengelola dana pihak lain, dan tidak menjanjikan imbal hasil. Angka di dalam soal adalah ilustrasi cara menghitung, bukan penilaian atas aset tertentu.</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// PENGATURAN — semua angka yang boleh diubah ada di sini, supaya perilaku kuis
+// bisa disetel tanpa membongkar logika di bawah.
+// ─────────────────────────────────────────────────────────────────────────────
+const PENGATURAN = {
+  jumlahSoal: 10,                                  // soal per permainan (bank tiap level berisi 14)
+  campuran: { dasar: 4, token: 3, pasar: 3 },      // komposisi level Campuran; jumlahnya = jumlahSoal
+  alamat: 'https://hanif-dossier.github.io/kuis.html',
+  kunciSimpan: 'kuis-skor-terbaik',                // nama laci localStorage untuk skor terbaik
+};
+
+// Empat level. `warna` dipakai untuk strip kartu dan label di arena.
+const LEVEL = {
+  dasar:    { nama: 'Dasar',          warna: 'var(--sage)', prasyarat: 'Tanpa prasyarat',     ringkas: 'Blockchain, dompet, seed phrase, stablecoin, halving, dan penipuan yang paling sering memakan korban.' },
+  token:    { nama: 'Membaca token',  warna: '#9fb8c9',     prasyarat: 'Dari modul 1–5',      ringkas: 'Kebutuhan dulu baru token, jantung protokol, nilai intrinsik, FDV × float, dan unlock.' },
+  pasar:    { nama: 'Pasar & mental', warna: '#c9a961',     prasyarat: 'Dari modul 6–9',      ringkas: 'Tiga tahap altcoin, rantai makro, bias yang merugikan, dan trading naratif.' },
+  campuran: { nama: 'Campuran',       warna: '#b86b5c',     prasyarat: 'Dari ketiga level',   ringkas: 'Empat soal dasar, tiga soal membaca token, tiga soal pasar. Cocok untuk menantang teman.' },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BANK SOAL. Aturan menulis soal baru:
+//   • pilihan[0] SELALU jawaban yang benar — urutannya diacak saat ditampilkan,
+//     jadi penulis tidak perlu memikirkan posisi jawaban.
+//   • `jelas` menjelaskan KENAPA, bukan hanya mengulang jawabannya.
+//   • `modul` = nomor modul yang membahasnya (null kalau belum ada modulnya).
+//   • Hindari angka yang cepat basi (harga hari ini, peringkat) — kuis ini
+//     harus tetap benar tahun depan.
+// ─────────────────────────────────────────────────────────────────────────────
+const SOAL = [
+// ── Level Dasar ──
+{ level: 'dasar', modul: null, tanya: 'Berapa jumlah maksimum Bitcoin yang akan pernah ada?',
+  pilihan: ['21 juta', '100 juta', 'Tidak terbatas, terus dicetak', '1 miliar'],
+  jelas: 'Batas 21 juta tertulis di aturan jaringan Bitcoin sejak awal. Koin baru dicetak lewat imbalan blok yang terus mengecil, sampai berhenti sekitar tahun 2140.' },
+{ level: 'dasar', modul: null, tanya: 'Seseorang di Telegram mengaku admin bursa dan meminta seed phrase Anda untuk "verifikasi akun". Apa yang tepat?',
+  pilihan: ['Tolak — pihak yang sah tidak pernah meminta seed phrase', 'Berikan, asal dia admin resmi', 'Berikan separuhnya saja', 'Kirim lewat email, jangan lewat chat'],
+  jelas: 'Seed phrase adalah kunci induk dompet. Siapa pun yang memegangnya bisa memindahkan seluruh isi dompet tanpa izin Anda. Tidak ada bursa, aplikasi dompet, atau admin sah yang memintanya — permintaan seperti ini selalu penipuan.' },
+{ level: 'dasar', modul: null, tanya: 'Apa itu stablecoin?',
+  pilihan: ['Token yang nilainya dipatok ke aset lain, umumnya dolar AS', 'Koin yang harganya dijamin pemerintah tidak akan bergerak', 'Koin apa pun yang kapitalisasinya besar', 'Token khusus untuk staking'],
+  jelas: 'USDT dan USDC dipatok 1:1 ke dolar AS dengan cadangan yang dipegang penerbitnya. Patokan itu bisa lepas (<i>depeg</i>) kalau cadangannya diragukan — stabil bukan berarti tanpa risiko.' },
+{ level: 'dasar', modul: null, tanya: 'Market cap sebuah token dihitung dengan cara…',
+  pilihan: ['Harga × jumlah token yang beredar', 'Harga × jumlah token maksimum', 'Total dana yang pernah disetor investor', 'Volume perdagangan 24 jam × harga'],
+  jelas: 'Harga dikalikan suplai <b>beredar</b>. Kalau yang dipakai suplai maksimum, hasilnya FDV — dan selisih keduanya menunjukkan berapa banyak token yang masih akan dilepas ke pasar.' },
+{ level: 'dasar', modul: null, tanya: 'Apa yang terjadi saat halving Bitcoin?',
+  pilihan: ['Imbalan penambang per blok dipotong setengah', 'Harga Bitcoin otomatis dibagi dua', 'Jumlah Bitcoin yang sudah beredar dipotong setengah', 'Biaya transaksi turun setengah'],
+  jelas: 'Setiap 210.000 blok — kira-kira empat tahun — imbalan blok berkurang separuh. Yang berkurang adalah laju pencetakan koin <b>baru</b>, bukan koin yang sudah ada. Pengaruhnya ke harga tidak otomatis.' },
+{ level: 'dasar', modul: null, tanya: 'Di jaringan Ethereum, gas fee adalah…',
+  pilihan: ['Biaya untuk memproses transaksi, dibayar dalam ETH', 'Pajak pemerintah atas transaksi crypto', 'Biaya langganan aplikasi dompet', 'Komisi bursa saat membeli ETH'],
+  jelas: 'Gas dibayar ke jaringan untuk menjalankan transaksi atau smart contract. Makin padat jaringannya, makin mahal gas-nya — itulah kenapa jaringan L2 muncul untuk menekan biaya.' },
+{ level: 'dasar', modul: null, tanya: 'Apa beda utama DEX dengan bursa terpusat (CEX)?',
+  pilihan: ['Di DEX penukaran lewat smart contract; dana tetap di dompet Anda', 'DEX selalu lebih murah', 'DEX diawasi langsung oleh OJK', 'DEX hanya memperdagangkan Bitcoin'],
+  jelas: 'Di CEX dana dititipkan ke perusahaan. Di DEX penukaran terjadi langsung antara dompet Anda dan kontrak pintar. Risikonya berpindah: bukan lagi bursa yang bangkrut, melainkan kontrak yang bisa diretas atau token palsu yang namanya mirip.' },
+{ level: 'dasar', modul: null, tanya: '"Not your keys, not your coins" artinya…',
+  pilihan: ['Kalau kunci privat dipegang pihak lain, asetnya pada praktiknya dalam kendali mereka', 'Koin tanpa kunci tidak bisa dijual', 'Hanya pemilik rumah yang boleh membeli crypto', 'Kunci privat bisa diganti kapan saja lewat email'],
+  jelas: 'Saldo di bursa adalah janji bursa kepada Anda. Kalau bursanya berhenti membayar — seperti FTX pada November 2022 — saldo itu tidak bisa ditarik.' },
+{ level: 'dasar', modul: null, tanya: 'Rug pull adalah…',
+  pilihan: ['Pengembang menarik likuiditas atau dana proyek lalu menghilang', 'Harga turun karena koreksi pasar biasa', 'Token dihapus bursa karena volumenya kecil', 'Blockchain berhenti sebentar untuk pembaruan'],
+  jelas: 'Tanda umumnya: tim anonim, likuiditas tidak dikunci, kontrak bisa mencetak token sesuka hati, dan janji imbal hasil yang terlalu tinggi untuk masuk akal.' },
+{ level: 'dasar', modul: null, tanya: 'Alamat dompet dan kunci privat — mana yang boleh dibagikan ke orang lain?',
+  pilihan: ['Alamat dompet saja', 'Keduanya', 'Kunci privat saja', 'Tidak ada yang boleh'],
+  jelas: 'Alamat seperti nomor rekening: dibagikan supaya orang bisa mengirim. Kunci privat seperti tanda tangan sekaligus PIN: siapa pun yang tahu bisa menguras isi dompet.' },
+{ level: 'dasar', modul: null, tanya: 'Situs airdrop meminta Anda menyambungkan dompet, lalu menyetujui ("approve") akses tak terbatas ke semua token. Itu tanda…',
+  pilihan: ['Kemungkinan besar penguras dompet (drainer)', 'Prosedur normal klaim airdrop', 'Verifikasi identitas (KYC)', 'Cara situs menghitung poin'],
+  jelas: '<i>Approve</i> memberi izin sebuah kontrak memindahkan token Anda. Izin tak terbatas ke kontrak yang tidak dikenal sama saja menyerahkan dompet. Izin lama bisa diperiksa dan dicabut lewat revoke.cash.' },
+{ level: 'dasar', modul: null, tanya: 'Smart contract adalah…',
+  pilihan: ['Program di blockchain yang menjalankan aturan secara otomatis', 'Kontrak kerja tim pengembang', 'Perjanjian jual beli yang disahkan notaris', 'Aplikasi dompet di HP'],
+  jelas: 'Smart contract berjalan persis seperti kodenya — tanpa perantara, tapi juga tanpa ampun. Kalau kodenya punya celah, celah itu ikut berjalan. Karena itu laporan audit selalu dibaca di setiap dossier.' },
+{ level: 'dasar', modul: null, tanya: 'Satoshi adalah…',
+  pilihan: ['Satuan terkecil Bitcoin: 0,00000001 BTC', 'Nama bursa crypto pertama', 'Koin pesaing Bitcoin', 'Nama jaringan uji Bitcoin'],
+  jelas: 'Diambil dari nama samaran pencipta Bitcoin, Satoshi Nakamoto. Artinya Anda tidak perlu membeli 1 BTC utuh — pecahan kecil pun bisa.' },
+{ level: 'dasar', modul: null, tanya: 'Blockchain paling tepat digambarkan sebagai…',
+  pilihan: ['Buku catatan transaksi yang disimpan bersama banyak komputer dan sulit diubah', 'Database milik satu perusahaan teknologi', 'Aplikasi untuk menambang koin', 'Nama lain dari dompet digital'],
+  jelas: 'Karena salinannya dipegang ribuan komputer, mengubah satu catatan berarti harus mengalahkan mayoritas jaringan. Itulah yang membuatnya bisa dipercaya tanpa perantara.' },
+
+// ── Level Membaca token (modul 1–5) ──
+{ level: 'token', modul: 1, tanya: 'Menurut kerangka "Langkah −1", analisis sebuah token dimulai dari…',
+  pilihan: ['Kebutuhan — siapa yang butuh protokol ini dan seberapa besar', 'Grafik harga 90 hari terakhir', 'Jumlah pengikut proyek di X', 'Halaman pertama whitepaper'],
+  jelas: 'Token punya nilai kalau ada kebutuhan yang dipenuhi protokolnya dan token itu memang perlu ada untuk memenuhinya. Mulai dari harga membuat kesimpulan presisi untuk pertanyaan yang salah.' },
+{ level: 'token', modul: 1, tanya: 'Memilih koin karena sedang ramai, lalu mencari-cari alasan untuk membelinya, disebut…',
+  pilihan: ['Token-driven', 'Thesis-driven', 'Value investing', 'Dollar cost averaging'],
+  jelas: '<b>Thesis-driven</b> memilih aset karena ia mendukung tesis. <b>Token-driven</b> kebalikannya: tesisnya dicari belakangan untuk membenarkan koin yang sudah dibeli.' },
+{ level: 'token', modul: 2, tanya: 'Sebuah bursa perpetual terdesentralisasi. Siapa pesaing sebenarnya?',
+  pilihan: ['Bursa perpetual lain', 'Bitcoin', 'Semua koin di 100 besar', 'Bank konvensional'],
+  jelas: 'Pesaing sejati ada di lapisan yang sama. Membandingkan bursa perpetual dengan Bitcoin sama dengan membandingkan warung dengan pembangkit listrik.' },
+{ level: 'token', modul: 3, tanya: 'Protokol lending punya TVL besar, tetapi pinjaman aktifnya kecil. Bacaan yang tepat?',
+  pilihan: ['Jantungnya lemah — TVL itu sebagian besar uang parkir', 'Sangat sehat karena TVL-nya besar', 'Harganya pasti naik', 'Tidak bisa dinilai sama sekali'],
+  jelas: 'Jantung protokol lending adalah <b>pinjaman aktif</b> dan selisih bunganya, bukan TVL. TVL tanpa peminjam sering hanya uang yang menunggu insentif, dan pergi begitu insentifnya habis.' },
+{ level: 'token', modul: 4, tanya: 'Dari fee, pendapatan protokol, dan holders revenue — mana yang benar-benar sampai ke pemegang token?',
+  pilihan: ['Holders revenue: buyback, bagi fee, atau burn dari pendapatan nyata', 'Fee total yang dibayar pengguna', 'TVL', 'Volume perdagangan'],
+  jelas: 'Fee dibayar pengguna tapi sebagian besar milik LP atau validator. Pendapatan protokol masuk treasury. Hanya yang mengalir ke pemegang token yang dihitung sebagai arus kas di rumus nilai intrinsik.' },
+{ level: 'token', modul: 4, tanya: 'Staking yield 12% setahun yang dibayar dari pencetakan token baru adalah…',
+  pilihan: ['Pengenceran yang dibagikan, bukan arus kas', 'Arus kas murni ke pemegang', 'Bunga bebas risiko', 'Pendapatan protokol'],
+  jelas: 'Kalau imbalannya dicetak dari token baru, semua pemegang ikut terencerkan. Yang tidak ikut staking kehilangan porsi; yang ikut staking hanya bertahan di tempat.' },
+{ level: 'token', modul: 4, tanya: 'Arus kas ke pemegang $60 juta per tahun, r = 20%, g = 0. Berapa nilai intrinsiknya?',
+  pilihan: ['$300 juta', '$1,2 miliar', '$72 juta', '$600 juta'],
+  jelas: 'V = CF × (1 + g) ÷ (r − g) = 60 × 1 ÷ 0,20 = <b>$300 juta</b>. Dengan g = 5% hasilnya $420 juta — itulah kenapa dossier selalu menampilkan tiga skenario, bukan satu angka.' },
+{ level: 'token', modul: 4, tanya: 'Rasio FDV ÷ nilai intrinsik sebuah token = 12. Artinya…',
+  pilihan: ['Yang dibayar pasar adalah narasi, bukan arus kas', 'Harganya di bawah nilai intrinsik', 'Wajar untuk aset yang sedang tumbuh', 'Tokennya pasti turun besok'],
+  jelas: 'Patokan modul 4: ≤ 1 di bawah nilai, 1–3 wajar untuk aset tumbuh, 3–10 sudah memuat pertumbuhan besar, dan <b>&gt; 10 berarti yang dibayar adalah narasi</b>. Itu bukan ramalan harga — pasar bisa membayar narasi lama sekali.' },
+{ level: 'token', modul: 4, tanya: 'Protokol punya pendapatan, tetapi semuanya masuk treasury DAO dan tidak dialirkan ke token. Nilainya disebut…',
+  pilihan: ['Nilai bersyarat — baru terwujud kalau governance mengalirkannya', 'Nilai intrinsik penuh', 'Nol mutlak', 'Sama dengan TVL'],
+  jelas: 'Ini tingkat B. Nilainya boleh dihitung dengan pendapatan protokol, tapi wajib diberi label bersyarat — tingkatnya tidak boleh dinaikkan dengan asumsi.' },
+{ level: 'token', modul: 5, tanya: 'FDV (fully diluted valuation) dihitung dari…',
+  pilihan: ['Harga × seluruh suplai, termasuk yang belum dilepas', 'Harga × suplai yang beredar', 'TVL × harga', 'Pendapatan bulanan × 12'],
+  jelas: 'FDV dipakai karena pembeli hari ini ikut menanggung dilusi dari token yang dilepas besok. Market cap hanya menghitung yang sudah beredar.' },
+{ level: 'token', modul: 5, tanya: 'Kombinasi mana yang cenderung sulit naik?',
+  pilihan: ['FDV tinggi + float rendah', 'FDV rendah + float tinggi', 'FDV sama dengan market cap', 'Float 100%'],
+  jelas: 'Dua lapis tekanan: pasar menganggap valuasinya sudah terlalu tinggi, dan likuiditas tipis membuat setiap penjualan menggeser harga jauh. Momentum sebagus apa pun sulit menyelamatkan struktur seperti ini.' },
+{ level: 'token', modul: 5, tanya: 'Batas peringatan unlock yang dipakai di modul 5 adalah…',
+  pilihan: ['Lebih dari 5% suplai beredar dilepas dalam 90 hari', 'Lebih dari 50% dalam setahun', 'Unlock berapa pun selalu aman', 'Lebih dari 1% dalam lima tahun'],
+  jelas: 'Yang penting bukan tanggalnya saja, tapi berapa persen dari suplai <b>beredar</b> yang akan dilepas. Di atas 5% dalam 90 hari berarti ada penjual yang sudah pasti datang.' },
+{ level: 'token', modul: 5, tanya: 'FDV sebuah token hanya 1,15× market cap-nya. Artinya…',
+  pilihan: ['Hampir seluruh suplai sudah beredar — dilusi yang tersisa kecil', 'Dilusi berat masih menunggu', 'Tokennya belum listing', 'Tokennya pasti undervalued'],
+  jelas: 'Patokan modul 5: 1,15× hampir penuh, 2–5× sedang, di atas 5× berat. Rasio kecil berarti naik-turunnya harga lebih murni soal permintaan, bukan jadwal pelepasan token.' },
+{ level: 'token', modul: 5, tanya: 'Tim menerima $27 juta token dari unlock. Cara paling tepat menilai apakah mereka menjual?',
+  pilihan: ['Lacak dompet penerima dan hitung berapa yang benar-benar dicairkan', 'Anggap semua unlock pasti dijual', 'Abaikan, tim pasti jujur', 'Lihat jumlah pengikut tim di X'],
+  jelas: 'Asumsi ke dua arah sama-sama malas. Pengembang yang menerima $27 juta dan mencairkan $1,3 juta berperilaku sangat berbeda dari yang mencairkan semuanya — dan itu bisa diperiksa on-chain.' },
+
+// ── Level Pasar & mental (modul 6–9) ──
+{ level: 'pasar', modul: 6, tanya: 'Tahap kedua siklus altcoin — harga sudah jenuh turun, pembeli belum percaya diri — disebut…',
+  pilihan: ['Kapitulasi berbasis waktu', 'Banjir rilis', 'Short squeeze', 'Halving'],
+  jelas: 'Urutannya: banjir rilis di fase euforia → kapitulasi berbasis waktu → penjual di dasar terkena short squeeze. Tahap kedua diukur dengan <b>waktu</b>, bukan harga.' },
+{ level: 'pasar', modul: 6, tanya: 'Di tahap kapitulasi, volume naik sementara harga datar. Itu tanda…',
+  pilihan: ['Akumulasi diam-diam — penawaran sedang diserap', 'Pembeli sedang pergi', 'Tokennya akan dihapus bursa', 'Data bursanya rusak'],
+  jelas: 'Uang besar tidak mengejar harga; ia menyerap penawaran. Volume yang sama di tahap pertama artinya lain — karena itu posisi dalam siklus disebut dulu sebelum metrik lain dibaca.' },
+{ level: 'pasar', modul: 6, tanya: 'Dua token sama-sama turun 85% dari puncak. Kenapa artinya bisa bertolak belakang?',
+  pilihan: ['Tahap siklusnya berbeda — float dan unlock yang tersisa berbeda', 'Warna grafiknya berbeda', 'Salah satunya pasti penipuan', 'Tidak mungkin berbeda'],
+  jelas: 'Token yang baru dirilis dengan float 12% masih menunggu unlock (tahap 1). Token yang sudah 14 bulan di bawah dengan float 90% sedang di tahap 2. Angka "turun 85%" identik, artinya berlawanan.' },
+{ level: 'pasar', modul: 7, tanya: 'Rantai transmisi makro yang utama adalah…',
+  pilihan: ['Berita AS → SPX → Bitcoin → altcoin', 'Berita Asia → altcoin → Bitcoin', 'Harga emas → Bitcoin → SPX', 'Altcoin → Bitcoin → berita AS'],
+  jelas: 'Altcoin membaca Bitcoin, Bitcoin membaca pasar saham AS, pasar saham membaca data ekonomi AS. Karena itu yang dipantau cukup rilis AS berbintang 2–3: FOMC, inflasi, tenaga kerja.' },
+{ level: 'pasar', modul: 7, tanya: 'Transfer besar ke bursa menjelang katalis yang sudah diumumkan publik biasanya dibaca sebagai…',
+  pilihan: ['Persiapan jual — "sell the news"', 'Akumulasi jangka panjang', 'Tanda bursanya bangkrut', 'Pembagian airdrop'],
+  jelas: 'Satu variabel, dua tanda: dana <b>masuk</b> ke bursa menjelang kabar yang sudah diketahui = bersiap menjual; dana <b>keluar</b> dari bursa saat harga jatuh = akumulasi.' },
+{ level: 'pasar', modul: 8, tanya: 'Anda beli 100 koin di $1. Harga turun 50% dan Anda jual. Lalu harga naik ke $2 dan Anda beli lagi dengan seluruh uang tadi. Berapa koin Anda sekarang?',
+  pilihan: ['25 koin', '50 koin', '100 koin', '200 koin'],
+  jelas: 'Jual di $0,50 → $50. Beli lagi di $2 → 50 ÷ 2 = <b>25 koin</b>. Harga "sudah kembali", tapi tiga perempat aset hilang. Mengukur hasil dalam jumlah koin adalah pengukur yang tidak bisa ditipu naik-turun harga.' },
+{ level: 'pasar', modul: 8, tanya: 'Loss aversion adalah…',
+  pilihan: ['Kerugian terasa jauh lebih sakit daripada keuntungan sebesar yang sama terasa menyenangkan', 'Takut ketinggalan kenaikan harga', 'Kebiasaan membeli koin yang harganya murah', 'Enggan membayar biaya transaksi'],
+  jelas: 'Akibatnya, drawdown kecil memicu keputusan besar. Takut ketinggalan itu FOMO — bias lain yang sering datang sesudahnya.' },
+{ level: 'pasar', modul: 8, tanya: 'Break-even syndrome terjadi ketika…',
+  pilihan: ['Tujuan berubah dari "menang" menjadi "yang penting balik modal"', 'Harga tidak bergerak berbulan-bulan', 'Bursa menahan penarikan dana', 'Portofolio dibagi rata ke semua koin'],
+  jelas: 'Begitu harga kembali ke titik masuk, posisi dijual — lalu dibeli lagi lebih tinggi karena FOMO. Obatnya: tulis di jurnal <i>kenapa</i> Anda masuk, supaya yang memicu keluar adalah tesis yang gugur, bukan perasaan.' },
+{ level: 'pasar', modul: 9, tanya: 'Dalam skor naratif tujuh kriteria, dua kriteria berbobot terbesar (masing-masing 20%) adalah…',
+  pilihan: ['Kekuatan katalis dan tokenomics', 'Likuiditas dan timing siklus', 'Tim dan revenue', 'Ukuran pasar dan likuiditas'],
+  jelas: 'Katalis 20, tokenomics 20, ukuran pasar 15, tim &amp; VC 15, likuiditas 10, timing 10, revenue 10. Skor di bawah 3 dari 5 berarti narasinya lemah untuk dijadikan tesis utama.' },
+{ level: 'pasar', modul: 9, tanya: 'Berapa dari enam sinyal fase distribusi yang harus menyala sebelum sebuah narasi dianggap kemungkinan besar di puncak?',
+  pilihan: ['Tiga atau lebih', 'Satu saja sudah cukup', 'Keenamnya harus menyala', 'Tidak ada patokannya'],
+  jelas: 'Keenam sinyal: funding ekstrem, open interest di puncak, listing bursa tier-1, liputan media mainstream, saturasi influencer, dan Google Trends di puncak. Sinyal yang tidak bisa diperiksa ditulis "tidak diperiksa", bukan dianggap mati.' },
+{ level: 'pasar', modul: 9, tanya: 'Dalam kerangka core-satellite, porsi maksimum satu altcoin adalah…',
+  pilihan: ['5% portofolio', '50% portofolio', '100% kalau sudah yakin', 'Minimal 20% portofolio'],
+  jelas: 'Core BTC + ETH 60–80%, satelit narasi 10–40%, buffer stablecoin 10–15% — dan tidak ada satu altcoin pun di atas 5%. Ini titik awal umum, bukan saran untuk kondisi keuangan Anda.' },
+{ level: 'pasar', modul: 9, tanya: 'Token long-tail di sebuah narasi biasanya berperilaku…',
+  pilihan: ['Naik paling kencang saat euforia, jatuh paling dalam saat berbalik', 'Naik paling awal dan turun paling lambat', 'Hampir tidak pernah bergerak', 'Selalu mengikuti harga emas'],
+  jelas: '"Naik paling awal, turun paling lambat" adalah ciri <b>leader</b>. Long-tail kebalikannya — karena itu porsinya sangat kecil dan disiplin keluarnya ketat.' },
+{ level: 'pasar', modul: 9, tanya: 'Mana yang termasuk lima aturan invalidasi sebuah tesis narasi?',
+  pilihan: ['Mindshare turun beberapa minggu berturut-turut', 'Harga naik 5% dalam sehari', 'Ada influencer baru yang membahasnya', 'Tokennya masuk daftar trending'],
+  jelas: 'Lima aturannya: katalis gagal, mindshare turun berminggu-minggu, developer pergi, fase decay (funding normal, volume mengering), dan struktur harga rusak di level kunci. Satu saja terpenuhi sudah cukup alasan meninjau ulang tesis.' },
+{ level: 'pasar', modul: 9, tanya: 'Sebelum ikut trading narasi, modul 9 menyarankan core BTC + ETH berada di kisaran…',
+  pilihan: ['60–80% portofolio', '5–10% portofolio', '0% — semua ke altcoin narasi', 'Tepat 50% portofolio'],
+  jelas: 'Jangan masuk trading narasi sebelum core-nya stabil. Profil titik awal (BTC / ETH / altcoin naratif): konservatif 80/15/5, moderat 70/20/10, agresif 60/25/15.' },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LOGIKA KUIS
+// ─────────────────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const HURUF = ['A', 'B', 'C', 'D'];
+let profilPengguna = null;   // diisi akun.pasangMenu(); null = pengunjung tanpa akun
+let main = null;             // keadaan permainan yang sedang berjalan
+
+// Acak urutan larik tanpa mengubah aslinya (algoritma Fisher–Yates).
+// Kenapa bukan arr.sort(() => Math.random() - .5)? Cara itu terlihat acak tapi
+// hasilnya berat sebelah — sebagian urutan jauh lebih sering muncul.
+function acak(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Skor terbaik disimpan di browser pemain saja. Dibungkus try/catch karena
+// localStorage bisa ditolak (mode penyamaran, pengaturan privasi ketat).
+function bacaTerbaik() { try { return JSON.parse(localStorage.getItem(PENGATURAN.kunciSimpan)) || {}; } catch { return {}; } }
+function simpanTerbaik(level, skor) {
+  const t = bacaTerbaik();
+  if (!(level in t) || skor > t[level]) { t[level] = skor; try { localStorage.setItem(PENGATURAN.kunciSimpan, JSON.stringify(t)); } catch {} return true; }
+  return false;
+}
+
+function tampilkan(layar) {
+  for (const id of ['layar-pilih', 'layar-main', 'layar-hasil']) $(id).hidden = id !== layar;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Layar 1 ──
+function gambarPilihan() {
+  const terbaik = bacaTerbaik();
+  $('daftar-level').innerHTML = Object.entries(LEVEL).map(([kode, l], i) => `
+    <button class="kartu level" style="--warna:${l.warna}" data-level="${kode}">
+      <span class="nomor">Level ${i + 1} · ${l.prasyarat}</span>
+      <h3 class="serif">${l.nama}</h3>
+      <p>${l.ringkas}</p>
+      <span class="kaki-level"><span class="terbaik">${kode in terbaik ? `Skor terbaik: ${terbaik[kode]}/${PENGATURAN.jumlahSoal}` : 'Belum pernah dimainkan'}</span><span class="mulai">Mulai →</span></span>
+    </button>`).join('');
+}
+
+// ── Mulai permainan: ambil soal sesuai level, acak ──
+function ambilSoal(level) {
+  if (level === 'campuran') {
+    return Object.entries(PENGATURAN.campuran)
+      .flatMap(([lv, n]) => acak(SOAL.filter(s => s.level === lv)).slice(0, n));
+  }
+  return acak(SOAL.filter(s => s.level === level)).slice(0, PENGATURAN.jumlahSoal);
+}
+
+function mulai(level) {
+  const soal = ambilSoal(level).map(s => ({ ...s, urutan: acak([0, 1, 2, 3]) }));
+  main = { level, soal, ke: 0, benar: 0, hasil: [] };   // hasil[i] = true/false per soal
+  $('label-level').textContent = LEVEL[level].nama;
+  $('label-level').style.cssText = `background:${LEVEL[level].warna};color:#fff`;
+  history.replaceState(null, '', '#' + level);
+  tampilkan('layar-main');
+  gambarSoal();
+}
+
+// ── Layar 2 ──
+function gambarSoal() {
+  const s = main.soal[main.ke], n = main.soal.length;
+  $('hitung').textContent = `Soal ${main.ke + 1} dari ${n} · benar ${main.benar}`;
+  $('titik').innerHTML = main.soal.map((_, i) =>
+    `<span class="${i < main.ke ? (main.hasil[i] ? 'ya' : 'tidak') : i === main.ke ? 'kini' : ''}"></span>`).join('');
+  $('tanya').textContent = s.tanya;
+  // Tombol ditampilkan menurut urutan acak, tapi data-i menyimpan indeks asli
+  // di larik pilihan — dengan begitu "indeks asli 0 = benar" tetap berlaku.
+  $('pilihan').innerHTML = s.urutan.map((asli, pos) =>
+    `<button class="opsi" data-i="${asli}"><span class="huruf">${HURUF[pos]}</span><span></span></button>`).join('');
+  $('pilihan').querySelectorAll('.opsi').forEach(b => { b.lastElementChild.textContent = s.pilihan[Number(b.dataset.i)]; });
+  $('penjelasan').hidden = true;
+  $('lanjut').hidden = true;
+  $('petunjuk').hidden = false;
+}
+
+function jawab(indeksAsli) {
+  if (!$('lanjut').hidden) return;          // sudah dijawab; abaikan klik kedua
+  const s = main.soal[main.ke];
+  const tepat = indeksAsli === 0;
+  main.hasil[main.ke] = tepat;
+  if (tepat) main.benar++;
+
+  $('pilihan').querySelectorAll('.opsi').forEach(b => {
+    const i = Number(b.dataset.i);
+    b.disabled = true;
+    if (i === 0) b.classList.add('benar');
+    else if (i === indeksAsli) b.classList.add('salah');
+    else b.classList.add('redup');
+  });
+
+  const tautan = s.modul ? ` <a href="modul.html#modul-${s.modul}">Pelajari di Modul ${s.modul} →</a>` : '';
+  $('penjelasan').className = 'penjelasan' + (tepat ? '' : ' meleset');
+  $('penjelasan').innerHTML = `<b class="vonis">${tepat ? 'Tepat.' : 'Belum tepat. Jawabannya: ' + s.pilihan[0] + '.'}</b>${s.jelas}${tautan}`;
+  $('penjelasan').hidden = false;
+
+  const terakhir = main.ke === main.soal.length - 1;
+  $('lanjut').textContent = terakhir ? 'Lihat hasil →' : 'Soal berikutnya →';
+  $('lanjut').hidden = false;
+  $('petunjuk').hidden = true;
+  $('hitung').textContent = `Soal ${main.ke + 1} dari ${main.soal.length} · benar ${main.benar}`;
+  $('lanjut').focus({ preventScroll: true });
+}
+
+function lanjut() {
+  if (main.ke < main.soal.length - 1) { main.ke++; gambarSoal(); $('tanya').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  else selesai();
+}
+
+// ── Layar 3 ──
+// Gelar berdasarkan persentase, bukan angka mentah, supaya tetap masuk akal
+// kalau PENGATURAN.jumlahSoal diubah.
+function gelarUntuk(persen) {
+  if (persen === 100) return ['Pembaca dossier', 'Sempurna. Kerangka analisisnya sudah Anda pegang — tinggal dipakai pada token sungguhan.'];
+  if (persen >= 80) return ['Tajam', 'Hampir semua tepat. Soal yang meleset di bawah ini biasanya justru yang paling mahal di pasar sungguhan.'];
+  if (persen >= 50) return ['Sedang menajam', 'Dasarnya ada. Baca ulang penjelasan soal yang meleset — masing-masing ditautkan ke modulnya.'];
+  return ['Baru mulai — dan itu wajar', 'Setiap soal yang meleset adalah satu jebakan yang sekarang sudah Anda kenali sebelum uang sungguhan dipertaruhkan.'];
+}
+
+function selesai() {
+  const n = main.soal.length, persen = Math.round(main.benar / n * 100);
+  const rekorBaru = simpanTerbaik(main.level, main.benar);
+  const [gelar, kalimat] = gelarUntuk(persen);
+
+  $('mata-hasil').textContent = `Hasil · ${LEVEL[main.level].nama}${rekorBaru ? ' · skor terbaik baru' : ''}`;
+  $('gelar').textContent = gelar;
+  $('kalimat').textContent = kalimat;
+  $('angka-hasil').textContent = `${main.benar}/${n}`;
+  $('cincin').style.stroke = persen >= 80 ? 'var(--sage)' : persen >= 50 ? 'var(--emas)' : 'var(--bata)';
+  $('cincin').setAttribute('stroke-dasharray', '0 251.3');
+  // Ditunda satu bingkai supaya transisi CSS berjalan dari nol ke skor.
+  requestAnimationFrame(() => requestAnimationFrame(() =>
+    $('cincin').setAttribute('stroke-dasharray', `${(persen / 100 * 251.3).toFixed(1)} 251.3`)));
+  $('tersalin').hidden = true;
+
+  const meleset = main.soal.filter((_, i) => !main.hasil[i]);
+  $('ulasan').innerHTML = meleset.length ? `<h3 class="serif">Yang perlu dibaca ulang</h3><ol>${meleset.map(s => `
+    <li><b></b><div class="jawab">Jawaban: <b></b></div>${s.modul ? `<a href="modul.html#modul-${s.modul}">Modul ${s.modul} →</a>` : ''}</li>`).join('')}</ol>` : '';
+  $('ulasan').querySelectorAll('li').forEach((li, i) => {
+    li.firstElementChild.textContent = meleset[i].tanya;
+    li.querySelector('.jawab b').textContent = meleset[i].pilihan[0];
+  });
+
+  // Ajakan penutup menyesuaikan siapa yang bermain.
+  const p = profilPengguna;
+  $('ajakan').innerHTML = !p
+    ? `<h2 class="serif">Mau tahu cara membaca token sungguhan?</h2><p>Daftar akun gratis untuk membuka modul 1–2 dan melihat daftar isi setiap dossier. Anggota berlangganan membaca kesembilan modul, empat laporan pagi, dan seluruh dossier token.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html?daftar">Daftar akun gratis</a><a class="kedua" href="tentang.html">Apa isi Hanif Dossier?</a></div>`
+    : !p.disetujui
+      ? `<h2 class="serif">Modul 3–9 menunggu Anda</h2><p>Soal level Membaca token dan Pasar &amp; mental diambil dari modul untuk anggota. Selesaikan langganan untuk membaca semuanya, bersama laporan pagi dan dossier.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html#status">Selesaikan langganan</a></div>`
+      : `<h2 class="serif">Lanjutkan dari sini</h2><p>Buka modul yang soalnya meleset, lalu coba lagi. Atau langsung pakai kerangkanya pada laporan pagi ini.</p><div class="tombol" style="justify-content:center"><a class="utama" href="modul.html">Buka modul</a><a class="kedua" href="dasbor.html">Laporan hari ini</a></div>`;
+
+  tampilkan('layar-hasil');
+}
+
+// Bagikan skor: di HP memakai lembar bagikan bawaan (WhatsApp, Instagram, dll.);
+// di laptop menyalin teksnya ke clipboard.
+async function bagikan() {
+  const n = main.soal.length;
+  const teks = `Saya dapat ${main.benar}/${n} di Kuis Crypto Hanif Dossier (level ${LEVEL[main.level].nama}). Coba kalahkan: ${PENGATURAN.alamat}`;
+  if (navigator.share) {
+    try { await navigator.share({ title: 'Kuis Crypto — Hanif Dossier', text: teks }); return; } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(teks); $('tersalin').textContent = 'Teks skor tersalin — tinggal tempel di WhatsApp atau Instagram.'; }
+  catch { $('tersalin').textContent = teks; }
+  $('tersalin').hidden = false;
+}
+
+// ── Sambungan tombol & keyboard ──
+$('daftar-level').addEventListener('click', e => { const b = e.target.closest('[data-level]'); if (b) mulai(b.dataset.level); });
+$('pilihan').addEventListener('click', e => { const b = e.target.closest('.opsi'); if (b) jawab(Number(b.dataset.i)); });
+$('lanjut').addEventListener('click', lanjut);
+$('ulangi').addEventListener('click', () => mulai(main.level));
+$('ganti-level').addEventListener('click', () => { gambarPilihan(); history.replaceState(null, '', location.pathname); tampilkan('layar-pilih'); });
+$('berhenti').addEventListener('click', e => { e.preventDefault(); gambarPilihan(); history.replaceState(null, '', location.pathname); tampilkan('layar-pilih'); });
+$('bagikan').addEventListener('click', bagikan);
+document.addEventListener('keydown', e => {
+  if ($('layar-main').hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+  const pos = '1234'.indexOf(e.key) >= 0 ? '1234'.indexOf(e.key) : 'abcd'.indexOf(e.key.toLowerCase());
+  const tombol = $('pilihan').querySelectorAll('.opsi');
+  if (pos >= 0 && e.key.length === 1 && tombol[pos] && !tombol[pos].disabled) tombol[pos].click();
+  else if (e.key === 'Enter' && !$('lanjut').hidden && document.activeElement !== $('lanjut')) lanjut();
+});
+
+// ── Awal halaman ──
+// Kuis terbuka untuk semua orang, jadi TIDAK memanggil akun.wajibMasuk().
+// pasangMenu() hanya menyesuaikan menu dan ajakan dengan status akun.
+gambarPilihan();
+const levelDariAlamat = location.hash.slice(1);          // kuis.html#dasar langsung mulai level itu
+if (LEVEL[levelDariAlamat]) mulai(levelDariAlamat);
+window.addEventListener('hashchange', () => { const l = location.hash.slice(1); if (LEVEL[l] && (!main || main.level !== l || $('layar-main').hidden)) mulai(l); });
+if (window.akun) akun.pasangMenu().then(p => { profilPengguna = p; }).catch(() => {});
+</script>
+</body>
+</html>

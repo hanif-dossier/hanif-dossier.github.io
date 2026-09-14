@@ -15,6 +15,7 @@ Satu situs untuk semuanya, tanpa build tool: halaman statis + `akun.js`
 | `dasbor.html` | anggota disetujui (tamu boleh lihat pasar) | Cuplikan hidup empat laporan |
 | `laporan.html?h=…` | anggota disetujui | Penampil laporan dari gudang privat |
 | `modul.html` | punya akun: modul 1–2 untuk tamu, 3–8 untuk anggota | Delapan modul edukasi format kelas; isinya di dalam berkas (larik `MODUL`) |
+| `kuis.html` | **publik, tanpa daftar** | Kuis crypto 10 soal, 4 level (Dasar · Membaca token = modul 1–5 · Pasar & mental = modul 6–9 · Campuran). Bank 42 soal di larik `SOAL`, angka yang bisa disetel di `PENGATURAN`. Penjelasan tiap jawaban + tautan ke modul, skor terbaik di localStorage, tombol bagikan skor. `kuis.html#dasar` langsung membuka satu level (untuk tautan Instagram) |
 | `pustaka.html` | anggota berlangganan | Katalog gaya aplikasi riset: riset terbaru bersampul logo koin + daftar semua riset, penyaring lapisan Web3; dossier dibuka langsung di `baca.html` |
 | `baca.html?b=…` | anggota berlangganan | Pembaca PDF di dalam halaman (pdf.js dari cdnjs) — dossier terbuka tanpa unduh; tautan sementara 5 menit |
 | `admin.html` | admin | Setujui / tolak anggota |
