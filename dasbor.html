@@ -370,10 +370,21 @@ body.tamu .daftar-laptop{display:none}
   // Angka pasar dari sumber publik (tanpa laporan): dipakai tamu, dan cadangan kalau
   // laporan belum terbaca. Format ringkas: $2,65 triliun.
   const uangRingkas = n => n >= 1e12 ? `$${(n / 1e12).toFixed(2).replace('.', ',')} triliun` : `$${(n / 1e9).toFixed(1).replace('.', ',')} miliar`;
+  // Angka global CoinGecko (market_cap_change_percentage_24h_usd) terbukti menyimpang
+  // (14 Sep 2026: -4,37% padahal tak satu pun koin besar turun >2%). Perubahan pasar
+  // dihitung dari harga 100 koin terbesar; angka CoinGecko hanya cadangan.
+  async function ubahPasar24(cadangan) {
+    try {
+      const koin = await (await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')).json();
+      let kini = 0, lalu = 0;
+      for (const c of koin) { const p = c.price_change_percentage_24h; if (!c.market_cap || p == null || p <= -100) continue; kini += c.market_cap; lalu += c.market_cap / (1 + p / 100); }
+      return lalu ? (kini / lalu - 1) * 100 : cadangan;
+    } catch { return cadangan; }
+  }
   async function angkaPublik() {
     try {
       const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
-      const cap = g.total_market_cap.usd, ubah = g.market_cap_change_percentage_24h_usd, domBtc = g.market_cap_percentage.btc, domEth = g.market_cap_percentage.eth;
+      const cap = g.total_market_cap.usd, ubah = await ubahPasar24(g.market_cap_change_percentage_24h_usd), domBtc = g.market_cap_percentage.btc, domEth = g.market_cap_percentage.eth;
       const teksUbah = `${ubah >= 0 ? '+' : ''}${ubah.toFixed(2).replace('.', ',')}%`;
       if ($('btc-harga').textContent === '…' || $('btc-harga').textContent === 'n/a') { $('btc-harga').textContent = uangRingkas(cap); $('btc-kanan').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
       if ($('cap-angka').textContent === '…' || $('cap-angka').textContent === 'n/a') { $('cap-angka').textContent = uangRingkas(cap); $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${teksUbah}</span> dalam 24 jam`; }
@@ -400,7 +411,7 @@ body.tamu .daftar-laptop{display:none}
   // 5. Grafik harga: garis sederhana, koin dan rentang bisa dipilih.
   //    Data dari CoinGecko (gratis, tanpa kunci); tiap kombinasi diambil sekali lalu disimpan.
   const KOIN_GRAFIK = [['BTC', 'bitcoin'], ['ETH', 'ethereum'], ['ZAMA', 'zama'], ['INJ', 'injective-protocol'], ['CFG', 'centrifuge-2'], ['ARB', 'arbitrum'],
-    ['ASTER', 'aster-2'], ['ONDO', 'ondo-finance'], ['ENA', 'ethena'], ['HUMA', 'huma-finance'], ['TRX', 'tron'], ['ARKM', 'arkham']];
+    ['ASTER', 'aster-2'], ['ONDO', 'ondo-finance'], ['ENA', 'ethena'], ['HUMA', 'huma-finance'], ['TRX', 'tron'], ['ARKM', 'arkham'], ['MON', 'monad'], ['REZ', 'renzo']];
   const RENTANG = [['1 hari', 1], ['7 hari', 7], ['30 hari', 30], ['90 hari', 90], ['1 tahun', 365], ['Semua', 'max']];
   const simpanan = new Map();
   let pilihan = { id: 'bitcoin', sim: 'BTC', hari: 7 };

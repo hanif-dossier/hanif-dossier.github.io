@@ -247,9 +247,20 @@
   // Angka pasar dari sumber publik — sama dengan yang dipakai dasbor untuk tamu.
   const arah = v => v == null ? '' : v > 0 ? 'naik' : v < 0 ? 'turun' : '';
   const uangRingkas = n => n >= 1e12 ? `$${(n / 1e12).toFixed(2).replace('.', ',')} triliun` : `$${(n / 1e9).toFixed(1).replace('.', ',')} miliar`;
+  // Angka global CoinGecko (market_cap_change_percentage_24h_usd) terbukti menyimpang
+  // (14 Sep 2026: -4,37% padahal tak satu pun koin besar turun >2%). Perubahan pasar
+  // dihitung dari harga 100 koin terbesar; angka CoinGecko hanya cadangan.
+  async function ubahPasar24(cadangan) {
+    try {
+      const koin = await (await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')).json();
+      let kini = 0, lalu = 0;
+      for (const c of koin) { const p = c.price_change_percentage_24h; if (!c.market_cap || p == null || p <= -100) continue; kini += c.market_cap; lalu += c.market_cap / (1 + p / 100); }
+      return lalu ? (kini / lalu - 1) * 100 : cadangan;
+    } catch { return cadangan; }
+  }
   try {
     const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
-    const cap = g.total_market_cap.usd, ubah = g.market_cap_change_percentage_24h_usd, b = g.market_cap_percentage.btc, e = g.market_cap_percentage.eth;
+    const cap = g.total_market_cap.usd, ubah = await ubahPasar24(g.market_cap_change_percentage_24h_usd), b = g.market_cap_percentage.btc, e = g.market_cap_percentage.eth;
     $('cap-angka').textContent = uangRingkas(cap);
     $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${(ubah >= 0 ? '+' : '') + ubah.toFixed(2).replace('.', ',')}%</span> dalam 24 jam`;
     $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`);

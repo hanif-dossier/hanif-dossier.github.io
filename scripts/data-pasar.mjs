@@ -105,13 +105,19 @@ const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'Coi
 // ---- 1. Angka pasar ringkas
 {
   const g = (await cg('/global'))?.data;
+  // Angka global CoinGecko (market_cap_change_percentage_24h_usd) terbukti menyimpang
+  // (14 Sep 2026: -4,37% padahal tak satu pun koin besar turun >2%). Dihitung ulang
+  // dari harga 100 koin terbesar; angka CoinGecko hanya cadangan.
+  const top = (await cg('/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')) || [];
+  let kapKini = 0, kapLalu = 0;
+  for (const c of top) { const p = c.price_change_percentage_24h; if (!c.market_cap || p == null || p <= -100) continue; kapKini += c.market_cap; kapLalu += c.market_cap / (1 + p / 100); }
   const fng = (await ambil('https://api.alternative.me/fng/?limit=1'))?.data?.[0];
   const cb = await cg('/coins/bitcoin/tickers?exchange_ids=gdax&order=volume_desc');
   const bn = await cg('/coins/bitcoin/tickers?exchange_ids=binance&order=volume_desc');
   const hargaDi = (d, target) => d?.tickers?.find(t => t.base === 'BTC' && t.target === target)?.last ?? null;
   const cbUsd = hargaDi(cb, 'USD'), bnUsdt = hargaDi(bn, 'USDT');
   hasil.pasar = {
-    kapTotal: g?.total_market_cap?.usd ?? null, ubah24: g?.market_cap_change_percentage_24h_usd ?? null,
+    kapTotal: g?.total_market_cap?.usd ?? null, ubah24: kapLalu ? (kapKini / kapLalu - 1) * 100 : (g?.market_cap_change_percentage_24h_usd ?? null),
     volume24: g?.total_volume?.usd ?? null, domBtc: g?.market_cap_percentage?.btc ?? null, domEth: g?.market_cap_percentage?.eth ?? null,
     fng: fng ? { nilai: Number(fng.value), label: fng.value_classification } : null,
     coinbasePremium: cbUsd && bnUsdt ? { coinbase: cbUsd, binance: bnUsdt, persen: (cbUsd - bnUsdt) / bnUsdt * 100 } : null,
