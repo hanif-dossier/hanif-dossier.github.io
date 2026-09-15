@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1C2356">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="ikon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="ikon-180.png">
+<title>Tautan Harian Hanif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<style>
+  body { padding-top: max(16px, env(safe-area-inset-top)); }
+  /* Gerbang harian Hanif. Langit di atas mengikuti waktu Pontianak (WIB); sisanya ikut tema terang/gelap. */
+  :root {
+    --latar: #EDF1EF; --kartu: #FFFFFF; --tinta: #13201D; --redup: #5A6865; --garis: #D5DDD9; --aksen: #A95F17;
+    --c-pagi: #4561C9; --c-minyak: #B8740F; --c-bisnis: #12796E; --c-belajar: #7C4DBD; --c-alat: #56657A; --c-laptop: #B04A31;
+    --huruf: "Plus Jakarta Sans", system-ui, "Segoe UI", sans-serif;
+    --judul: "Bricolage Grotesque", "Plus Jakarta Sans", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --latar: #0D1413; --kartu: #151F1D; --tinta: #E4ECE9; --redup: #93A4A0; --garis: #26322F; --aksen: #E6A456;
+      --c-pagi: #8EA3F2; --c-minyak: #E9AE4E; --c-bisnis: #4FC6B6; --c-belajar: #B99AF0; --c-alat: #A3B1C4; --c-laptop: #EE8D72;
+    }
+  }
+  :root[data-theme="dark"] {
+    --latar: #0D1413; --kartu: #151F1D; --tinta: #E4ECE9; --redup: #93A4A0; --garis: #26322F; --aksen: #E6A456;
+    --c-pagi: #8EA3F2; --c-minyak: #E9AE4E; --c-bisnis: #4FC6B6; --c-belajar: #B99AF0; --c-alat: #A3B1C4; --c-laptop: #EE8D72;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--latar); color: var(--tinta); font: 15px/1.55 var(--huruf); padding-inline: 16px; padding-block: 16px 48px; -webkit-font-smoothing: antialiased; }
+  .bingkai { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; border-radius: 8px; }
+
+  /* ---------- langit ---------- */
+  .langit { position: relative; overflow: hidden; border-radius: 22px; color: #fff; padding: 22px 22px 0; isolation: isolate;
+            background: linear-gradient(180deg, #0A1230 0%, #16224A 60%, #2A2F5E 100%); }
+  .langit[data-fase="fajar"] { background: linear-gradient(180deg, #1C2356 0%, #574788 55%, #DC8B7A 100%); }
+  .langit[data-fase="pagi"]  { background: linear-gradient(180deg, #245F9E 0%, #5E98CD 55%, #EFC58A 100%); }
+  .langit[data-fase="siang"] { background: linear-gradient(180deg, #1B5B9C 0%, #3F86C6 60%, #93C6E8 100%); }
+  .langit[data-fase="sore"]  { background: linear-gradient(180deg, #22507F 0%, #B77C48 70%, #EDB35F 100%); }
+  .langit[data-fase="senja"] { background: linear-gradient(180deg, #211A49 0%, #843A59 55%, #E9814F 100%); }
+  .langit[data-fase="malam"] { background: linear-gradient(180deg, #0A1230 0%, #16224A 60%, #2A2F5E 100%); }
+  .langit::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 1s;
+    background-image: radial-gradient(1.2px 1.2px at 12% 18%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 28% 42%, #fff 50%, transparent 51%),
+      radial-gradient(1.4px 1.4px at 46% 12%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 63% 30%, #fff 50%, transparent 51%),
+      radial-gradient(1.3px 1.3px at 78% 16%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 88% 40%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 36% 24%, #fff 50%, transparent 51%), radial-gradient(1.2px 1.2px at 70% 8%, #fff 50%, transparent 51%); }
+  .langit[data-fase="malam"]::before, .langit[data-fase="fajar"]::before { opacity: .8; }
+  .atas-langit { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px 24px; flex-wrap: wrap; }
+  .lokasi { margin: 0 0 6px; font: 500 11px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; opacity: .78; }
+  .langit h1 { margin: 0; font: 700 clamp(28px, 6vw, 44px)/1.05 var(--judul); letter-spacing: -.02em; text-wrap: balance; text-shadow: 0 1px 12px #0003; }
+  .tanggal { margin: 8px 0 0; font-size: 14px; opacity: .88; }
+  .jam-blok { text-align: right; }
+  .jam { display: block; font: 500 clamp(34px, 7vw, 52px)/1 var(--mono); letter-spacing: -.03em; font-variant-numeric: tabular-nums; text-shadow: 0 1px 14px #0003; }
+  .berikut { display: block; margin-top: 6px; font-size: 13px; opacity: .92; }
+  .berikut b { font-weight: 600; }
+  .busur { display: block; width: 100%; height: auto; margin-top: 10px; }
+  .sholat { list-style: none; margin: 0 -22px; padding: 12px 22px 14px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;
+            background: rgba(6, 12, 28, .30); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .sholat li { text-align: center; padding: 6px 2px; border-radius: 10px; }
+  .sholat .n { display: block; font-size: 11.5px; opacity: .8; }
+  .sholat .w { display: block; font: 500 15px/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+  .sholat li.lewat { opacity: .5; }
+  .sholat li.berikut-ini { background: rgba(255, 255, 255, .18); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35); }
+
+  /* ---------- pintasan ---------- */
+  .kepala { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .kepala h2 { margin: 0; font: 700 20px/1.2 var(--judul); letter-spacing: -.01em; display: flex; align-items: center; gap: 10px; }
+  .kepala .ket { margin: 0; color: var(--redup); font-size: 13px; }
+  .pintasan { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .pintasan { grid-template-columns: repeat(2, 1fr); } }
+  .ubin { --g: var(--c-alat); display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 18px; text-decoration: none; min-height: 132px;
+          background: linear-gradient(160deg, color-mix(in srgb, var(--g) 20%, var(--kartu)) 0%, var(--kartu) 85%);
+          border: 1px solid color-mix(in srgb, var(--g) 30%, var(--garis)); transition: transform .15s, box-shadow .15s; }
+  .ubin:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--g) 70%, transparent); }
+  .ubin .ikon { width: 42px; height: 42px; }
+  .ubin .nama { font: 700 16px/1.25 var(--judul); margin-top: auto; }
+  .ubin .host { font: 500 11px/1.3 var(--mono); color: var(--redup); }
+
+  /* ---------- cari ---------- */
+  .cari-blok { position: relative; }
+  .cari-blok svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--redup); pointer-events: none; }
+  #cari { width: 100%; font: inherit; color: var(--tinta); background: var(--kartu); border: 1px solid var(--garis); border-radius: 14px; padding: 12px 14px 12px 42px; }
+  #cari::placeholder { color: var(--redup); }
+
+  /* ---------- kelompok & kartu ---------- */
+  .kelompok { --g: var(--c-alat); }
+  .tanda { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; color: var(--g); background: color-mix(in srgb, var(--g) 16%, transparent); }
+  .tanda svg { width: 16px; height: 16px; }
+  .jumlah { font: 500 12px var(--mono); color: var(--redup); }
+  .sekarang { font: 600 11px/1 var(--huruf); color: var(--kartu); background: var(--aksen); padding: 5px 9px; border-radius: 999px; letter-spacing: .02em; }
+  .kisi { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+  .kartu { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 14px 16px; background: var(--kartu);
+           border: 1px solid var(--garis); border-radius: 14px; text-decoration: none; transition: border-color .15s, transform .15s; }
+  .kartu:hover { border-color: color-mix(in srgb, var(--g) 55%, var(--garis)); transform: translateY(-1px); }
+  .ikon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--g); background: color-mix(in srgb, var(--g) 14%, transparent); }
+  .ikon svg { width: 22px; height: 22px; }
+  .kartu .nama { display: block; font-weight: 600; font-size: 15px; line-height: 1.3; }
+  .kartu .ket { display: block; color: var(--redup); font-size: 13px; line-height: 1.45; margin-top: 3px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .host, .chip { font: 500 11px/1.5 var(--mono); }
+  .host { color: var(--redup); }
+  .chip { padding: 0 8px; border-radius: 999px; border: 1px solid var(--garis); }
+  .chip.masuk { color: var(--aksen); border-color: color-mix(in srgb, var(--aksen) 45%, var(--garis)); }
+  .chip.laptop { color: var(--c-laptop); border-color: color-mix(in srgb, var(--c-laptop) 45%, var(--garis)); }
+  .kosong { color: var(--redup); font-size: 14px; }
+
+  footer { color: var(--redup); font-size: 12.5px; line-height: 1.6; border-top: 1px solid var(--garis); padding-top: 16px; display: grid; gap: 4px; }
+  footer a { color: var(--tinta); }
+
+  @media (max-width: 520px) {
+    .langit { padding: 18px 16px 0; border-radius: 18px; }
+    .sholat { margin: 0 -16px; padding: 10px 10px 12px; }
+    .jam-blok { text-align: left; }
+    .sholat .w { font-size: 13.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="bingkai">
+  <header class="langit" id="langit" data-fase="pagi">
+    <div class="atas-langit">
+      <div>
+        <p class="lokasi">Pontianak · 0°01′ LS · Kota Khatulistiwa</p>
+        <h1 id="sapa">Selamat pagi, Hanif</h1>
+        <p class="tanggal" id="tanggal">Senin, 14 September 2026</p>
+      </div>
+      <div class="jam-blok">
+        <span class="jam" id="jam">06.00</span>
+        <span class="berikut" id="berikut">Dzuhur 11.40</span>
+      </div>
+    </div>
+    <svg class="busur" id="busur" viewBox="0 0 360 72" role="img" aria-label="Posisi matahari hari ini"></svg>
+    <ol class="sholat" id="sholat"></ol>
+  </header>
+
+  <section aria-labelledby="judul-pintasan">
+    <div class="kepala">
+      <h2 id="judul-pintasan">Pintasan utama</h2>
+      <p class="ket" id="ket-pintasan">Empat yang paling sering kamu buka</p>
+    </div>
+    <div class="pintasan" id="pintasan"></div>
+  </section>
+
+  <div class="cari-blok">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="cari" type="search" placeholder="Cari tautan… (misal: gaji, radar, kelas)" aria-label="Cari tautan" autocomplete="off">
+  </div>
+
+  <div id="daftar" class="bingkai" style="gap:32px"></div>
+
+  <footer>
+    <span>Diperbarui 15 September 2026. Versi dokumen: <a href="https://docs.google.com/document/d/1Icqtl-yYM4i28l6IkzdJ9UG9jH6RYsqddrc-v4lL0KI/edit" target="_blank" rel="noopener">Tautan Harian Hanif di Google Drive</a>.</span>
+    <span>Jadwal sholat dihitung untuk Pontianak dengan metode Kemenag (Subuh 20°, Isya 18°, ihtiyat 2 menit), sama seperti di Markas Hanif.</span>
+    <span>Di HP: buka menu browser, lalu pilih <b>Tambahkan ke layar utama</b> supaya halaman ini jadi ikon seperti aplikasi.</span>
+  </footer>
+</div>
+
+<script>
+// ---------- ikon garis (24×24) ----------
+const IKON = {
+  markas: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
+  koran: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
+  radar: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 12l5-5"/>',
+  kalender: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  tetes: '<path d="M12 3c3.5 4.5 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.5-6.5 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>',
+  absen: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 13.5l2 2 4-4"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>',
+  perisai: '<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
+  kirim: '<path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/>',
+  kamera: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>',
+  saring: '<path d="M4 5h16l-6 8v6l-4-2v-4z"/>',
+  grafik: '<path d="M4 19h16"/><path d="M6 15l4-5 3 3 5-7"/>',
+  buku: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  topi: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+  tanya: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.5"/><circle cx="12" cy="16.8" r=".9" fill="currentColor" stroke="none"/>',
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  jaringan: '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="9" cy="18" r="2.5"/><path d="M8.4 6.4l7.2 1.2M6.6 8.4l1.8 7.2M16.4 10l-5.6 6.2"/>',
+  dok: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',
+  chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/>',
+  alur: '<rect x="3" y="9" width="6" height="6" rx="1.5"/><rect x="15" y="3.5" width="6" height="6" rx="1.5"/><rect x="15" y="14.5" width="6" height="6" rx="1.5"/><path d="M9 12h3M12 6.5v11M12 6.5h3M12 17.5h3"/>',
+  matahari: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  toko: '<path d="M4 9l1.5-5h13L20 9"/><path d="M4 9h16v2a3 3 0 0 1-5.3 2 3 3 0 0 1-5.4 0A3 3 0 0 1 4 11z"/><path d="M5 13v7h14v-7"/>',
+  bintang: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+  alat: '<path d="M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-3-3z"/>',
+  laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
+};
+const svg = (nama, ukuran = 22) => `<svg width="${ukuran}" height="${ukuran}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IKON[nama]}</svg>`;
+
+// ---------- daftar tautan ----------
+const GRUP = [
+  { id: 'pagi', judul: 'Pagi, setelah Subuh', ket: 'Buka berurutan sebelum mulai kerja', warna: 'var(--c-pagi)', ikon: 'matahari', tautan: [
+    { id: 'markas', nama: 'Markas Hanif', ikon: 'markas', url: 'https://claude.ai/code/artifact/554dd532-1dc1-46ce-8a08-0ac416e6c58e', ket: 'Jurnal pagi, sholat, jadwal, disiplin, hutang, dan arus kas.' },
+    { id: 'briefing', nama: 'Briefing pasar harian', ikon: 'koran', url: 'https://hanif-dossier.github.io/laporan.html?h=briefing', masuk: true, ket: 'Ringkasan pasar crypto, terbit 06.00 WIB walau laptop mati.' },
+    { id: 'radar', nama: 'Radar portofolio', ikon: 'radar', url: 'https://hanif-dossier.github.io/laporan.html?h=radar', masuk: true, ket: 'Berita dan peringatan untuk koin yang kamu pegang.' },
+    { id: 'jadwal', nama: 'Jadwal portofolio', ikon: 'kalender', url: 'https://hanif-dossier.github.io/laporan.html?h=schedule', masuk: true, ket: 'Unlock token dan acara 45 hari ke depan.' },
+  ]},
+  { id: 'minyak', judul: 'Usaha minyak', ket: 'Laporan harian tetap lewat laptop', warna: 'var(--c-minyak)', ikon: 'toko', tautan: [
+    { id: 'dkm', nama: 'Dashboard Keuangan Minyak', ikon: 'tetes', url: 'https://doc.farm/dashboard-keuangan-minyak', ket: 'Omzet, laba, biaya, dan gaji per minggu, per pengantar dan jenis minyak.' },
+    { id: 'absensi', nama: 'Panel Absensi Karyawan', ikon: 'absen', url: 'https://claude.ai/code/artifact/2a7401ec-c9b5-43fa-bd4c-6e464ea8b532', ket: 'Isi absensi dan gaji mingguan, lalu Simpan. Halaman tiap karyawan ikut diperbarui.' },
+  ]},
+  { id: 'bisnis', judul: 'Hanif Dossier Crypto', ket: 'Situs, anggota, dan jalur langganan', warna: 'var(--c-bisnis)', ikon: 'bintang', tautan: [
+    { id: 'situs', nama: 'Situs utama', ikon: 'globe', url: 'https://hanif-dossier.github.io/', ket: 'Halaman masuk anggota, riset, pasar, dan kelas.' },
+    { id: 'admin', nama: 'Admin anggota', ikon: 'perisai', url: 'https://hanif-dossier.github.io/admin.html', masuk: true, ket: 'Setujui atau tolak anggota baru.' },
+    { id: 'bot', nama: 'Bot Telegram', ikon: 'kirim', url: 'https://t.me/HanifDossierBot', ket: '@HanifDossierBot, jalur langganan. Bukti transfer masuk ke sini.' },
+    { id: 'ig', nama: 'Instagram', ikon: 'kamera', url: 'https://www.instagram.com/hanif.dossiercrypto/', ket: '@hanif.dossiercrypto, akun konten.' },
+    { id: 'screening', nama: 'Screening altcoin', ikon: 'saring', url: 'https://hanif-dossier.github.io/laporan.html?h=screening', masuk: true, ket: 'Daftar pendek koin hasil pemindaian harian.' },
+    { id: 'pasar', nama: 'Data pasar', ikon: 'grafik', url: 'https://hanif-dossier.github.io/pasar.html', masuk: true, ket: 'RWA, stablecoin, dan peringkat fee serta pendapatan.' },
+    { id: 'riset', nama: 'Katalog riset', ikon: 'buku', url: 'https://hanif-dossier.github.io/riset.html', masuk: true, ket: 'Semua dossier, dikelompokkan per lapisan Web3.' },
+  ]},
+  { id: 'belajar', judul: 'Belajar & bahan konten', ket: 'Materi untuk anggota dan postingan', warna: 'var(--c-belajar)', ikon: 'topi', tautan: [
+    { id: 'kelas', nama: 'Kelas Teknologi Blockchain', ikon: 'topi', url: 'https://hanif-dossier.github.io/kelas.html', ket: '37 kelas, 87 pelajaran, dan kuis di setiap kelas.' },
+    { id: 'kuis', nama: 'Kuis Crypto', ikon: 'tanya', url: 'https://hanif-dossier.github.io/kuis.html', ket: 'Jalur belajar 11 level, bisa dibagikan ke calon anggota.' },
+    { id: 'drive-ig', nama: 'Folder konten Instagram', ikon: 'folder', url: 'https://drive.google.com/drive/folders/1DnKYlcsVudC2eHvxsb1XyZRyayH_nEtR', ket: 'Bitcoin Terbukti, Berita Pekan Ini, dan Label Komposisi Token.' },
+  ]},
+  { id: 'alat', judul: 'Alat & sistem', ket: 'Untuk merawat semuanya', warna: 'var(--c-alat)', ikon: 'alat', tautan: [
+    { id: 'otak', nama: 'Otak Ai Agent', ikon: 'jaringan', url: 'https://claude.ai/code/artifact/c4d8cac9-303e-4fd3-8931-d57def34675b', ket: 'Peta hidup semua berkas di folder Ai Agent.' },
+    { id: 'app', nama: 'Aplikasi di HP', ikon: 'laptop', url: 'https://hanif-dossier.github.io/hanif/', ket: 'Versi yang bisa dipasang di layar utama HP, tanpa login.' },
+    { id: 'gdoc', nama: 'Versi Google Docs', ikon: 'dok', url: 'https://docs.google.com/document/d/1Icqtl-yYM4i28l6IkzdJ9UG9jH6RYsqddrc-v4lL0KI/edit', ket: 'Daftar yang sama dalam bentuk dokumen, sebagai cadangan.' },
+  ]},
+  { id: 'laptop', judul: 'Saat laptop menyala', ket: 'Hanya hidup kalau laptop dan n8n berjalan', warna: 'var(--c-laptop)', ikon: 'laptop', tautan: [
+    { id: 'chat', nama: 'Chat asisten', ikon: 'chat', url: 'https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/7a229dd9-e597-44e9-90e0-89ebf542b9bb/chat', laptop: true, ket: 'Asisten pribadi yang bisa diajak bicara dari HP.' },
+    { id: 'lap-laptop', nama: 'Laporan harian lewat laptop', ikon: 'koran', url: 'https://laptop-6u96r0ol.tailf715e9.ts.net/webhook/laporan', laptop: true, ket: 'Halaman laporan yang disajikan langsung dari laptop.' },
+    { id: 'n8n', nama: 'Editor n8n', ikon: 'alur', url: 'http://localhost:5678', laptop: true, ket: 'Hanya bisa dibuka dari laptop itu sendiri.' },
+  ]},
+];
+const SEMUA = GRUP.flatMap(g => g.tautan.map(t => ({ ...t, grup: g })));
+const BAWAAN = ['markas', 'dkm', 'absensi', 'briefing'];
+const host = u => new URL(u).hostname.replace(/^www\./, '').replace(/^laptop-.*\.ts\.net$/, 'laptop (Tailscale)');
+
+// ---------- kebiasaan membuka (hanya di browser ini) ----------
+function bacaKlik() { try { return JSON.parse(localStorage.getItem('tautan-klik') || '{}'); } catch { return {}; } }
+function catatKlik(id) { try { const k = bacaKlik(); k[id] = (k[id] || 0) + 1; localStorage.setItem('tautan-klik', JSON.stringify(k)); } catch { /* penyimpanan tidak tersedia */ } }
+
+function pilihPintasan() {
+  const k = bacaKlik();
+  const sering = Object.entries(k).filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).map(([id]) => id);
+  const urut = [...new Set([...sering, ...BAWAAN])].filter(id => SEMUA.some(t => t.id === id)).slice(0, 4);
+  document.getElementById('ket-pintasan').textContent = sering.length ? 'Menyesuaikan dengan yang paling sering kamu buka' : 'Yang dibuka hampir setiap hari';
+  return urut.map(id => SEMUA.find(t => t.id === id));
+}
+
+function gambarPintasan() {
+  document.getElementById('pintasan').innerHTML = pilihPintasan().map(t => `
+    <a class="ubin" href="${t.url}" target="_blank" rel="noopener" data-id="${t.id}" style="--g:${t.grup.warna}">
+      <span class="ikon">${svg(t.ikon)}</span>
+      <span class="nama">${t.nama}</span>
+      <span class="host">${host(t.url)}</span>
+    </a>`).join('');
+}
+
+function kartu(t) {
+  const chip = (t.masuk ? '<span class="chip masuk">perlu masuk</span>' : '') + (t.laptop ? '<span class="chip laptop">laptop menyala</span>' : '');
+  return `<a class="kartu" href="${t.url}" target="_blank" rel="noopener" data-id="${t.id}">
+      <span class="ikon">${svg(t.ikon)}</span>
+      <span><span class="nama">${t.nama}</span><span class="ket">${t.ket}</span>
+        <span class="meta"><span class="host">${host(t.url)}</span>${chip}</span></span>
+    </a>`;
+}
+
+let faseSekarang = 'pagi';
+function gambarDaftar() {
+  const q = document.getElementById('cari').value.trim().toLowerCase();
+  const cocok = t => !q || (t.nama + ' ' + t.ket + ' ' + t.grup.judul).toLowerCase().includes(q);
+  const html = GRUP.map(g => {
+    const isi = g.tautan.filter(cocok);
+    if (!isi.length) return '';
+    const waktunya = g.id === 'pagi' && (faseSekarang === 'fajar' || faseSekarang === 'pagi') && !q;
+    return `<section class="kelompok" style="--g:${g.warna}" aria-label="${g.judul}">
+      <div class="kepala">
+        <h2><span class="tanda">${svg(g.ikon, 16)}</span>${g.judul}${waktunya ? '<span class="sekarang">Waktunya sekarang</span>' : ''}</h2>
+        <p class="ket">${g.ket} · <span class="jumlah">${isi.length}</span></p>
+      </div>
+      <div class="kisi">${isi.map(kartu).join('')}</div>
+    </section>`;
+  }).join('');
+  document.getElementById('daftar').innerHTML = html || `<p class="kosong">Tidak ada tautan yang cocok dengan “${q.replace(/[<&]/g, '')}”. Coba kata lain, misalnya “gaji” atau “radar”.</p>`;
+}
+
+document.addEventListener('click', e => { const a = e.target.closest('a[data-id]'); if (a) catatKlik(a.dataset.id); });
+document.getElementById('cari').addEventListener('input', gambarDaftar);
+
+// ---------- waktu Pontianak & jadwal sholat ----------
+// Rumus sama dengan Markas Hanif (metode Kemenag: Subuh 20°, Isya 18°, ihtiyat 2 menit), zona WIB tetap.
+const KOTA = { lat: -0.0263, lng: 109.3425, tz: 7, zona: 'Asia/Pontianak' };
+function waktuSholat(y, m, d) {
+  const rad = Math.PI / 180, tz = KOTA.tz, lat = KOTA.lat, lng = KOTA.lng;
+  const a = Math.floor((14 - m) / 12), yy = y + 4800 - a, mm = m + 12 * a - 3;
+  const jd = d + Math.floor((153 * mm + 2) / 5) + 365 * yy + Math.floor(yy / 4) - Math.floor(yy / 100) + Math.floor(yy / 400) - 32045 - 0.5 + (12 - tz) / 24;
+  const D = jd - 2451545.0;
+  const g = rad * ((357.529 + 0.98560028 * D) % 360), q = (280.459 + 0.98564736 * D) % 360;
+  const L = rad * ((q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) % 360);
+  const e = rad * (23.439 - 0.00000036 * D);
+  let RA = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / rad / 15; RA = ((RA % 24) + 24) % 24;
+  const decl = Math.asin(Math.sin(e) * Math.sin(L));
+  const EqT = q / 15 - RA;
+  const noon = 12 + tz - lng / 15 - EqT;
+  const la = lat * rad;
+  const T = ang => { const c = (-Math.sin(ang * rad) - Math.sin(la) * Math.sin(decl)) / (Math.cos(la) * Math.cos(decl)); return Math.acos(Math.max(-1, Math.min(1, c))) / rad / 15; };
+  const asr = () => { const t = 1 + Math.tan(Math.abs(la - decl)); const ang = Math.atan(1 / t); const c = (Math.sin(ang) - Math.sin(la) * Math.sin(decl)) / (Math.cos(la) * Math.cos(decl)); return Math.acos(Math.max(-1, Math.min(1, c))) / rad / 15; };
+  const toMin = h => Math.round(((h % 24) + 24) % 24 * 60);
+  return {
+    subuh: toMin(noon - T(20)) + 2, terbit: toMin(noon - T(0.833)) - 2, dzuhur: toMin(noon) + 2,
+    ashar: toMin(noon + asr()) + 2, maghrib: toMin(noon + T(0.833)) + 2, isya: toMin(noon + T(18)) + 2,
+  };
+}
+const SHOLAT = [['subuh', 'Subuh'], ['dzuhur', 'Dzuhur'], ['ashar', 'Ashar'], ['maghrib', 'Maghrib'], ['isya', 'Isya']];
+const dua = n => String(n).padStart(2, '0');
+const jamTeks = min => `${dua(Math.floor(min / 60) % 24)}.${dua(Math.round(min) % 60)}`;
+
+function sekarangWIB() {
+  const f = new Intl.DateTimeFormat('en-GB', { timeZone: KOTA.zona, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+  const p = Object.fromEntries(f.formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { y: +p.year, m: +p.month, d: +p.day, menit: +p.hour * 60 + +p.minute + +p.second / 60 };
+}
+
+function tentukanFase(n, s) {
+  if (n < s.subuh || n >= s.isya) return 'malam';
+  if (n < s.terbit) return 'fajar';
+  if (n < 10 * 60) return 'pagi';
+  if (n < s.ashar) return 'siang';
+  if (n < s.maghrib - 25) return 'sore';
+  return 'senja';
+}
+const SAPA = n => n < 11 * 60 && n >= 3 * 60 ? 'Selamat pagi' : n < 15 * 60 && n >= 11 * 60 ? 'Selamat siang' : n < 18 * 60 && n >= 15 * 60 ? 'Selamat sore' : 'Selamat malam';
+
+function gambarBusur(n, s, fase) {
+  const X = t => 12 + (t / 1440) * 336, dasar = 58, tinggi = 44;
+  const Y = t => (t > s.terbit && t < s.maghrib) ? dasar - Math.sin(Math.PI * (t - s.terbit) / (s.maghrib - s.terbit)) * tinggi : dasar;
+  let jalur = '';
+  for (let t = s.terbit; t <= s.maghrib; t += 10) jalur += (jalur ? 'L' : 'M') + X(t).toFixed(1) + ' ' + Y(t).toFixed(1);
+  const titik = SHOLAT.map(([k]) => `<circle cx="${X(s[k]).toFixed(1)}" cy="${Y(s[k]).toFixed(1)}" r="3" fill="#FFFFFF" fill-opacity="${n > s[k] ? .45 : .9}"/>`).join('');
+  const siang = fase !== 'malam' && n >= s.terbit && n <= s.maghrib;
+  const cx = X(n).toFixed(1), cy = Y(n).toFixed(1);
+  const penanda = siang
+    ? `<circle cx="${cx}" cy="${cy}" r="14" fill="#FFE3A3" fill-opacity=".22"/><circle cx="${cx}" cy="${cy}" r="7" fill="#FFE7B0"/>`
+    : `<circle cx="${cx}" cy="${cy}" r="6" fill="#EEF1FF"/><circle cx="${(+cx + 3).toFixed(1)}" cy="${(+cy - 2).toFixed(1)}" r="5" fill="#1A2350" fill-opacity=".85"/>`;
+  document.getElementById('busur').innerHTML =
+    `<line x1="12" y1="${dasar}" x2="348" y2="${dasar}" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="1" stroke-dasharray="2 4"/>` +
+    `<path d="${jalur}" fill="none" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="1.5"/>` + titik + penanda;
+}
+
+let tanggalTerakhir = '';
+function perbarui() {
+  const w = sekarangWIB();
+  const s = waktuSholat(w.y, w.m, w.d);
+  const n = w.menit;
+  const fase = tentukanFase(n, s);
+  document.getElementById('langit').dataset.fase = fase;
+  document.getElementById('sapa').textContent = SAPA(n) + ', Hanif';
+  document.getElementById('jam').textContent = `${dua(Math.floor(n / 60))}.${dua(Math.floor(n % 60))}`;
+
+  const kunci = `${w.y}-${w.m}-${w.d}`;
+  if (kunci !== tanggalTerakhir) {
+    tanggalTerakhir = kunci;
+    const tgl = new Date();
+    let teks = new Intl.DateTimeFormat('id-ID', { timeZone: KOTA.zona, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(tgl);
+    try { teks += ' · ' + new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', { timeZone: KOTA.zona, day: 'numeric', month: 'long', year: 'numeric' }).format(tgl); } catch { /* kalender hijriah tidak didukung */ }
+    document.getElementById('tanggal').textContent = teks;
+  }
+
+  // sholat berikutnya (lewat Isya → Subuh besok)
+  let berikut = SHOLAT.find(([k]) => s[k] > n), sisa;
+  if (berikut) sisa = s[berikut[0]] - n;
+  else { berikut = SHOLAT[0]; sisa = s.subuh + 1440 - n; }
+  const j = Math.floor(sisa / 60), m = Math.floor(sisa % 60);
+  document.getElementById('berikut').innerHTML = `<b>${berikut[1]} ${jamTeks(s[berikut[0]])}</b> · ${j ? j + ' j ' : ''}${m} m lagi`;
+  document.getElementById('sholat').innerHTML = SHOLAT.map(([k, nama]) =>
+    `<li class="${k === berikut[0] ? 'berikut-ini' : n > s[k] ? 'lewat' : ''}"><span class="n">${nama}</span><span class="w">${jamTeks(s[k])}</span></li>`).join('');
+
+  gambarBusur(n, s, fase);
+  if (fase !== faseSekarang) { faseSekarang = fase; gambarDaftar(); }
+}
+
+gambarPintasan();
+faseSekarang = tentukanFase(sekarangWIB().menit, (() => { const w = sekarangWIB(); return waktuSholat(w.y, w.m, w.d); })());
+gambarDaftar();
+perbarui();
+setInterval(perbarui, 20000);
+// Di hanif-dossier.github.io/hanif/ halaman ini jadi aplikasi (PWA): service worker menyimpan salinannya supaya tetap terbuka saat sinyal jelek.
+if ('serviceWorker' in navigator && location.hostname.endsWith('github.io')) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+
+</body>
+</html>

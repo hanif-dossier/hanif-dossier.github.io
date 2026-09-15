@@ -1,0 +1,17 @@
+{
+  "name": "Tautan Harian Hanif",
+  "short_name": "Hanif",
+  "description": "Gerbang harian: jadwal sholat Pontianak dan semua tautan kerja, bisnis, dan belajar.",
+  "start_url": "/hanif/",
+  "scope": "/hanif/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0D1413",
+  "theme_color": "#1C2356",
+  "lang": "id",
+  "icons": [
+    { "src": "ikon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "ikon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "ikon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
