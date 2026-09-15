@@ -1,5 +1,5 @@
 // Service worker Tautan Harian Hanif: ambil dari jaringan dulu, salinan terakhir dipakai kalau offline.
-const CACHE = 'hanif-v1';
+const CACHE = 'hanif-dashboard-v1';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
 self.addEventListener('fetch', e => {

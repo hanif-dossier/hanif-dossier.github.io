@@ -1,9 +1,9 @@
 {
-  "name": "Tautan Harian Hanif",
-  "short_name": "Hanif",
+  "name": "Hanif Dashboard",
+  "short_name": "Hanif Dashboard",
   "description": "Gerbang harian: jadwal sholat Pontianak dan semua tautan kerja, bisnis, dan belajar.",
-  "start_url": "/hanif/",
-  "scope": "/hanif/",
+  "start_url": "/hanif-dashboard/",
+  "scope": "/hanif-dashboard/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0D1413",
