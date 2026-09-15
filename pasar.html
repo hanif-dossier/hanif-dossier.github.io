@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pasar — Hanif Dossier Crypto</title>
-<meta name="description" content="Data pasar crypto yang diperbarui tiap pagi: kapitalisasi aset dunia nyata (RWA), stablecoin, papan peringkat fee dan pendapatan, dan ekosistem per koin.">
+<meta name="description" content="Data pasar crypto yang diperbarui tiap pagi: indeks sektor (RWA, tokenisasi, DeFi, AI, dll.), kapitalisasi aset dunia nyata (RWA), stablecoin, papan peringkat fee dan pendapatan, dan ekosistem per koin.">
 <meta name="theme-color" content="#4f7a68">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23dfe9e1'/%3E%3Cpath d='M32 12c-10 10-17 17-17 26a17 17 0 0 0 34 0c0-9-7-16-17-26z' fill='none' stroke='%234f7a68' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,6 +60,33 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 .tt-ringkas{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
 .tt-ringkas span{font-size:12.5px;background:var(--kartu);border:1px solid var(--gr);border-radius:999px;padding:5px 11px;color:var(--tx2)}
 .tt-ringkas b{color:var(--tx)}
+/* Indeks sektor: ubin berwarna menurut kinerja periode terpilih (hijau naik,
+   bata turun; makin pekat makin besar), logo koin penyusun bertumpuk, garis
+   riwayat kecil, dan penanda koin milik pengguna. */
+.sk-atas{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.sk-banding{display:flex;gap:8px;flex-wrap:wrap}
+.sk-banding span{font-size:12.5px;background:var(--kartu);border:1px solid var(--gr);border-radius:999px;padding:5px 11px;color:var(--tx2)}
+.sk-kisi{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}
+.sk-ubin{position:relative;border-radius:20px;padding:16px 16px 14px;border:1px solid var(--gr);background:var(--kartu);box-shadow:var(--bayang);display:flex;flex-direction:column;gap:6px;overflow:hidden;transition:transform .15s}
+.sk-ubin:hover{transform:translateY(-2px)}
+.sk-ubin .grp{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700}
+.sk-ubin .nm{font-weight:800;font-size:15.5px;color:var(--tx);line-height:1.2}
+.sk-ubin .angka{font-family:"DM Serif Display",serif;font-size:2rem;line-height:1;margin-top:2px}
+.sk-ubin .vs{font-size:12px;color:var(--tx2)}
+.sk-ubin .logo{display:flex;align-items:center;margin-top:4px}
+.sk-ubin .logo img,.sk-ubin .logo b{width:24px;height:24px;border-radius:50%;border:2px solid #fff;background:#fff;margin-left:-6px;object-fit:cover;flex:none}
+.sk-ubin .logo img:first-child{margin-left:0}
+.sk-ubin .logo span{font-size:11.5px;color:var(--tx2);margin-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sk-ubin .kaki-u{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:auto;padding-top:4px}
+.sk-ubin .kecil{font-size:11.5px;color:var(--lb);line-height:1.45}
+.sk-ubin svg.garis-kecil{width:92px;height:30px;flex:none}
+.sk-ubin .milikmu{position:absolute;top:12px;right:12px;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:999px;background:var(--sage);color:#fff}
+.sk-ubin .awas{font-size:11.5px;color:var(--pasir-tua);background:var(--pasir);border-radius:10px;padding:5px 8px}
+.sk-nilai{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:14px}
+.sk-nilai .kartu .nil{font-family:"DM Serif Display",serif;font-size:1.7rem;margin:4px 0 2px}
+.sk-rinci{margin-top:14px;padding:14px 18px}
+.sk-rinci summary{cursor:pointer;font-weight:700;color:var(--sage-tua)}
+.sk-rinci ul{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--tx2);line-height:1.6}
 </style>
 </head>
 <body>
@@ -93,6 +120,16 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
   <p class="pengantar">Sumber yang sama dengan riset profesional — Token Terminal, DefiLlama, CoinGecko, Coinbase — ditarik otomatis dan disajikan tanpa dipoles. Fee dan pendapatan di sini adalah uang yang benar-benar dibayar pengguna, bukan klaim proyek.</p>
   <div class="ubin-pasar" id="ubin"></div>
   <p class="jelas" id="premium-jelas"></p>
+</section>
+
+<section class="bagian" id="sektor">
+  <div class="mata">Indeks sektor · dihitung Hanif Dossier dari CoinGecko</div>
+  <div class="judul"><h2 class="serif">Ke sektor mana modal sedang mengalir</h2><span class="catatan" id="sektor-ringkas"></span></div>
+  <p class="pengantar">Seperti indeks saham per sektor: tiap sektor diwakili 30 koin terbesarnya, dibobot kapitalisasi dengan batas 25% per koin supaya satu koin tidak menguasai. Stablecoin, token bungkus (wBTC, stETH), dan data janggal dikeluarkan — angka kategori CoinGecko mentah bisa melonjak puluhan persen hanya karena satu token rusak datanya.</p>
+  <div class="sk-atas"><div class="tab" id="sektor-tab"></div><div class="sk-banding" id="sektor-banding"></div></div>
+  <div class="sk-kisi" id="sektor-kisi"><div class="memuat">Memuat indeks sektor…</div></div>
+  <div class="sk-nilai" id="sektor-nilai"></div>
+  <details class="kartu sk-rinci"><summary>Cara menghitung, yang dikeluarkan, dan bedanya dengan angka CoinGecko</summary><div id="sektor-rinci"></div></details>
 </section>
 
 <section class="bagian" id="rwa">
@@ -142,7 +179,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 </section>
 
 <div class="kaki">
-  <div class="penafian" id="sumber">Sumber: Token Terminal (leaderboard aplikasi, rantai, dan sektor — snapshot harian), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
+  <div class="penafian" id="sumber">Sumber: Token Terminal (leaderboard aplikasi, rantai, dan sektor — snapshot harian), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
 </div>
 
 </main>
@@ -182,8 +219,69 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
   $('ubin').innerHTML = ubin.map(([l, n, s], i) => `<div class="kartu"><div class="lbl">${l}</div><div class="serif nil ${i === 6 && prem ? kelas(prem.persen) : ''}">${n}</div><div class="sub">${s}</div></div>`).join('');
   if (prem) $('premium-jelas').innerHTML = `<b>Coinbase premium</b> adalah selisih harga Bitcoin di Coinbase (pembeli Amerika dan institusi) terhadap Binance. Hari ini ${persen(prem.persen, 3)}: ${Math.abs(prem.persen) < 0.05 ? 'netral, tidak ada dorongan beli atau jual yang berarti dari Amerika' : prem.persen > 0 ? 'permintaan dari Amerika lebih kuat daripada pasar global' : 'ada tekanan jual dari Amerika'}. Dihitung dari harga per bursa di CoinGecko.`;
 
+  // ---- indeks sektor
+  if (d.sektor?.daftar?.length) {
+    const sk = d.sektor, harga_ = sk.daftar.filter(s => s.mode === 'harga'), nilai_ = sk.daftar.filter(s => s.mode === 'kapitalisasi');
+    const PER = [['r24', '24 jam'], ['r7', '7 hari'], ['r30', '30 hari']];
+    const btc = sk.pembanding.find(b => b.kode === 'BTC');
+    const garisKecil = (deret) => {
+      if (!deret || deret.length < 3) return '';
+      const v = deret.map(x => x.v), lo = Math.min(...v), hi = Math.max(...v), n = v.length;
+      const pts = v.map((y, i) => `${(i / (n - 1) * 90 + 1).toFixed(1)},${(28 - (hi === lo ? 0.5 : (y - lo) / (hi - lo)) * 26).toFixed(1)}`).join(' ');
+      return `<svg class="garis-kecil" viewBox="0 0 92 30" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${v.at(-1) >= v[0] ? '#4f7a68' : '#b86b5c'}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+    };
+    const logo = (t) => t.gambar ? `<img src="${esc(t.gambar)}" alt="" loading="lazy" title="${esc(t.nama)} · bobot ${t.bobot.toFixed(1).replace('.', ',')}%">` : `<b class="koin-gbr huruf" title="${esc(t.nama)}">${esc(t.simbol[0])}</b>`;
+    const gambarSektor = (k) => {
+      const urut = [...harga_].sort((a, b) => (b[k] ?? -1e9) - (a[k] ?? -1e9));
+      const maksAbs = Math.max(...urut.map(s => Math.abs(s[k] || 0)), 1);
+      $('sektor-kisi').innerHTML = urut.map(s => {
+        const r = s[k], a = r == null ? 0 : 0.04 + Math.min(Math.abs(r) / maksAbs, 1) * 0.24;
+        const warna = r == null ? 'transparent' : r >= 0 ? `rgba(79,122,104,${a.toFixed(3)})` : `rgba(184,107,92,${a.toFixed(3)})`;
+        const vs = r != null && btc?.[k] != null ? r - btc[k] : null;
+        const pg = s.penggerak?.[k];
+        return `<article class="sk-ubin" style="background:linear-gradient(160deg,${warna},#fff 78%)" title="${esc(s.ket)}">
+          ${s.koinmu?.length ? `<span class="milikmu" title="Koin di portofoliomu yang masuk sektor ini">koinmu: ${esc(s.koinmu.join(', '))}</span>` : ''}
+          <div class="grp">${esc(s.grup)}</div>
+          <div class="nm">${esc(s.nama)}</div>
+          <div class="angka ${kelas(r)}">${persen(r, 1)}</div>
+          <div class="vs">${vs == null ? '' : `${vs >= 0 ? 'unggul' : 'tertinggal'} <b>${Math.abs(vs).toFixed(1).replace('.', ',')} poin</b> dari Bitcoin`}</div>
+          <div class="logo">${s.teratas.slice(0, 5).map(logo).join('')}<span>${esc(s.teratas.slice(0, 3).map(t => t.simbol).join(' · '))}</span></div>
+          <div class="kaki-u"><div class="kecil">${uang(s.kap)} · ${s.jumlah} koin${pg ? `<br>penggerak: <b>${esc(pg.simbol)}</b> <span class="${kelas(pg.r)}">${persen(pg.r, 1)}</span>` : ''}</div>${garisKecil(s.riwayat)}</div>
+        </article>`;
+      }).join('');
+      $('sektor-banding').innerHTML = sk.pembanding.map(b => `<span>${esc(b.kode === 'PASAR' ? 'Pasar' : b.nama)} <b class="${kelas(b[k])}">${persen(b[k], 1)}</b></span>`).join('');
+      [...$('sektor-tab').children].forEach(b => b.classList.toggle('aktif', b.dataset.k === k));
+      const naik = urut.filter(s => (s[k] ?? 0) > 0).length;
+      $('sektor-ringkas').textContent = `${naik} dari ${urut.length} sektor naik · ${PER.find(p => p[0] === k)[1]}`;
+    };
+    $('sektor-tab').innerHTML = PER.map(([k, l]) => `<button type="button" data-k="${k}">${l}</button>`).join('');
+    $('sektor-tab').addEventListener('click', e => { const b = e.target.closest('button'); if (b) gambarSektor(b.dataset.k); });
+    gambarSektor('r7');
+
+    const tglMulai = s => s.riwayat?.[0]?.t ? new Date(s.riwayat[0].t + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', timeZone: 'UTC' }) : '';
+    $('sektor-nilai').innerHTML = nilai_.map(s => {
+      const distorsi = s.cg24 != null && s.r24 != null && Math.abs(s.cg24 - s.r24) > 10;
+      return `<div class="kartu"><div class="lbl catatan" style="text-transform:uppercase;letter-spacing:.05em;font-size:11px">${esc(s.grup)} · diukur dari nilai beredar</div>
+        <div style="font-weight:800;margin-top:4px">${esc(s.nama)}</div>
+        <div class="nil">${uang(s.kap)}</div>
+        <div class="catatan"><span class="${kelas(s.r24)}" style="font-weight:700">${persen(s.r24, 2)}</span> 24 jam · 7 hari ${s.r7 == null ? '—' : `<span class="${kelas(s.r7)}">${persen(s.r7, 1)}</span>`} · 30 hari ${s.r30 == null ? '—' : `<span class="${kelas(s.r30)}">${persen(s.r30, 1)}</span>`}</div>
+        <div class="catatan" style="margin-top:6px">${esc(s.ket)} · ${s.jumlah} token · terbesar ${esc(s.teratas.slice(0, 3).map(t => t.simbol).join(', '))}</div>
+        ${s.r7 == null ? `<div class="catatan" style="margin-top:4px">Perubahan 7 & 30 hari muncul setelah riwayatnya terkumpul (mulai ${tglMulai(s)}).</div>` : ''}
+        ${distorsi ? `<div class="awas" style="margin-top:8px">Angka mentah CoinGecko hari ini ${persen(s.cg24, 1)} — terdistorsi oleh ${esc(s.dikeluarkan.map(x => x.nama).join(', ') || 'data janggal')}, yang dikeluarkan dari hitungan ini.</div>` : ''}
+      </div>`;
+    }).join('');
+
+    const beda = sk.daftar.filter(s => s.cg24 != null && s.r24 != null && Math.abs(s.cg24 - s.r24) > 3);
+    $('sektor-rinci').innerHTML = `<p class="jelas">${esc(sk.metode)} Riwayat indeks dimulai 100 pada hari pertama dan disambung tiap hari dari kinerja 24 jam.</p>
+      ${beda.length ? `<p class="jelas"><b>Beda dengan angka mentah CoinGecko (24 jam):</b></p><ul>${beda.map(s => `<li>${esc(s.nama)}: CoinGecko ${persen(s.cg24, 1)}, indeks ini ${persen(s.r24, 1)}${s.dikeluarkan.length ? ` — dikeluarkan: ${esc(s.dikeluarkan.map(x => `${x.simbol} (${x.alasan})`).join(', '))}` : ' — beda cara hitung (CoinGecko memakai perubahan kapitalisasi, termasuk token baru dan perubahan suplai)'}</li>`).join('')}</ul>` : ''}
+      <p class="jelas"><b>Koin yang dikeluarkan per sektor:</b></p><ul>${sk.daftar.filter(s => s.dikeluarkan.length).map(s => `<li>${esc(s.nama)}: ${esc(s.dikeluarkan.map(x => `${x.simbol} — ${x.alasan}`).join('; '))}</li>`).join('') || '<li>tidak ada</li>'}</ul>
+      <p class="jelas">Indeks ini alat baca, bukan produk yang bisa dibeli. Kinerja masa lalu tidak menjamin apa pun.</p>`;
+  } else {
+    $('sektor-kisi').innerHTML = '<div class="memuat">Indeks sektor belum tersedia — muncul setelah penarikan data berikutnya.</div>';
+  }
+
   // ---- baris palang
-  const palang = (items, nilaiDari, labelDari, { kelasKe = () => '', format = uang, sub = () => '' } = {}) => {
+  const palang =(items, nilaiDari, labelDari, { kelasKe = () => '', format = uang, sub = () => '' } = {}) => {
     const maks = Math.max(...items.map(nilaiDari), 1);
     return items.map(x => `<div class="baris ${kelasKe(x)}"><div class="nama" title="${esc(labelDari(x))}">${esc(labelDari(x))}${sub(x) ? `<small>${esc(sub(x))}</small>` : ''}</div><div class="palang"><i style="width:${(nilaiDari(x) / maks * 100).toFixed(1)}%"></i></div><div class="nil">${format(nilaiDari(x))}</div></div>`).join('');
   };

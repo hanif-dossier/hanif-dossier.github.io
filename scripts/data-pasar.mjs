@@ -17,6 +17,8 @@
 //              volume DEX per rantai
 //    koin    — ekosistem per koin dossier: harga/FDV/float dari CoinGecko,
 //              TVL/fee/pendapatan/stablecoin/DEX dari DefiLlama, fee 6 bulan
+//    sektor  — indeks sektor buatan sendiri (kategori CoinGecko, bobot kapitalisasi
+//              maks 25%/koin, dibersihkan); riwayat hariannya di data/sektor-riwayat.json
 // =====================================================================
 
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
@@ -230,6 +232,174 @@ const perSlug = Object.fromEntries(protokol.map(p => [p.slug, p]));
     });
     console.log(`  ${k.tick.padEnd(6)} harga ${c.current_price} | tvl ${eko.tvl} | fee30d ${eko.fee30d}`);
   }
+}
+
+// ---- 7. Indeks sektor
+// Indeks buatan sendiri dari daftar koin per kategori CoinGecko. Angka kategori
+// CoinGecko sendiri tidak dipakai sebagai hasil karena mudah terdistorsi: 15 Sep
+// 2026 "RWA" +51% dan "Tokenized Assets" +97% dalam 24 jam, seluruhnya karena satu
+// token (Figure HELOC) yang datanya melompat.
+//
+// Metode (mode 'harga'):
+//   1. 30 koin terbesar per sektor setelah dibersihkan dari stablecoin, token
+//      bungkus/staking (wBTC, stETH, …), dan data janggal.
+//   2. Bobot = kapitalisasi, dibatasi 25% per koin (sisa bobot dibagi ulang).
+//   3. Kinerja 24 jam, 7 hari, 30 hari = rata-rata tertimbang perubahan harga koin
+//      penyusun hari ini. Tidak ada angka 1 tahun: dengan penyusun hari ini ia
+//      bias (koin mati tidak ikut, koin baru +1.000% ikut) — uji 15 Sep 2026: Rantai
+//      L1 +21% setahun padahal BTC −32% dan ETH −45%.
+//   Tiap sektor mencatat 'penggerak' = koin dengan sumbangan terbesar ke kinerjanya.
+//   4. Riwayat harian dirantai dari kinerja 24 jam, disimpan di data/sektor-riwayat.json.
+// Mode 'kapitalisasi' (stablecoin, obligasi tertokenisasi): harganya dipatok, jadi
+// yang diukur adalah pertumbuhan nilai beredar, bukan harga.
+const SEKTOR_INDEKS = [
+  { id: 'layer-1', nama: 'Rantai L1', grup: 'Infrastruktur', ket: 'Blockchain lapisan dasar' },
+  { id: 'layer-2', nama: 'Rantai L2', grup: 'Infrastruktur', ket: 'Jaringan skala di atas Ethereum' },
+  { id: 'oracle', nama: 'Oracle', grup: 'Infrastruktur', ket: 'Pemasok data ke kontrak' },
+  { id: 'depin', nama: 'DePIN', grup: 'Infrastruktur', ket: 'Jaringan fisik terdesentralisasi' },
+  { id: 'decentralized-finance-defi', nama: 'DeFi', grup: 'Keuangan on-chain', ket: 'Seluruh aplikasi keuangan on-chain' },
+  { id: 'decentralized-exchange', nama: 'Bursa DEX', grup: 'Keuangan on-chain', ket: 'Bursa terdesentralisasi' },
+  { id: 'lending-borrowing', nama: 'Pinjam-meminjam', grup: 'Keuangan on-chain', ket: 'Protokol lending' },
+  { id: 'decentralized-perpetuals', nama: 'DEX perpetual', grup: 'Keuangan on-chain', ket: 'Bursa derivatif on-chain' },
+  { id: 'liquid-staking-governance-tokens', nama: 'Liquid staking', grup: 'Keuangan on-chain', ket: 'Token tata kelola protokol staking' },
+  { id: 'liquid-restaking-governance-token', nama: 'Restaking', grup: 'Keuangan on-chain', ket: 'Token tata kelola protokol restaking' },
+  { id: 'rwa-protocol', nama: 'Protokol RWA', grup: 'RWA & tokenisasi', ket: 'Token protokol yang menokenisasi aset (bukan asetnya)' },
+  { id: 'tokenized-gold', nama: 'Emas tertokenisasi', grup: 'RWA & tokenisasi', ket: 'Emas fisik dalam bentuk token' },
+  { id: 'tokenized-stock', nama: 'Saham tertokenisasi', grup: 'RWA & tokenisasi', ket: 'Saham & ETF dalam bentuk token; satu saham bisa punya beberapa versi penerbit' },
+  { id: 'artificial-intelligence', nama: 'AI', grup: 'Narasi', ket: 'Kecerdasan buatan' },
+  { id: 'privacy-coins', nama: 'Privasi', grup: 'Narasi', ket: 'Koin transaksi privat' },
+  { id: 'gaming', nama: 'Gaming', grup: 'Narasi', ket: 'Game & metaverse' },
+  { id: 'meme-token', nama: 'Meme', grup: 'Narasi', ket: 'Koin meme' },
+  { id: 'exchange-based-tokens', nama: 'Token bursa', grup: 'Narasi', ket: 'Token milik bursa terpusat' },
+  { id: 'stablecoins', nama: 'Stablecoin', grup: 'Nilai beredar', ket: 'Dolar & mata uang on-chain', mode: 'kapitalisasi' },
+  { id: 'tokenized-treasuries', nama: 'Obligasi AS tertokenisasi', grup: 'Nilai beredar', ket: 'T-bill & dana pasar uang on-chain', mode: 'kapitalisasi' },
+  { id: 'tokenized-products', nama: 'Aset tertokenisasi (total)', grup: 'Nilai beredar', ket: 'Semua aset dunia nyata yang ditokenisasi', mode: 'kapitalisasi' },
+];
+const BUNGKUS_NAMA = /wrapped|bridged|binance-peg|\bpeg\b|staked|restaked|liquid staking|\bbridge\b/i;
+const BUNGKUS_SIMBOL = /^(w|cb|l|st|wst|we|r|rs|m|j|b|ez|pz|k|s|os|sol|u|t|f|x)(btc|eth|sol|bnb|hype|avax|sui)$/i;
+const BATAS_BOBOT = 0.25;
+
+function bobotTerbatas(koin, batas) {
+  const cap = Math.max(batas, 1 / koin.length);
+  let w = koin.map(c => c.market_cap), total = w.reduce((a, b) => a + b, 0);
+  w = w.map(x => x / total);
+  for (let putaran = 0; putaran < 20; putaran++) {
+    const lebih = w.reduce((a, x) => a + Math.max(0, x - cap), 0);
+    if (lebih < 1e-9) break;
+    const bebas = w.reduce((a, x) => a + (x < cap ? x : 0), 0);
+    w = w.map(x => x >= cap ? cap : x + lebih * (x / bebas));
+  }
+  return w;
+}
+const rataTertimbang = (koin, w, kunci) => {
+  let jum = 0, bobot = 0;
+  koin.forEach((c, i) => { const v = c[kunci]; if (v != null && Number.isFinite(v)) { jum += v * w[i]; bobot += w[i]; } });
+  return bobot > 0.5 ? jum / bobot : null; // butuh data untuk >50% bobot
+};
+
+{
+  const PERIODE = '24h,7d,30d';
+  const RIWAYAT = join(AKAR, 'data', 'sektor-riwayat.json');
+  const riwayatLama = existsSync(RIWAYAT) ? JSON.parse(await readFile(RIWAYAT, 'utf8')) : {};
+  const hariIni = new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+  const tanggalLalu = Object.keys(riwayatLama).filter(t => t < hariIni).sort().at(-1);
+  const kemarin = tanggalLalu ? riwayatLama[tanggalLalu] : {};
+  const hariBaru = {};
+  const milik = Object.fromEntries(KOIN.map(k => [k.gecko, k.tick]));
+
+  const kategoriCg = Object.fromEntries(((await cg('/coins/categories')) || []).map(c => [c.id, c]));
+  const stable = (await cg(`/coins/markets?vs_currency=usd&category=stablecoins&order=market_cap_desc&per_page=250&page=1`)) || [];
+  const idStable = new Set(stable.map(c => c.id));
+  const mentahPer = { stablecoins: stable };
+
+  // Pembanding: BTC, ETH, dan 100 koin terbesar (tanpa stablecoin), metode yang sama.
+  const top = (await cg(`/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&price_change_percentage=${PERIODE}`)) || [];
+  const rangkum = (koin) => {
+    const w = bobotTerbatas(koin, 1);
+    return { r24: rataTertimbang(koin, w, 'price_change_percentage_24h_in_currency'), r7: rataTertimbang(koin, w, 'price_change_percentage_7d_in_currency'),
+      r30: rataTertimbang(koin, w, 'price_change_percentage_30d_in_currency') };
+  };
+  const pembanding = [
+    { kode: 'BTC', nama: 'Bitcoin', ...rangkum(top.filter(c => c.id === 'bitcoin')) },
+    { kode: 'ETH', nama: 'Ethereum', ...rangkum(top.filter(c => c.id === 'ethereum')) },
+    { kode: 'PASAR', nama: 'Pasar (100 koin, tanpa stablecoin)', ...rangkum(top.filter(c => c.market_cap && !idStable.has(c.id))) },
+  ];
+
+  const daftar = [];
+  for (const s of SEKTOR_INDEKS) {
+    let koin = mentahPer[s.id];
+    if (!koin) { await tidur(KUNCI_CG ? 2200 : 6000); koin = (await cg(`/coins/markets?vs_currency=usd&category=${s.id}&order=market_cap_desc&per_page=100&page=1&price_change_percentage=${PERIODE}`)) || []; }
+    const dikeluarkan = [];
+    const lolos = [];
+    for (const c of koin) {
+      if (!c.market_cap) continue;
+      const likuid = c.total_volume / c.market_cap;
+      const alasan = s.mode === 'kapitalisasi'
+        ? (c.market_cap_change_24h == null ? 'data perubahan kosong'
+          : Math.abs(c.market_cap_change_percentage_24h) > 50 ? 'lonjakan nilai beredar tidak wajar' : null)
+        : (idStable.has(c.id) ? 'stablecoin'
+          : BUNGKUS_NAMA.test(c.name) || BUNGKUS_SIMBOL.test(c.symbol) ? 'token bungkus / staking'
+          : c.price_change_percentage_24h_in_currency == null ? 'data harga kosong'
+          : Math.abs(c.price_change_percentage_24h_in_currency) > 40 && likuid < 0.005 ? 'lonjakan tanpa likuiditas' : null);
+      if (alasan) { if (c.market_cap > 1e8 && dikeluarkan.length < 8) dikeluarkan.push({ simbol: c.symbol.toUpperCase(), nama: c.name, alasan }); continue; }
+      lolos.push(c);
+    }
+    const cg24 = kategoriCg[s.id]?.market_cap_change_24h ?? null;
+    const entri = { id: s.id, nama: s.nama, grup: s.grup, ket: s.ket, mode: s.mode || 'harga', cg24, dikeluarkan };
+    if (!lolos.length) { console.log(`  sektor ${s.id}: kosong`); continue; }
+
+    if (entri.mode === 'kapitalisasi') {
+      const kap = lolos.reduce((a, c) => a + c.market_cap, 0);
+      const kapLalu = lolos.reduce((a, c) => a + c.market_cap - c.market_cap_change_24h, 0);
+      Object.assign(entri, { kap: Math.round(kap), jumlah: lolos.length, r24: (kap / kapLalu - 1) * 100,
+        teratas: lolos.slice(0, 5).map(c => ({ simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, bobot: c.market_cap / kap * 100 })) });
+      hariBaru[s.id] = Math.round(kap);
+    } else {
+      const inti = lolos.slice(0, 30), w = bobotTerbatas(inti, BATAS_BOBOT);
+      Object.assign(entri, {
+        kap: Math.round(inti.reduce((a, c) => a + c.market_cap, 0)), jumlah: inti.length,
+        r24: rataTertimbang(inti, w, 'price_change_percentage_24h_in_currency'), r7: rataTertimbang(inti, w, 'price_change_percentage_7d_in_currency'),
+        r30: rataTertimbang(inti, w, 'price_change_percentage_30d_in_currency'),
+        penggerak: Object.fromEntries([['r24', '24h'], ['r7', '7d'], ['r30', '30d']].map(([k, p]) => {
+          const kunci = p === '24h' ? 'price_change_percentage_24h_in_currency' : `price_change_percentage_${p}_in_currency`;
+          let terbaik = null;
+          inti.forEach((c, i) => { const v = c[kunci]; if (v != null && (!terbaik || Math.abs(v * w[i]) > Math.abs(terbaik.s))) terbaik = { simbol: c.symbol.toUpperCase(), r: v, s: v * w[i] }; });
+          return [k, terbaik && { simbol: terbaik.simbol, r: terbaik.r, sumbangan: terbaik.s }];
+        })),
+        teratas: inti.map((c, i) => ({ simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, bobot: w[i] * 100, r24: c.price_change_percentage_24h_in_currency }))
+          .sort((a, b) => b.bobot - a.bobot).slice(0, 5),
+        koinmu: inti.filter(c => milik[c.id]).map(c => milik[c.id]),
+      });
+      const dasar = kemarin[s.id] ?? 100;
+      hariBaru[s.id] = Math.round(dasar * (1 + (entri.r24 || 0) / 100) * 100) / 100;
+    }
+    daftar.push(entri);
+    console.log(`  sektor ${s.nama.padEnd(26)} ${entri.mode === 'harga' ? 'r7 ' + entri.r7?.toFixed(1) + '%' : 'kap ' + Math.round(entri.kap / 1e9) + ' M'} | ${entri.jumlah} koin | dikeluarkan ${dikeluarkan.length}`);
+  }
+  for (const b of pembanding) hariBaru[b.kode] = Math.round((kemarin[b.kode] ?? 100) * (1 + (b.r24 || 0) / 100) * 100) / 100;
+
+  // Simpan riwayat (±400 hari). Dijalankan dua kali sehari tetap aman: nilai hari
+  // ini selalu dihitung dari tanggal sebelumnya, bukan dari dirinya sendiri.
+  const riwayat = { ...riwayatLama, [hariIni]: hariBaru };
+  const tanggal = Object.keys(riwayat).sort().slice(-400);
+  const riwayatBaru = Object.fromEntries(tanggal.map(t => [t, riwayat[t]]));
+  await writeFile(RIWAYAT, JSON.stringify(riwayatBaru), 'utf8');
+  const deret = k => tanggal.map(t => ({ t, v: riwayatBaru[t][k] })).filter(x => x.v != null).slice(-90);
+  for (const e of daftar) {
+    e.riwayat = deret(e.id);
+    if (e.mode === 'kapitalisasi') {
+      const cari = hari => { const batas = new Date(Date.parse(hariIni) - hari * 864e5).toISOString().slice(0, 10); return e.riwayat.find(x => x.t >= batas && x.t < hariIni); };
+      const a7 = cari(7), a30 = cari(30);
+      e.r7 = a7 && a7.t <= new Date(Date.parse(hariIni) - 6 * 864e5).toISOString().slice(0, 10) ? (e.kap / a7.v - 1) * 100 : null;
+      e.r30 = a30 && a30.t <= new Date(Date.parse(hariIni) - 28 * 864e5).toISOString().slice(0, 10) ? (e.kap / a30.v - 1) * 100 : null;
+    }
+  }
+  for (const b of pembanding) b.riwayat = deret(b.kode);
+
+  hasil.sektor = {
+    tanggal: hariIni, pembanding, daftar,
+    metode: 'Indeks buatan Hanif Dossier dari kategori CoinGecko: 30 koin terbesar per sektor, bobot kapitalisasi dibatasi 25% per koin, tanpa stablecoin, token bungkus/staking, dan data janggal. Kinerja = rata-rata tertimbang perubahan harga koin penyusun hari ini (tanpa angka 1 tahun karena bias bertahan hidup). Sektor bernilai tetap (stablecoin, obligasi) diukur dari nilai beredarnya.',
+  };
 }
 
 await mkdir(dirname(KELUAR), { recursive: true });
