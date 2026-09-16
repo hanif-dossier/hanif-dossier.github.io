@@ -119,6 +119,24 @@ body.tamu .daftar-laptop{display:none}
 
 @media(max-width:860px){.sambut,.tengah{grid-template-columns:1fr}.ubin{grid-template-columns:1fr}.koin{grid-template-columns:1fr}}
 @media(max-width:480px){main{padding:16px 14px 48px}.kartu{padding:18px 18px;border-radius:20px}.jadwal{flex-wrap:wrap}}
+
+/* Musim pasar: Altcoin Season Index — pita pelangi dari musim Bitcoin (oranye)
+   ke musim altcoin (hijau), dengan penunjuk di nilai hari ini dan garis 90 hari. */
+.musim{margin-top:18px}
+.musim .isi{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:center}
+@media(max-width:820px){.musim .isi{grid-template-columns:1fr}}
+.pita{position:relative;height:26px;border-radius:999px;background:linear-gradient(90deg,#e08a3c,#e8c07a 24%,#cfe0d4 50%,#7fae92 76%,#3f7a5e);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.pita i{position:absolute;top:-9px;width:4px;height:44px;border-radius:999px;background:#2b3330;box-shadow:0 0 0 3px #fff}
+.pita b{position:absolute;top:-2px;font-size:11px;color:#fff;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.35);line-height:30px}
+.pita .kiri{left:12px}.pita .kanan{right:12px}
+.musim-skala{display:flex;justify-content:space-between;font-size:11.5px;color:var(--lb);margin-top:8px}
+.musim-nilai{font-family:"DM Serif Display",serif;font-size:3rem;line-height:1}
+.musim-label{font-weight:800;font-size:15px;margin-top:2px}
+.musim-kecil{font-size:12.5px;color:var(--tx2);margin-top:6px;line-height:1.6}
+.musim-koin{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.musim-koin span{display:inline-flex;align-items:center;gap:5px;font-size:12px;background:var(--lembut);border-radius:999px;padding:4px 9px}
+.musim-koin img{width:16px;height:16px;border-radius:50%}
+.musim svg.garis90{width:100%;height:78px;display:block}
 </style>
 </head>
 <body>
@@ -136,6 +154,7 @@ body.tamu .daftar-laptop{display:none}
     <a href="laporan.html?h=schedule">Schedule</a>
     <a href="laporan.html?h=screening">Screening</a>
     <a href="pasar.html">Pasar</a>
+    <a href="bitcoin.html">Bitcoin</a>
     <a href="kelas.html">Kelas</a>
     <a href="modul.html">Modul</a>
     <a href="kuis.html">Kuis</a>
@@ -190,6 +209,30 @@ body.tamu .daftar-laptop{display:none}
     <div class="label" style="font-size:12px;color:var(--lb)">Kapitalisasi total</div>
     <div class="serif besar" id="cap-angka">…</div>
     <div class="teks" id="cap-ket">Nilai seluruh pasar crypto.</div>
+  </div>
+</section>
+
+
+<section class="bagian musim" id="musim">
+  <div class="judul"><h2 class="serif">Musim pasar</h2><a href="pasar.html#sektor">Indeks sektor →</a></div>
+  <div class="kartu">
+    <div class="isi">
+      <div>
+        <div class="catatan" style="margin-bottom:10px">Altcoin Season Index — berapa persen dari 50 koin terbesar yang mengalahkan Bitcoin dalam 90 hari</div>
+        <div class="pita"><b class="kiri">Musim Bitcoin</b><b class="kanan">Musim altcoin</b><i id="musim-tunjuk" style="left:0%"></i></div>
+        <div class="musim-skala"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+        <div class="musim-kecil" id="musim-ket">Memuat…</div>
+        <div class="musim-koin" id="musim-koin"></div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <div class="musim-nilai" id="musim-nilai">…</div>
+          <div><div class="musim-label" id="musim-label"></div><div class="catatan" id="musim-dom"></div></div>
+        </div>
+        <svg class="garis90" id="musim-garis" role="img" aria-label="Riwayat Altcoin Season Index 90 hari"></svg>
+        <div class="catatan">Garis: 90 hari terakhir. Sumbu 0–100.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -409,6 +452,39 @@ body.tamu .daftar-laptop{display:none}
   }
   if (tamu) angkaPublik(); else setTimeout(angkaPublik, 6000);
   setTimeout(() => { for (const id of ['btc-harga', 'cap-angka', 'dom-teks', 'fg-angka']) if ($(id).textContent === '…') $(id).textContent = 'n/a'; }, 12000);
+
+
+  // ---- musim pasar (Altcoin Season Index, dari data/pasar.json yang ditarik tiap pagi)
+  (async () => {
+    let ps;
+    try { ps = await (await fetch('data/pasar.json', { cache: 'no-cache' })).json(); } catch { return; }
+    const m = ps.musim;
+    if (!m || m.nilai == null) { $('musim').hidden = true; return; }
+    $('musim-nilai').textContent = m.nilai;
+    $('musim-label').textContent = m.label;
+    $('musim-tunjuk').style.left = 'calc(' + m.nilai + '% - 2px)';
+    $('musim-ket').innerHTML = '<b>' + m.unggul + ' dari ' + m.jumlah + ' koin</b> mengalahkan Bitcoin dalam 90 hari terakhir, sementara Bitcoin sendiri ' +
+      (m.btc90 >= 0 ? 'naik ' : 'turun ') + Math.abs(m.btc90).toFixed(1).replace('.', ',') + '%. ' +
+      (m.nilai >= 75 ? 'Di atas 75 disebut musim altcoin.' : m.nilai <= 25 ? 'Di bawah 25 disebut musim Bitcoin: modal berkumpul di BTC.' : 'Di antara 25 dan 75: belum musim altcoin, belum juga murni musim Bitcoin.');
+    const pil = (k, kelas) => '<span><img src="' + k.gambar + '" alt="" loading="lazy">' + k.simbol + ' <b class="' + kelas + '">' + (k.naik90 >= 0 ? '+' : '−') + Math.abs(k.naik90).toFixed(0) + '%</b></span>';
+    $('musim-koin').innerHTML = '<span style="background:transparent;padding-left:0">90 hari:</span>' +
+      m.teratas.slice(0, 3).map(k => pil(k, 'naik')).join('') + m.terbawah.slice(0, 2).map(k => pil(k, 'turun')).join('');
+    const dom = ps.pasar?.domBtc;
+    if (dom != null) $('musim-dom').textContent = 'Dominasi Bitcoin ' + dom.toFixed(1).replace('.', ',') + '%';
+    const dr = m.riwayat || [];
+    if (dr.length > 3) {
+      const W = 320, H = 78, pad = 6;
+      const X = i => pad + i / (dr.length - 1) * (W - pad * 2), Y = v => pad + (1 - v / 100) * (H - pad * 2);
+      const pts = dr.map((x, i) => X(i).toFixed(1) + ',' + Y(x.v).toFixed(1));
+      const g = $('musim-garis');
+      g.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      g.innerHTML = '<rect x="0" y="' + Y(75).toFixed(1) + '" width="' + W + '" height="' + (Y(0) - Y(75)).toFixed(1) + '" fill="#f6f5f0"/>' +
+        '<line x1="0" x2="' + W + '" y1="' + Y(75).toFixed(1) + '" y2="' + Y(75).toFixed(1) + '" stroke="#cfe0d4" stroke-dasharray="4 4"/>' +
+        '<line x1="0" x2="' + W + '" y1="' + Y(25).toFixed(1) + '" y2="' + Y(25).toFixed(1) + '" stroke="#e8c07a" stroke-dasharray="4 4"/>' +
+        '<polyline points="' + pts.join(' ') + '" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linejoin="round"/>' +
+        '<circle cx="' + X(dr.length - 1).toFixed(1) + '" cy="' + Y(dr.at(-1).v).toFixed(1) + '" r="3.5" fill="#4f7a68"/>';
+    }
+  })();
 
   // 5. Grafik harga: garis sederhana, koin dan rentang bisa dipilih.
   //    Data dari CoinGecko (gratis, tanpa kunci); tiap kombinasi diambil sekali lalu disimpan.

@@ -17,6 +17,8 @@
 //              volume DEX per rantai
 //    koin    — ekosistem per koin dossier: harga/FDV/float dari CoinGecko,
 //              TVL/fee/pendapatan/stablecoin/DEX dari DefiLlama, fee 6 bulan
+//    musim   — Altcoin Season Index (hitung sendiri, riwayat 90 hari)
+//    bitcoin — suplai, inflasi, halving, kesulitan (aturan protokol + mempool.space)
 //    sektor  — indeks sektor buatan sendiri (kategori CoinGecko, bobot kapitalisasi
 //              maks 25%/koin, dibersihkan); riwayat hariannya di data/sektor-riwayat.json
 // =====================================================================
@@ -102,7 +104,7 @@ const jenisRwa = (nama) => (JENIS_RWA.find(([, re]) => re.test(nama)) || ['Lainn
 
 // ==================================================================== utama
 console.log('Menarik data pasar…' + (KUNCI_CG ? ' (CoinGecko dengan kunci)' : ' (CoinGecko tanpa kunci)'));
-const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'CoinGecko', 'alternative.me'] };
+const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'CoinGecko', 'alternative.me', 'mempool.space'] };
 
 // ---- 1. Angka pasar ringkas
 {
@@ -400,6 +402,97 @@ const rataTertimbang = (koin, w, kunci) => {
     tanggal: hariIni, pembanding, daftar,
     metode: 'Indeks buatan Hanif Dossier dari kategori CoinGecko: 30 koin terbesar per sektor, bobot kapitalisasi dibatasi 25% per koin, tanpa stablecoin, token bungkus/staking, dan data janggal. Kinerja = rata-rata tertimbang perubahan harga koin penyusun hari ini (tanpa angka 1 tahun karena bias bertahan hidup). Sektor bernilai tetap (stablecoin, obligasi) diukur dari nilai beredarnya.',
   };
+}
+
+// ---- 8. Musim pasar: Altcoin Season Index
+// Definisi blockchaincenter.net: dari 50 koin terbesar (tanpa stablecoin dan token
+// bungkus), berapa persen yang mengalahkan Bitcoin dalam 90 hari terakhir.
+// ≥75 = musim altcoin, ≤25 = musim Bitcoin. Dihitung sendiri dari harga harian
+// CoinGecko supaya riwayatnya ikut terbentuk dan bisa diperiksa.
+{
+  const stabil = new Set(((await cg('/coins/markets?vs_currency=usd&category=stablecoins&order=market_cap_desc&per_page=250&page=1')) || []).map(c => c.id));
+  const semua = (await cg('/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')) || [];
+  const pilih = semua.filter(c => c.id !== 'bitcoin' && !stabil.has(c.id) && !BUNGKUS_NAMA.test(c.name) && !BUNGKUS_SIMBOL.test(c.symbol)).slice(0, 50);
+  const hargaHarian = async (id) => {
+    const d = await cg(`/coins/${id}/market_chart?vs_currency=usd&days=181`);
+    if (!d?.prices?.length) return null;
+    const per = {};
+    for (const [ts, p] of d.prices) per[new Date(ts).toISOString().slice(0, 10)] = p;
+    return per;
+  };
+  const btc = await hargaHarian('bitcoin');
+  const koin = [];
+  for (const c of pilih) {
+    await tidur(KUNCI_CG ? 2100 : 6000);
+    const h = await hargaHarian(c.id);
+    if (h) koin.push({ id: c.id, simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, harga: h });
+  }
+  if (btc && koin.length >= 20) {
+    const hari = Object.keys(btc).sort();
+    const naikSejak = (h, t, t0) => (h[t] != null && h[t0] != null && h[t0] > 0) ? h[t] / h[t0] - 1 : null;
+    const riwayat = [];
+    for (let i = 90; i < hari.length; i++) {
+      const t = hari[i], t0 = hari[i - 90], b = naikSejak(btc, t, t0);
+      if (b == null) continue;
+      const nilai = koin.map(k => naikSejak(k.harga, t, t0)).filter(v => v != null);
+      if (nilai.length < 20) continue;
+      riwayat.push({ t, v: Math.round(nilai.filter(v => v > b).length / nilai.length * 100) });
+    }
+    const t = hari.at(-1), t0 = hari.at(-91);
+    const btc90 = naikSejak(btc, t, t0) * 100;
+    const per = koin.map(k => ({ simbol: k.simbol, nama: k.nama, gambar: k.gambar, naik90: (naikSejak(k.harga, t, t0) ?? 0) * 100 }))
+      .filter(k => Number.isFinite(k.naik90)).sort((a, b2) => b2.naik90 - a.naik90);
+    const nilai = riwayat.at(-1)?.v ?? null;
+    hasil.musim = {
+      nilai, btc90, jumlah: per.length, riwayat,
+      unggul: per.filter(k => k.naik90 > btc90).length,
+      teratas: per.slice(0, 5), terbawah: per.slice(-5).reverse(),
+      label: nilai == null ? 'tidak tersedia' : nilai >= 75 ? 'Musim altcoin' : nilai <= 25 ? 'Musim Bitcoin' : 'Di antara keduanya',
+      catatan: 'Dihitung ulang dari harga harian CoinGecko dengan definisi Altcoin Season Index (blockchaincenter.net): berapa persen dari 50 koin terbesar (tanpa stablecoin dan token bungkus) yang mengalahkan Bitcoin dalam 90 hari. Riwayat memakai daftar koin hari ini.',
+    };
+    console.log(`  musim: ${nilai} (${hasil.musim.label}) · ${hasil.musim.unggul}/${per.length} koin kalahkan BTC · BTC 90h ${btc90.toFixed(1)}%`);
+  }
+}
+
+// ---- 9. Bitcoin: suplai, inflasi, halving
+// Semua dihitung dari aturan protokol (subsidi 50 BTC dibagi dua tiap 210.000 blok),
+// bukan disalin dari situs lain. Tinggi blok & kecepatan blok dari mempool.space.
+{
+  const tinggi = Number(await (await fetch('https://mempool.space/api/blocks/tip/height').catch(() => ({ text: async () => '' }))).text()) || null;
+  const sulit = await ambil('https://mempool.space/api/v1/difficulty-adjustment');
+  const subsidi = (h) => 50 / 2 ** Math.floor(h / 210000);
+  const suplai = (h) => { let s = 0; for (let e = 0; e * 210000 <= h; e++) s += Math.min(210000, h - e * 210000 + 1) * (50 / 2 ** e); return s; };
+  // Tanggal halving yang sudah terjadi (blok 210.000 kelipatan) — sisanya diperkirakan.
+  const HALVING = [['2009-01-03', 0], ['2012-11-28', 210000], ['2016-07-09', 420000], ['2020-05-11', 630000], ['2024-04-20', 840000]];
+  if (tinggi) {
+    const blokPerTahun = 144 * 365;
+    const kini = suplai(tinggi), sub = subsidi(tinggi);
+    const berikut = (Math.floor(tinggi / 210000) + 1) * 210000;
+    const sisaBlok = berikut - tinggi;
+    const detikPerBlok = sulit?.timeAvg ? sulit.timeAvg / 1000 : 600;
+    const tanggalHalving = new Date(Date.now() + sisaBlok * detikPerBlok * 1000).toISOString();
+    // Jadwal inflasi 2010–2040: satu titik per epoch, dipakai grafik tangga.
+    const jadwal = [];
+    for (let e = 0; e < 9; e++) {
+      const h = e * 210000;
+      const t = HALVING[e] ? HALVING[e][0] : new Date(Date.parse(HALVING.at(-1)[0]) + (e - (HALVING.length - 1)) * 4 * 365.25 * 864e5).toISOString().slice(0, 10);
+      // Inflasi dihitung atas suplai di AKHIR periode halving itu. Kalau memakai
+      // suplai di awal, epoch pertama keluar 5.256.000% (suplai baru 50 BTC) dan
+      // grafiknya tidak terbaca. Dengan dasar akhir periode, angka periode berjalan
+      // cocok dengan inflasi hari ini.
+      const akhir = Math.max(suplai(h + 209999), 50);
+      jadwal.push({ tahun: t.slice(0, 4), tanggal: t, blok: h, subsidi: 50 / 2 ** e, suplai: Math.round(suplai(h)), suplaiAkhir: Math.round(akhir), inflasi: (50 / 2 ** e) * blokPerTahun / akhir * 100 });
+    }
+    hasil.bitcoin = {
+      tinggi, subsidi: sub, suplai: Math.round(kini), maks: 21e6, pangsaDitambang: kini / 21e6 * 100,
+      inflasiTahunan: sub * blokPerTahun / kini * 100, terbitPerTahun: Math.round(sub * blokPerTahun),
+      halving: { blok: berikut, sisaBlok, perkiraanTanggal: tanggalHalving, subsidiSesudah: sub / 2 },
+      kesulitan: sulit ? { progres: sulit.progressPercent, perubahan: sulit.difficultyChange, sisaBlok: sulit.remainingBlocks, perkiraanTanggal: new Date(sulit.estimatedRetargetDate).toISOString(), detikPerBlok } : null,
+      jadwal,
+      catatan: 'Suplai dan inflasi dihitung dari aturan protokol (subsidi 50 BTC, dibagi dua tiap 210.000 blok) memakai tinggi blok dari mempool.space. Tanggal halving sebelum 2024 dari catatan sejarah; sesudahnya perkiraan.',
+    };
+    console.log(`  bitcoin: blok ${tinggi} | suplai ${(kini / 1e6).toFixed(3)} jt (${(kini / 21e6 * 100).toFixed(2)}%) | inflasi ${(sub * blokPerTahun / kini * 100).toFixed(2)}%/th | halving ${tanggalHalving.slice(0, 10)}`);
+  }
 }
 
 await mkdir(dirname(KELUAR), { recursive: true });
