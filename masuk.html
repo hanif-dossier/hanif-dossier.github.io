@@ -70,6 +70,43 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
 .tautan{margin-top:16px;font-size:13px;color:var(--lb);text-align:center}
 .tautan a{color:var(--sage);font-weight:700;text-decoration:none}
 .kaki{text-align:center;font-size:12px;color:#a3aca7;padding:16px}
+
+/* Musim pasar (Altcoin Season Index) — panel publik di bawah lipatan.
+   Pita pelangi: oranye = modal berkumpul di Bitcoin, hijau = altcoin unggul. */
+.musim{padding:8px 16px 40px}
+.musim-bungkus{max-width:1060px;margin:0 auto}
+.musim-kepala{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.musim-kepala h2{font-size:1.9rem;line-height:1.15;margin:6px 0 0;letter-spacing:-.01em}
+.musim-kepala h2 span{color:var(--sage)}
+.musim-kepala .kapan{font-size:12.5px;color:var(--lb)}
+.musim-kartu{background:var(--kartu);border-radius:24px;padding:26px;box-shadow:var(--bayang);border:1px solid var(--gr)}
+.musim-isi{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:30px;align-items:start}
+.pita{position:relative;height:28px;border-radius:999px;background:linear-gradient(90deg,#e08a3c,#e8c07a 24%,#cfe0d4 50%,#7fae92 76%,#3f7a5e);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.pita i{position:absolute;top:-9px;width:4px;height:46px;border-radius:999px;background:var(--tx);box-shadow:0 0 0 3px var(--kartu)}
+.pita b{position:absolute;top:0;font-size:11px;color:#fff;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.35);line-height:28px}
+.pita .kiri{left:13px}.pita .kanan{right:13px}
+.musim-ujung{display:none;justify-content:space-between;font-size:11.5px;font-weight:700;color:var(--tx2);margin-top:9px}
+.musim-skala{display:flex;justify-content:space-between;font-size:11.5px;color:var(--lb);margin-top:8px}
+.musim-ket{font-size:14px;color:var(--tx2);line-height:1.65;margin-top:14px}
+.musim-nilai{font-family:"DM Serif Display",Georgia,serif;font-size:3.4rem;line-height:1}
+.musim-label{font-weight:800;font-size:16px}
+.musim-dom{font-size:12.5px;color:var(--lb);margin-top:2px}
+.musim-garis{width:100%;height:118px;display:block;margin-top:6px}
+.musim-kecil{font-size:12px;color:var(--lb);margin-top:4px}
+.musim-daftar{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;padding-top:20px;border-top:1px solid var(--gr)}
+.musim-daftar .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700;margin-bottom:9px}
+.musim-koin{display:flex;gap:7px;flex-wrap:wrap}
+.musim-koin span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:var(--lembut);border-radius:999px;padding:5px 11px;font-weight:600}
+.musim-koin img{width:17px;height:17px;border-radius:50%}
+.musim-koin b{font-weight:800}
+.musim-koin .naik{color:var(--sage)}.musim-koin .turun{color:var(--bata)}
+.musim-cara{margin-top:18px;font-size:13px;color:var(--tx2)}
+.musim-cara summary{cursor:pointer;font-weight:700;color:var(--sage);font-size:13px}
+.musim-cara p{margin:10px 0 0;line-height:1.6}
+.musim-ajak{margin-top:16px;font-size:13px;color:var(--lb)}
+.musim-ajak a{color:var(--sage);font-weight:700;text-decoration:none}
+@media(max-width:620px){.pita b{display:none}.musim-ujung{display:flex}.musim-skala{margin-top:4px}}
+@media(max-width:860px){.musim-isi{grid-template-columns:1fr;gap:24px}.musim-daftar{grid-template-columns:1fr}.musim-kepala h2{font-size:1.5rem}.musim-nilai{font-size:2.8rem}.musim-kartu{padding:20px}}
 </style>
 </head>
 <body>
@@ -128,6 +165,103 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   </div>
   </div>
 </main>
+
+<section class="musim" id="musim" hidden>
+  <div class="musim-bungkus">
+    <div class="musim-kepala">
+      <div>
+        <div class="mata">Contoh data yang anggota lihat tiap pagi</div>
+        <h2 class="serif">Sekarang musim Bitcoin, <span>atau musim altcoin?</span></h2>
+      </div>
+      <div class="kapan" id="musim-kapan"></div>
+    </div>
+    <div class="musim-kartu">
+      <div class="musim-isi">
+        <div>
+          <div class="pita"><b class="kiri">Musim Bitcoin</b><b class="kanan">Musim altcoin</b><i id="musim-tunjuk" style="left:0%"></i></div>
+          <div class="musim-ujung"><span>← Musim Bitcoin</span><span>Musim altcoin →</span></div>
+          <div class="musim-skala"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+          <div class="musim-ket" id="musim-ket">Memuat data pasar…</div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <div class="musim-nilai" id="musim-nilai">…</div>
+            <div><div class="musim-label" id="musim-label"></div><div class="musim-dom" id="musim-dom"></div></div>
+          </div>
+          <svg class="musim-garis" id="musim-garis" role="img" aria-label="Riwayat Altcoin Season Index 90 hari terakhir"></svg>
+          <div class="musim-kecil">Sumbu 0–100. Garis putus: batas 25 (musim Bitcoin) dan 75 (musim altcoin).</div>
+        </div>
+      </div>
+      <div class="musim-daftar">
+        <div><div class="lbl">Paling unggul 90 hari</div><div class="musim-koin" id="musim-atas"></div></div>
+        <div><div class="lbl">Paling tertinggal 90 hari</div><div class="musim-koin" id="musim-bawah"></div></div>
+      </div>
+      <details class="musim-cara">
+        <summary>Bagaimana angka ini dihitung</summary>
+        <p id="musim-cara-teks"></p>
+      </details>
+    </div>
+    <p class="musim-ajak">Angka ini terbuka untuk siapa saja. Yang tertutup adalah bacaannya: apa yang berubah, kenapa, dan apa yang membatalkannya — itu isi <a href="tentang.html">laporan harian anggota</a>.</p>
+  </div>
+</section>
+
+<script>
+// Musim pasar: dibaca dari data/pasar.json yang diperbarui otomatis tiap 04.47 WIB.
+(async () => {
+  const $ = id => document.getElementById(id);
+  const ang = (n, d = 1) => Math.abs(n).toFixed(d).replace('.', ',');
+  let ps;
+  try { ps = await (await fetch('data/pasar.json', { cache: 'no-cache' })).json(); } catch { return; }
+  const m = ps && ps.musim;
+  if (!m || m.nilai == null) return;
+  $('musim').hidden = false;
+
+  $('musim-nilai').textContent = m.nilai;
+  $('musim-label').textContent = m.label;
+  $('musim-tunjuk').style.left = 'calc(' + m.nilai + '% - 2px)';
+  $('musim-cara-teks').textContent = m.catatan || '';
+  if (ps.diperbarui) {
+    const t = new Date(ps.diperbarui);
+    $('musim-kapan').textContent = 'Diperbarui ' + t.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  if (ps.pasar && ps.pasar.domBtc != null) $('musim-dom').textContent = 'Dominasi Bitcoin ' + ang(ps.pasar.domBtc) + '%';
+
+  $('musim-ket').innerHTML =
+    '<b>' + m.unggul + ' dari ' + m.jumlah + ' koin terbesar</b> mengalahkan Bitcoin dalam 90 hari terakhir, sementara Bitcoin sendiri ' +
+    (m.btc90 >= 0 ? 'naik ' : 'turun ') + ang(m.btc90) + '%. ' +
+    (m.nilai >= 75 ? 'Di atas 75 disebut musim altcoin: uang menyebar ke luar Bitcoin.'
+      : m.nilai <= 25 ? 'Di bawah 25 disebut musim Bitcoin: modal berkumpul di BTC dan altcoin tertinggal.'
+      : 'Di antara 25 dan 75: belum musim altcoin, belum juga murni musim Bitcoin.');
+
+  const pil = (k, kelas) => '<span><img src="' + k.gambar + '" alt="" loading="lazy" width="17" height="17">' + k.simbol +
+    ' <b class="' + kelas + '">' + (k.naik90 >= 0 ? '+' : '−') + ang(k.naik90, 0) + '%</b></span>';
+  $('musim-atas').innerHTML = (m.teratas || []).map(k => pil(k, 'naik')).join('');
+  $('musim-bawah').innerHTML = (m.terbawah || []).map(k => pil(k, 'turun')).join('');
+
+  // Garis riwayat 90 hari, dengan label bulan di sumbu bawah.
+  const r = m.riwayat || [];
+  if (r.length > 3) {
+    const W = 420, H = 118, kiri = 4, kanan = 4, atas = 8, bawah = 18;
+    const X = i => kiri + i / (r.length - 1) * (W - kiri - kanan);
+    const Y = v => atas + (1 - v / 100) * (H - atas - bawah);
+    const titik = r.map((x, i) => X(i).toFixed(1) + ',' + Y(x.v).toFixed(1));
+    const bulan = [];
+    let akhirBulan = '';
+    r.forEach((x, i) => {
+      const b = x.t.slice(0, 7);
+      if (b !== akhirBulan) { akhirBulan = b; bulan.push({ x: X(i), nama: new Date(x.t).toLocaleDateString('id-ID', { month: 'short' }) }); }
+    });
+    $('musim-garis').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    $('musim-garis').innerHTML =
+      '<rect x="0" y="' + Y(75).toFixed(1) + '" width="' + W + '" height="' + (Y(25) - Y(75)).toFixed(1) + '" fill="#f6f5f0"/>' +
+      '<line x1="0" x2="' + W + '" y1="' + Y(75).toFixed(1) + '" y2="' + Y(75).toFixed(1) + '" stroke="#7fae92" stroke-dasharray="4 4"/>' +
+      '<line x1="0" x2="' + W + '" y1="' + Y(25).toFixed(1) + '" y2="' + Y(25).toFixed(1) + '" stroke="#e08a3c" stroke-dasharray="4 4"/>' +
+      '<polyline points="' + titik.join(' ') + '" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<circle cx="' + X(r.length - 1).toFixed(1) + '" cy="' + Y(r.at(-1).v).toFixed(1) + '" r="4" fill="#4f7a68"/>' +
+      bulan.map(b => '<text x="' + b.x.toFixed(1) + '" y="' + (H - 4) + '" font-size="10" fill="#7b8781">' + b.nama + '</text>').join('');
+  }
+})();
+</script>
 <div class="kaki">Riset dan analisis, bukan nasihat investasi berizin.</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
