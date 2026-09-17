@@ -72,3 +72,12 @@ manual: daftar akun → DM Instagram → cara bayar dikirim → admin menyetujui
 `.supabase.env` (kunci rahasia) dan `desain/` tidak ikut git. Kunci di
 `akun.js` adalah kunci publik; yang menjaga data adalah kebijakan RLS di
 `supabase/skema.sql`.
+
+## Aplikasi (PWA) dan menu pil
+
+Situs bisa dipasang di layar utama HP/desktop: `manifest.webmanifest` + `sw.js` (jaringan
+dulu, cache hanya cadangan offline; Supabase dan API luar tidak pernah di-cache) + `ikon-*.png`.
+`aplikasi.js` memberi ikon pada tiap tautan `nav.menu`, mendaftarkan service worker di alamat
+terbit, dan menawarkan pil "Pasang aplikasi"; `aplikasi.css` menjadikan menu pil bergaris
+(aktif terisi sage, bisa digeser di layar sempit). Tiap halaman memuat keduanya sebelum `</head>`.
+Kalau mengubah `sw.js`, naikkan nama `CACHE` supaya pembaruan terpasang di semua perangkat.
