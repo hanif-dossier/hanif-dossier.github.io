@@ -38,6 +38,8 @@ nav.menu a:hover{color:var(--sage-tua)}
 .sapa p{margin:0;color:var(--tx2);max-width:480px}
 .tombol{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
 .tombol a{padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px}
+.tombol button{padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px;font:inherit;cursor:pointer}
+.tombol button:disabled{opacity:.6;cursor:wait}
 .tombol a.utama{background:var(--sage);color:#fff}.tombol a.utama:hover{background:var(--sage-tua)}
 .tombol a.kedua{background:var(--kartu);border:1px solid #d9dfda;color:var(--tx)}
 .kartu{background:var(--kartu);border-radius:24px;padding:20px 22px;box-shadow:var(--bayang)}
@@ -147,7 +149,7 @@ body.tamu .daftar-laptop{display:none}
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png?v=1">
 <link rel="stylesheet" href="aplikasi.css?v=1">
-<script src="aplikasi.js?v=1" defer></script>
+<script src="aplikasi.js?v=2" defer></script>
 </head>
 <body>
 <main>
@@ -185,6 +187,7 @@ body.tamu .daftar-laptop{display:none}
     <div class="tombol">
       <a class="utama" href="laporan.html?h=briefing">Baca briefing hari ini</a>
       <a class="kedua" href="laporan.html?h=radar">Lihat koinku</a>
+      <button class="kedua" id="notif-briefing" type="button" hidden>🔔 Nyalakan notifikasi briefing pagi</button>
     </div>
   </div>
 
@@ -300,6 +303,7 @@ body.tamu .daftar-laptop{display:none}
   $('sapa-nama').textContent = namaDepan || 'kawan';
   if (profil.admin) $('tautan-admin').hidden = false;
   if (profil.disetujui) $('tautan-pustaka').hidden = false;
+  if (profil.disetujui && window.notifBriefing && notifBriefing.didukung()) $('notif-briefing').hidden = false;
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
   const tamu = !profil.disetujui;
