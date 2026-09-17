@@ -7,39 +7,58 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="ikon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap">
 <style>
 :root{color-scheme:light;--bg:#f6f5f0;--bg2:#eef2ec;--kartu:#fff;--tx:#2b3330;--tx2:#58635e;--lb:#7b8781;--redup:#a3aca7;--gr:#e6e9e4;--lembut:#eef2ec;--sage:#4f7a68;--sage-tua:#365446;--sage-lembut:#dfe9e1;--pasir:#f3e9d8;--pasir-tua:#8a6a2e;--bata:#b86b5c;--bata-lembut:#f6e4df;--bayang:0 10px 30px rgba(43,51,48,.06)}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--tx);font:15px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif}
 .serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
-main{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+main{max-width:1160px;margin:0 auto;padding:22px 16px 60px}
 .atas{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .merek{display:flex;align-items:center;gap:12px}
 .merek .daun{width:40px;height:40px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center;flex:none}
 .merek b{display:block;font-size:15px}.merek small{color:var(--lb);font-size:12px}
 .pil-peran{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;background:var(--lembut);color:var(--lb)}
 .pil-peran.owner{background:#2b3330;color:#f3e9d8}.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
-.mata{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-top:30px}
-h1{font-size:2.1rem;line-height:1.1;margin:4px 0 6px}
-.pengantar{color:var(--tx2);margin:0 0 22px;max-width:60ch}
-.kisi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-@media(max-width:820px){.kisi{grid-template-columns:1fr}}
-.kartu{background:var(--kartu);border-radius:22px;padding:22px 24px;box-shadow:var(--bayang);border:1px solid var(--gr)}
-.kartu.lebar{grid-column:1/-1}
-.kartu h2{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-size:1.25rem}
-.kartu h2 .ik{width:34px;height:34px;border-radius:10px;background:var(--lembut);display:grid;place-items:center;flex:none}
-.kartu h2 .ik svg{width:17px;height:17px;stroke:var(--sage);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.kartu .ket{margin:0 0 14px;color:var(--lb);font-size:13px}
-.baris{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--gr);font-size:14px}
-.baris:first-of-type{border-top:0}
+.mata{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-top:28px}
+h1{font-size:2.1rem;line-height:1.1;margin:4px 0 18px}
+
+/* Tata letak ala menu pengaturan game: daftar bagian di kiri, satu panel di kanan. */
+.tata{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}
+.sisi{position:sticky;top:14px}
+.tab-set{display:flex;flex-direction:column;gap:6px;background:var(--kartu);border:1px solid var(--gr);border-radius:22px;padding:10px;box-shadow:var(--bayang)}
+.tab-set button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;border:0;border-radius:14px;background:transparent;font:inherit;color:var(--tx2);cursor:pointer;position:relative;transition:background .15s,color .15s,transform .15s}
+.tab-set button:hover{background:var(--lembut);transform:translateX(2px)}
+.tab-set button .ik{width:38px;height:38px;border-radius:12px;background:var(--lembut);display:grid;place-items:center;flex:none;transition:background .15s}
+.tab-set button .ik svg{width:18px;height:18px;stroke:var(--sage);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab-set button b{display:block;font-size:14.5px;color:var(--tx);font-weight:800}
+.tab-set button small{display:block;font-size:12px;color:var(--lb);line-height:1.3}
+.tab-set button.aktif{background:var(--sage);color:#fff}
+.tab-set button.aktif b,.tab-set button.aktif small{color:#fff}.tab-set button.aktif small{opacity:.8}
+.tab-set button.aktif .ik{background:rgba(255,255,255,.18)}.tab-set button.aktif .ik svg{stroke:#fff}
+.tab-set button .lencana{margin-left:auto;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua)}
+.tab-set button.aktif .lencana{background:rgba(255,255,255,.22);color:#fff}
+.tab-set .pisah{height:1px;background:var(--gr);margin:4px 8px}
+.tab-set .keluar-set{color:var(--bata)}.tab-set .keluar-set .ik{background:var(--bata-lembut)}.tab-set .keluar-set .ik svg{stroke:var(--bata)}.tab-set .keluar-set b{color:var(--bata)}
+
+.panel{display:none;background:var(--kartu);border-radius:22px;padding:24px 26px 26px;box-shadow:var(--bayang);border:1px solid var(--gr);animation:muncul .18s ease-out}
+.panel.aktif{display:block}
+@keyframes muncul{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.panel h2{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:1.45rem}
+.panel .ket{margin:0 0 16px;color:var(--lb);font-size:13.5px}
+.dua{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px}
+.baris{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-top:1px solid var(--gr);font-size:14px}
+.baris:first-child{border-top:0}
 .baris .k{color:var(--lb)}.baris .v{font-weight:600;text-align:right}
+.sub{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700;margin:18px 0 4px}
 .status-pil{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
 .status-pil.aktif{background:var(--sage-lembut);color:var(--sage-tua)}
 .status-pil.menunggu{background:var(--pasir);color:var(--pasir-tua)}
 .status-pil.habis{background:var(--bata-lembut);color:var(--bata)}
-.meter{height:8px;border-radius:999px;background:var(--lembut);overflow:hidden;margin-top:8px}
-.meter i{display:block;height:100%;background:var(--sage);border-radius:999px}
+.meter{height:10px;border-radius:999px;background:var(--lembut);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--sage),#7fae92);border-radius:999px}
+.angka-besar{font-family:"DM Serif Display",Georgia,serif;font-size:2.6rem;line-height:1}
+.angka-besar small{font:600 13px "Nunito Sans",sans-serif;color:var(--lb);margin-left:6px}
 label{display:block;font-size:13px;font-weight:700;color:var(--tx2);margin:10px 0 5px}
 input[type=password],input[type=text]{width:100%;padding:11px 13px;border:1px solid #d9dfda;border-radius:12px;font:inherit;font-size:15px;background:#fff;color:var(--tx)}
 input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
@@ -48,27 +67,42 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
 .tombol.kedua{background:var(--kartu);border-color:#d9dfda;color:var(--tx)}.tombol.kedua:hover{border-color:var(--sage)}
 .tombol.bahaya{background:var(--bata-lembut);color:var(--bata)}
 .tombol:disabled{opacity:.55;cursor:default}
-.tombol-baris{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.tombol-baris{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .pesan{margin-top:12px;padding:10px 12px;border-radius:12px;font-size:13.5px;display:none}
 .pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
 .pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
 .pesan.info{display:block;background:var(--pasir);color:var(--pasir-tua)}
-.saklar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--gr)}
-.saklar:first-of-type{border-top:0}
-.saklar b{display:block;font-size:14px}.saklar small{color:var(--lb);font-size:12.5px}
-.saklar input{appearance:none;width:44px;height:26px;border-radius:999px;background:#d9dfda;position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
-.saklar input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
-.saklar input:checked{background:var(--sage)}.saklar input:checked::after{left:21px}
+/* saklar besar ala game */
+.saklar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--gr)}
+.saklar:first-child{border-top:0}
+.saklar b{display:block;font-size:14.5px}.saklar small{color:var(--lb);font-size:12.5px;line-height:1.4;display:block}
+.saklar input{appearance:none;width:52px;height:30px;border-radius:999px;background:#d9dfda;position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
+.saklar input::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
+.saklar input:checked{background:var(--sage)}.saklar input:checked::after{left:25px}
 .saklar input:disabled{opacity:.5;cursor:default}
-.perangkat{list-style:none;margin:10px 0 0;padding:0;font-size:13.5px}
-.perangkat li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--gr)}
-.perangkat li span small{color:var(--lb);display:block}
+.saklar.utama-s{background:var(--lembut);border:0;border-radius:16px;padding:14px 16px;margin-bottom:6px}
+.perangkat{list-style:none;margin:6px 0 0;padding:0;font-size:13.5px}
+.perangkat li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--gr)}
+.perangkat li:first-child{border-top:0}
+.perangkat li span small{color:var(--lb);display:block;font-size:12px}
 .perangkat button{border:0;background:transparent;color:var(--bata);font:inherit;font-weight:700;cursor:pointer;font-size:13px}
 .perangkat .ini{color:var(--sage);font-weight:700;font-size:12px}
-.tautan-lain a{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--gr);color:var(--tx);text-decoration:none;font-size:14px;font-weight:600}
+.tautan-lain a{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--gr);color:var(--tx);text-decoration:none;font-size:14px;font-weight:600}
 .tautan-lain a:first-child{border-top:0}
 .tautan-lain a span{color:var(--lb);font-weight:400}
 .kaki{text-align:center;font-size:12px;color:#a3aca7;padding:16px}
+@media(max-width:900px){
+  .tata{grid-template-columns:1fr;gap:14px}
+  .sisi{position:static}
+  .tab-set{flex-direction:row;overflow-x:auto;scrollbar-width:none;padding:8px;border-radius:18px}
+  .tab-set::-webkit-scrollbar{display:none}
+  .tab-set button{flex:none;width:auto;padding:9px 12px 9px 9px}
+  .tab-set button small,.tab-set .pisah,.tab-set .lencana{display:none}
+  .tab-set button .ik{width:32px;height:32px;border-radius:10px}
+  .tab-set button b{font-size:13.5px}
+  .dua{grid-template-columns:1fr}
+  h1{font-size:1.7rem}.panel{padding:20px}
+}
 
 <!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
 </style>
@@ -108,86 +142,124 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
 </header>
 
 <div class="mata">Pengaturan</div>
-<h1 class="serif">Akun, langganan, notifikasi, aplikasi.</h1>
-<p class="pengantar">Semua yang mengatur cara Hanif Dossier melayanimu ada di sini — di halaman lain hanya ada laporannya.</p>
+<h1 class="serif">Atur cara Hanif Dossier melayanimu.</h1>
 
-<div class="kisi">
+<div class="tata">
+  <aside class="sisi">
+    <nav class="tab-set" id="tab-set" aria-label="Bagian pengaturan">
+      <button type="button" data-tab="akun"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span><b>Akun</b><small>nama, email, Telegram</small></span></button>
+      <button type="button" data-tab="langganan"><span class="ik"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span><span><b>Langganan</b><small>status &amp; sisa masa</small></span><span class="lencana" id="lencana-langganan" hidden></span></button>
+      <button type="button" data-tab="notifikasi"><span class="ik"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0v5l2 3H4l2-3z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span><span><b>Notifikasi</b><small>briefing, screening, perangkat</small></span><span class="lencana" id="lencana-notif" hidden></span></button>
+      <button type="button" data-tab="sandi"><span class="ik"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Kata sandi</b><small>ganti kata sandi</small></span></button>
+      <button type="button" data-tab="aplikasi"><span class="ik"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span><b>Aplikasi</b><small>pasang, segarkan</small></span></button>
+      <button type="button" data-tab="lainnya"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span><b>Lainnya</b><small>Telegram, privasi, tentang</small></span></button>
+      <div class="pisah"></div>
+      <button type="button" class="keluar-set" data-keluar><span class="ik"><svg viewBox="0 0 24 24"><path d="M10 4H5v16h5"/><path d="M14 8l4 4-4 4M18 12H9"/></svg></span><span><b>Keluar</b><small>dari akun ini</small></span></button>
+    </nav>
+  </aside>
 
-  <section class="kartu" id="akun">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Akun</h2>
-    <p class="ket">Identitas yang dipakai untuk masuk dan menerima kabar.</p>
-    <div class="baris"><span class="k">Nama</span><span class="v" id="akun-nama">…</span></div>
-    <div class="baris"><span class="k">Email</span><span class="v" id="akun-email">…</span></div>
-    <div class="baris"><span class="k">Peran</span><span class="v" id="akun-peran">…</span></div>
-    <div class="baris"><span class="k">Bergabung</span><span class="v" id="akun-sejak">…</span></div>
-    <div class="baris"><span class="k">Telegram</span><span class="v" id="akun-telegram">…</span></div>
-    <div class="tombol-baris"><button class="tombol kedua" type="button" id="ubah-nama">Ubah nama</button><button class="tombol bahaya" type="button" data-keluar>Keluar dari akun</button></div>
-    <div class="pesan" id="akun-pesan"></div>
-  </section>
+  <div class="panel-wadah">
 
-  <section class="kartu" id="langganan">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>Langganan</h2>
-    <p class="ket">Status akses ke laporan dan dossier.</p>
-    <div class="baris"><span class="k">Status</span><span class="v" id="lg-status">…</span></div>
-    <div class="baris"><span class="k">Paket</span><span class="v" id="lg-paket">…</span></div>
-    <div class="baris"><span class="k">Berlaku sampai</span><span class="v" id="lg-sampai">…</span></div>
-    <div class="baris"><span class="k">Sisa masa</span><span class="v" id="lg-sisa">…</span></div>
-    <div class="meter" id="lg-meter" hidden><i style="width:0%"></i></div>
-    <div class="tombol-baris" id="lg-aksi"></div>
-    <ul class="perangkat" id="lg-riwayat"></ul>
-  </section>
-
-  <section class="kartu lebar" id="notifikasi">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0v5l2 3H4l2-3z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notifikasi</h2>
-    <p class="ket">Dikirim ke perangkat yang kamu nyalakan, begitu laporannya terunggah. Tanpa iklan, tanpa pengingat lain.</p>
-    <div class="kisi" style="gap:14px 28px">
-      <div>
-        <div class="saklar"><div><b>Perangkat ini</b><small id="notif-ket">Memeriksa…</small></div><input type="checkbox" id="notif-ini" disabled></div>
-        <div class="saklar"><div><b>Briefing pagi</b><small>Sekitar 06.10 WIB · judul + kalimat pertama "Yang Paling Penting Hari Ini"</small></div><input type="checkbox" id="jenis-briefing" data-jenis="briefing" checked></div>
-        <div class="saklar"><div><b>Screening altcoin</b><small>Sekitar 06.30 WIB · saat daftar pendek hari itu terbit</small></div><input type="checkbox" id="jenis-screening" data-jenis="screening" checked></div>
-        <div class="pesan" id="notif-pesan"></div>
+    <section class="panel" id="akun">
+      <h2 class="serif">Akun</h2>
+      <p class="ket">Identitas yang dipakai untuk masuk dan menerima kabar.</p>
+      <div class="dua">
+        <div>
+          <div class="baris"><span class="k">Nama</span><span class="v" id="akun-nama">…</span></div>
+          <div class="baris"><span class="k">Email</span><span class="v" id="akun-email">…</span></div>
+          <div class="baris"><span class="k">Peran</span><span class="v" id="akun-peran">…</span></div>
+        </div>
+        <div>
+          <div class="baris"><span class="k">Bergabung</span><span class="v" id="akun-sejak">…</span></div>
+          <div class="baris"><span class="k">Telegram</span><span class="v" id="akun-telegram">…</span></div>
+          <div class="baris"><span class="k">ID akun</span><span class="v" id="akun-id" style="font-size:12px;color:var(--lb)">…</span></div>
+        </div>
       </div>
-      <div>
-        <b style="font-size:14px">Perangkat yang berlangganan</b>
-        <ul class="perangkat" id="notif-perangkat"><li><span>Memuat…</span></li></ul>
+      <div class="tombol-baris"><button class="tombol kedua" type="button" id="ubah-nama">Ubah nama</button><button class="tombol bahaya" type="button" data-keluar>Keluar dari akun</button></div>
+      <div class="pesan" id="akun-pesan"></div>
+    </section>
+
+    <section class="panel" id="langganan">
+      <h2 class="serif">Langganan</h2>
+      <p class="ket">Status akses ke laporan dan dossier.</p>
+      <div class="dua">
+        <div>
+          <div class="baris"><span class="k">Status</span><span class="v" id="lg-status">…</span></div>
+          <div class="baris"><span class="k">Paket</span><span class="v" id="lg-paket">…</span></div>
+          <div class="baris"><span class="k">Berlaku sampai</span><span class="v" id="lg-sampai">…</span></div>
+        </div>
+        <div>
+          <div class="sub" style="margin-top:8px">Sisa masa</div>
+          <div class="angka-besar" id="lg-sisa">…</div>
+          <div class="meter" id="lg-meter" hidden><i style="width:0%"></i></div>
+          <div class="tombol-baris" id="lg-aksi"></div>
+        </div>
       </div>
-    </div>
-  </section>
+      <div id="lg-riwayat-wadah" hidden><div class="sub">Riwayat pembayaran</div><ul class="perangkat" id="lg-riwayat"></ul></div>
+    </section>
 
-  <section class="kartu" id="sandi">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>Kata sandi</h2>
-    <p class="ket">Minimal 6 karakter. Berlaku untuk semua perangkat setelah disimpan.</p>
-    <form id="form-sandi" autocomplete="off">
-      <label for="sandi-baru">Kata sandi baru</label><input id="sandi-baru" type="password" minlength="6" required autocomplete="new-password">
-      <label for="sandi-ulang">Ulangi</label><input id="sandi-ulang" type="password" minlength="6" required autocomplete="new-password">
-      <div class="tombol-baris"><button class="tombol utama" type="submit" id="simpan-sandi">Simpan kata sandi</button></div>
-    </form>
-    <div class="pesan" id="sandi-pesan"></div>
-  </section>
+    <section class="panel" id="notifikasi">
+      <h2 class="serif">Notifikasi</h2>
+      <p class="ket">Dikirim ke perangkat yang kamu nyalakan, begitu laporannya terunggah. Tanpa iklan, tanpa pengingat lain.</p>
+      <div class="dua">
+        <div>
+          <div class="saklar utama-s"><div><b>Perangkat ini</b><small id="notif-ket">Memeriksa…</small></div><input type="checkbox" id="notif-ini" disabled></div>
+          <div class="sub">Jenis kabar</div>
+          <div class="saklar"><div><b>Briefing pagi</b><small>Sekitar 06.10 WIB · judul + kalimat pertama "Yang Paling Penting Hari Ini"</small></div><input type="checkbox" id="jenis-briefing" data-jenis="briefing" checked></div>
+          <div class="saklar"><div><b>Screening altcoin</b><small>Sekitar 06.30 WIB · saat daftar pendek hari itu terbit</small></div><input type="checkbox" id="jenis-screening" data-jenis="screening" checked></div>
+          <div class="pesan" id="notif-pesan"></div>
+        </div>
+        <div>
+          <div class="sub" style="margin-top:8px">Perangkat yang berlangganan</div>
+          <ul class="perangkat" id="notif-perangkat"><li><span>Memuat…</span></li></ul>
+        </div>
+      </div>
+    </section>
 
-  <section class="kartu" id="aplikasi">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Aplikasi</h2>
-    <p class="ket">Pasang di layar utama supaya terbuka tanpa bilah alamat.</p>
-    <div class="baris"><span class="k">Keadaan</span><span class="v" id="app-status">…</span></div>
-    <div class="baris"><span class="k">Versi tampilan</span><span class="v">17 Sep 2026</span></div>
-    <div class="tombol-baris">
-      <button class="tombol utama" type="button" id="tombol-pasang" disabled>Pasang aplikasi</button>
-      <a class="tombol kedua" href="pasang.html">Cara memasang</a>
-      <button class="tombol kedua" type="button" id="segarkan">Segarkan aplikasi</button>
-    </div>
-    <div class="pesan" id="app-pesan"></div>
-  </section>
+    <section class="panel" id="sandi">
+      <h2 class="serif">Kata sandi</h2>
+      <p class="ket">Minimal 6 karakter. Berlaku untuk semua perangkat setelah disimpan.</p>
+      <form id="form-sandi" autocomplete="off" style="max-width:420px">
+        <label for="sandi-baru">Kata sandi baru</label><input id="sandi-baru" type="password" minlength="6" required autocomplete="new-password">
+        <label for="sandi-ulang">Ulangi</label><input id="sandi-ulang" type="password" minlength="6" required autocomplete="new-password">
+        <div class="tombol-baris"><button class="tombol utama" type="submit" id="simpan-sandi">Simpan kata sandi</button></div>
+      </form>
+      <div class="pesan" id="sandi-pesan"></div>
+    </section>
 
-  <section class="kartu lebar" id="lainnya">
-    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>Lainnya</h2>
-    <div class="tautan-lain">
-      <a id="tautan-telegram" href="#" target="_blank" rel="noopener">Bot Telegram Hanif Dossier <span>langganan, konfirmasi, tanya →</span></a>
-      <a href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Instagram <span>pesan langsung →</span></a>
-      <a href="tentang.html">Tentang Hanif Dossier <span>metode, harga, siapa di baliknya →</span></a>
-      <a href="privasi.html">Privasi <span>data apa yang disimpan →</span></a>
-    </div>
-  </section>
+    <section class="panel" id="aplikasi">
+      <h2 class="serif">Aplikasi</h2>
+      <p class="ket">Pasang di layar utama supaya terbuka tanpa bilah alamat.</p>
+      <div class="dua">
+        <div>
+          <div class="baris"><span class="k">Keadaan</span><span class="v" id="app-status">…</span></div>
+          <div class="baris"><span class="k">Versi tampilan</span><span class="v">17 Sep 2026</span></div>
+          <div class="baris"><span class="k">Alamat pemasangan</span><span class="v" style="font-size:13px">hanif-dossier.github.io/pasang.html</span></div>
+        </div>
+        <div>
+          <div class="tombol-baris" style="margin-top:4px">
+            <button class="tombol utama" type="button" id="tombol-pasang" disabled>Pasang aplikasi</button>
+            <a class="tombol kedua" href="pasang.html">Cara memasang</a>
+            <button class="tombol kedua" type="button" id="segarkan">Segarkan aplikasi</button>
+          </div>
+          <p class="ket" style="margin-top:12px">"Segarkan" membuang salinan lama di perangkat ini lalu memuat ulang — pakai kalau tampilan tidak ikut berubah setelah pembaruan.</p>
+          <div class="pesan" id="app-pesan"></div>
+        </div>
+      </div>
+    </section>
 
+    <section class="panel" id="lainnya">
+      <h2 class="serif">Lainnya</h2>
+      <p class="ket">Tempat bertanya dan membaca aturan mainnya.</p>
+      <div class="tautan-lain">
+        <a id="tautan-telegram" href="#" target="_blank" rel="noopener">Bot Telegram Hanif Dossier <span>langganan, konfirmasi, tanya →</span></a>
+        <a href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Instagram <span>pesan langsung →</span></a>
+        <a href="tentang.html">Tentang Hanif Dossier <span>metode, harga, siapa di baliknya →</span></a>
+        <a href="privasi.html">Privasi <span>data apa yang disimpan →</span></a>
+      </div>
+    </section>
+
+  </div>
 </div>
 </main>
 <div class="kaki">Riset dan analisis, bukan nasihat investasi berizin.</div>
@@ -199,6 +271,19 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   const $ = id => document.getElementById(id);
   const pesan = (id, teks, jenis) => { const p = $(id); p.textContent = teks; p.className = 'pesan ' + (jenis || ''); if (!teks) p.className = 'pesan'; };
   const tgl = s => s ? new Date(s).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+
+  // ---- Tab: satu panel tampil, dipilih lewat menu kiri, #hash, atau pilihan terakhir.
+  const tombolTab = [...document.querySelectorAll('#tab-set [data-tab]')];
+  const pilihTab = (id, simpan = true) => {
+    if (!document.getElementById(id) || !tombolTab.some(b => b.dataset.tab === id)) id = 'akun';
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('aktif', p.id === id));
+    tombolTab.forEach(b => b.classList.toggle('aktif', b.dataset.tab === id));
+    if (simpan) { history.replaceState(null, '', '#' + id); try { localStorage.setItem('pengaturan-tab', id); } catch {} }
+  };
+  tombolTab.forEach(b => b.addEventListener('click', () => pilihTab(b.dataset.tab)));
+  window.addEventListener('hashchange', () => pilihTab(location.hash.slice(1), false));
+  let awal = location.hash.slice(1); try { awal = awal || localStorage.getItem('pengaturan-tab') || 'akun'; } catch {}
+  pilihTab(awal, false);
 
   // Anggota yang belum disetujui boleh masuk ke sini (melihat status langganannya).
   const p = await akun.wajibMasuk({ bolehTamu: true });
@@ -213,6 +298,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   $('akun-peran').textContent = { owner: 'Pemilik', admin: 'Admin', anggota: 'Anggota', tamu: 'Terdaftar, menunggu konfirmasi' }[p.peran];
   $('akun-sejak').textContent = tgl(a.dibuat_pada || p.pengguna.created_at);
   $('akun-telegram').textContent = a.telegram_chat_id ? 'Tersambung' : 'Belum tersambung';
+  $('akun-id').textContent = (p.pengguna.id || '').slice(0, 8) + '…';
   $('ubah-nama').onclick = async () => {
     const baru = prompt('Nama yang ingin ditampilkan:', a.nama || '');
     if (baru == null || !baru.trim()) return;
@@ -236,7 +322,10 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   $('lg-status').innerHTML = `<span class="status-pil ${kelas}">${status}</span>`;
   $('lg-paket').textContent = paket;
   $('lg-sampai').textContent = p.admin || (!sampai && a.status === 'disetujui') ? 'Tanpa batas' : tgl(a.langganan_sampai);
-  $('lg-sisa').textContent = sampai && !p.admin ? (sisaHari >= 0 ? `${sisaHari} hari` : `lewat ${-sisaHari} hari`) : (kelas === 'aktif' ? 'Tanpa batas' : '—');
+  $('lg-sisa').innerHTML = sampai && !p.admin ? (sisaHari >= 0 ? `${sisaHari}<small>hari lagi</small>` : `<span style="color:var(--bata)">habis</span><small>${-sisaHari} hari lalu</small>`) : (kelas === 'aktif' ? '∞<small>tanpa batas</small>' : '—');
+  const lc = $('lencana-langganan');
+  if (kelas !== 'aktif') { lc.textContent = kelas === 'menunggu' ? 'menunggu' : 'habis'; lc.hidden = false; }
+  else if (sisaHari != null && sisaHari <= 7 && !p.admin) { lc.textContent = sisaHari + ' hari'; lc.hidden = false; }
   if (sampai && !p.admin && kelas === 'aktif') {
     const total = a.paket === 'tahunan' ? 365 : 30; $('lg-meter').hidden = false;
     $('lg-meter').firstElementChild.style.width = Math.max(2, Math.min(100, sisaHari / total * 100)) + '%';
@@ -247,24 +336,32 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   }
   try {
     const { data: byr } = await akun.sb.from('pembayaran').select('paket,status,dibuat_pada,diputuskan_pada').eq('anggota_id', p.pengguna.id).order('dibuat_pada', { ascending: false }).limit(5);
-    if (byr && byr.length) $('lg-riwayat').innerHTML = '<li style="border-top:0;padding-top:14px"><span><b>Riwayat pembayaran</b></span></li>' +
-      byr.map(b => `<li><span>${b.paket === 'tahunan' ? 'Tahunan' : 'Bulanan'}<small>${tgl(b.dibuat_pada)}</small></span><span class="status-pil ${b.status === 'disetujui' ? 'aktif' : b.status === 'ditolak' ? 'habis' : 'menunggu'}">${b.status}</span></li>`).join('');
+    if (byr && byr.length) { $('lg-riwayat-wadah').hidden = false; $('lg-riwayat').innerHTML =
+      byr.map(b => `<li><span>${b.paket === 'tahunan' ? 'Tahunan' : 'Bulanan'}<small>${tgl(b.dibuat_pada)}</small></span><span class="status-pil ${b.status === 'disetujui' ? 'aktif' : b.status === 'ditolak' ? 'habis' : 'menunggu'}">${b.status}</span></li>`).join(''); }
   } catch {}
 
   // ---- Notifikasi
-  const N = window.notifBriefing;
   const saklar = $('notif-ini'), ket = $('notif-ket');
   const kotakJenis = [...document.querySelectorAll('[data-jenis]')];
   const bacaJenis = () => Object.fromEntries(kotakJenis.map(k => [k.dataset.jenis, k.checked]));
   const tunggu = async () => { for (let i = 0; i < 20 && !window.notifBriefing; i++) await new Promise(r => setTimeout(r, 100)); return window.notifBriefing; };
   const nb = await tunggu();
+  // Nama perangkat yang ramah dibaca — baris lama menyimpan user-agent mentah.
+  const ringkasUA = ua => {
+    if (!ua) return 'Perangkat';
+    if (!/Mozilla\//.test(ua)) return ua;
+    const os = /Android/.test(ua) ? 'Android' : /iPhone|iPad/.test(ua) ? 'iPhone/iPad' : /Windows/.test(ua) ? 'Windows' : /Mac/.test(ua) ? 'Mac' : /Linux/.test(ua) ? 'Linux' : 'Perangkat';
+    const br = /Edg\//.test(ua) ? 'Edge' : /OPR\//.test(ua) ? 'Opera' : /Chrome\//.test(ua) ? 'Chrome' : /Safari\//.test(ua) ? 'Safari' : /Firefox\//.test(ua) ? 'Firefox' : 'browser';
+    return os + ' · ' + br;
+  };
   const daftarPerangkat = async () => {
     const sub = await nb.langganan();
     const { data, error } = await akun.sb.from('dossier_push').select('endpoint,perangkat,dibuat,jenis').order('dibuat', { ascending: false });
-    const ul = $('notif-perangkat');
+    const ul = $('notif-perangkat'), ln = $('lencana-notif');
     if (error) { ul.innerHTML = `<li><span>${/jenis/i.test(error.message) ? 'Kolom pilihan jenis belum dibuat di database — jalankan SQL-nya dulu.' : 'Tidak bisa memuat: ' + error.message}</span></li>`; return; }
+    ln.hidden = !data.length; ln.textContent = data.length;
     if (!data.length) { ul.innerHTML = '<li><span>Belum ada perangkat. Nyalakan saklar "Perangkat ini" di kiri.</span></li>'; return; }
-    ul.innerHTML = data.map(d => `<li><span>${d.perangkat || 'Perangkat'}${sub && sub.endpoint === d.endpoint ? ' <span class="ini">· ini</span>' : ''}<small>${tgl(d.dibuat)} · ${Object.entries(d.jenis || {}).filter(([, v]) => v).map(([k]) => k).join(', ') || 'semua'}</small></span><button type="button" data-hapus="${encodeURIComponent(d.endpoint)}">hapus</button></li>`).join('');
+    ul.innerHTML = data.map(d => `<li><span>${ringkasUA(d.perangkat)}${sub && sub.endpoint === d.endpoint ? ' <span class="ini">· ini</span>' : ''}<small>${tgl(d.dibuat)} · ${Object.entries(d.jenis || {}).filter(([, v]) => v).map(([k]) => k).join(', ') || 'semua'}</small></span><button type="button" data-hapus="${encodeURIComponent(d.endpoint)}">hapus</button></li>`).join('');
     ul.querySelectorAll('[data-hapus]').forEach(b => b.onclick = async () => {
       const ep = decodeURIComponent(b.dataset.hapus);
       if (sub && sub.endpoint === ep) await nb.matikan(); else await akun.sb.from('dossier_push').delete().eq('endpoint', ep);
