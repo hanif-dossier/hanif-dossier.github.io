@@ -132,7 +132,7 @@
 
   // ---- 4. menu bawah untuk HP (<=720px): 4 tujuan utama + tombol Menu yang membuka lembar semua tautan.
   // Dibangun dari nav.menu halaman, jadi ikut aturan tampil/sembunyi tamu-anggota-admin di tiap halaman.
-  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pengaturan', 'pustaka', 'kelas', 'masuk', 'tentang'];   // Pengaturan = slot "Profil" (Akun, Langganan, Notifikasi); Pustaka lewat Menu
+  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pustaka', 'kelas', 'masuk', 'tentang'];   // Pengaturan sengaja tidak di bilah: tampil sebagai roda gigi di kepala lembar Menu
   const IK_MENU = '<path d="M4 6h16M4 12h16M4 18h16"/>';
   const LAPORAN = ['briefing', 'radar', 'schedule', 'screening'];
   const kunciA = a => kunci(a) || a.textContent.trim().toLowerCase();
@@ -141,12 +141,26 @@
   const teruskan = (wadah, tautan, sebelum) => wadah.querySelectorAll('a[href="#"]').forEach(b => b.addEventListener('click', e => {
     e.preventDefault(); if (sebelum) sebelum(); const asli = tautan.find(x => kunciA(x) === b.dataset.asli); if (asli) asli.click();
   }));
-  function bukaLembar(tautan) {
+  const KELOMPOK = [
+    ['Laporan', ['briefing', 'radar', 'schedule', 'screening', 'bitcoin', 'riset', 'laporan']],
+    ['Belajar', ['kelas', 'modul', 'kuis']],
+    ['Lainnya', ['beranda', 'pasar', 'pustaka', 'anggota', 'langganan', 'status', 'tentang', 'masuk']]
+  ];
+  const kartu = a => { const k = kunciA(a); return '<a href="' + a.getAttribute('href') + '" class="' + (a.classList.contains('aktif') ? 'aktif' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span><span>' + a.textContent.trim() + '</span></a>'; };
+  function bukaLembar(tautan, diBilah = []) {
     const lama = document.querySelector('.lembar-menu'); if (lama) lama.remove();
+    const sisa = tautan.filter(a => !diBilah.includes(a) || kunciA(a) === 'briefing');   // Briefing tetap ditulis di kelompok Laporan walau bilah sudah punya "Laporan"
+    const ambil = k => { const i = sisa.findIndex(a => kunciA(a) === k); return i < 0 ? null : sisa.splice(i, 1)[0]; };
+    const pengaturan = ambil('pengaturan'), keluar = ambil('keluar');
+    const bagian = KELOMPOK.map(([judul, kunciK]) => [judul, kunciK.map(ambil).filter(Boolean)]);
+    if (sisa.length) bagian[bagian.length - 1][1].push(...sisa.splice(0));           // kunci yang belum dikenal ikut ke "Lainnya"
     const l = document.createElement('div'); l.className = 'lembar-menu';
-    l.innerHTML = '<div class="latar"></div><div class="lembar"><div class="kepala"><b>Menu</b><button type="button" class="tutup" aria-label="Tutup">×</button></div><div class="kisi">' +
-      tautan.map(a => { const k = kunciA(a); return '<a href="' + a.getAttribute('href') + '" class="' + (a.classList.contains('aktif') ? 'aktif' : '') + (k === 'keluar' ? ' keluar' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span><span>' + a.textContent.trim() + '</span></a>'; }).join('') +
-      '</div></div>';
+    l.innerHTML = '<div class="latar"></div><div class="lembar"><div class="kepala"><b>Menu</b><span class="aksi">' +
+      (pengaturan ? '<a href="' + pengaturan.getAttribute('href') + '" class="roda' + (pengaturan.classList.contains('aktif') ? ' aktif' : '') + '" data-asli="pengaturan"><svg viewBox="0 0 24 24">' + IKON.pengaturan + '</svg>Pengaturan</a>' : '') +
+      '<button type="button" class="tutup" aria-label="Tutup">×</button></span></div>' +
+      bagian.filter(([, isi]) => isi.length).map(([judul, isi]) => '<div class="kelompok"><div class="judul">' + judul + '</div><div class="kisi">' + isi.map(kartu).join('') + '</div></div>').join('') +
+      (keluar ? '<a href="' + keluar.getAttribute('href') + '" class="keluar-baris" data-asli="keluar"><svg viewBox="0 0 24 24">' + IKON.keluar + '</svg>Keluar dari akun</a>' : '') +
+      '</div>';
     const tutup = () => l.remove();
     l.querySelector('.latar').onclick = tutup; l.querySelector('.tutup').onclick = tutup;
     teruskan(l, tautan, tutup);
@@ -166,7 +180,7 @@
       return '<a href="' + a.getAttribute('href') + '" class="' + (aktif ? 'aktif' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span>' + label + '</a>';
     }).join('') + (tautan.length > 5 ? '<button type="button" class="buka-menu"><span class="ik"><svg viewBox="0 0 24 24">' + IK_MENU + '</svg></span>Menu</button>' : '');
     teruskan(bar, tautan);
-    const tb = bar.querySelector('.buka-menu'); if (tb) tb.addEventListener('click', () => bukaLembar(tautan));
+    const tb = bar.querySelector('.buka-menu'); if (tb) tb.addEventListener('click', () => bukaLembar(tautan, utama));
     if (!nav.__diamati) { nav.__diamati = true; new MutationObserver(() => bangunMenuBawah()).observe(nav, { attributes: true, subtree: true, attributeFilter: ['hidden', 'class'] }); }
   }
   window.bangunMenuBawah = bangunMenuBawah;

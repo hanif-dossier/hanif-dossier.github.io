@@ -49,6 +49,14 @@ nav.menu a[hidden]{display:none}
 .lembar-menu .kepala{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px}
 .lembar-menu .kepala b{font-size:16px;color:#2b3330}
 .lembar-menu .tutup{border:0;background:#eef2ec;width:32px;height:32px;border-radius:50%;font-size:20px;line-height:1;color:#58635e;cursor:pointer}
+.lembar-menu .kepala .aksi{display:flex;align-items:center;gap:8px}
+.lembar-menu .roda{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px 0 10px;border-radius:999px;background:#eef2ec;color:#365446;text-decoration:none;font-weight:700;font-size:12.5px}
+.lembar-menu .roda svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lembar-menu .roda.aktif{background:#4f7a68;color:#fff}
+.lembar-menu .kelompok{margin-bottom:14px}
+.lembar-menu .judul{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7b8781;margin:0 2px 8px}
+.lembar-menu .keluar-baris{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;background:#f6e4df;color:#b86b5c;text-decoration:none;font-weight:700;font-size:13px}
+.lembar-menu .keluar-baris svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lembar-menu .kisi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .lembar-menu .kisi a{display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 6px 11px;border-radius:16px;background:#eef2ec;color:#2b3330;text-decoration:none;text-align:center}
 .lembar-menu .kisi a .ik{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center}
