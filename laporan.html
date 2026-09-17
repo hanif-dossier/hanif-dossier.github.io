@@ -20,8 +20,8 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
 <meta name="apple-mobile-web-app-title" content="Hanif Dossier">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png?v=1">
-<link rel="stylesheet" href="aplikasi.css?v=4">
-<script src="aplikasi.js?v=4" defer></script>
+<link rel="stylesheet" href="aplikasi.css?v=5">
+<script src="aplikasi.js?v=5" defer></script>
 </head>
 <body>
 <div class="memuat" id="memuat"><div class="putar"></div><p id="teks">Membuka laporan…</p></div>
@@ -52,7 +52,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
     // Isinya diganti dengan menu pil lengkap yang sama dengan halaman lain — satu header, bukan dua.
     // Kalau laporan tidak punya nav.menu (templat lama), bilah anggota dipasang di atasnya.
     try {
-      const h2 = document.head, l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'aplikasi.css?v=4'; h2.appendChild(l);
+      const h2 = document.head, l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'aplikasi.css?v=5'; h2.appendChild(l);
       document.getElementById('memuat')?.remove();
       const aktif = k => k === h || (h === 'peringatan' && k === 'schedule') ? ' class="aktif"' : '';
       const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="modul.html">Modul</a><a href="kuis.html">Kuis</a>' +
@@ -67,7 +67,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
         document.body.prepend(bar); nav = bar.querySelector('nav.menu');
       }
       nav.querySelector('[data-keluar]').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
-      const sk = document.createElement('script'); sk.src = 'aplikasi.js?v=4'; h2.appendChild(sk);
+      const sk = document.createElement('script'); sk.src = 'aplikasi.js?v=5'; h2.appendChild(sk);
     } catch (e) { console.warn('bilah anggota:', e); }
   } catch (e) {
     document.getElementById('teks').innerHTML = `Laporan belum tersedia di gudang (${e.message}).<br>Biasanya terbit tiap pagi. <a href="index.html">Kembali ke beranda</a>`;

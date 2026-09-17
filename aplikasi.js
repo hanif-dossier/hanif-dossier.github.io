@@ -132,7 +132,7 @@
 
   // ---- 4. menu bawah untuk HP (<=720px): 4 tujuan utama + tombol Menu yang membuka lembar semua tautan.
   // Dibangun dari nav.menu halaman, jadi ikut aturan tampil/sembunyi tamu-anggota-admin di tiap halaman.
-  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pustaka', 'kelas', 'pengaturan', 'masuk', 'tentang'];
+  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pengaturan', 'pustaka', 'kelas', 'masuk', 'tentang'];   // Pengaturan = slot "Profil" (Akun, Langganan, Notifikasi); Pustaka lewat Menu
   const IK_MENU = '<path d="M4 6h16M4 12h16M4 18h16"/>';
   const LAPORAN = ['briefing', 'radar', 'schedule', 'screening'];
   const kunciA = a => kunci(a) || a.textContent.trim().toLowerCase();
