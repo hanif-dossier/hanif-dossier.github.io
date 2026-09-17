@@ -48,18 +48,25 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/potret-pasar-crypto\/?"/g, 'href="laporan.html?h=screening"')
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/laporan-harian\/?"/g, 'href="laporan.html?h=briefing"');
     document.open(); document.write(html); document.close();
-    // Bilah anggota di atas laporan: merek + menu pil yang sama dengan halaman lain.
-    // Dokumen laporan menggantikan dokumen ini, jadi gaya & skrip aplikasi dimuat ulang.
+    // Menu anggota: dokumen laporan punya header.atas + nav.menu sendiri (5 tautan publik).
+    // Isinya diganti dengan menu pil lengkap yang sama dengan halaman lain — satu header, bukan dua.
+    // Kalau laporan tidak punya nav.menu (templat lama), bilah anggota dipasang di atasnya.
     try {
       const h2 = document.head, l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'aplikasi.css?v=3'; h2.appendChild(l);
+      document.getElementById('memuat')?.remove();
       const aktif = k => k === h || (h === 'peringatan' && k === 'schedule') ? ' class="aktif"' : '';
-      const bar = document.createElement('header'); bar.className = 'bar-anggota';
-      bar.innerHTML = '<a class="merek-kecil" href="dasbor.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg><b>Hanif Dossier</b></a>' +
-        '<nav class="menu"><a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="modul.html">Modul</a><a href="kuis.html">Kuis</a>' +
-        (profil.disetujui ? '<a href="pustaka.html">Pustaka</a>' : '') + (profil.admin ? '<a href="admin.html">Anggota</a>' : '') + '<a href="pengaturan.html">Pengaturan</a><a href="tentang.html">Tentang</a><a href="#" data-keluar>Keluar</a></nav>';
-      document.getElementById('memuat')?.remove();   // kalau dokumen tidak diganti (parser masih aktif), penanda memuat ikut dibuang
-      document.body.prepend(bar);
-      bar.querySelector('[data-keluar]').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
+      const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="modul.html">Modul</a><a href="kuis.html">Kuis</a>' +
+        (profil.disetujui ? '<a href="pustaka.html">Pustaka</a>' : '') + (profil.admin ? '<a href="admin.html">Anggota</a>' : '') + '<a href="pengaturan.html">Pengaturan</a><a href="tentang.html">Tentang</a><a href="#" data-keluar>Keluar</a>';
+      let nav = document.querySelector('header.atas nav.menu');
+      if (nav) {
+        nav.innerHTML = tautan;
+        const merek = document.querySelector('header.atas .merek'); if (merek) merek.setAttribute('href', 'dasbor.html');
+      } else {
+        const bar = document.createElement('header'); bar.className = 'bar-anggota';
+        bar.innerHTML = '<a class="merek-kecil" href="dasbor.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg><b>Hanif Dossier</b></a><nav class="menu">' + tautan + '</nav>';
+        document.body.prepend(bar); nav = bar.querySelector('nav.menu');
+      }
+      nav.querySelector('[data-keluar]').addEventListener('click', e => { e.preventDefault(); akun.keluar(); });
       const sk = document.createElement('script'); sk.src = 'aplikasi.js?v=3'; h2.appendChild(sk);
     } catch (e) { console.warn('bilah anggota:', e); }
   } catch (e) {
