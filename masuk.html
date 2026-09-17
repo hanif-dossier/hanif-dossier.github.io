@@ -341,8 +341,13 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   });
   // Sudah masuk? Langsung arahkan.
   let p = pSekarang;
-  // Akun yang lahir dari Markasku (satu basis akun) tidak otomatis jadi pendaftar Dossier.
-  // Baru ketika pemiliknya sengaja masuk ke sini, ia dicatat sebagai pendaftar (RPC gabung_dossier).
+  // Akun yang lahir dari Markasku TIDAK berlaku di Hanif Dossier (keputusan pemilik, 17 Sep 2026), walau
+  // basis akunnya masih satu. Tandanya metadata aplikasi='markas' tanpa baris anggota. Sesi seperti itu
+  // dikeluarkan dan diperlakukan seperti belum punya akun di sini.
+  const akunMarkas = q => !!(q && !q.admin && !q.anggota && ((q.pengguna && q.pengguna.user_metadata) || {}).aplikasi === 'markas');
+  const TOLAK_MARKAS = 'Email ini belum terdaftar di Hanif Dossier. Silakan daftar dengan email lain.';
+  if (akunMarkas(p)) { try { await akun.sb.auth.signOut(); } catch {} p = null; pesan(TOLAK_MARKAS, 'salah'); }
+  // Akun lain yang belum punya baris anggota (mis. dibuat sebelum pemicu ada) dicatat sebagai pendaftar.
   if (p && !p.anggota) { try { await akun.sb.rpc('gabung_dossier'); p = await akun.profil(); } catch {} }
   if (p) { if (p.disetujui && location.hash !== '#status') { location.replace(ke); return; } tampilkanStatus(p); }
 
@@ -375,7 +380,9 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       } else {
         const { error } = await akun.sb.auth.signInWithPassword({ email, password: sandi });
         if (error) throw error;
-        const p2 = await akun.profil();
+        let p2 = await akun.profil();
+        if (akunMarkas(p2)) { try { await akun.sb.auth.signOut(); } catch {} throw new Error(TOLAK_MARKAS); }
+        if (p2 && !p2.anggota) { try { await akun.sb.rpc('gabung_dossier'); p2 = await akun.profil(); } catch {} }
         if (p2 && p2.disetujui) location.replace(ke); else { tampilkanStatus(p2); }
       }
     } catch (err) { pesan(terjemah(err.message), 'salah'); }
