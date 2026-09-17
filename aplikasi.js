@@ -130,5 +130,47 @@
   }
   window.notifBriefing = { didukung: notifDidukung, langganan: langgananKini, nyalakan: nyalakanNotif, aturJenis: aturJenisNotif, matikan: matikanNotif, JENIS_BAWAAN, namaPerangkat, terpasang: sudahTerpasang, iOS };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => hias()); else hias();
+  // ---- 4. menu bawah untuk HP (<=720px): 4 tujuan utama + tombol Menu yang membuka lembar semua tautan.
+  // Dibangun dari nav.menu halaman, jadi ikut aturan tampil/sembunyi tamu-anggota-admin di tiap halaman.
+  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pustaka', 'kelas', 'pengaturan', 'masuk', 'tentang'];
+  const IK_MENU = '<path d="M4 6h16M4 12h16M4 18h16"/>';
+  const LAPORAN = ['briefing', 'radar', 'schedule', 'screening'];
+  const kunciA = a => kunci(a) || a.textContent.trim().toLowerCase();
+  const ikonUntuk = k => IKON[k] || IKON.laporan;
+  // Tautan "#" (Keluar) diteruskan ke tautan aslinya supaya handler halaman ikut jalan.
+  const teruskan = (wadah, tautan, sebelum) => wadah.querySelectorAll('a[href="#"]').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); if (sebelum) sebelum(); const asli = tautan.find(x => kunciA(x) === b.dataset.asli); if (asli) asli.click();
+  }));
+  function bukaLembar(tautan) {
+    const lama = document.querySelector('.lembar-menu'); if (lama) lama.remove();
+    const l = document.createElement('div'); l.className = 'lembar-menu';
+    l.innerHTML = '<div class="latar"></div><div class="lembar"><div class="kepala"><b>Menu</b><button type="button" class="tutup" aria-label="Tutup">×</button></div><div class="kisi">' +
+      tautan.map(a => { const k = kunciA(a); return '<a href="' + a.getAttribute('href') + '" class="' + (a.classList.contains('aktif') ? 'aktif' : '') + (k === 'keluar' ? ' keluar' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span><span>' + a.textContent.trim() + '</span></a>'; }).join('') +
+      '</div></div>';
+    const tutup = () => l.remove();
+    l.querySelector('.latar').onclick = tutup; l.querySelector('.tutup').onclick = tutup;
+    teruskan(l, tautan, tutup);
+    document.body.appendChild(l);
+  }
+  function bangunMenuBawah() {
+    const nav = document.querySelector('nav.menu'); if (!nav) return;
+    let bar = document.querySelector('.nav-bawah');
+    if (!bar) { bar = document.createElement('nav'); bar.className = 'nav-bawah'; bar.setAttribute('aria-label', 'Menu bawah'); document.body.appendChild(bar); }
+    const tautan = [...nav.querySelectorAll('a')].filter(a => !a.hidden);
+    const aktifLaporan = tautan.some(a => a.classList.contains('aktif') && LAPORAN.includes(kunciA(a)));
+    let utama = tautan;
+    if (tautan.length > 5) { utama = []; for (const k of PRIORITAS) { const a = tautan.find(x => kunciA(x) === k); if (a && !utama.includes(a)) utama.push(a); if (utama.length === 4) break; } }
+    bar.innerHTML = utama.map(a => {
+      const k = kunciA(a), label = k === 'briefing' ? 'Laporan' : a.textContent.trim();
+      const aktif = a.classList.contains('aktif') || (k === 'briefing' && aktifLaporan);
+      return '<a href="' + a.getAttribute('href') + '" class="' + (aktif ? 'aktif' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span>' + label + '</a>';
+    }).join('') + (tautan.length > 5 ? '<button type="button" class="buka-menu"><span class="ik"><svg viewBox="0 0 24 24">' + IK_MENU + '</svg></span>Menu</button>' : '');
+    teruskan(bar, tautan);
+    const tb = bar.querySelector('.buka-menu'); if (tb) tb.addEventListener('click', () => bukaLembar(tautan));
+    if (!nav.__diamati) { nav.__diamati = true; new MutationObserver(() => bangunMenuBawah()).observe(nav, { attributes: true, subtree: true, attributeFilter: ['hidden', 'class'] }); }
+  }
+  window.bangunMenuBawah = bangunMenuBawah;
+
+  const mulai = () => { hias(); bangunMenuBawah(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mulai); else mulai();
 })();
