@@ -65,7 +65,55 @@
 .baca-modul .sumber{font-size:12px;color:var(--lb);border-top:1px solid var(--gr);padding-top:10px;margin-top:18px}
 .baca-modul .kunci{background:var(--sage-lembut);border-radius:20px;padding:26px;text-align:center}
 .baca-modul .kunci h3{margin-top:0;color:var(--sage-tua)}
-.nav-modul{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.nav-modul{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.nav-modul a{display:flex;flex-direction:column;gap:3px;padding:14px 18px;border-radius:18px;background:var(--kartu);border:1px solid var(--gr);box-shadow:var(--bayang);text-decoration:none;color:var(--tx)}
+.nav-modul a small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700}
+.nav-modul a b{font-size:14.5px;line-height:1.35}
+.nav-modul a.lanjut{text-align:right;background:var(--sage);border-color:var(--sage);color:#fff}.nav-modul a.lanjut small{color:rgba(255,255,255,.75)}
+/* ---- Indeks modul */
+a.modul-kartu{text-decoration:none}
+.modul-kartu .meta{font-size:12px;color:var(--lb)}
+.modul-kartu.selesai .status{color:var(--sage-tua)}
+.kemajuan{display:flex;align-items:center;gap:12px;margin-top:20px;font-size:13px;color:var(--tx2);font-weight:700}
+.kemajuan .meter{flex:1;max-width:260px;height:8px;border-radius:999px;background:var(--sage-lembut);overflow:hidden}
+.kemajuan .meter i{display:block;height:100%;background:var(--sage);border-radius:999px}
+/* ---- Halaman khusus satu modul */
+.baca-batang{position:fixed;left:0;top:0;height:3px;width:0;background:var(--sage);z-index:80;transition:width .1s linear}
+.kembali{display:inline-flex;align-items:center;gap:6px;margin-top:22px;font-size:13.5px;font-weight:700;color:var(--sage-tua);text-decoration:none}
+.kepala-modul{margin-top:12px;background:var(--kartu);border:1px solid var(--gr);border-radius:24px;padding:26px 28px 22px;box-shadow:var(--bayang)}
+.kepala-modul h1{font-size:clamp(1.6rem,3.4vw,2.3rem);line-height:1.2;margin:6px 0 10px}
+.kepala-modul > p{font-size:15.5px;color:var(--tx2);line-height:1.65;max-width:70ch;margin:0}
+.kepala-modul .cip{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.kepala-modul .cip span{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua)}
+.kepala-modul .cip span.pasir{background:var(--pasir);color:var(--pasir-tua)}
+.langkah{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--gr)}
+.langkah a{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;text-decoration:none;background:#eef2ec;color:var(--tx2)}
+.langkah a.beres{background:var(--sage-lembut);color:var(--sage-tua)}
+.langkah a.kini{background:var(--sage);color:#fff}
+.tata-modul{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px;margin-top:20px;align-items:start}
+.isi-modul{position:sticky;top:16px;background:var(--kartu);border:1px solid var(--gr);border-radius:20px;padding:14px 14px 10px;box-shadow:var(--bayang)}
+.isi-modul summary{cursor:pointer;list-style:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);font-weight:700;padding:2px 6px 8px}
+.isi-modul summary::-webkit-details-marker{display:none}
+.isi-modul ol{list-style:none;margin:0;padding:0;counter-reset:isi}
+.isi-modul li{counter-increment:isi;margin:0}
+.isi-modul li a{display:flex;gap:10px;align-items:baseline;padding:8px 8px;border-radius:12px;font-size:13.5px;line-height:1.35;color:var(--tx2);text-decoration:none}
+.isi-modul li a::before{content:counter(isi);flex:none;width:20px;font-size:11.5px;font-weight:700;color:var(--lb)}
+.isi-modul li a.kini{background:var(--sage-lembut);color:var(--sage-tua);font-weight:700}
+.tata-modul .baca-modul{margin-top:0;max-width:none}
+.tata-modul .baca-modul .blok:first-child{margin-top:0}
+.baca-modul .blok,.baca-modul .batas-berlaku{scroll-margin-top:16px}
+.kotak-selesai{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding:18px 20px;border-radius:20px;background:var(--sage-lembut)}
+.kotak-selesai b{display:block;color:var(--sage-tua);font-size:15px}
+.kotak-selesai span{font-size:13px;color:var(--tx2)}
+.kotak-selesai .aksi{display:flex;flex-wrap:wrap;gap:8px}
+.kotak-selesai button{font:inherit;cursor:pointer;border:0}
+@media(max-width:860px){
+  .tata-modul{grid-template-columns:minmax(0,1fr);gap:14px}
+  .isi-modul{position:static;padding:12px 12px 6px}
+  .isi-modul summary{padding-bottom:4px}.isi-modul summary::after{content:" ▾"}
+  .kepala-modul{padding:20px 18px 18px;border-radius:20px}
+  .nav-modul{grid-template-columns:1fr}
+}
 </style>
 
 <!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
@@ -105,18 +153,22 @@
   </nav>
 </header>
 
+<div id="indeks">
 <section class="sambut" style="grid-template-columns:1fr">
   <div class="sapa" style="max-width:720px">
     <div class="mata">Modul edukasi</div>
     <h1 class="serif">Cara membaca token,<br><span>satu konsep per modul.</span></h1>
-    <p>Sembilan kelas pendek — tiap modul satu konsep, istilahnya didefinisikan dulu, ada aturan bacanya, ada contohnya, dan selalu ada batas keberlakuannya. Ini kerangka yang dipakai setiap dossier dan setiap laporan pagi. Dua modul pertama terbuka untuk semua; sisanya untuk anggota.</p>
+    <p>Sembilan kelas pendek — tiap modul satu konsep, istilahnya didefinisikan dulu, ada aturan bacanya, ada contohnya, dan selalu ada batas keberlakuannya. Ini kerangka yang dipakai setiap dossier dan setiap laporan pagi. Dua modul pertama terbuka untuk semua; sisanya untuk anggota. Ketuk satu modul untuk membukanya di halaman belajarnya sendiri.</p>
     <p class="catatan">Sudah membaca? <a href="kuis.html" style="font-weight:700">Uji diri di Kuis Crypto →</a></p>
   </div>
 </section>
 
+<div class="kemajuan" id="kemajuan" hidden></div>
 <div class="daftar-modul" id="daftar"></div>
+</div>
 
-<section class="baca-modul" id="baca" hidden></section>
+<div class="baca-batang" id="batang"></div>
+<div id="halaman-modul" hidden></div>
 
 <footer class="kaki">
   <div>
@@ -426,17 +478,22 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
   const anggota = !!(p && p.disetujui);
   const bolehBaca = m => m.terbuka || anggota;
 
-  $('daftar').innerHTML = MODUL.map(m => `<button class="kartu modul-kartu${bolehBaca(m) ? '' : ' terkunci'}" data-n="${m.nomor}">
-    <span class="nomor">Modul ${m.nomor}</span>
-    <h3 class="serif">${esc(m.judul)}</h3>
-    <p>${esc(m.ringkas)}</p>
-    <span class="status">${bolehBaca(m) ? 'Baca →' : 'Untuk anggota'}</span>
-  </button>`).join('');
+  // Dua tampilan dalam satu berkas:
+  //   modul.html       -> indeks: kartu sembilan modul + kemajuan belajar
+  //   modul.html?m=3   -> halaman khusus Modul 3: kepala, daftar isi, isi per bagian, tandai selesai, sebelum/berikutnya
+  // Tautan lama modul.html#modul-3 dialihkan ke bentuk baru.
+  const dariHash = Number((location.hash.match(/^#modul-(\d+)/) || [])[1]);
+  if (dariHash) { location.replace('modul.html?m=' + dariHash); return; }
+  const nomorKini = Number(new URLSearchParams(location.search).get('m')) || 0;
 
-  // Isi modul ditulis sebagai HTML datar (h3, p, table, ol, ...). Fungsi ini
-  // mengelompokkan setiap <h3> beserta semua yang ada di bawahnya — sampai <h3>
-  // berikutnya — ke dalam satu kartu <section class="blok">. Jenis bagiannya
-  // ditebak dari kata di judul supaya warna penandanya konsisten di semua modul.
+  // Kemajuan belajar disimpan di perangkat ini saja (localStorage) — cukup untuk penanda pribadi.
+  const bacaSelesai = () => { try { return new Set(JSON.parse(localStorage.getItem('modul-selesai') || '[]')); } catch { return new Set(); } };
+  const simpanSelesai = set => { try { localStorage.setItem('modul-selesai', JSON.stringify([...set])); } catch {} };
+  const menit = m => Math.max(2, Math.round(m.isi.replace(/<[^>]+>/g, ' ').split(/\s+/).length / 200));
+
+  // Isi modul ditulis sebagai HTML datar (h3, p, table, ol, ...). Fungsi ini mengelompokkan setiap <h3>
+  // beserta semua yang di bawahnya ke dalam satu kartu <section class="blok" id="bagian-N">, sekaligus
+  // mengumpulkan daftar isi. Jenis bagian ditebak dari kata di judul supaya warna penandanya konsisten.
   const JENIS = [
     [/konsep/i, 'konsep', 'Konsep'],
     [/istilah/i, 'istilah', 'Istilah'],
@@ -447,7 +504,7 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
   ];
   function blokkan(html) {
     const t = document.createElement('template'); t.innerHTML = html;
-    const wadah = document.createElement('div');
+    const wadah = document.createElement('div'), isi = [];
     let blok = null;
     for (const node of [...t.content.childNodes]) {
       const el = node.nodeType === 1 ? node : null;
@@ -456,33 +513,89 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
         const judul = el.textContent || '';
         const cocok = JENIS.find(([re]) => re.test(judul));
         blok.className = 'blok ' + (cocok ? cocok[1] : 'konsep');
+        blok.id = 'bagian-' + (isi.length + 1);
         el.dataset.label = cocok ? cocok[2] : 'Bagian';
+        isi.push([blok.id, judul.replace(/:.*$/, '')]);
         wadah.append(blok);
       }
+      if (el && el.classList.contains('batas-berlaku')) { el.id = 'bagian-' + (isi.length + 1); isi.push([el.id, 'Batas keberlakuan']); }
       // Sumber dan salam penutup berdiri di luar kartu, sebagai kaki halaman.
       if (el && (el.classList.contains('sumber') || /^semoga bermanfaat/i.test((el.textContent || '').trim()))) blok = null;
       if (!blok && node.nodeType === 3 && !node.textContent.trim()) continue;
       (blok || wadah).append(node);
     }
-    return wadah.innerHTML;
+    return { html: wadah.innerHTML, isi };
   }
 
-  function buka(n, gulir = true) {
-    const m = MODUL.find(x => x.nomor === n); if (!m) return;
-    document.querySelectorAll('.modul-kartu').forEach(k => k.classList.toggle('aktif', Number(k.dataset.n) === n));
-    const sebelum = MODUL.find(x => x.nomor === n - 1), sesudah = MODUL.find(x => x.nomor === n + 1);
-    const navigasi = `<div class="nav-modul">${sebelum ? `<a class="kedua tbl" href="#modul-${sebelum.nomor}">← Modul ${sebelum.nomor}</a>` : '<span></span>'}${sesudah ? `<a class="utama tbl" href="#modul-${sesudah.nomor}">Modul ${sesudah.nomor} →</a>` : ''}</div>`;
-    $('baca').hidden = false;
-    $('baca').innerHTML = bolehBaca(m)
-      ? `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><div class="sub">Format kelas: konsep → istilah → aturan baca → contoh → batas keberlakuan.</div>${blokkan(m.isi)}${navigasi}`
-      : `<div class="mata">Modul ${m.nomor}</div><h2 class="serif">${esc(m.judul)}</h2><p>${esc(m.ringkas)}</p><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–9 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">${p ? '<a class="utama" href="masuk.html">Selesaikan langganan</a>' : '<a class="utama" href="masuk.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=modul.html">Sudah anggota? Masuk</a>'}</div></div>${navigasi}`;
-    history.replaceState(null, '', `#modul-${n}`);
-    if (gulir) $('baca').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function tampilIndeks() {
+    const beres = bacaSelesai(), n = MODUL.filter(m => beres.has(m.nomor)).length;
+    $('kemajuan').hidden = false;
+    $('kemajuan').innerHTML = '<span>' + n + ' dari ' + MODUL.length + ' modul selesai</span><div class="meter"><i style="width:' + Math.round(n / MODUL.length * 100) + '%"></i></div>';
+    $('daftar').innerHTML = MODUL.map(m => {
+      const boleh = bolehBaca(m), sudah = beres.has(m.nomor);
+      return '<a class="kartu modul-kartu' + (boleh ? '' : ' terkunci') + (sudah ? ' selesai' : '') + '" href="modul.html?m=' + m.nomor + '">' +
+        '<span class="nomor">Modul ' + m.nomor + '</span><h3 class="serif">' + esc(m.judul) + '</h3><p>' + esc(m.ringkas) + '</p>' +
+        '<span class="meta">± ' + menit(m) + ' menit baca</span>' +
+        '<span class="status">' + (!boleh ? 'Untuk anggota' : sudah ? '✓ Selesai · baca lagi →' : 'Mulai belajar →') + '</span></a>';
+    }).join('');
   }
-  $('daftar').addEventListener('click', e => { const b = e.target.closest('.modul-kartu'); if (b) buka(Number(b.dataset.n)); });
-  window.addEventListener('hashchange', () => { const n = Number((location.hash.match(/modul-(\d+)/) || [])[1]); if (n) buka(n); });
-  const awal = Number((location.hash.match(/modul-(\d+)/) || [])[1]);
-  buka(awal || 1, !!awal);
+
+  function tampilModul(m) {
+    $('indeks').hidden = true;
+    const wadah = $('halaman-modul'); wadah.hidden = false;
+    document.title = 'Modul ' + m.nomor + ': ' + m.judul + ' — Hanif Dossier Crypto';
+    const beres = bacaSelesai(), boleh = bolehBaca(m);
+    const sebelum = MODUL.find(x => x.nomor === m.nomor - 1), sesudah = MODUL.find(x => x.nomor === m.nomor + 1);
+    const navigasi = '<div class="nav-modul">' +
+      (sebelum ? '<a href="modul.html?m=' + sebelum.nomor + '"><small>← Modul ' + sebelum.nomor + '</small><b>' + esc(sebelum.judul) + '</b></a>' : '<a href="modul.html"><small>← Kembali</small><b>Semua modul</b></a>') +
+      (sesudah ? '<a class="lanjut" href="modul.html?m=' + sesudah.nomor + '"><small>Modul ' + sesudah.nomor + ' →</small><b>' + esc(sesudah.judul) + '</b></a>' : '<a class="lanjut" href="kuis.html"><small>Selesai semua →</small><b>Uji diri di Kuis Crypto</b></a>') + '</div>';
+    const langkah = '<div class="langkah" aria-label="Pindah modul">' + MODUL.map(x => '<a href="modul.html?m=' + x.nomor + '" title="' + esc(x.judul) + '" class="' + (x.nomor === m.nomor ? 'kini' : beres.has(x.nomor) ? 'beres' : '') + '">' + x.nomor + '</a>').join('') + '</div>';
+    const hasil = boleh ? blokkan(m.isi) : null;
+    const kepala = '<a class="kembali" href="modul.html">← Semua modul</a>' +
+      '<header class="kepala-modul"><div class="mata">Modul ' + m.nomor + ' dari ' + MODUL.length + '</div><h1 class="serif">' + esc(m.judul) + '</h1><p>' + esc(m.ringkas) + '</p>' +
+      '<div class="cip">' + (boleh ? '<span>± ' + menit(m) + ' menit baca</span><span>' + hasil.isi.length + ' bagian</span>' : '') + '<span class="' + (m.terbuka ? '' : 'pasir') + '">' + (m.terbuka ? 'Terbuka untuk semua' : 'Khusus anggota') + '</span>' + (beres.has(m.nomor) ? '<span>✓ Sudah selesai</span>' : '') + '</div>' + langkah + '</header>';
+    if (!boleh) {
+      wadah.innerHTML = kepala + '<section class="baca-modul" style="max-width:none"><div class="kunci"><h3 class="serif">Modul ini untuk anggota</h3><p>Modul 3–9 adalah bagian dari langganan, bersama empat laporan pagi dan dossier token.</p><div class="tombol" style="justify-content:center">' +
+        (p ? '<a class="utama" href="masuk.html">Selesaikan langganan</a>' : '<a class="utama" href="masuk.html">Lihat paket langganan</a><a class="kedua" href="masuk.html?ke=' + encodeURIComponent('modul.html?m=' + m.nomor) + '">Sudah anggota? Masuk</a>') + '</div></div>' + navigasi + '</section>';
+      return;
+    }
+    wadah.innerHTML = kepala + '<div class="tata-modul">' +
+      '<aside><details class="isi-modul" id="isi-modul"><summary>Daftar isi</summary><ol>' + hasil.isi.map(([id, judul]) => '<li><a href="#' + id + '">' + esc(judul) + '</a></li>').join('') + '</ol></details></aside>' +
+      '<article class="baca-modul">' + hasil.html +
+      '<div class="kotak-selesai"><div><b id="selesai-judul"></b><span id="selesai-teks"></span></div><div class="aksi"><button type="button" class="utama tbl" id="tandai"></button><a class="kedua tbl" href="kuis.html">Uji di Kuis →</a></div></div>' +
+      navigasi + '</article></div>';
+
+    // Daftar isi: terbuka di layar lebar, terlipat di HP (diketuk untuk membuka) — tanpa geser ke samping.
+    const lebar = matchMedia('(min-width:861px)');
+    const aturIsi = () => { $('isi-modul').open = lebar.matches; }; aturIsi(); lebar.addEventListener('change', aturIsi);
+    wadah.querySelectorAll('.isi-modul a').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault(); if (!lebar.matches) $('isi-modul').open = false;
+      document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    // Penanda bagian yang sedang dibaca + batang kemajuan baca di tepi atas.
+    const tautanIsi = [...wadah.querySelectorAll('.isi-modul a')], bagian = tautanIsi.map(a => document.getElementById(a.getAttribute('href').slice(1)));
+    const artikel = wadah.querySelector('article.baca-modul');
+    const gulir = () => {
+      let kini = 0; bagian.forEach((b, i) => { if (b.getBoundingClientRect().top < 140) kini = i; });
+      tautanIsi.forEach((a, i) => a.classList.toggle('kini', i === kini));
+      const r = artikel.getBoundingClientRect(), jarak = r.height - innerHeight * .6;
+      $('batang').style.width = Math.max(0, Math.min(100, (-r.top + 120) / Math.max(1, jarak) * 100)) + '%';
+    };
+    addEventListener('scroll', gulir, { passive: true }); gulir();
+    // Tandai selesai (bisa dibatalkan).
+    const gambarSelesai = () => {
+      const sudah = bacaSelesai().has(m.nomor);
+      $('selesai-judul').textContent = sudah ? '✓ Modul ' + m.nomor + ' sudah selesai' : 'Sudah paham isi modul ini?';
+      $('selesai-teks').textContent = sudah ? 'Tercatat di perangkat ini. Lanjut ke modul berikutnya atau uji diri di kuis.' : 'Tandai selesai supaya kemajuan belajarmu tercatat di halaman Modul.';
+      $('tandai').textContent = sudah ? 'Batalkan tanda' : 'Tandai selesai';
+      $('tandai').className = (sudah ? 'kedua' : 'utama') + ' tbl';
+    };
+    $('tandai').addEventListener('click', () => { const set = bacaSelesai(); set.has(m.nomor) ? set.delete(m.nomor) : set.add(m.nomor); simpanSelesai(set); gambarSelesai(); });
+    gambarSelesai();
+  }
+
+  const modulKini = MODUL.find(x => x.nomor === nomorKini);
+  if (modulKini) tampilModul(modulKini); else tampilIndeks();
 })();
 </script>
 </body>

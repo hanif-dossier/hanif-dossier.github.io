@@ -315,7 +315,7 @@ function jawab(indeksAsli) {
     else b.classList.add('redup');
   });
 
-  const tautan = s.modul ? ` <a href="modul.html#modul-${s.modul}">Pelajari di Modul ${s.modul} →</a>` : '';
+  const tautan = s.modul ? ` <a href="modul.html?m=${s.modul}">Pelajari di Modul ${s.modul} →</a>` : '';
   const asal = s.sumber ? `<span class="asal">Sumber: ${s.sumber}</span>` : '';
   $('penjelasan').className = 'penjelasan' + (tepat ? '' : ' meleset');
   $('penjelasan').innerHTML = `<b class="vonis"></b>${s.jelas}${tautan}${asal}`;
@@ -378,7 +378,7 @@ function selesai() {
 
   const meleset = main.soal.filter((_, i) => !main.hasil[i]);
   $('ulasan').innerHTML = meleset.length ? `<h3 class="serif">Yang perlu dibaca ulang</h3><ol>${meleset.map(s => `
-    <li><b></b><div class="jawab">Jawaban: <b></b></div>${s.modul ? `<a href="modul.html#modul-${s.modul}">Modul ${s.modul} →</a>` : ''}</li>`).join('')}</ol>` : '';
+    <li><b></b><div class="jawab">Jawaban: <b></b></div>${s.modul ? `<a href="modul.html?m=${s.modul}">Modul ${s.modul} →</a>` : ''}</li>`).join('')}</ol>` : '';
   $('ulasan').querySelectorAll('li').forEach((li, i) => {
     li.firstElementChild.textContent = meleset[i].tanya;
     li.querySelector('.jawab b').textContent = meleset[i].pilihan[0];

@@ -340,7 +340,10 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
     t.addEventListener('click', () => akun.pilihPaket(t.dataset.paket));
   });
   // Sudah masuk? Langsung arahkan.
-  const p = pSekarang;
+  let p = pSekarang;
+  // Akun yang lahir dari Markasku (satu basis akun) tidak otomatis jadi pendaftar Dossier.
+  // Baru ketika pemiliknya sengaja masuk ke sini, ia dicatat sebagai pendaftar (RPC gabung_dossier).
+  if (p && !p.anggota) { try { await akun.sb.rpc('gabung_dossier'); p = await akun.profil(); } catch {} }
   if (p) { if (p.disetujui && location.hash !== '#status') { location.replace(ke); return; } tampilkanStatus(p); }
 
   document.querySelectorAll('.tab button').forEach(b => b.addEventListener('click', () => {
