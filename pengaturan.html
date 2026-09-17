@@ -26,6 +26,7 @@ h1{font-size:2.1rem;line-height:1.1;margin:4px 0 18px}
 /* Tata letak ala menu pengaturan game: daftar bagian di kiri, satu panel di kanan. */
 .tata{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}
 .sisi{position:sticky;top:14px}
+.sisi,.panel-wadah{min-width:0}   /* item grid tidak boleh melebar mengikuti isi yang bisa digeser */
 .tab-set{display:flex;flex-direction:column;gap:6px;background:var(--kartu);border:1px solid var(--gr);border-radius:22px;padding:10px;box-shadow:var(--bayang)}
 .tab-set button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;border:0;border-radius:14px;background:transparent;font:inherit;color:var(--tx2);cursor:pointer;position:relative;transition:background .15s,color .15s,transform .15s}
 .tab-set button:hover{background:var(--lembut);transform:translateX(2px)}
