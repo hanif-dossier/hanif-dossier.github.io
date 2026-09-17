@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengaturan — Hanif Dossier Crypto</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="ikon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+:root{color-scheme:light;--bg:#f6f5f0;--bg2:#eef2ec;--kartu:#fff;--tx:#2b3330;--tx2:#58635e;--lb:#7b8781;--redup:#a3aca7;--gr:#e6e9e4;--lembut:#eef2ec;--sage:#4f7a68;--sage-tua:#365446;--sage-lembut:#dfe9e1;--pasir:#f3e9d8;--pasir-tua:#8a6a2e;--bata:#b86b5c;--bata-lembut:#f6e4df;--bayang:0 10px 30px rgba(43,51,48,.06)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--tx);font:15px/1.6 "Nunito Sans","Segoe UI",system-ui,sans-serif}
+.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+.atas{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.merek{display:flex;align-items:center;gap:12px}
+.merek .daun{width:40px;height:40px;border-radius:50%;background:var(--sage-lembut);display:grid;place-items:center;flex:none}
+.merek b{display:block;font-size:15px}.merek small{color:var(--lb);font-size:12px}
+.pil-peran{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:2px;background:var(--lembut);color:var(--lb)}
+.pil-peran.owner{background:#2b3330;color:#f3e9d8}.pil-peran.admin{background:var(--pasir);color:var(--pasir-tua)}.pil-peran.anggota{background:var(--sage-lembut);color:var(--sage-tua)}
+.mata{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-top:30px}
+h1{font-size:2.1rem;line-height:1.1;margin:4px 0 6px}
+.pengantar{color:var(--tx2);margin:0 0 22px;max-width:60ch}
+.kisi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media(max-width:820px){.kisi{grid-template-columns:1fr}}
+.kartu{background:var(--kartu);border-radius:22px;padding:22px 24px;box-shadow:var(--bayang);border:1px solid var(--gr)}
+.kartu.lebar{grid-column:1/-1}
+.kartu h2{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-size:1.25rem}
+.kartu h2 .ik{width:34px;height:34px;border-radius:10px;background:var(--lembut);display:grid;place-items:center;flex:none}
+.kartu h2 .ik svg{width:17px;height:17px;stroke:var(--sage);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kartu .ket{margin:0 0 14px;color:var(--lb);font-size:13px}
+.baris{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--gr);font-size:14px}
+.baris:first-of-type{border-top:0}
+.baris .k{color:var(--lb)}.baris .v{font-weight:600;text-align:right}
+.status-pil{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.status-pil.aktif{background:var(--sage-lembut);color:var(--sage-tua)}
+.status-pil.menunggu{background:var(--pasir);color:var(--pasir-tua)}
+.status-pil.habis{background:var(--bata-lembut);color:var(--bata)}
+.meter{height:8px;border-radius:999px;background:var(--lembut);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--sage);border-radius:999px}
+label{display:block;font-size:13px;font-weight:700;color:var(--tx2);margin:10px 0 5px}
+input[type=password],input[type=text]{width:100%;padding:11px 13px;border:1px solid #d9dfda;border-radius:12px;font:inherit;font-size:15px;background:#fff;color:var(--tx)}
+input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
+.tombol{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid transparent;font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
+.tombol.utama{background:var(--sage);color:#fff}.tombol.utama:hover{background:var(--sage-tua)}
+.tombol.kedua{background:var(--kartu);border-color:#d9dfda;color:var(--tx)}.tombol.kedua:hover{border-color:var(--sage)}
+.tombol.bahaya{background:var(--bata-lembut);color:var(--bata)}
+.tombol:disabled{opacity:.55;cursor:default}
+.tombol-baris{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pesan{margin-top:12px;padding:10px 12px;border-radius:12px;font-size:13.5px;display:none}
+.pesan.baik{display:block;background:var(--sage-lembut);color:var(--sage-tua)}
+.pesan.salah{display:block;background:var(--bata-lembut);color:var(--bata)}
+.pesan.info{display:block;background:var(--pasir);color:var(--pasir-tua)}
+.saklar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--gr)}
+.saklar:first-of-type{border-top:0}
+.saklar b{display:block;font-size:14px}.saklar small{color:var(--lb);font-size:12.5px}
+.saklar input{appearance:none;width:44px;height:26px;border-radius:999px;background:#d9dfda;position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
+.saklar input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
+.saklar input:checked{background:var(--sage)}.saklar input:checked::after{left:21px}
+.saklar input:disabled{opacity:.5;cursor:default}
+.perangkat{list-style:none;margin:10px 0 0;padding:0;font-size:13.5px}
+.perangkat li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--gr)}
+.perangkat li span small{color:var(--lb);display:block}
+.perangkat button{border:0;background:transparent;color:var(--bata);font:inherit;font-weight:700;cursor:pointer;font-size:13px}
+.perangkat .ini{color:var(--sage);font-weight:700;font-size:12px}
+.tautan-lain a{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--gr);color:var(--tx);text-decoration:none;font-size:14px;font-weight:600}
+.tautan-lain a:first-child{border-top:0}
+.tautan-lain a span{color:var(--lb);font-weight:400}
+.kaki{text-align:center;font-size:12px;color:#a3aca7;padding:16px}
+
+<!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
+</style>
+<meta name="theme-color" content="#4f7a68">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hanif Dossier">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="ikon-180.png?v=1">
+<link rel="stylesheet" href="aplikasi.css?v=3">
+<script src="aplikasi.js?v=3" defer></script>
+</head>
+<body>
+<main>
+<header class="atas">
+  <div class="merek">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto <span id="peran" class="pil-peran"></span></b><small>pengaturan akun &amp; aplikasi</small></div>
+  </div>
+  <nav class="menu">
+    <a href="dasbor.html">Beranda</a>
+    <a href="laporan.html?h=briefing" data-anggota hidden>Briefing</a>
+    <a href="laporan.html?h=radar" data-anggota hidden>Radar</a>
+    <a href="laporan.html?h=schedule" data-anggota hidden>Schedule</a>
+    <a href="laporan.html?h=screening" data-anggota hidden>Screening</a>
+    <a href="pasar.html">Pasar</a>
+    <a href="bitcoin.html">Bitcoin</a>
+    <a href="kelas.html">Kelas</a>
+    <a href="modul.html">Modul</a>
+    <a href="kuis.html">Kuis</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a class="aktif" href="pengaturan.html">Pengaturan</a>
+    <a href="tentang.html">Tentang</a>
+    <a href="#" data-keluar>Keluar</a>
+  </nav>
+</header>
+
+<div class="mata">Pengaturan</div>
+<h1 class="serif">Akun, langganan, notifikasi, aplikasi.</h1>
+<p class="pengantar">Semua yang mengatur cara Hanif Dossier melayanimu ada di sini — di halaman lain hanya ada laporannya.</p>
+
+<div class="kisi">
+
+  <section class="kartu" id="akun">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Akun</h2>
+    <p class="ket">Identitas yang dipakai untuk masuk dan menerima kabar.</p>
+    <div class="baris"><span class="k">Nama</span><span class="v" id="akun-nama">…</span></div>
+    <div class="baris"><span class="k">Email</span><span class="v" id="akun-email">…</span></div>
+    <div class="baris"><span class="k">Peran</span><span class="v" id="akun-peran">…</span></div>
+    <div class="baris"><span class="k">Bergabung</span><span class="v" id="akun-sejak">…</span></div>
+    <div class="baris"><span class="k">Telegram</span><span class="v" id="akun-telegram">…</span></div>
+    <div class="tombol-baris"><button class="tombol kedua" type="button" id="ubah-nama">Ubah nama</button><button class="tombol bahaya" type="button" data-keluar>Keluar dari akun</button></div>
+    <div class="pesan" id="akun-pesan"></div>
+  </section>
+
+  <section class="kartu" id="langganan">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>Langganan</h2>
+    <p class="ket">Status akses ke laporan dan dossier.</p>
+    <div class="baris"><span class="k">Status</span><span class="v" id="lg-status">…</span></div>
+    <div class="baris"><span class="k">Paket</span><span class="v" id="lg-paket">…</span></div>
+    <div class="baris"><span class="k">Berlaku sampai</span><span class="v" id="lg-sampai">…</span></div>
+    <div class="baris"><span class="k">Sisa masa</span><span class="v" id="lg-sisa">…</span></div>
+    <div class="meter" id="lg-meter" hidden><i style="width:0%"></i></div>
+    <div class="tombol-baris" id="lg-aksi"></div>
+    <ul class="perangkat" id="lg-riwayat"></ul>
+  </section>
+
+  <section class="kartu lebar" id="notifikasi">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0v5l2 3H4l2-3z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>Notifikasi</h2>
+    <p class="ket">Dikirim ke perangkat yang kamu nyalakan, begitu laporannya terunggah. Tanpa iklan, tanpa pengingat lain.</p>
+    <div class="kisi" style="gap:14px 28px">
+      <div>
+        <div class="saklar"><div><b>Perangkat ini</b><small id="notif-ket">Memeriksa…</small></div><input type="checkbox" id="notif-ini" disabled></div>
+        <div class="saklar"><div><b>Briefing pagi</b><small>Sekitar 06.10 WIB · judul + kalimat pertama "Yang Paling Penting Hari Ini"</small></div><input type="checkbox" id="jenis-briefing" data-jenis="briefing" checked></div>
+        <div class="saklar"><div><b>Screening altcoin</b><small>Sekitar 06.30 WIB · saat daftar pendek hari itu terbit</small></div><input type="checkbox" id="jenis-screening" data-jenis="screening" checked></div>
+        <div class="pesan" id="notif-pesan"></div>
+      </div>
+      <div>
+        <b style="font-size:14px">Perangkat yang berlangganan</b>
+        <ul class="perangkat" id="notif-perangkat"><li><span>Memuat…</span></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="kartu" id="sandi">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>Kata sandi</h2>
+    <p class="ket">Minimal 6 karakter. Berlaku untuk semua perangkat setelah disimpan.</p>
+    <form id="form-sandi" autocomplete="off">
+      <label for="sandi-baru">Kata sandi baru</label><input id="sandi-baru" type="password" minlength="6" required autocomplete="new-password">
+      <label for="sandi-ulang">Ulangi</label><input id="sandi-ulang" type="password" minlength="6" required autocomplete="new-password">
+      <div class="tombol-baris"><button class="tombol utama" type="submit" id="simpan-sandi">Simpan kata sandi</button></div>
+    </form>
+    <div class="pesan" id="sandi-pesan"></div>
+  </section>
+
+  <section class="kartu" id="aplikasi">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Aplikasi</h2>
+    <p class="ket">Pasang di layar utama supaya terbuka tanpa bilah alamat.</p>
+    <div class="baris"><span class="k">Keadaan</span><span class="v" id="app-status">…</span></div>
+    <div class="baris"><span class="k">Versi tampilan</span><span class="v">17 Sep 2026</span></div>
+    <div class="tombol-baris">
+      <button class="tombol utama" type="button" id="tombol-pasang" disabled>Pasang aplikasi</button>
+      <a class="tombol kedua" href="pasang.html">Cara memasang</a>
+      <button class="tombol kedua" type="button" id="segarkan">Segarkan aplikasi</button>
+    </div>
+    <div class="pesan" id="app-pesan"></div>
+  </section>
+
+  <section class="kartu lebar" id="lainnya">
+    <h2 class="serif"><span class="ik"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>Lainnya</h2>
+    <div class="tautan-lain">
+      <a id="tautan-telegram" href="#" target="_blank" rel="noopener">Bot Telegram Hanif Dossier <span>langganan, konfirmasi, tanya →</span></a>
+      <a href="https://ig.me/m/hanif.dossiercrypto" target="_blank" rel="noopener">Instagram <span>pesan langsung →</span></a>
+      <a href="tentang.html">Tentang Hanif Dossier <span>metode, harga, siapa di baliknya →</span></a>
+      <a href="privasi.html">Privasi <span>data apa yang disimpan →</span></a>
+    </div>
+  </section>
+
+</div>
+</main>
+<div class="kaki">Riset dan analisis, bukan nasihat investasi berizin.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const pesan = (id, teks, jenis) => { const p = $(id); p.textContent = teks; p.className = 'pesan ' + (jenis || ''); if (!teks) p.className = 'pesan'; };
+  const tgl = s => s ? new Date(s).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+
+  // Anggota yang belum disetujui boleh masuk ke sini (melihat status langganannya).
+  const p = await akun.wajibMasuk({ bolehTamu: true });
+  await akun.pasangMenu();
+  const a = p.anggota || {};
+
+  // ---- Akun
+  $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[p.peran] || 'Tamu';
+  $('peran').className = 'pil-peran ' + p.peran;
+  $('akun-nama').textContent = a.nama || (p.pengguna.user_metadata && p.pengguna.user_metadata.nama) || '—';
+  $('akun-email').textContent = p.pengguna.email;
+  $('akun-peran').textContent = { owner: 'Pemilik', admin: 'Admin', anggota: 'Anggota', tamu: 'Terdaftar, menunggu konfirmasi' }[p.peran];
+  $('akun-sejak').textContent = tgl(a.dibuat_pada || p.pengguna.created_at);
+  $('akun-telegram').textContent = a.telegram_chat_id ? 'Tersambung' : 'Belum tersambung';
+  $('ubah-nama').onclick = async () => {
+    const baru = prompt('Nama yang ingin ditampilkan:', a.nama || '');
+    if (baru == null || !baru.trim()) return;
+    const { error } = await akun.sb.from('anggota').update({ nama: baru.trim() }).eq('id', p.pengguna.id);
+    if (error) return pesan('akun-pesan', 'Gagal mengubah nama: ' + error.message, 'salah');
+    $('akun-nama').textContent = baru.trim(); pesan('akun-pesan', 'Nama disimpan.', 'baik');
+  };
+  document.querySelectorAll('[data-keluar]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); akun.keluar(); }));
+
+  // ---- Langganan
+  const hariIni = new Date(); hariIni.setHours(0, 0, 0, 0);
+  const sampai = a.langganan_sampai ? new Date(a.langganan_sampai + 'T00:00:00') : null;
+  const sisaHari = sampai ? Math.ceil((sampai - hariIni) / 86400000) : null;
+  const paket = a.paket ? (a.paket === 'tahunan' ? 'Tahunan' : 'Bulanan') : (p.admin ? 'Akses pemilik' : '—');
+  let status, kelas;
+  if (p.admin) { status = 'Aktif · tanpa batas'; kelas = 'aktif'; }
+  else if (a.status === 'disetujui' && (!sampai || sisaHari >= 0)) { status = 'Aktif'; kelas = 'aktif'; }
+  else if (a.status === 'disetujui') { status = 'Habis'; kelas = 'habis'; }
+  else if (a.status === 'ditolak') { status = 'Ditolak'; kelas = 'habis'; }
+  else { status = 'Menunggu konfirmasi'; kelas = 'menunggu'; }
+  $('lg-status').innerHTML = `<span class="status-pil ${kelas}">${status}</span>`;
+  $('lg-paket').textContent = paket;
+  $('lg-sampai').textContent = p.admin || (!sampai && a.status === 'disetujui') ? 'Tanpa batas' : tgl(a.langganan_sampai);
+  $('lg-sisa').textContent = sampai && !p.admin ? (sisaHari >= 0 ? `${sisaHari} hari` : `lewat ${-sisaHari} hari`) : (kelas === 'aktif' ? 'Tanpa batas' : '—');
+  if (sampai && !p.admin && kelas === 'aktif') {
+    const total = a.paket === 'tahunan' ? 365 : 30; $('lg-meter').hidden = false;
+    $('lg-meter').firstElementChild.style.width = Math.max(2, Math.min(100, sisaHari / total * 100)) + '%';
+  }
+  const aksi = $('lg-aksi');
+  if (!p.admin && (kelas !== 'aktif' || (sisaHari != null && sisaHari <= 7))) {
+    aksi.innerHTML = `<a class="tombol utama" href="${akun.tautanLangganan ? akun.tautanLangganan(a.paket || 'bulanan') : 'masuk.html'}" target="_blank" rel="noopener">${kelas === 'aktif' ? 'Perpanjang lewat Telegram' : kelas === 'menunggu' ? 'Lanjutkan pembayaran di Telegram' : 'Berlangganan lagi'}</a>`;
+  }
+  try {
+    const { data: byr } = await akun.sb.from('pembayaran').select('paket,status,dibuat_pada,diputuskan_pada').eq('anggota_id', p.pengguna.id).order('dibuat_pada', { ascending: false }).limit(5);
+    if (byr && byr.length) $('lg-riwayat').innerHTML = '<li style="border-top:0;padding-top:14px"><span><b>Riwayat pembayaran</b></span></li>' +
+      byr.map(b => `<li><span>${b.paket === 'tahunan' ? 'Tahunan' : 'Bulanan'}<small>${tgl(b.dibuat_pada)}</small></span><span class="status-pil ${b.status === 'disetujui' ? 'aktif' : b.status === 'ditolak' ? 'habis' : 'menunggu'}">${b.status}</span></li>`).join('');
+  } catch {}
+
+  // ---- Notifikasi
+  const N = window.notifBriefing;
+  const saklar = $('notif-ini'), ket = $('notif-ket');
+  const kotakJenis = [...document.querySelectorAll('[data-jenis]')];
+  const bacaJenis = () => Object.fromEntries(kotakJenis.map(k => [k.dataset.jenis, k.checked]));
+  const tunggu = async () => { for (let i = 0; i < 20 && !window.notifBriefing; i++) await new Promise(r => setTimeout(r, 100)); return window.notifBriefing; };
+  const nb = await tunggu();
+  const daftarPerangkat = async () => {
+    const sub = await nb.langganan();
+    const { data, error } = await akun.sb.from('dossier_push').select('endpoint,perangkat,dibuat,jenis').order('dibuat', { ascending: false });
+    const ul = $('notif-perangkat');
+    if (error) { ul.innerHTML = `<li><span>${/jenis/i.test(error.message) ? 'Kolom pilihan jenis belum dibuat di database — jalankan SQL-nya dulu.' : 'Tidak bisa memuat: ' + error.message}</span></li>`; return; }
+    if (!data.length) { ul.innerHTML = '<li><span>Belum ada perangkat. Nyalakan saklar "Perangkat ini" di kiri.</span></li>'; return; }
+    ul.innerHTML = data.map(d => `<li><span>${d.perangkat || 'Perangkat'}${sub && sub.endpoint === d.endpoint ? ' <span class="ini">· ini</span>' : ''}<small>${tgl(d.dibuat)} · ${Object.entries(d.jenis || {}).filter(([, v]) => v).map(([k]) => k).join(', ') || 'semua'}</small></span><button type="button" data-hapus="${encodeURIComponent(d.endpoint)}">hapus</button></li>`).join('');
+    ul.querySelectorAll('[data-hapus]').forEach(b => b.onclick = async () => {
+      const ep = decodeURIComponent(b.dataset.hapus);
+      if (sub && sub.endpoint === ep) await nb.matikan(); else await akun.sb.from('dossier_push').delete().eq('endpoint', ep);
+      await segarNotif();
+    });
+  };
+  const segarNotif = async () => {
+    if (!nb.didukung()) { ket.textContent = nb.iOS ? 'Di iPhone: pasang dulu ke Layar Utama, lalu buka dari ikonnya.' : 'Browser ini tidak mendukung notifikasi dorong.'; saklar.disabled = true; kotakJenis.forEach(k => k.disabled = true); await daftarPerangkat(); return; }
+    const sub = await nb.langganan();
+    const aktif = !!sub && Notification.permission === 'granted';
+    saklar.checked = aktif; saklar.disabled = false;
+    ket.textContent = aktif ? `Aktif · ${nb.namaPerangkat()}` : Notification.permission === 'denied' ? 'Izin ditolak di browser — buka ikon gembok di bilah alamat untuk mengizinkan.' : 'Belum menyala di perangkat ini.';
+    kotakJenis.forEach(k => k.disabled = !aktif);
+    if (aktif) {
+      const { data } = await akun.sb.from('dossier_push').select('jenis').eq('endpoint', sub.endpoint).maybeSingle();
+      const j = (data && data.jenis) || nb.JENIS_BAWAAN; kotakJenis.forEach(k => k.checked = j[k.dataset.jenis] !== false);
+    }
+    await daftarPerangkat();
+  };
+  saklar.onchange = async () => {
+    saklar.disabled = true; pesan('notif-pesan', '');
+    try {
+      if (saklar.checked) { await nb.nyalakan(bacaJenis()); pesan('notif-pesan', 'Menyala. Notifikasi berikutnya mampir begitu laporannya terbit.', 'baik'); }
+      else { await nb.matikan(); pesan('notif-pesan', 'Dimatikan untuk perangkat ini.', 'info'); }
+    } catch (e) { pesan('notif-pesan', e.message, 'salah'); }
+    await segarNotif();
+  };
+  kotakJenis.forEach(k => k.onchange = async () => { try { await nb.aturJenis(bacaJenis()); pesan('notif-pesan', 'Pilihan disimpan.', 'baik'); await daftarPerangkat(); } catch (e) { pesan('notif-pesan', e.message, 'salah'); } });
+  await segarNotif();
+
+  // ---- Kata sandi
+  $('form-sandi').addEventListener('submit', async e => {
+    e.preventDefault(); pesan('sandi-pesan', '');
+    if ($('sandi-baru').value !== $('sandi-ulang').value) return pesan('sandi-pesan', 'Kedua kata sandi tidak sama.', 'salah');
+    $('simpan-sandi').disabled = true;
+    const { error } = await akun.sb.auth.updateUser({ password: $('sandi-baru').value });
+    $('simpan-sandi').disabled = false;
+    if (error) return pesan('sandi-pesan', /same|different/i.test(error.message) ? 'Kata sandi baru harus berbeda dari yang lama.' : error.message, 'salah');
+    $('form-sandi').reset(); pesan('sandi-pesan', 'Kata sandi diperbarui.', 'baik');
+  });
+
+  // ---- Aplikasi
+  const tp = $('tombol-pasang');
+  const terpasang = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  $('app-status').textContent = terpasang ? 'Terpasang · dibuka sebagai aplikasi' : 'Dibuka lewat browser';
+  const siapPasang = () => { tp.disabled = false; };
+  if (window.__pasangSiap) siapPasang(); window.addEventListener('pasang-siap', siapPasang);
+  if (terpasang) { tp.textContent = 'Sudah terpasang'; }
+  tp.onclick = async () => { const h = await window.pasangAplikasi(); if (h === 'accepted') { tp.textContent = 'Terpasang'; tp.disabled = true; $('app-status').textContent = 'Terpasang'; } };
+  $('segarkan').onclick = async () => {
+    pesan('app-pesan', 'Membersihkan salinan lama…', 'info');
+    try { const regs = await navigator.serviceWorker.getRegistrations(); for (const r of regs) await r.unregister(); const ks = await caches.keys(); for (const k of ks) await caches.delete(k); } catch {}
+    location.reload();
+  };
+
+  // ---- Lainnya
+  $('tautan-telegram').href = 'https://t.me/' + (akun.BOT_TELEGRAM || 'HanifDossierBot');
+})();
+</script>
+</body>
+</html>

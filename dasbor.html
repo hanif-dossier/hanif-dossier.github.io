@@ -148,8 +148,8 @@ body.tamu .daftar-laptop{display:none}
 <meta name="apple-mobile-web-app-title" content="Hanif Dossier">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png?v=1">
-<link rel="stylesheet" href="aplikasi.css?v=1">
-<script src="aplikasi.js?v=2" defer></script>
+<link rel="stylesheet" href="aplikasi.css?v=3">
+<script src="aplikasi.js?v=3" defer></script>
 </head>
 <body>
 <main>
@@ -173,6 +173,7 @@ body.tamu .daftar-laptop{display:none}
     <a href="pustaka.html" id="tautan-pustaka" hidden>Pustaka</a>
     <a href="admin.html" id="tautan-admin" hidden>Anggota</a>
     <a href="tentang.html">Tentang</a>
+    <a href="pengaturan.html">Pengaturan</a>
     <a href="#" id="tautan-keluar">Keluar</a>
   </nav>
 </header>
@@ -187,7 +188,7 @@ body.tamu .daftar-laptop{display:none}
     <div class="tombol">
       <a class="utama" href="laporan.html?h=briefing">Baca briefing hari ini</a>
       <a class="kedua" href="laporan.html?h=radar">Lihat koinku</a>
-      <button class="kedua" id="notif-briefing" type="button" hidden>🔔 Nyalakan notifikasi briefing pagi</button>
+      <a class="kedua" href="pengaturan.html" title="Notifikasi, akun, langganan">⚙ Pengaturan</a>
     </div>
   </div>
 
@@ -303,7 +304,6 @@ body.tamu .daftar-laptop{display:none}
   $('sapa-nama').textContent = namaDepan || 'kawan';
   if (profil.admin) $('tautan-admin').hidden = false;
   if (profil.disetujui) $('tautan-pustaka').hidden = false;
-  if (profil.disetujui && window.notifBriefing && notifBriefing.didukung()) $('notif-briefing').hidden = false;
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[profil.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + profil.peran;
   const tamu = !profil.disetujui;

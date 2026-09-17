@@ -32,3 +32,10 @@ nav.menu a[hidden]{display:none}
 .pasang-aplikasi .ya{background:var(--sage,#4f7a68);color:#fff}
 .pasang-aplikasi .tutup{background:transparent;color:#fff;opacity:.6;padding:8px 6px;font-size:16px;line-height:1}
 .pasang-aplikasi .tutup:hover{opacity:1}
+
+/* Bilah anggota di atas laporan (laporan.html menulis ulang dokumen dengan HTML laporan dari gudang). */
+.bar-anggota{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;padding:10px 16px;background:#f6f5f0;border-bottom:1px solid #e6e9e4;font:14px/1.4 "Nunito Sans","Segoe UI",system-ui,sans-serif;color:#2b3330}
+.bar-anggota .merek-kecil{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#2b3330;font-weight:800;font-size:14px;white-space:nowrap}
+.bar-anggota .merek-kecil svg{background:#dfe9e1;border-radius:50%;padding:6px;width:30px;height:30px}
+.bar-anggota nav.menu{flex:1;min-width:0}
+@media(max-width:720px){.bar-anggota{padding:8px 12px}.bar-anggota .merek-kecil b{display:none}}

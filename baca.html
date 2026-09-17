@@ -28,6 +28,7 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
 @keyframes p{to{transform:rotate(360deg)}}
 .pesan a{color:var(--sage);font-weight:700}
 .kaki{text-align:center;font-size:12px;color:var(--lb);padding:20px}
+.menu-baca{padding:8px 16px;background:var(--bg,#f6f5f0);border-bottom:1px solid #e6e9e4}
 </style>
 
 <!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
@@ -37,8 +38,8 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
 <meta name="apple-mobile-web-app-title" content="Hanif Dossier">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png?v=1">
-<link rel="stylesheet" href="aplikasi.css?v=1">
-<script src="aplikasi.js?v=2" defer></script>
+<link rel="stylesheet" href="aplikasi.css?v=3">
+<script src="aplikasi.js?v=3" defer></script>
 </head>
 <body>
 <div class="bar">
@@ -47,6 +48,9 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
   <div class="hal" id="hal"></div>
   <a class="tab-baru" id="tab-baru" href="#" hidden>Buka di tab baru</a>
 </div>
+<div class="menu-baca"><nav class="menu">
+  <a href="dasbor.html">Beranda</a><a href="laporan.html?h=briefing">Briefing</a><a href="laporan.html?h=radar">Radar</a><a href="laporan.html?h=schedule">Schedule</a><a href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="modul.html">Modul</a><a href="kuis.html">Kuis</a><a class="aktif" href="pustaka.html">Pustaka</a><a href="admin.html" data-admin hidden>Anggota</a><a href="pengaturan.html">Pengaturan</a><a href="tentang.html">Tentang</a><a href="#" data-keluar>Keluar</a>
+</nav></div>
 <div class="isi" id="isi">
   <div class="pesan" id="pesan"><div class="putar"></div><p id="teks">Mengambil berkas dari gudang…</p></div>
 </div>
@@ -66,6 +70,7 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
   const gagal = pesan => { $('pesan').innerHTML = `<p>${pesan}</p><p><a href="pustaka.html">Kembali ke pustaka</a></p>`; };
 
   await akun.wajibMasuk();
+  akun.pasangMenu();
   if (!berkas) return gagal('Berkas tidak disebutkan.');
 
   // Judul dari pustaka.json (cocokkan nama berkas), supaya bilah atas tidak menampilkan nama berkas mentah.
