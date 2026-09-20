@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kelas Crypto & Keuangan — Hanif Dossier Crypto</title>
-<meta name="description" content="Kelas crypto berbahasa Indonesia dalam tiga jalur: teknologi blockchain, analisis pasar dan manajemen risiko, serta riset fundamental dan keuangan pribadi. Setiap kelas berisi pelajaran bertahap dan kuis.">
+<meta name="description" content="Kelas crypto berbahasa Indonesia dalam empat jalur: teknologi blockchain, analisis pasar dan manajemen risiko, riset fundamental dan keuangan pribadi, serta metode riset yang dipakai menyusun dossier Hanif Dossier. Setiap kelas berisi pelajaran bertahap dan kuis.">
 <meta property="og:title" content="Kelas Crypto & Keuangan — Hanif Dossier Crypto">
 <meta property="og:description" content="Belajar crypto dari nol: teknologinya, cara membaca pasarnya, dan keuangan di belakangnya. Pelajaran bertahap, tanda selesai, dan kuis di setiap kelas.">
 <meta property="og:url" content="https://hanif-dossier.github.io/kelas.html">
@@ -74,6 +74,9 @@
 .baca .blok > h3:first-child::before{content:attr(data-label);font-family:"Nunito Sans",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--sage-lembut);color:var(--sage-tua);white-space:nowrap}
 .baca .blok.istilah > h3:first-child::before{background:#e7eef3;color:#4d6b80}.baca .blok.aturan > h3:first-child::before{background:#f3e9d8;color:#8a6a2e}.baca .blok.contoh > h3:first-child::before{background:#f6e4df;color:#9a5144}.baca .blok.rumus > h3:first-child::before{background:#ebe7f3;color:#5a4a82}
 .baca .blok > :last-child{margin-bottom:0}
+/* Keterangan sumber di kaki pelajaran. Wajib ada di tiap pelajaran yang mengutip
+   data atau kerangka pihak lain; dipindahkan dari modul.html saat Modul digabung. */
+.baca .sumber{font-size:12px;color:var(--lb);border-top:1px solid var(--gr);padding-top:10px;margin-top:18px;max-width:860px}
 .baca h3{font-size:1.05rem;margin:22px 0 6px;color:var(--sage-tua)}
 .baca p,.baca li{font-size:15.5px;color:var(--tx2);line-height:1.75}
 .baca p{margin:0 0 10px}
@@ -132,7 +135,7 @@
     <a href="pasar.html" data-sesi hidden>Pasar</a>
     <a href="bitcoin.html" data-sesi hidden>Bitcoin</a>
     <a class="aktif" href="kelas.html">Kelas</a>
-    <a href="modul.html">Modul</a>
+    
     <a href="kuis.html">Kuis</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="masuk.html#status" data-menunggu hidden>Status akun</a>
@@ -168,6 +171,7 @@
 <script src="kelas/risiko.js"></script>
 <script src="kelas/riset.js"></script>
 <script src="kelas/uang.js"></script>
+<script src="kelas/metode.js"></script>
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
 // PENGATURAN
@@ -190,6 +194,7 @@ const IKON = {
   risiko:   '<path d="M32 8L8 52h48L32 8z"/><path d="M32 26v12M32 44v2"/>',
   riset:    '<circle cx="28" cy="28" r="16"/><path d="M40 40l14 14"/><path d="M22 30l5 5 9-11"/>',
   uang:     '<rect x="8" y="18" width="48" height="30" rx="5"/><circle cx="32" cy="33" r="7"/><path d="M8 26h6M50 40h6"/>',
+  metode:   '<circle cx="32" cy="32" r="24"/><path d="M42 22L36 36 22 42l6-14z"/>',
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -244,7 +249,7 @@ function tampilKatalog(filter) {
     <section class="sambut" style="grid-template-columns:1fr"><div class="sapa" style="max-width:780px">
       <div class="mata">Kelas · teknologi, pasar & keuangan</div>
       <h1 class="serif">Pahami teknologinya,<br><span>sebelum membeli koinnya.</span></h1>
-      <p>${semuaKelas.length} kelas, ${totalPel} pelajaran, dalam tiga jalur. <b>Teknologi</b>: cara kerja blockchain dari dasar sampai DeFi. <b>Pasar</b>: membaca grafik, mengukur risiko, dan mengenali bias sendiri. <b>Riset &amp; keuangan</b>: menilai aset dengan angka, dan membereskan keuangan yang menopang semuanya. Setiap kelas ditutup kuis. Kelas <b>Dasar Blockchain</b> dan <b>Bitcoin</b> terbuka untuk semua; kelas lain cukup dengan akun gratis.</p>
+      <p>${semuaKelas.length} kelas, ${totalPel} pelajaran, dalam empat jalur. <b>Teknologi</b>: cara kerja blockchain dari dasar sampai DeFi. <b>Pasar</b>: membaca grafik, mengukur risiko, dan mengenali bias sendiri. <b>Riset &amp; keuangan</b>: menilai aset dengan angka, dan membereskan keuangan yang menopang semuanya. <b>Metode</b>: kerangka yang dipakai menyusun dossier dan screening harian di sini. Setiap kelas ditutup kuis. Kelas <b>Dasar Blockchain</b> dan <b>Bitcoin</b> terbuka untuk semua; kelas lain cukup dengan akun gratis.</p>
     </div></section>
     <div class="katalog"><nav class="kategori"><h2 class="serif">Kategori</h2>${tombol}</nav><div class="kisi-kelas">${kelompok}</div></div>`);
   $('layar').querySelector('.kategori').onclick = e => { const b = e.target.closest('[data-kat]'); if (b) location.hash = b.dataset.kat === 'semua' ? '' : 'kategori/' + b.dataset.kat; };

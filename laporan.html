@@ -55,7 +55,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
       const h2 = document.head, l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'aplikasi.css?v=6'; h2.appendChild(l);
       document.getElementById('memuat')?.remove();
       const aktif = k => k === h || (h === 'peringatan' && k === 'schedule') ? ' class="aktif"' : '';
-      const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="modul.html">Modul</a><a href="kuis.html">Kuis</a>' +
+      const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="kuis.html">Kuis</a>' +
         (profil.disetujui ? '<a href="pustaka.html">Pustaka</a>' : '') + (profil.admin ? '<a href="admin.html">Anggota</a>' : '') + '<a href="pengaturan.html">Pengaturan</a><a href="tentang.html">Tentang</a><a href="#" data-keluar>Keluar</a>';
       let nav = document.querySelector('header.atas nav.menu');
       if (nav) {
