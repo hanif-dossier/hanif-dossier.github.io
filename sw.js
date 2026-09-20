@@ -3,7 +3,7 @@
 // itu selalu langsung ke jaringan supaya laporan anggota tidak pernah tertinggal di cache.
 // Juga menerima Web Push (notifikasi briefing pagi dari GitHub Actions) dan membuka
 // halaman briefing saat notifikasinya diketuk.
-const CACHE = 'hanif-dossier-v2';
+const CACHE = 'hanif-dossier-v3';
 const CANGKANG = ['dasbor.html', 'masuk.html', 'akun.js', 'aplikasi.js', 'aplikasi.css', 'manifest.webmanifest', 'ikon-192.png'];
 const BERANDA = 'https://hanif-dossier.github.io/';
 

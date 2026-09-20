@@ -12,13 +12,13 @@
   "lang": "id",
   "categories": ["finance", "education", "news"],
   "icons": [
-    { "src": "ikon-192.png?v=1", "sizes": "192x192", "type": "image/png" },
-    { "src": "ikon-512.png?v=1", "sizes": "512x512", "type": "image/png" },
-    { "src": "ikon-maskable-512.png?v=1", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "ikon-192.png?v=2", "sizes": "192x192", "type": "image/png" },
+    { "src": "ikon-512.png?v=2", "sizes": "512x512", "type": "image/png" },
+    { "src": "ikon-maskable-512.png?v=2", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Briefing hari ini", "url": "/laporan.html?h=briefing", "icons": [{ "src": "ikon-192.png?v=1", "sizes": "192x192" }] },
-    { "name": "Pasar", "url": "/pasar.html", "icons": [{ "src": "ikon-192.png?v=1", "sizes": "192x192" }] },
-    { "name": "Pustaka dossier", "url": "/pustaka.html", "icons": [{ "src": "ikon-192.png?v=1", "sizes": "192x192" }] }
+    { "name": "Briefing hari ini", "url": "/laporan.html?h=briefing", "icons": [{ "src": "ikon-192.png?v=2", "sizes": "192x192" }] },
+    { "name": "Pasar", "url": "/pasar.html", "icons": [{ "src": "ikon-192.png?v=2", "sizes": "192x192" }] },
+    { "name": "Pustaka dossier", "url": "/pustaka.html", "icons": [{ "src": "ikon-192.png?v=2", "sizes": "192x192" }] }
   ]
 }
