@@ -133,6 +133,20 @@ const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'Coi
 const protokol = (await llama('/protocols')) || [];
 const perSlug = Object.fromEntries(protokol.map(p => [p.slug, p]));
 
+// Indeks protokol menurut simbol token, dipakai untuk melengkapi keterangan tiap koin
+// di halaman Pasar. Satu simbol bisa dipakai beberapa protokol (mis. token bercabang),
+// jadi yang dipilih yang TVL-nya paling besar.
+const protoPerSimbol = {};
+for (const p of protokol) {
+  const s = (p.symbol || '').toUpperCase();
+  if (!s || s === '-') continue;
+  if (!protoPerSimbol[s] || (p.tvl || 0) > (protoPerSimbol[s].tvl || 0)) protoPerSimbol[s] = p;
+}
+// Diisi di bagian 5 (papan peringkat), dipakai di bagian 7 (sektor).
+let feePerNama = {}, revPerNama = {};
+// Keterangan tiap koin penyusun sektor; ditulis ke data/koin.json, bukan ke pasar.json.
+const koinDetail = {};
+
 // ---- 3. RWA
 {
   const rwa = protokol.filter(p => p.category === 'RWA' || p.category === 'RWA Lending').sort((a, b) => (b.tvl || 0) - (a.tvl || 0));
@@ -174,6 +188,9 @@ const perSlug = Object.fromEntries(protokol.map(p => [p.slug, p]));
   const fee = await ambil('https://api.llama.fi/overview/fees?dataType=dailyFees&excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true');
   const rev = await ambil('https://api.llama.fi/overview/fees?dataType=dailyRevenue&excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true');
   const revPer = Object.fromEntries((rev?.protocols || []).map(p => [p.name, p.total30d || 0]));
+  // Disimpan ke luar blok supaya bagian sektor bisa memakainya untuk keterangan koin.
+  feePerNama = Object.fromEntries((fee?.protocols || []).map(p => [p.name, p.total30d || 0]));
+  revPerNama = revPer;
   const feeProtokol = (fee?.protocols || []).filter(p => p.category !== 'Chain' && (p.total30d || 0) > 0)
     .sort((a, b) => (b.total30d || 0) - (a.total30d || 0)).slice(0, 15)
     .map(p => ({ nama: p.name, kategori: p.category, fee30d: Math.round(p.total30d), rev30d: Math.round(revPer[p.name] || 0), rantai: (p.chains || []).slice(0, 3) }));
@@ -327,10 +344,42 @@ const rataTertimbang = (koin, w, kunci) => {
     { kode: 'PASAR', nama: 'Pasar (100 koin, tanpa stablecoin)', ...rangkum(top.filter(c => c.market_cap && !idStable.has(c.id))) },
   ];
 
+  // Keterangan tiap koin untuk panel detail di halaman Pasar. Ditulis ke berkas
+  // terpisah (data/koin.json) dan hanya diambil browser saat pengguna membuka sebuah
+  // sektor, supaya pasar.json tetap kecil dan halamannya cepat dibuka.
+  // Sektor cukup menyimpan daftar id koinnya.
+  const angka = v => (v == null || !Number.isFinite(v)) ? null : v;
+  function catatKoin(c) {
+    if (koinDetail[c.id]) return c.id;
+    const simbol = (c.symbol || '').toUpperCase();
+    const pr = protoPerSimbol[simbol];
+    const nm = pr?.name || null;
+    const d = {
+      id: c.id, simbol, nama: c.name, gambar: c.image, peringkat: c.market_cap_rank ?? null,
+      harga: angka(c.current_price), mcap: angka(c.market_cap), fdv: angka(c.fully_diluted_valuation),
+      volume24: angka(c.total_volume), beredar: angka(c.circulating_supply),
+      suplaiTotal: angka(c.total_supply), suplaiMaks: angka(c.max_supply),
+      r24: angka(c.price_change_percentage_24h_in_currency ?? c.price_change_percentage_24h),
+      r7: angka(c.price_change_percentage_7d_in_currency),
+      r30: angka(c.price_change_percentage_30d_in_currency),
+      ath: angka(c.ath), dariAth: angka(c.ath_change_percentage),
+      athTanggal: c.ath_date ? c.ath_date.slice(0, 10) : null,
+      // Bagian di bawah hanya terisi kalau simbol tokennya cocok dengan protokol di
+      // DefiLlama. Banyak koin (mis. meme) memang tidak punya, dan itu wajar.
+      protokol: nm, kategori: pr?.category || null, tvl: pr ? angka(pr.tvl) : null,
+      rantai: pr?.chains?.length ? pr.chains.slice(0, 5) : null, situs: pr?.url || null,
+      deskripsi: pr?.description ? String(pr.description).replace(/\s+/g, ' ').trim().slice(0, 400) : null,
+      fee30d: nm ? angka(feePerNama[nm]) : null, rev30d: nm ? angka(revPerNama[nm]) : null,
+    };
+    for (const k of Object.keys(d)) if (d[k] == null) delete d[k];
+    koinDetail[c.id] = d;
+    return c.id;
+  }
+
   const daftar = [];
   for (const s of SEKTOR_INDEKS) {
     let koin = mentahPer[s.id];
-    if (!koin) { await tidur(KUNCI_CG ? 2200 : 6000); koin = (await cg(`/coins/markets?vs_currency=usd&category=${s.id}&order=market_cap_desc&per_page=100&page=1&price_change_percentage=${PERIODE}`)) || []; }
+    if (!koin) { await tidur(KUNCI_CG ? 3200 : 6500); koin = (await cg(`/coins/markets?vs_currency=usd&category=${s.id}&order=market_cap_desc&per_page=100&page=1&price_change_percentage=${PERIODE}`)) || []; }
     const dikeluarkan = [];
     const lolos = [];
     for (const c of koin) {
@@ -354,7 +403,8 @@ const rataTertimbang = (koin, w, kunci) => {
       const kap = lolos.reduce((a, c) => a + c.market_cap, 0);
       const kapLalu = lolos.reduce((a, c) => a + c.market_cap - c.market_cap_change_24h, 0);
       Object.assign(entri, { kap: Math.round(kap), jumlah: lolos.length, r24: (kap / kapLalu - 1) * 100,
-        teratas: lolos.slice(0, 5).map(c => ({ simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, bobot: c.market_cap / kap * 100 })) });
+        teratas: lolos.slice(0, 5).map(c => ({ simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, bobot: c.market_cap / kap * 100 })),
+        koin: lolos.map(c => ({ id: catatKoin(c), bobot: c.market_cap / kap * 100, r24: angka(c.market_cap_change_percentage_24h) })) });
       hariBaru[s.id] = Math.round(kap);
     } else {
       const inti = lolos.slice(0, 30), w = bobotTerbatas(inti, BATAS_BOBOT);
@@ -370,6 +420,7 @@ const rataTertimbang = (koin, w, kunci) => {
         })),
         teratas: inti.map((c, i) => ({ simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, bobot: w[i] * 100, r24: c.price_change_percentage_24h_in_currency }))
           .sort((a, b) => b.bobot - a.bobot).slice(0, 5),
+        koin: inti.map((c, i) => ({ id: catatKoin(c), bobot: w[i] * 100, r24: angka(c.price_change_percentage_24h_in_currency) })),
         koinmu: inti.filter(c => milik[c.id]).map(c => milik[c.id]),
       });
       const dasar = kemarin[s.id] ?? 100;
@@ -423,7 +474,7 @@ const rataTertimbang = (koin, w, kunci) => {
   const btc = await hargaHarian('bitcoin');
   const koin = [];
   for (const c of pilih) {
-    await tidur(KUNCI_CG ? 2100 : 6000);
+    await tidur(KUNCI_CG ? 3200 : 6500);
     const h = await hargaHarian(c.id);
     if (h) koin.push({ id: c.id, simbol: c.symbol.toUpperCase(), nama: c.name, gambar: c.image, harga: h });
   }
@@ -498,3 +549,10 @@ const rataTertimbang = (koin, w, kunci) => {
 await mkdir(dirname(KELUAR), { recursive: true });
 await writeFile(KELUAR, JSON.stringify(hasil), 'utf8');
 console.log('Ditulis:', KELUAR, Math.round(JSON.stringify(hasil).length / 1024), 'KB');
+
+// Berkas kedua: keterangan tiap koin. Dipisah supaya pasar.json tetap kecil;
+// browser hanya mengambilnya ketika pengguna membuka sebuah sektor.
+const KELUAR_KOIN = join(AKAR, 'data', 'koin.json');
+const isiKoin = JSON.stringify({ diperbarui: hasil.diperbarui, sumber: ['CoinGecko', 'DefiLlama'], koin: koinDetail });
+await writeFile(KELUAR_KOIN, isiKoin, 'utf8');
+console.log('Ditulis:', KELUAR_KOIN, Object.keys(koinDetail).length, 'koin,', Math.round(isiKoin.length / 1024), 'KB');

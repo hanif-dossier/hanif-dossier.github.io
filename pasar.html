@@ -87,6 +87,66 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 .sk-rinci{margin-top:14px;padding:14px 18px}
 .sk-rinci summary{cursor:pointer;font-weight:700;color:var(--sage-tua)}
 .sk-rinci ul{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--tx2);line-height:1.6}
+/* ── Panel geser: isi sektor dan keterangan tiap koin ──
+   Dipakai halaman Pasar saat sebuah ubin sektor atau baris koin diklik.
+   Satu panel dipakai dua tampilan (daftar koin, lalu detail satu koin) supaya
+   tidak ada dua lapisan tumpang tindih di layar HP. */
+.sk-ubin{cursor:pointer;border:1.5px solid transparent;transition:border-color .15s,transform .15s}
+.sk-ubin:hover,.sk-ubin:focus-visible{border-color:var(--sage);transform:translateY(-2px)}
+.sk-ubin .buka{position:absolute;right:10px;top:10px;font-size:11px;font-weight:800;color:var(--lb);opacity:0;transition:opacity .15s}
+.sk-ubin:hover .buka{opacity:1}
+
+.pn{position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-end}  /* di atas .nav-bawah (z-index 60) dan lembar menu (70) */
+.pn[hidden]{display:none}
+.pn-tirai{position:absolute;inset:0;background:rgba(27,34,31,.42);backdrop-filter:blur(2px)}
+.pn-isi{position:relative;width:min(560px,100%);background:var(--bg);display:flex;flex-direction:column;
+  box-shadow:-18px 0 50px rgba(27,34,31,.22);animation:pnMasuk .18s ease-out}
+@keyframes pnMasuk{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.pn-isi{animation:none}}
+.pn-kepala{display:flex;align-items:flex-start;gap:12px;padding:16px 18px 14px;border-bottom:1px solid var(--gr);background:var(--kartu)}
+.pn-id{flex:1;display:flex;gap:12px;align-items:center;min-width:0}
+.pn-id img{width:42px;height:42px;border-radius:50%;flex:none;background:var(--lembut)}
+.pn-id h3{margin:0;font-family:"DM Serif Display",Georgia,serif;font-size:1.35rem;line-height:1.15}
+.pn-id p{margin:2px 0 0;font-size:12.5px;color:var(--lb)}
+.pn-x,.pn-kembali{border:1px solid var(--gr);background:var(--kartu);color:var(--tx2);border-radius:10px;
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:6px 10px;flex:none}
+.pn-x{font-size:18px;line-height:1;padding:4px 10px 6px}
+.pn-x:hover,.pn-kembali:hover{border-color:var(--sage);color:var(--sage-tua)}
+.pn-badan{flex:1;overflow-y:auto;padding:16px 18px calc(40px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+.pn-badan h4{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);margin:20px 0 8px}
+.pn-badan h4:first-child{margin-top:0}
+.pn-kartu{background:var(--kartu);border:1px solid var(--gr);border-radius:14px;overflow:hidden}
+.pn-brs{display:flex;justify-content:space-between;gap:12px;padding:9px 14px;font-size:14px;border-bottom:1px solid var(--gr)}
+.pn-brs:last-child{border-bottom:0}
+.pn-brs span{color:var(--tx2)}
+.pn-brs b{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.pn-na{color:var(--redup);font-weight:600}
+
+/* daftar koin dalam sektor */
+.pn-koin{width:100%;border-collapse:collapse;font-size:13.5px}
+.pn-koin th{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--lb);
+  text-align:right;padding:8px 10px;border-bottom:1px solid var(--gr);position:sticky;top:0;background:var(--kartu)}
+.pn-koin th:first-child,.pn-koin td:first-child{text-align:left}
+.pn-koin td{padding:9px 10px;border-bottom:1px solid var(--gr);text-align:right;font-variant-numeric:tabular-nums}
+.pn-koin tr:last-child td{border-bottom:0}
+.pn-koin tbody tr{cursor:pointer}
+.pn-koin tbody tr:hover{background:var(--lembut)}
+.pn-nm{display:flex;align-items:center;gap:9px;min-width:0}
+.pn-nm img{width:22px;height:22px;border-radius:50%;flex:none;background:var(--lembut)}
+.pn-nm i{width:22px;height:22px;border-radius:50%;flex:none;background:var(--sage-lembut);color:var(--sage-tua);
+  display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800}
+.pn-nm b{font-weight:800;font-size:13px}
+.pn-nm small{display:block;color:var(--lb);font-weight:600;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.pn-bobot{color:var(--lb);font-size:12px}
+
+.pn-tentang{background:var(--kartu);border:1px solid var(--gr);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--tx2);line-height:1.6}
+.pn-tentang cite{display:block;margin-top:8px;font-style:normal;font-size:11.5px;color:var(--lb)}
+.pn-sumber{font-size:12.5px;color:var(--tx2);line-height:1.7}
+.pn-sumber li{margin-bottom:3px}
+.pn-kosong{color:var(--lb);font-size:13.5px;padding:10px 2px}
+.pn-tag{display:inline-block;background:var(--sage-lembut);color:var(--sage-tua);font-size:11px;font-weight:800;
+  padding:3px 9px;border-radius:999px;margin-right:6px}
+@media(max-width:600px){.pn-isi{width:100%}.pn-nm small{max-width:96px}}
 </style>
 
 <!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
@@ -194,6 +254,18 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
   <div class="penafian" id="sumber">Sumber: Token Terminal (leaderboard aplikasi, rantai, dan sektor — snapshot harian), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
 </div>
 
+<div class="pn" id="pn" hidden>
+  <div class="pn-tirai" data-tutup></div>
+  <aside class="pn-isi" role="dialog" aria-modal="true" aria-labelledby="pn-judul">
+    <header class="pn-kepala">
+      <button type="button" class="pn-kembali" id="pn-kembali" hidden>&larr; Sektor</button>
+      <div class="pn-id"><img id="pn-gbr" alt="" hidden>
+        <div><h3 id="pn-judul"></h3><p id="pn-sub"></p></div></div>
+      <button type="button" class="pn-x" data-tutup aria-label="Tutup panel">&times;</button>
+    </header>
+    <div class="pn-badan" id="pn-badan"></div>
+  </aside>
+</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="akun.js"></script>
@@ -251,7 +323,8 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
         const warna = r == null ? 'transparent' : r >= 0 ? `rgba(79,122,104,${a.toFixed(3)})` : `rgba(184,107,92,${a.toFixed(3)})`;
         const vs = r != null && btc?.[k] != null ? r - btc[k] : null;
         const pg = s.penggerak?.[k];
-        return `<article class="sk-ubin" style="background:linear-gradient(160deg,${warna},#fff 78%)" title="${esc(s.ket)}">
+        return `<article class="sk-ubin" data-sektor="${esc(s.id)}" role="button" tabindex="0" style="background:linear-gradient(160deg,${warna},#fff 78%)" title="${esc(s.ket)} — klik untuk melihat koin penyusunnya">
+          <span class="buka">lihat koin →</span>
           ${s.koinmu?.length ? `<span class="milikmu" title="Koin di portofoliomu yang masuk sektor ini">koinmu: ${esc(s.koinmu.join(', '))}</span>` : ''}
           <div class="grp">${esc(s.grup)}</div>
           <div class="nm">${esc(s.nama)}</div>
@@ -273,7 +346,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     const tglMulai = s => s.riwayat?.[0]?.t ? new Date(s.riwayat[0].t + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', timeZone: 'UTC' }) : '';
     $('sektor-nilai').innerHTML = nilai_.map(s => {
       const distorsi = s.cg24 != null && s.r24 != null && Math.abs(s.cg24 - s.r24) > 10;
-      return `<div class="kartu"><div class="lbl catatan" style="text-transform:uppercase;letter-spacing:.05em;font-size:11px">${esc(s.grup)} · diukur dari nilai beredar</div>
+      return `<div class="kartu sk-nilai-kartu" data-sektor="${esc(s.id)}" role="button" tabindex="0" style="cursor:pointer" title="Klik untuk melihat token penyusunnya"><div class="lbl catatan" style="text-transform:uppercase;letter-spacing:.05em;font-size:11px">${esc(s.grup)} · diukur dari nilai beredar</div>
         <div style="font-weight:800;margin-top:4px">${esc(s.nama)}</div>
         <div class="nil">${uang(s.kap)}</div>
         <div class="catatan"><span class="${kelas(s.r24)}" style="font-weight:700">${persen(s.r24, 2)}</span> 24 jam · 7 hari ${s.r7 == null ? '—' : `<span class="${kelas(s.r7)}">${persen(s.r7, 1)}</span>`} · 30 hari ${s.r30 == null ? '—' : `<span class="${kelas(s.r30)}">${persen(s.r30, 1)}</span>`}</div>
@@ -432,6 +505,172 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
       <div class="aksi"><a href="riset.html#${esc(k.tick)}">Dossier ${esc(k.tick)} →</a></div>
     </article>`;
   }).join('');
+  // ─────────────────────────────────────────────────────────────────────────
+  // Panel sektor dan keterangan koin
+  // Ubin sektor diklik  → daftar seluruh koin penyusunnya
+  // Baris koin diklik   → keterangan lengkap koin itu
+  // Keterangan koin ada di data/koin.json, berkas terpisah yang baru diambil
+  // ketika panel pertama kali dibuka, supaya halaman ini tetap cepat dibuka.
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    const pn = $('pn'), badan = $('pn-badan'), judul = $('pn-judul'), sub = $('pn-sub'),
+          gbr = $('pn-gbr'), kembali = $('pn-kembali');
+    let KOIN = null, sektorAktif = null, fokusSebelum = null;
+
+    async function muatKoin() {
+      if (KOIN) return KOIN;
+      try { KOIN = (await (await fetch('data/koin.json', { cache: 'no-cache' })).json()).koin || {}; }
+      catch { KOIN = {}; }
+      return KOIN;
+    }
+
+    const tutup = () => {
+      pn.hidden = true; document.body.style.overflow = '';
+      sektorAktif = null; if (fokusSebelum) { fokusSebelum.focus(); fokusSebelum = null; }
+    };
+    const buka = () => {
+      if (pn.hidden) { fokusSebelum = document.activeElement; pn.hidden = false; document.body.style.overflow = 'hidden'; }
+      badan.scrollTop = 0;
+    };
+    pn.addEventListener('click', e => { if (e.target.closest('[data-tutup]')) tutup(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pn.hidden) tutup(); });
+
+    const brs = (l, v, ket) => `<div class="pn-brs"><span>${l}${ket ? ` <small style="color:var(--redup)">${ket}</small>` : ''}</span><b>${v}</b></div>`;
+    const na = '<span class="pn-na">n/a</span>';
+    const nilai = (v, f) => v == null ? na : f(v);
+    const warnai = v => v == null ? na : `<span class="${kelas(v)}">${persen(v, 1)}</span>`;
+    const kali = n => n == null || !isFinite(n) || n <= 0 ? na : `${n.toFixed(1).replace('.', ',')}×`;
+    const tgl = s => { try { return new Date(s).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return s; } };
+
+    // ---- tampilan 1: daftar koin dalam satu sektor
+    async function bukaSektor(sid) {
+      const s = (d.sektor?.daftar || []).find(x => x.id === sid);
+      if (!s) return;
+      sektorAktif = sid;
+      kembali.hidden = true; gbr.hidden = true;
+      judul.textContent = s.nama;
+      sub.textContent = `${s.grup} · ${s.jumlah} koin · ${s.ket}`;
+      buka();
+      badan.innerHTML = '<p class="pn-kosong">Memuat koin…</p>';
+      const K = await muatKoin();
+      if (sektorAktif !== sid) return;
+
+      const per = s.mode === 'kapitalisasi'
+        ? [['24 jam', 'r24']]
+        : [['24 jam', 'r24'], ['7 hari', 'r7'], ['30 hari', 'r30']];
+      const kinerja = per.map(([l, k]) => brs(l, warnai(s[k]))).join('');
+      const daftar = (s.koin || []).map(x => ({ ...x, k: K[x.id] })).filter(x => x.k);
+
+      badan.innerHTML = `
+        <h4>Kinerja indeks</h4>
+        <div class="pn-kartu">${kinerja}${brs(s.mode === 'kapitalisasi' ? 'Nilai beredar' : 'Kapitalisasi gabungan', uang(s.kap))}</div>
+        <h4>${daftar.length} koin penyusun</h4>
+        ${daftar.length ? `<div class="pn-kartu"><table class="pn-koin"><thead><tr>
+            <th>Koin</th><th>Bobot</th><th>Harga</th><th>24 jam</th><th>Kapitalisasi</th>
+          </tr></thead><tbody>${daftar.map(x => `<tr data-koin="${esc(x.id)}" tabindex="0">
+            <td><div class="pn-nm">${x.k.gambar ? `<img src="${esc(x.k.gambar)}" alt="" loading="lazy">` : `<i>${esc((x.k.simbol || '?')[0])}</i>`}
+              <div><b>${esc(x.k.simbol)}</b><small>${esc(x.k.nama)}</small></div></div></td>
+            <td class="pn-bobot">${x.bobot == null ? '' : x.bobot.toFixed(1).replace('.', ',') + '%'}</td>
+            <td>${harga(x.k.harga)}</td>
+            <td class="${kelas(x.r24 ?? x.k.r24)}">${persen(x.r24 ?? x.k.r24, 1)}</td>
+            <td>${uang(x.k.mcap)}</td></tr>`).join('')}</tbody></table></div>
+          <p class="pn-kosong">Klik satu koin untuk melihat keterangannya.</p>`
+          : '<p class="pn-kosong">Rincian koin sektor ini belum tersedia. Data diperbarui tiap pagi.</p>'}
+        <h4>Cara sektor ini dihitung</h4>
+        <div class="pn-tentang">${esc(s.mode === 'kapitalisasi'
+          ? 'Sektor bernilai tetap. Yang diukur nilai beredarnya, bukan perubahan harganya.'
+          : 'Rata-rata tertimbang perubahan harga koin penyusun, bobot kapitalisasi dibatasi 25% per koin. Stablecoin, token bungkus, dan data janggal dikeluarkan.')}
+          ${s.dikeluarkan?.length ? `<br><br><b>Dikeluarkan:</b> ${esc(s.dikeluarkan.map(x => `${x.simbol} (${x.alasan})`).join('; '))}` : ''}
+          <cite>Sumber: kategori dan harga dari CoinGecko. Indeks disusun Hanif Dossier.</cite></div>`;
+    }
+
+    // ---- tampilan 2: keterangan satu koin
+    function bukaKoin(cid) {
+      const k = (KOIN || {})[cid];
+      if (!k) return;
+      kembali.hidden = !sektorAktif;
+      if (k.gambar) { gbr.src = k.gambar; gbr.hidden = false; } else gbr.hidden = true;
+      judul.textContent = `${k.nama} (${k.simbol})`;
+      sub.textContent = [k.peringkat ? `Peringkat #${k.peringkat} menurut kapitalisasi` : null, k.kategori].filter(Boolean).join(' · ') || 'Aset kripto';
+      buka();
+
+      // P/F dan P/S memakai fee dan pendapatan 30 hari yang disetahunkan (×12),
+      // cara yang sama dipakai Token Terminal. Hanya muncul kalau angkanya ada.
+      const pf = k.mcap && k.fee30d ? k.mcap / (k.fee30d * 12) : null;
+      const ps = k.mcap && k.rev30d ? k.mcap / (k.rev30d * 12) : null;
+      const adaProtokol = k.protokol && (k.tvl != null || k.fee30d != null || k.kategori);
+
+      badan.innerHTML = `
+        <h4>Pasar</h4>
+        <div class="pn-kartu">
+          ${brs('Harga', nilai(k.harga, harga))}
+          ${brs('Kapitalisasi', nilai(k.mcap, uang), 'token beredar × harga')}
+          ${brs('FDV', nilai(k.fdv, uang), 'seluruh token × harga')}
+          ${brs('Volume 24 jam', nilai(k.volume24, uang))}
+          ${brs('Token beredar', k.beredar == null ? na : id(Math.round(k.beredar)))}
+          ${brs('Suplai maksimum', k.suplaiMaks == null ? na : id(Math.round(k.suplaiMaks)))}
+          ${brs('Sudah beredar', k.beredar && k.suplaiMaks ? (k.beredar / k.suplaiMaks * 100).toFixed(1).replace('.', ',') + '%' : na, 'dari suplai maksimum')}
+        </div>
+
+        <h4>Kinerja</h4>
+        <div class="pn-kartu">
+          ${brs('24 jam', warnai(k.r24))}
+          ${brs('7 hari', warnai(k.r7))}
+          ${brs('30 hari', warnai(k.r30))}
+          ${brs('Dari puncak', warnai(k.dariAth), k.athTanggal ? `puncak ${harga(k.ath)} pada ${tgl(k.athTanggal)}` : '')}
+        </div>
+
+        ${adaProtokol ? `<h4>Protokol</h4>
+        <div class="pn-kartu">
+          ${brs('Kategori', esc(k.kategori || 'n/a'))}
+          ${brs('TVL', nilai(k.tvl, uang), 'nilai yang tersimpan di protokol')}
+          ${brs('Fee 30 hari', nilai(k.fee30d, uang), 'dibayar pengguna')}
+          ${brs('Pendapatan 30 hari', nilai(k.rev30d, uang), 'bagian yang masuk ke protokol')}
+          ${brs('P/F', kali(pf), 'kapitalisasi ÷ fee setahun')}
+          ${brs('P/S', kali(ps), 'kapitalisasi ÷ pendapatan setahun')}
+          ${k.rantai?.length ? brs('Rantai', esc(k.rantai.join(', '))) : ''}
+        </div>` : ''}
+
+        ${k.deskripsi ? `<h4>Tentang</h4>
+        <div class="pn-tentang">${esc(k.deskripsi)}<cite>Deskripsi dari DefiLlama.</cite></div>` : ''}
+
+        <h4>Sumber</h4>
+        <div class="pn-tentang"><ul class="pn-sumber" style="margin:0;padding-left:1.1em">
+          <li><b>CoinGecko</b> — harga, kapitalisasi, FDV, volume, suplai, dan puncak sepanjang masa.</li>
+          ${adaProtokol ? '<li><b>DefiLlama</b> — TVL, kategori, fee dan pendapatan 30 hari, serta deskripsi protokol.</li>' : ''}
+          <li><b>Hanif Dossier</b> — perhitungan P/F dan P/S, yaitu kapitalisasi dibagi fee atau pendapatan 30 hari yang disetahunkan.</li>
+        </ul>
+        <cite>Diperbarui ${new Date(d.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}. Angka bisa berbeda dari sumber lain karena definisi dan waktu pengambilannya berbeda. Bukan nasihat investasi.</cite></div>
+
+        ${!adaProtokol ? '<p class="pn-kosong">Koin ini belum punya data protokol di DefiLlama, jadi fee, pendapatan, dan TVL-nya tidak tersedia. Itu wajar untuk koin yang bukan protokol, misalnya meme dan token bursa.</p>' : ''}`;
+    }
+
+    // klik ubin sektor
+    for (const wadah of [$('sektor-kisi'), $('sektor-nilai')]) {
+      if (!wadah) continue;
+      wadah.addEventListener('click', e => {
+        const u = e.target.closest('[data-sektor]');
+        if (u) bukaSektor(u.dataset.sektor);
+      });
+      wadah.addEventListener('keydown', e => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const u = e.target.closest('[data-sektor]');
+        if (u) { e.preventDefault(); bukaSektor(u.dataset.sektor); }
+      });
+    }
+    // klik baris koin di dalam panel
+    badan.addEventListener('click', e => {
+      const b = e.target.closest('[data-koin]');
+      if (b) bukaKoin(b.dataset.koin);
+    });
+    badan.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const b = e.target.closest('[data-koin]');
+      if (b) { e.preventDefault(); bukaKoin(b.dataset.koin); }
+    });
+    kembali.addEventListener('click', () => { if (sektorAktif) bukaSektor(sektorAktif); });
+  }
+
 })();
 </script>
 </body>
