@@ -21,6 +21,7 @@
     bitcoin:    '<circle cx="12" cy="12" r="9"/><path d="M9 7h4.5a2.25 2.25 0 0 1 0 4.5H9m0 0h5a2.25 2.25 0 0 1 0 4.5H9M9 7v9M11 5v2M11 16v2"/>',
     kelas:      '<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>',
     modul:      '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
+    metrics:    '<path d="M4 19a8 8 0 1 1 16 0"/><path d="m12 19 4-5.5"/><path d="M12 19h.01"/>',
     kuis:       '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><path d="M12 17h.01"/>',
     pustaka:    '<path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="m16 5 3.5-.8L22 19l-3.5.8z"/>',
     anggota:    '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>',
@@ -132,7 +133,7 @@
 
   // ---- 4. menu bawah untuk HP (<=720px): 4 tujuan utama + tombol Menu yang membuka lembar semua tautan.
   // Dibangun dari nav.menu halaman, jadi ikut aturan tampil/sembunyi tamu-anggota-admin di tiap halaman.
-  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'pustaka', 'kelas', 'masuk', 'tentang'];   // Pengaturan sengaja tidak di bilah: tampil sebagai roda gigi di kepala lembar Menu
+  const PRIORITAS = ['beranda', 'briefing', 'laporan', 'pasar', 'kelas', 'pustaka', 'kuis', 'riset', 'bitcoin', 'masuk', 'tentang'];   // Pengaturan sengaja tidak di bilah: tampil sebagai roda gigi di kepala lembar Menu
   const IK_MENU = '<path d="M4 6h16M4 12h16M4 18h16"/>';
   const LAPORAN = ['briefing', 'radar', 'schedule', 'screening'];
   const kunciA = a => kunci(a) || a.textContent.trim().toLowerCase();
@@ -142,14 +143,17 @@
     e.preventDefault(); if (sebelum) sebelum(); const asli = tautan.find(x => kunciA(x) === b.dataset.asli); if (asli) asli.click();
   }));
   const KELOMPOK = [
-    ['Laporan', ['briefing', 'radar', 'schedule', 'screening', 'bitcoin', 'riset', 'laporan']],
-    ['Belajar', ['kelas', 'modul', 'kuis']],
-    ['Lainnya', ['beranda', 'pasar', 'pustaka', 'anggota', 'langganan', 'status', 'tentang', 'masuk']]
+    ['Laporan', ['beranda', 'briefing', 'radar', 'schedule', 'screening', 'laporan']],
+    ['Pasar & riset', ['pasar', 'bitcoin', 'riset', 'metrics']],
+    ['Belajar', ['kelas', 'modul', 'kuis', 'pustaka']],
+    ['Akun', ['anggota', 'langganan', 'status', 'tentang', 'masuk']]
   ];
   const kartu = a => { const k = kunciA(a); return '<a href="' + a.getAttribute('href') + '" class="' + (a.classList.contains('aktif') ? 'aktif' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span><span>' + a.textContent.trim() + '</span></a>'; };
-  function bukaLembar(tautan, diBilah = []) {
+  // Lembar memuat SELURUH tautan halaman, termasuk yang sudah ada di bilah bawah: kalau sebagian
+  // disembunyikan, menu terasa tidak lengkap. Halaman yang sedang dibuka ditandai terisi warna.
+  function bukaLembar(tautan) {
     const lama = document.querySelector('.lembar-menu'); if (lama) lama.remove();
-    const sisa = tautan.filter(a => !diBilah.includes(a) || kunciA(a) === 'briefing');   // Briefing tetap ditulis di kelompok Laporan walau bilah sudah punya "Laporan"
+    const sisa = tautan.slice();
     const ambil = k => { const i = sisa.findIndex(a => kunciA(a) === k); return i < 0 ? null : sisa.splice(i, 1)[0]; };
     const pengaturan = ambil('pengaturan'), keluar = ambil('keluar');
     const bagian = KELOMPOK.map(([judul, kunciK]) => [judul, kunciK.map(ambil).filter(Boolean)]);
@@ -173,14 +177,22 @@
     const tautan = [...nav.querySelectorAll('a')].filter(a => !a.hidden);
     const aktifLaporan = tautan.some(a => a.classList.contains('aktif') && LAPORAN.includes(kunciA(a)));
     let utama = tautan;
-    if (tautan.length > 5) { utama = []; for (const k of PRIORITAS) { const a = tautan.find(x => kunciA(x) === k); if (a && !utama.includes(a)) utama.push(a); if (utama.length === 4) break; } }
+    if (tautan.length > 5) {
+      utama = [];
+      for (const k of PRIORITAS) { const a = tautan.find(x => kunciA(x) === k); if (a && !utama.includes(a)) utama.push(a); if (utama.length === 4) break; }
+      // Halaman yang sedang dibuka harus terlihat di bilah, supaya jelas kita ada di mana.
+      // Kalau belum masuk empat besar, ia menggantikan slot terakhir.
+      const kini = tautan.find(a => a.classList.contains('aktif'));
+      const sudah = kini && (utama.includes(kini) || (aktifLaporan && utama.some(a => kunciA(a) === 'briefing')));
+      if (kini && !sudah) utama[utama.length - 1] = kini;
+    }
     bar.innerHTML = utama.map(a => {
       const k = kunciA(a), label = k === 'briefing' ? 'Laporan' : a.textContent.trim();
       const aktif = a.classList.contains('aktif') || (k === 'briefing' && aktifLaporan);
       return '<a href="' + a.getAttribute('href') + '" class="' + (aktif ? 'aktif' : '') + '" data-asli="' + k + '"><span class="ik"><svg viewBox="0 0 24 24">' + ikonUntuk(k) + '</svg></span>' + label + '</a>';
     }).join('') + (tautan.length > 5 ? '<button type="button" class="buka-menu"><span class="ik"><svg viewBox="0 0 24 24">' + IK_MENU + '</svg></span>Menu</button>' : '');
     teruskan(bar, tautan);
-    const tb = bar.querySelector('.buka-menu'); if (tb) tb.addEventListener('click', () => bukaLembar(tautan, utama));
+    const tb = bar.querySelector('.buka-menu'); if (tb) tb.addEventListener('click', () => bukaLembar(tautan));
     if (!nav.__diamati) { nav.__diamati = true; new MutationObserver(() => bangunMenuBawah()).observe(nav, { attributes: true, subtree: true, attributeFilter: ['hidden', 'class'] }); }
   }
   window.bangunMenuBawah = bangunMenuBawah;
