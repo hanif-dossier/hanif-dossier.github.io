@@ -139,7 +139,7 @@ mark{background:var(--pasir);color:inherit;border-radius:3px;padding:0 1px}
     // ── Pasar ───────────────────────────────────────────────────────────
     { n: 'Harga', a: 'Price', g: 'pasar',
       arti: 'Harga terakhir yang benar-benar terjadi, dirata-rata dari banyak bursa menurut volumenya. Bukan harga yang bisa kamu dapat: untuk order besar, harga yang didapat lebih buruk karena likuiditasnya terbatas.',
-      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Radar', 'laporan.html?h=radar']] },
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Briefing', 'laporan.html?h=briefing#portofolio-kamu-hari-ini']] },
     { n: 'Kapitalisasi pasar', a: 'Market cap', g: 'pasar', r: 'harga × token beredar',
       arti: 'Nilai seluruh token yang sudah beredar. Ini angka yang dibandingkan antar aset, bukan harga per keping. Token seharga seperseribu dolar bisa jauh lebih mahal daripada token seharga seribu dolar.',
       awas: 'Tidak sama dengan uang yang masuk ke aset itu. Kapitalisasi naik satu miliar dolar tidak berarti ada satu miliar dolar yang dibelanjakan.',
@@ -185,7 +185,7 @@ mark{background:var(--pasir);color:inherit;border-radius:3px;padding:0 1px}
       s: ['DefiLlama', 'Token Terminal'], d: [['Pasar', 'pasar.html'], ['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
     { n: 'Biaya ke penyedia', a: 'Supply-side fees', g: 'keuangan', r: 'fee − pendapatan protokol',
       arti: 'Bagian fee yang diteruskan ke pihak yang menyediakan modal atau keamanan: penyedia likuiditas, validator, pemberi pinjaman. Biaya nyata, bukan keuntungan.',
-      s: ['DefiLlama'], d: [['Radar', 'laporan.html?h=radar']] },
+      s: ['DefiLlama'], d: [['Briefing', 'laporan.html?h=briefing#portofolio-kamu-hari-ini']] },
     { n: 'Insentif token', a: 'Token incentives', g: 'keuangan',
       arti: 'Nilai token yang dibagikan protokol untuk menarik pengguna. Bentuknya hadiah, poin, atau program likuiditas. Ini pengeluaran, dibayar dengan mengencerkan pemegang token lama.',
       awas: 'Pertumbuhan yang dibiayai insentif sering hilang begitu insentifnya berhenti. Ujiannya: lihat aktivitas setelah programnya dikurangi.',
@@ -262,13 +262,13 @@ mark{background:var(--pasir);color:inherit;border-radius:3px;padding:0 1px}
       s: ['Glassnode'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
     { n: 'Aplikasi aktif', a: 'Active apps', g: 'onchain',
       arti: 'Jumlah aplikasi di sebuah rantai yang masih punya nilai tersimpan di atas ambang tertentu. Ukuran kedalaman ekosistem, bukan popularitas.',
-      s: ['DefiLlama'], d: [['Radar', 'laporan.html?h=radar']] },
+      s: ['DefiLlama'], d: [['Briefing', 'laporan.html?h=briefing#portofolio-kamu-hari-ini']] },
 
     // ── Derivatif ───────────────────────────────────────────────────────
     { n: 'Open interest', a: 'OI', g: 'derivatif',
       arti: 'Total nilai posisi berjangka yang sedang terbuka. Naik berarti uang baru masuk ke posisi berleverage; turun berarti posisi ditutup atau dilikuidasi.',
       awas: 'Kenaikan harga yang disertai lonjakan open interest berarti kenaikannya dibiayai pinjaman, dan struktur seperti itu rapuh.',
-      s: ['Coinglass'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain'], ['Radar', 'laporan.html?h=radar']] },
+      s: ['Coinglass'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain'], ['Briefing', 'laporan.html?h=briefing#portofolio-kamu-hari-ini']] },
     { n: 'Funding rate', a: '', g: 'derivatif',
       arti: 'Biaya berkala yang dibayar antar pemegang posisi di kontrak perpetual. Positif berarti pemegang posisi beli yang membayar, tanda permintaan beli dengan pinjaman sedang tinggi.',
       awas: 'Funding tinggi yang bertahan berhari-hari membuat pasar rapuh: penurunan kecil bisa memicu rantai likuidasi yang menekan harga lebih jauh.',

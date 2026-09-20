@@ -35,7 +35,9 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
 // Tautan antarhalaman di dalamnya diarahkan kembali ke penampil ini.
 (async () => {
   // 'peringatan' dipertahankan sebagai nama lama supaya tautan tersimpan tetap sampai ke Schedule.
-  const PETA = { briefing: 'briefing.html', radar: 'radar.html', schedule: 'schedule.html', peringatan: 'schedule.html', screening: 'screening.html' };
+  // radar dipetakan ke briefing sejak 20 Sep 2026: bagian portofolionya sudah
+  // dilebur ke sana. Kuncinya dipertahankan supaya tautan lama tidak mati.
+  const PETA = { briefing: 'briefing.html', radar: 'briefing.html', schedule: 'schedule.html', peringatan: 'schedule.html', screening: 'screening.html' };
   const h = new URLSearchParams(location.search).get('h') || 'briefing';
   const nama = PETA[h] || PETA.briefing;
   const profil = await akun.wajibMasuk();
@@ -43,7 +45,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
     let html = await akun.unduh(nama);
     html = html
       .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?index\.html"/g, 'href="laporan.html?h=briefing"')
-      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?radar\.html"/g, 'href="laporan.html?h=radar"')
+      .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?radar\.html"/g, 'href="laporan.html?h=briefing#portofolio-kamu-hari-ini"')
       .replace(/href="(?:https:\/\/hanif-dossier\.github\.io\/laporan-harian\/)?(?:schedule|peringatan)\.html"/g, 'href="laporan.html?h=schedule"')
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/potret-pasar-crypto\/?"/g, 'href="laporan.html?h=screening"')
       .replace(/href="https:\/\/hanif-dossier\.github\.io\/laporan-harian\/?"/g, 'href="laporan.html?h=briefing"');
@@ -55,7 +57,7 @@ body{margin:0;background:#f6f5f0;color:#2b3330;font:16px/1.6 "Nunito Sans","Sego
       const h2 = document.head, l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'aplikasi.css?v=6'; h2.appendChild(l);
       document.getElementById('memuat')?.remove();
       const aktif = k => k === h || (h === 'peringatan' && k === 'schedule') ? ' class="aktif"' : '';
-      const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('radar') + ' href="laporan.html?h=radar">Radar</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="metrik.html">Metrics</a><a href="kuis.html">Kuis</a>' +
+      const tautan = '<a href="dasbor.html">Beranda</a><a' + aktif('briefing') + ' href="laporan.html?h=briefing">Briefing</a><a' + aktif('schedule') + ' href="laporan.html?h=schedule">Schedule</a><a' + aktif('screening') + ' href="laporan.html?h=screening">Screening</a><a href="pasar.html">Pasar</a><a href="bitcoin.html">Bitcoin</a><a href="kelas.html">Kelas</a><a href="metrik.html">Metrics</a><a href="kuis.html">Kuis</a>' +
         (profil.disetujui ? '<a href="pustaka.html">Pustaka</a>' : '') + (profil.admin ? '<a href="admin.html">Anggota</a>' : '') + '<a href="pengaturan.html">Pengaturan</a><a href="tentang.html">Tentang</a><a href="#" data-keluar>Keluar</a>';
       let nav = document.querySelector('header.atas nav.menu');
       if (nav) {

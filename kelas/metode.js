@@ -312,7 +312,7 @@ Dari 100 koin tinggal 25. Harga "sudah kembali", jumlah asetnya hilang tiga pere
 <tr><td><b>Airdrop &amp; testnet</b></td><td>Program poin dan testnet yang menarik pengguna sebelum token ada</td><td>Pengumuman proyek, Kaito Yaps</td></tr>
 </table>
 <p>Di Hanif Dossier Crypto, sebagian sinyal ini sudah dirangkum untuk Anda: <a href="laporan.html?h=screening">Screening altcoin</a> membaca narasi yang menghangat dan mendingin tiap pagi, <a href="pasar.html">Pasar</a>
-    <a href="bitcoin.html">Bitcoin</a> memuat leaderboard Token Terminal per sektor, dan <a href="laporan.html?h=radar">Radar</a> menampilkan metrik tiap koin yang Anda pegang.</p>
+    <a href="bitcoin.html">Bitcoin</a> memuat leaderboard per sektor dan panel rincian tiap koin, <a href="metrik.html">Metrics</a> menjelaskan arti tiap angkanya, dan bagian <a href="laporan.html?h=briefing#portofolio-kamu-hari-ini">Portofolio Kamu Hari Ini</a> di briefing memantau koin yang Anda pegang.</p>
 <h3>Rumus skor naratif: tujuh kriteria berbobot</h3>
 <p>Setiap kriteria diberi skor 1–5, dikalikan bobotnya, lalu dijumlahkan.</p>
 <table>
