@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metrics — Hanif Dossier Crypto</title>
+<meta name="description" content="Kamus metrik crypto berbahasa Indonesia: arti, rumus, sumber data, dan di halaman mana tiap angka dipakai di Hanif Dossier. Dari kapitalisasi dan FDV sampai funding rate, MVRV, dan skor naratif.">
+<meta name="theme-color" content="#4f7a68">
+<meta property="og:title" content="Metrics — Hanif Dossier Crypto">
+<meta property="og:description" content="Tiap angka yang dipakai di Hanif Dossier, lengkap dengan rumus dan sumbernya.">
+<meta property="og:url" content="https://hanif-dossier.github.io/metrik.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="ikon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+/* ── Kamus metrik: pencarian di atas, kelompok di kiri, daftar di kanan ── */
+.mt-atas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.mt-cari{flex:1;min-width:220px;display:flex;align-items:center;gap:9px;background:var(--kartu);
+  border:1.5px solid var(--gr);border-radius:12px;padding:10px 14px}
+.mt-cari:focus-within{border-color:var(--sage)}
+.mt-cari svg{width:17px;height:17px;flex:none;stroke:var(--lb);fill:none;stroke-width:2}
+.mt-cari input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--tx);outline:none}
+.mt-hitung{font-size:13px;color:var(--lb);font-weight:700;white-space:nowrap}
+
+.mt-isi{display:grid;grid-template-columns:212px 1fr;gap:26px;margin-top:22px;align-items:start}
+.mt-grup{position:sticky;top:16px;display:flex;flex-direction:column;gap:4px}
+.mt-grup h2{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lb);margin:0 0 8px}
+.mt-grup button{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;
+  border:1.5px solid transparent;background:transparent;font:inherit;font-size:14px;font-weight:700;
+  color:var(--tx2);padding:8px 12px;border-radius:10px;cursor:pointer}
+.mt-grup button:hover{background:var(--kartu)}
+.mt-grup button.aktif{background:var(--kartu);border-color:var(--sage);color:var(--tx)}
+.mt-grup button small{font-weight:700;color:var(--lb);font-size:12px}
+
+.mt-daftar{display:flex;flex-direction:column;gap:14px;min-width:0}
+.mt-judul-grup{font-size:1.2rem;margin:14px 0 0}
+.mt-judul-grup:first-child{margin-top:0}
+.mt-kartu{background:var(--kartu);border:1px solid var(--gr);border-radius:16px;padding:16px 18px;box-shadow:var(--bayang)}
+.mt-kepala{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.mt-nama{font-family:"DM Serif Display",Georgia,serif;font-size:1.18rem;line-height:1.2}
+.mt-aka{font-size:12.5px;color:var(--lb);font-weight:600}
+.mt-rumus{margin-top:10px;background:var(--lembut);border-radius:10px;padding:9px 13px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--sage-tua);overflow-x:auto;white-space:nowrap}
+.mt-arti{margin:10px 0 0;font-size:14.5px;color:var(--tx2);line-height:1.62}
+.mt-awas{margin:9px 0 0;font-size:13.5px;color:#7a4a40;background:var(--bata-lembut);
+  border-radius:10px;padding:9px 13px;line-height:1.55}
+.mt-kaki{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px solid var(--gr);font-size:12.5px}
+.mt-kaki b{display:block;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--lb);margin-bottom:3px}
+.mt-kaki span{color:var(--tx2)}
+.mt-kaki a{font-weight:700}
+.mt-kosong{background:var(--kartu);border:1px dashed var(--gr);border-radius:16px;padding:28px;text-align:center;color:var(--lb)}
+mark{background:var(--pasir);color:inherit;border-radius:3px;padding:0 1px}
+@media(max-width:820px){
+  .mt-isi{grid-template-columns:1fr}
+  .mt-grup{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}
+  .mt-grup h2{display:none}
+  .mt-grup button{white-space:nowrap;flex:none}
+  .mt-grup button small{display:none}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="dasbor.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a href="pasar.html">Pasar</a>
+    <a href="bitcoin.html">Bitcoin</a>
+    <a href="kelas.html">Kelas</a>
+    <a class="aktif" href="metrik.html">Metrics</a>
+    <a href="kuis.html">Kuis</a>
+    <a href="masuk.html#status" data-menunggu hidden>Langganan</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="pengaturan.html" data-sesi hidden>Pengaturan</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+</header>
+
+<section class="bagian" style="margin-top:28px">
+  <div class="mata">Metrics · kamus angka</div>
+  <div class="judul"><h1 class="serif">Tiap angka di sini, dan dari mana asalnya</h1></div>
+  <p class="pengantar">Halaman ini menjelaskan setiap metrik yang dipakai di Hanif Dossier: artinya dalam
+    bahasa sehari-hari, rumusnya kalau ada, jebakan yang sering membuat orang salah baca, sumber datanya,
+    dan di halaman mana ia muncul. Angka tanpa definisi mudah dipakai untuk membenarkan apa saja, jadi
+    definisinya ditaruh di depan.</p>
+
+  <div class="mt-atas">
+    <label class="mt-cari">
+      <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="cari" type="search" placeholder="Cari metrik, misalnya FDV, funding, drawdown…" autocomplete="off">
+    </label>
+    <span class="mt-hitung" id="hitung"></span>
+  </div>
+
+  <div class="mt-isi">
+    <nav class="mt-grup" id="grup"><h2>Kelompok</h2></nav>
+    <div class="mt-daftar" id="daftar"></div>
+  </div>
+
+  <div class="penafian" style="margin-top:28px">Definisi di halaman ini disusun Hanif Dossier. Angka yang
+    dipakai di halaman lain berasal dari penyedia yang disebut pada tiap metrik. Definisi antar penyedia
+    bisa berbeda, jadi angka yang sama bisa tidak persis sama di dua tempat; kalau itu terjadi, yang dipakai
+    adalah sumber yang disebut di sini. Bukan nasihat investasi.</div>
+</section>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  if (window.akun) akun.pasangMenu();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // Kelompok mengikuti cara angka itu dipakai, bukan cara penyedianya mengelompokkan.
+  const GRUP = [
+    ['pasar', 'Pasar'],
+    ['keuangan', 'Keuangan protokol'],
+    ['valuasi', 'Valuasi'],
+    ['pakai', 'Pemakaian'],
+    ['onchain', 'Ekosistem & on-chain'],
+    ['derivatif', 'Derivatif'],
+    ['risiko', 'Risiko & portofolio'],
+    ['sendiri', 'Hitungan Hanif Dossier'],
+  ];
+
+  // dipakai: [judul, tautan] — halaman tempat metrik ini benar-benar muncul.
+  const M = [
+    // ── Pasar ───────────────────────────────────────────────────────────
+    { n: 'Harga', a: 'Price', g: 'pasar',
+      arti: 'Harga terakhir yang benar-benar terjadi, dirata-rata dari banyak bursa menurut volumenya. Bukan harga yang bisa kamu dapat: untuk order besar, harga yang didapat lebih buruk karena likuiditasnya terbatas.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Radar', 'laporan.html?h=radar']] },
+    { n: 'Kapitalisasi pasar', a: 'Market cap', g: 'pasar', r: 'harga × token beredar',
+      arti: 'Nilai seluruh token yang sudah beredar. Ini angka yang dibandingkan antar aset, bukan harga per keping. Token seharga seperseribu dolar bisa jauh lebih mahal daripada token seharga seribu dolar.',
+      awas: 'Tidak sama dengan uang yang masuk ke aset itu. Kapitalisasi naik satu miliar dolar tidak berarti ada satu miliar dolar yang dibelanjakan.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Membaca tokenomics', 'kelas.html#kelas/tokenomics']] },
+    { n: 'FDV', a: 'Fully diluted valuation', g: 'pasar', r: 'harga × suplai maksimum',
+      arti: 'Nilai proyek seandainya semua token sudah beredar hari ini. Selisih besar antara FDV dan kapitalisasi berarti sebagian besar risikomu ada di masa depan, bukan hari ini.',
+      awas: 'Proyek tanpa suplai maksimum tidak punya FDV yang berarti. Sebagian penyedia mengisinya dengan suplai total, yang bisa berubah.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Tokenomics', 'kelas.html#kelas/tokenomics']] },
+    { n: 'Volume 24 jam', a: '24h trading volume', g: 'pasar',
+      arti: 'Total nilai yang diperdagangkan sehari. Dipakai untuk menilai apakah sebuah gerakan harga serius: kenaikan dengan volume sepi berarti sedikit pihak yang benar-benar berpindah posisi.',
+      awas: 'Angka yang paling sering digelembungkan. Sejumlah penelitian sejak 2019 menemukan sebagian besar volume yang dilaporkan bursa kecil tidak mencerminkan perdagangan nyata. Periksa sebarannya antar bursa.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Token beredar', a: 'Circulating supply', g: 'pasar',
+      arti: 'Token yang sudah di tangan publik dan bisa diperdagangkan. Pembagi dalam kapitalisasi pasar.',
+      awas: 'Definisinya berbeda antar penyedia. Sebagian menghitung token yayasan yang masih terkunci sebagai beredar, sebagian tidak, dan selisihnya bisa puluhan persen.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Suplai maksimum', a: 'Max supply', g: 'pasar',
+      arti: 'Batas tertinggi token yang akan pernah ada. Bitcoin 21 juta. Sebagian proyek tidak punya batas, dan itu perlu dibaca sebagai inflasi tanpa akhir.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Bitcoin', 'bitcoin.html']] },
+    { n: 'Float', a: 'Free float', g: 'pasar', r: 'token beredar ÷ suplai maksimum × 100%',
+      arti: 'Berapa persen dari seluruh token yang sudah beredar. Float rendah berarti banyak token masih menunggu masuk pasar, dan tiap token baru butuh pembeli baru supaya harga tidak turun.',
+      awas: 'Float rendah bersama FDV tinggi adalah kombinasi yang secara sejarah paling sulit naik: valuasi dianggap kemahalan sekaligus likuiditasnya tipis.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Struktur Suplai', 'kelas.html#kelas/suplai-siklus']] },
+    { n: 'Puncak sepanjang masa', a: 'All-time high (ATH)', g: 'pasar', r: 'jarak dari puncak = (harga ÷ ATH − 1) × 100%',
+      arti: 'Harga tertinggi yang pernah dicapai, dan seberapa jauh harga sekarang di bawahnya.',
+      awas: 'Turun jauh dari puncak bukan berarti murah. Dua aset yang sama-sama turun 85 persen bisa berarti hal yang bertolak belakang, tergantung tahap siklusnya.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html'], ['Struktur Suplai dan Siklus', 'kelas.html#kelas/suplai-siklus']] },
+    { n: 'Dominasi Bitcoin', a: 'BTC dominance', g: 'pasar', r: 'kapitalisasi Bitcoin ÷ kapitalisasi seluruh pasar × 100%',
+      arti: 'Porsi pasar yang dipegang Bitcoin. Dominasi naik biasanya berarti modal berlindung ke aset paling besar; dominasi turun berarti modal menyebar ke altcoin.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Coinbase premium', a: '', g: 'pasar', r: '(harga di Coinbase ÷ harga di Binance − 1) × 100%',
+      arti: 'Selisih harga Bitcoin di bursa yang dipakai pembeli Amerika dan institusi terhadap bursa global. Positif berarti permintaan Amerika lebih kuat, negatif berarti ada tekanan jual dari sana.',
+      awas: 'Selisih di bawah 0,05 persen praktis netral dan tidak perlu ditafsirkan.',
+      s: ['CoinGecko'], d: [['Pasar', 'pasar.html']] },
+
+    // ── Keuangan protokol ───────────────────────────────────────────────
+    { n: 'Fee', a: 'Fees', g: 'keuangan',
+      arti: 'Total yang dibayar pengguna untuk memakai sebuah protokol. Ini seperti omzet kotor: uang yang masuk ke seluruh sistem, belum tentu jadi milik protokolnya.',
+      awas: 'Angka inilah yang paling sering dipamerkan. Sebuah bursa bisa memungut fee ratusan juta dolar tetapi menyerahkan hampir semuanya ke penyedia likuiditas.',
+      s: ['DefiLlama', 'Token Terminal'], d: [['Pasar', 'pasar.html'], ['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
+    { n: 'Pendapatan protokol', a: 'Revenue', g: 'keuangan',
+      arti: 'Bagian dari fee yang benar-benar masuk ke kas protokol atau ke pemegang token. Sisanya pergi ke penyedia likuiditas, validator, atau pemasok.',
+      s: ['DefiLlama', 'Token Terminal'], d: [['Pasar', 'pasar.html'], ['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
+    { n: 'Biaya ke penyedia', a: 'Supply-side fees', g: 'keuangan', r: 'fee − pendapatan protokol',
+      arti: 'Bagian fee yang diteruskan ke pihak yang menyediakan modal atau keamanan: penyedia likuiditas, validator, pemberi pinjaman. Biaya nyata, bukan keuntungan.',
+      s: ['DefiLlama'], d: [['Radar', 'laporan.html?h=radar']] },
+    { n: 'Insentif token', a: 'Token incentives', g: 'keuangan',
+      arti: 'Nilai token yang dibagikan protokol untuk menarik pengguna. Bentuknya hadiah, poin, atau program likuiditas. Ini pengeluaran, dibayar dengan mengencerkan pemegang token lama.',
+      awas: 'Pertumbuhan yang dibiayai insentif sering hilang begitu insentifnya berhenti. Ujiannya: lihat aktivitas setelah programnya dikurangi.',
+      s: ['Token Terminal'], d: [['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
+    { n: 'Laba', a: 'Earnings', g: 'keuangan', r: 'pendapatan protokol − insentif token',
+      arti: 'Sisa setelah biaya menarik pengguna dikurangi. Protokol bisa terlihat sangat ramai dan tetap merugi, dan kerugian itu ditanggung pemegang token dalam bentuk dilusi.',
+      s: ['Token Terminal'], d: [['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
+
+    // ── Valuasi ─────────────────────────────────────────────────────────
+    { n: 'P/F', a: 'Price to fees', g: 'valuasi', r: 'kapitalisasi ÷ (fee 30 hari × 12)',
+      arti: 'Berapa tahun fee yang sedang dibayar pasar untuk aset ini. Dipakai membandingkan protokol sejenis, bukan menentukan harga wajar.',
+      awas: 'Kalau dihitung dengan kapitalisasi dan bukan FDV, protokol yang baru sedikit beredar akan terlihat jauh lebih murah daripada kenyataannya. Hitung kedua versinya.',
+      s: ['Hanif Dossier', 'DefiLlama'], d: [['Pasar', 'pasar.html'], ['Valuasi', 'kelas.html#kelas/pendapatan']] },
+    { n: 'P/S', a: 'Price to sales', g: 'valuasi', r: 'kapitalisasi ÷ (pendapatan protokol 30 hari × 12)',
+      arti: 'Sama dengan P/F tetapi memakai pendapatan yang benar-benar jadi milik protokol, bukan seluruh fee. Angkanya selalu lebih tinggi dan biasanya lebih jujur.',
+      awas: 'Tidak berarti apa-apa kalau pemegang token tidak punya hak atas pendapatan itu. Periksa dulu mekanismenya: pembelian kembali, pembakaran, atau pembagian.',
+      s: ['Hanif Dossier', 'DefiLlama'], d: [['Pasar', 'pasar.html']] },
+    { n: 'P/E', a: 'Price to earnings', g: 'valuasi', r: 'kapitalisasi ÷ (laba setahun)',
+      arti: 'Rasio klasik dari pasar saham. Di crypto masih jarang bisa dipakai karena sedikit protokol yang punya laba positif setelah insentif token dikurangi.',
+      s: ['Token Terminal'], d: [['Pendapatan Protokol', 'kelas.html#kelas/pendapatan']] },
+    { n: 'Nilai intrinsik', a: 'V (Gordon growth)', g: 'valuasi', r: 'V = CF × (1 + g) ÷ (r − g)',
+      arti: 'Nilai yang tersisa kalau semua cerita dihapus: arus kas yang benar-benar sampai ke pemegang token, didiskontokan dengan risiko. CF hanya pembelian kembali, bagi fee, dan pembakaran yang dibiayai pendapatan nyata.',
+      awas: 'Hasilnya sangat peka terhadap r dan g, jadi wajib ditampilkan dalam tiga skenario. Imbal hasil staking yang dibayar dari inflasi bukan arus kas; itu pengenceran yang dibagikan.',
+      s: ['Hanif Dossier'], d: [['Nilai Intrinsik Token', 'kelas.html#kelas/jantung-nilai/2']] },
+    { n: 'FDV ÷ V', a: 'Rasio harga terhadap nilai', g: 'valuasi', r: 'FDV ÷ nilai intrinsik',
+      arti: 'Seberapa jauh harga di atas nilai yang bisa dihitung. Di bawah 1 jarang terjadi dan biasanya ada alasannya. Satu sampai tiga wajar untuk aset yang tumbuh. Di atas sepuluh, yang dibayar adalah narasi.',
+      s: ['Hanif Dossier'], d: [['Nilai Intrinsik Token', 'kelas.html#kelas/jantung-nilai/2']] },
+    { n: 'NVT', a: 'Network value to transactions', g: 'valuasi', r: 'kapitalisasi jaringan ÷ nilai transaksi harian',
+      arti: 'Versi jaringan dari P/E: seberapa mahal sebuah jaringan dibanding nilai yang mengalir lewatnya. Dipakai untuk aset yang tidak punya arus kas ke pemegang token.',
+      awas: 'Diberi label nilai jaringan, bukan nilai intrinsik. Keduanya menjawab pertanyaan berbeda.',
+      s: ['Glassnode'], d: [['Nilai Intrinsik Token', 'kelas.html#kelas/jantung-nilai/2']] },
+
+    // ── Pemakaian ───────────────────────────────────────────────────────
+    { n: 'Pengguna aktif', a: 'Active users', g: 'pakai',
+      arti: 'Alamat unik yang memakai sebuah protokol dalam periode tertentu. Ukuran kasar permintaan.',
+      awas: 'Satu orang bisa punya ribuan alamat, terutama di jaringan berbiaya rendah dan saat ada program airdrop. Periksa nilai transaksi rata-rata dan pola waktunya.',
+      s: ['Token Terminal'], d: [['Pasar', 'pasar.html'], ['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Alamat aktif', a: 'Active addresses', g: 'pakai',
+      arti: 'Jumlah alamat yang bertransaksi di sebuah jaringan dalam periode tertentu. Dipakai melihat arah pemakaian, bukan angka mutlaknya.',
+      s: ['Glassnode', 'Token Terminal'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Jumlah transaksi', a: 'Transaction count', g: 'pakai',
+      arti: 'Banyaknya transaksi di sebuah jaringan. Berguna dibandingkan dengan fee: transaksi banyak dengan fee kecil berarti pemakaiannya murah, bukan berarti bernilai.',
+      s: ['Token Terminal'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Volume DEX', a: 'DEX volume', g: 'pakai',
+      arti: 'Nilai yang ditukar lewat bursa terdesentralisasi. Dipakai membandingkan pangsa pasar antar bursa dan antar rantai.',
+      s: ['DefiLlama'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Pinjaman aktif', a: 'Active loans', g: 'pakai',
+      arti: 'Nilai yang benar-benar sedang dipinjam di sebuah protokol pinjam-meminjam. Inilah jantung sektor ini, bukan TVL.',
+      awas: 'TVL besar dengan pinjaman aktif kecil berarti uang parkir yang menunggu insentif, bukan permintaan nyata.',
+      s: ['DefiLlama'], d: [['Jantung dan Nilai', 'kelas.html#kelas/jantung-nilai'], ['Lending', 'kelas.html#kelas/lending']] },
+
+    // ── Ekosistem & on-chain ────────────────────────────────────────────
+    { n: 'TVL', a: 'Total value locked', g: 'onchain',
+      arti: 'Nilai aset yang sedang disimpan di dalam sebuah protokol atau rantai. Ukuran kepercayaan dan skala, bukan ukuran pendapatan.',
+      awas: 'Bisa naik hanya karena harga aset di dalamnya naik, tanpa uang baru masuk. Periksa TVL dalam satuan aset, dan bandingkan dengan pasokan stablecoin yang tidak bisa digelembungkan kenaikan harga.',
+      s: ['DefiLlama'], d: [['Pasar', 'pasar.html'], ['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Pasokan stablecoin', a: 'Stablecoin supply', g: 'onchain',
+      arti: 'Total stablecoin yang beredar di sebuah jaringan. Ukuran kasar berapa banyak uang siap pakai di ekosistem itu.',
+      awas: 'Bisa melonjak karena satu pihak besar memindahkan dana sementara. Baca arahnya selama beberapa minggu, bukan satu hari.',
+      s: ['DefiLlama'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Arus bursa', a: 'Exchange netflow', g: 'onchain', r: 'koin masuk bursa − koin keluar bursa',
+      arti: 'Selisih koin yang masuk dan keluar dompet bursa. Arus masuk besar sering mendahului penjualan; arus keluar sering berarti pemindahan ke simpanan jangka panjang.',
+      awas: 'Data on-chain menunjukkan perpindahan, bukan niat. Koin keluar bursa bisa juga berarti pindah kustodian atau dipakai sebagai jaminan pinjaman. Label dompet bursa adalah dugaan pihak ketiga.',
+      s: ['CryptoQuant', 'Glassnode'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Pasokan menurut umur', a: 'HODL waves', g: 'onchain',
+      arti: 'Berapa porsi koin yang tidak bergerak selama satu tahun, dua tahun, dan seterusnya. Porsi koin tua yang naik berarti pemegang lama sedang menyimpan, bukan menjual.',
+      s: ['Glassnode'], d: [['Siklus dan Struktur Pasar', 'kelas.html#kelas/struktur']] },
+    { n: 'MVRV', a: 'Market value to realized value', g: 'onchain', r: 'kapitalisasi pasar ÷ realized cap',
+      arti: 'Perbandingan harga pasar dengan harga rata-rata saat koin terakhir berpindah tangan. Memberi gambaran apakah pemegang rata-rata sedang untung atau rugi.',
+      awas: 'Paling dapat diandalkan untuk Bitcoin dan Ethereum, yang sejarah datanya panjang. Untuk aset baru, pembandingnya belum berarti.',
+      s: ['Glassnode', 'CryptoQuant'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Realized cap', a: 'Realized capitalization', g: 'onchain',
+      arti: 'Nilai seluruh koin dihitung dengan harga saat koin itu terakhir berpindah, bukan harga hari ini. Mendekati gambaran berapa uang yang benar-benar masuk ke aset itu.',
+      s: ['Glassnode'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Aplikasi aktif', a: 'Active apps', g: 'onchain',
+      arti: 'Jumlah aplikasi di sebuah rantai yang masih punya nilai tersimpan di atas ambang tertentu. Ukuran kedalaman ekosistem, bukan popularitas.',
+      s: ['DefiLlama'], d: [['Radar', 'laporan.html?h=radar']] },
+
+    // ── Derivatif ───────────────────────────────────────────────────────
+    { n: 'Open interest', a: 'OI', g: 'derivatif',
+      arti: 'Total nilai posisi berjangka yang sedang terbuka. Naik berarti uang baru masuk ke posisi berleverage; turun berarti posisi ditutup atau dilikuidasi.',
+      awas: 'Kenaikan harga yang disertai lonjakan open interest berarti kenaikannya dibiayai pinjaman, dan struktur seperti itu rapuh.',
+      s: ['Coinglass'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain'], ['Radar', 'laporan.html?h=radar']] },
+    { n: 'Funding rate', a: '', g: 'derivatif',
+      arti: 'Biaya berkala yang dibayar antar pemegang posisi di kontrak perpetual. Positif berarti pemegang posisi beli yang membayar, tanda permintaan beli dengan pinjaman sedang tinggi.',
+      awas: 'Funding tinggi yang bertahan berhari-hari membuat pasar rapuh: penurunan kecil bisa memicu rantai likuidasi yang menekan harga lebih jauh.',
+      s: ['Coinglass'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+    { n: 'Likuidasi', a: 'Liquidations', g: 'derivatif',
+      arti: 'Nilai posisi yang ditutup paksa bursa karena jaminannya tidak lagi cukup. Likuidasi besar sering menjadi penyebab gerakan harga, bukan akibatnya.',
+      s: ['Coinglass'], d: [['Leverage', 'kelas.html#kelas/ukur-risiko/2']] },
+    { n: 'Long/short ratio', a: '', g: 'derivatif',
+      arti: 'Perbandingan posisi beli dan jual di pasar berjangka. Berguna sebagai tanda keramaian di satu sisi, bukan sebagai penunjuk arah.',
+      awas: 'Hanya mencakup bursa yang melaporkannya. Posisi lindung nilai institusi tidak terlihat, jadi pasar yang tampak sangat memihak satu arah bisa sudah dilindungi di tempat lain.',
+      s: ['Coinglass'], d: [['Analisis On-chain', 'kelas.html#kelas/onchain']] },
+
+    // ── Risiko & portofolio ─────────────────────────────────────────────
+    { n: 'Volatilitas', a: 'Volatility', g: 'risiko',
+      arti: 'Ukuran seberapa jauh harga biasanya bergerak naik turun. Menentukan ukuran posisi yang masuk akal: makin bergejolak, makin kecil porsinya.',
+      awas: 'Volatilitas masa lalu bukan ukuran risiko yang lengkap. Aset bisa tenang bertahun-tahun lalu jatuh habis dalam sehari karena diretas atau dilarang.',
+      s: ['Hanif Dossier'], d: [['Mengukur Risiko', 'kelas.html#kelas/ukur-risiko']] },
+    { n: 'Drawdown', a: 'Max drawdown', g: 'risiko', r: '(titik terendah ÷ puncak sebelumnya − 1) × 100%',
+      arti: 'Penurunan terdalam dari puncak ke dasar sesudahnya. Angka ini menentukan apakah kamu sanggup bertahan menjalankan sebuah rencana, dan sering lebih penting daripada hasil akhirnya.',
+      awas: 'Ingat aritmetikanya: rugi 50 persen butuh untung 100 persen hanya untuk kembali ke titik awal.',
+      s: ['Hanif Dossier'], d: [['Mengukur Risiko', 'kelas.html#kelas/ukur-risiko']] },
+    { n: 'Waktu pemulihan', a: 'Recovery time', g: 'risiko',
+      arti: 'Lama waktu dari dasar sampai kembali ke puncak lama. Bitcoin pernah butuh sekitar tiga tahun untuk pulih dari dasar 2018. Biaya kesempatan itu tidak pernah muncul di grafik.',
+      s: ['Hanif Dossier'], d: [['Mengukur Risiko', 'kelas.html#kelas/ukur-risiko']] },
+    { n: 'Korelasi', a: 'Correlation', g: 'risiko',
+      arti: 'Seberapa sering dua aset bergerak searah, dari −1 sampai +1. Diversifikasi hanya bekerja kalau korelasinya rendah.',
+      awas: 'Di crypto, korelasi justru naik saat pasar panik. Persis pada hari perlindungan paling dibutuhkan, hampir semuanya jatuh bersama.',
+      s: ['Hanif Dossier'], d: [['Menyusun Portofolio', 'kelas.html#kelas/portofolio']] },
+    { n: 'Beta', a: '', g: 'risiko',
+      arti: 'Seberapa besar sebuah aset bergerak dibanding acuannya. Altcoin dengan beta 2 terhadap Bitcoin cenderung naik dan turun dua kali lebih tajam.',
+      s: ['Hanif Dossier'], d: [['Menyusun Portofolio', 'kelas.html#kelas/portofolio']] },
+    { n: 'Expectancy', a: 'Harapan hasil per transaksi', g: 'risiko',
+      r: '(win rate × rata-rata untung) − (lose rate × rata-rata rugi)',
+      arti: 'Hasil rata-rata yang diharapkan dari satu transaksi. Angka inti untuk menilai sebuah metode, karena menggabungkan seberapa sering benar dengan seberapa besar untung dan ruginya.',
+      awas: 'Win rate sendirian menyesatkan. Menang 80 persen dengan kekalahan lima kali lebih besar dari kemenangan tetap menghabiskan modal.',
+      s: ['Hanif Dossier'], d: [['Menguji Strategi', 'kelas.html#kelas/uji']] },
+    { n: 'DSR', a: 'Debt service ratio', g: 'risiko', r: 'total cicilan bulanan ÷ penghasilan bulanan × 100%',
+      arti: 'Berapa bagian penghasilan yang sudah terikat cicilan. Dipakai bank untuk menilai pengajuan pinjaman, dan bisa kamu pakai untuk menilai dirimu sendiri lebih dulu.',
+      awas: 'Hitung dengan penghasilan bulan terburuk, bukan bulan terbaik, kalau pemasukanmu tidak tetap.',
+      s: ['Hanif Dossier'], d: [['Hutang', 'kelas.html#kelas/hutang']] },
+
+    // ── Hitungan Hanif Dossier ──────────────────────────────────────────
+    { n: 'Indeks sektor', a: '', g: 'sendiri',
+      r: 'rata-rata tertimbang perubahan harga 30 koin terbesar per sektor, bobot dibatasi 25% per koin',
+      arti: 'Indeks buatan sendiri untuk melihat ke sektor mana modal mengalir. Stablecoin, token bungkus seperti wBTC dan stETH, serta data janggal dikeluarkan lebih dulu.',
+      awas: 'Dibuat karena angka kategori mentah bisa melonjak puluhan persen hanya karena satu token rusak datanya. Sektor bernilai tetap seperti stablecoin diukur dari nilai beredarnya, bukan perubahan harganya.',
+      s: ['Hanif Dossier', 'CoinGecko'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Altcoin Season Index', a: '', g: 'sendiri',
+      r: 'jumlah dari 50 koin teratas yang mengalahkan Bitcoin dalam 90 hari',
+      arti: 'Menunjukkan apakah modal sedang menyebar ke altcoin atau berkumpul di Bitcoin. Dihitung ulang sendiri dari harga harian, bukan disalin dari penyedia lain.',
+      s: ['Hanif Dossier', 'CoinGecko'], d: [['Pasar', 'pasar.html']] },
+    { n: 'Skor naratif', a: '', g: 'sendiri',
+      r: 'tujuh kriteria diberi skor 1–5 lalu dikalikan bobotnya (katalis 20%, tokenomics 20%, ukuran pasar 15%, tim & pendana 15%, likuiditas 10%, timing siklus 10%, pendapatan & pengguna nyata 10%)',
+      arti: 'Menilai apakah sebuah narasi layak diperdagangkan sekarang. Skor di bawah 3 berarti narasinya lemah untuk dijadikan tesis utama.',
+      awas: 'Tidak menggantikan analisis fundamental. Ia menjawab pertanyaan yang berbeda: soal waktu, bukan soal nilai.',
+      s: ['Hanif Dossier'], d: [['Trading Naratif', 'kelas.html#kelas/naratif']] },
+    { n: 'Fear & Greed Index', a: '', g: 'sendiri',
+      arti: 'Indeks sentimen pasar dari 0 (takut ekstrem) sampai 100 (serakah ekstrem), disusun dari volatilitas, volume, media sosial, dan dominasi Bitcoin.',
+      awas: 'Ini bukan hitungan kami, melainkan indeks pihak ketiga yang ditampilkan apa adanya. Berguna sebagai tanda suasana, bukan sebagai pemicu.',
+      s: ['alternative.me'], d: [['Pasar', 'pasar.html']] },
+  ];
+
+  const url = { 'CoinGecko': 'https://www.coingecko.com', 'CoinMarketCap': 'https://coinmarketcap.com',
+    'DefiLlama': 'https://defillama.com', 'Token Terminal': 'https://tokenterminal.com',
+    'Glassnode': 'https://glassnode.com', 'CryptoQuant': 'https://cryptoquant.com',
+    'Coinglass': 'https://www.coinglass.com', 'alternative.me': 'https://alternative.me/crypto/fear-and-greed-index/',
+    'Messari': 'https://messari.io' };
+
+  let grupAktif = 'semua', kata = '';
+  const cocok = m => {
+    if (!kata) return true;
+    const k = kata.toLowerCase();
+    return [m.n, m.a, m.arti, m.r, m.awas].some(x => x && x.toLowerCase().includes(k));
+  };
+  const sorot = (t) => {
+    if (!kata) return esc(t);
+    const i = t.toLowerCase().indexOf(kata.toLowerCase());
+    return i < 0 ? esc(t) : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + kata.length)) + '</mark>' + esc(t.slice(i + kata.length));
+  };
+
+  function kartu(m) {
+    return `<article class="mt-kartu">
+      <div class="mt-kepala"><span class="mt-nama">${sorot(m.n)}</span>${m.a ? `<span class="mt-aka">${sorot(m.a)}</span>` : ''}</div>
+      ${m.r ? `<div class="mt-rumus">${esc(m.r)}</div>` : ''}
+      <p class="mt-arti">${sorot(m.arti)}</p>
+      ${m.awas ? `<p class="mt-awas"><b>Mudah salah baca.</b> ${sorot(m.awas)}</p>` : ''}
+      <div class="mt-kaki">
+        <div><b>Sumber</b><span>${m.s.map(x => url[x] ? `<a href="${url[x]}" target="_blank" rel="noopener">${esc(x)}</a>` : esc(x)).join(' · ')}</span></div>
+        <div><b>Dipakai di</b><span>${m.d.map(([t, h]) => `<a href="${esc(h)}">${esc(t)}</a>`).join(' · ')}</span></div>
+      </div>
+    </article>`;
+  }
+
+  function gambar() {
+    const kena = M.filter(m => (grupAktif === 'semua' || m.g === grupAktif) && cocok(m));
+    $('hitung').textContent = `${kena.length} dari ${M.length} metrik`;
+    $('grup').innerHTML = '<h2>Kelompok</h2>' +
+      [['semua', 'Semua metrik'], ...GRUP].map(([k, n]) => {
+        const j = M.filter(m => (k === 'semua' || m.g === k) && cocok(m)).length;
+        return `<button type="button" data-g="${k}" class="${k === grupAktif ? 'aktif' : ''}">${esc(n)}<small>${j}</small></button>`;
+      }).join('');
+    if (!kena.length) { $('daftar').innerHTML = `<div class="mt-kosong">Tidak ada metrik yang cocok dengan “${esc(kata)}”.</div>`; return; }
+    // Kalau sedang melihat semua kelompok, tampilkan judul tiap kelompok sebagai pemisah.
+    $('daftar').innerHTML = grupAktif === 'semua'
+      ? GRUP.map(([k, n]) => {
+          const isi = kena.filter(m => m.g === k);
+          return isi.length ? `<h2 class="serif mt-judul-grup">${esc(n)}</h2>` + isi.map(kartu).join('') : '';
+        }).join('')
+      : kena.map(kartu).join('');
+  }
+
+  $('grup').addEventListener('click', e => {
+    const b = e.target.closest('[data-g]');
+    if (b) { grupAktif = b.dataset.g; gambar(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+  let jeda;
+  $('cari').addEventListener('input', e => {
+    clearTimeout(jeda);
+    jeda = setTimeout(() => { kata = e.target.value.trim(); gambar(); }, 120);
+  });
+  gambar();
+})();
+</script>
+</body>
+</html>
