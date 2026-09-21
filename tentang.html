@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="gaya.css">
+<link rel="stylesheet" href="hidup.css">
+<script src="hidup.js"></script>
 <style>
 .masalah{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
 .masalah .kartu b{display:block;margin-bottom:4px}
@@ -48,7 +50,7 @@
 
 <header class="atas">
   <a class="merek" href="index.html">
-    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path d="M12 21V11"/></svg></div>
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path pathLength="1" d="M12 21V11"/></svg></div>
     <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
   </a>
   <nav class="menu">
@@ -75,7 +77,7 @@
 <section class="sambut">
   <div class="sapa">
     <div class="lencana"><span>Riset independen</span><span>Bear case selalu disertakan</span><span>Bukan rekomendasi beli/jual</span></div>
-    <h1 class="serif">Sebelum beli,<br><span>baca dulu argumen lawannya.</span></h1>
+    <h1 class="serif">Sebelum beli,<br><span>baca dulu <em class="spidol">argumen lawannya.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 13C58 6 118 17 176 10s96-5 120 2"/></svg></em></span></h1>
     <p>Setiap pagi terbit briefing pasar, radar portofolio, schedule, dan screening 750 altcoin — disusun mesin, diperiksa manusia. Ditambah dossier token yang menulis alasan paling kuat untuk <em>tidak</em> membeli, dan modul edukasi cara membacanya. Supaya keputusan Anda diambil dengan mata terbuka, bukan karena ikut ramai di grup.</p>
     <div class="tombol">
       <a class="utama" href="masuk.html">Lihat harga &amp; daftar</a>
@@ -276,18 +278,18 @@
   try {
     const g = (await (await fetch('https://api.coingecko.com/api/v3/global')).json()).data;
     const cap = g.total_market_cap.usd, ubah = await ubahPasar24(g.market_cap_change_percentage_24h_usd), b = g.market_cap_percentage.btc, e = g.market_cap_percentage.eth;
-    $('cap-angka').textContent = uangRingkas(cap);
+    $('cap-angka').textContent = uangRingkas(cap); hidup.hitung($('cap-angka'));
     $('cap-ket').innerHTML = `<span class="${arah(ubah)}" style="font-weight:700">${(ubah >= 0 ? '+' : '') + ubah.toFixed(2).replace('.', ',')}%</span> dalam 24 jam`;
     $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`);
     $('dom-eth').setAttribute('stroke-dasharray', `${(e / 100 * 251.3).toFixed(1)} 251.3`); $('dom-eth').setAttribute('stroke-dashoffset', `-${(b / 100 * 251.3).toFixed(1)}`);
-    $('dom-teks').textContent = `${b.toFixed(1).replace('.', ',')}%`;
+    $('dom-teks').textContent = `${b.toFixed(1).replace('.', ',')}%`; hidup.hitung($('dom-teks'));
     $('dom-ket').textContent = `Bitcoin ${b.toFixed(1).replace('.', ',')}%, Ethereum ${e.toFixed(1).replace('.', ',')}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.`;
   } catch { $('cap-angka').textContent = 'n/a'; $('dom-teks').textContent = 'n/a'; }
   try {
     const f = (await (await fetch('https://api.alternative.me/fng/?limit=1')).json()).data[0];
     const n = Number(f.value);
     $('fg-busur').setAttribute('stroke-dasharray', `${(n / 100 * 157.1).toFixed(1)} 157.1`);
-    $('fg-angka').textContent = n; $('fg-judul').textContent = `Fear & Greed · ${f.value_classification}`;
+    $('fg-angka').textContent = n; hidup.hitung($('fg-angka')); $('fg-judul').textContent = `Fear & Greed · ${f.value_classification}`;
     $('fg-ket').textContent = n >= 75 ? 'Serakah ekstrem.' : n >= 55 ? 'Masih di zona serakah.' : n >= 45 ? 'Netral.' : n >= 25 ? 'Zona takut.' : 'Takut ekstrem.';
   } catch { $('fg-angka').textContent = 'n/a'; }
 
@@ -303,6 +305,7 @@
       <ul class="angka"><li><b>${d.kata.toLocaleString('id-ID')}</b> kata</li><li><b>${d.bagian}</b> bagian</li><li><b>${d.grafik}</b> grafik</li></ul>
       <div class="aksi"><a href="riset.html#${esc(d.tick)}">Daftar isi →</a></div>
     </article>`).join('');
+    hidup.pindai($('dossier-terbaru'));
     $('pustaka-jumlah').textContent = `${p.dossier.length} dossier · ${p.totalKata.toLocaleString('id-ID')} kata`;
   } catch { $('dossier-terbaru').innerHTML = '<span class="memuat">Daftar dossier belum bisa dimuat — buka <a href="masuk.html?ke=riset.html">halaman riset</a>.</span>'; }
 })();
