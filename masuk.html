@@ -107,6 +107,41 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
 .musim-ajak a{color:var(--sage);font-weight:700;text-decoration:none}
 @media(max-width:620px){.pita b{display:none}.musim-ujung{display:flex}.musim-skala{margin-top:4px}}
 @media(max-width:860px){.musim-isi{grid-template-columns:1fr;gap:24px}.musim-daftar{grid-template-columns:1fr}.musim-kepala h2{font-size:1.5rem}.musim-nilai{font-size:2.8rem}.musim-kartu{padding:20px}}
+
+/* Catatan call (publik). Angka dihitung saat halaman dibuka dari data harian Binance. */
+.call{padding:10px 16px 34px}
+.call-bungkus{max-width:1060px;margin:0 auto}
+.call-kartu{background:var(--kartu);border-radius:24px;padding:28px;box-shadow:var(--bayang);border:1px solid var(--gr)}
+.call-atas{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px;align-items:end}
+.call-atas h2{font-size:2rem;line-height:1.15;margin:6px 0 0;letter-spacing:-.01em}
+.call-atas h2 span{color:var(--sage)}
+.call-naik{font:800 3.4rem/1 "Nunito Sans",system-ui,sans-serif;color:var(--sage);letter-spacing:-.02em;text-align:right}
+.call-naik small{display:block;font-size:12.5px;font-weight:700;color:var(--lb);letter-spacing:.02em;margin-top:6px}
+.call-angka{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0 16px}
+.call-angka div{background:var(--bg2);border-radius:14px;padding:12px 14px}
+.call-angka b{display:block;font-size:1.25rem;color:var(--tx);font-variant-numeric:tabular-nums}
+.call-angka span{font-size:12px;color:var(--lb);font-weight:700}
+.call-angka .garis-call{background:#e3efe6}.call-angka .garis-call b{color:#2e7d4f}
+.call-grafik{width:100%;height:auto;display:block}
+.call-bawah{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 18px;margin-top:10px;font-size:12.5px;color:var(--lb)}
+.call-bawah a{color:var(--sage);font-weight:700;text-decoration:none}
+.call-bukti{margin-top:14px}
+.call-bukti summary{cursor:pointer;font-size:13.5px;font-weight:700;color:var(--sage-tua)}
+.call-bukti img{display:block;width:100%;margin-top:12px;border-radius:14px;border:1px solid var(--gr)}
+.call-bukti p{font-size:12.5px;color:var(--lb);margin:8px 0 0}
+.call-lain{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:22px;padding-top:22px;border-top:1px solid var(--gr)}
+.call-lain h3{font-size:1.35rem;margin:0 0 6px}
+.call-lain p{margin:0;color:var(--tx2);font-size:14.5px;line-height:1.6}
+.call-kunci{display:grid;gap:8px}
+.call-kunci div{display:flex;align-items:center;gap:10px;background:var(--bg2);border-radius:12px;padding:11px 14px}
+.call-kunci i{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sage-lembut)}
+.call-kunci s{flex:1;height:11px;border-radius:6px;background:linear-gradient(90deg,#cfd8d1,#e4e9e5);text-decoration:none;filter:blur(1.5px)}
+.call-kunci em{font-style:normal;font-size:12px;font-weight:700;color:var(--sage-tua);white-space:nowrap}
+.call-ajak{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:13px 22px;border-radius:12px;background:var(--sage);color:#fff;font-weight:800;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:inherit}
+.call-ajak:hover{background:var(--sage-tua)}
+.call-catatan{font-size:12px;color:var(--lb);margin:14px 0 0;line-height:1.55}
+@media(max-width:860px){.call-kartu{padding:20px}.call-atas{grid-template-columns:1fr}.call-naik{text-align:left;font-size:2.8rem}.call-atas h2{font-size:1.55rem}
+  .call-angka{grid-template-columns:1fr 1fr}.call-lain{grid-template-columns:1fr;gap:16px}}
 </style>
 
 <!-- aplikasi: bisa dipasang di HP/desktop; menu pil berikon -->
@@ -176,6 +211,46 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   </div>
 </main>
 
+<section class="call" id="call">
+  <div class="call-bungkus">
+    <div class="call-kartu">
+      <div class="call-atas">
+        <div>
+          <div class="mata">Catatan call</div>
+          <h2 class="serif">ZAMA sudah saya call di $0,050. <span id="call-judul-naik">Sekarang naik 72%.</span></h2>
+        </div>
+        <div class="call-naik"><span id="call-persen">+72,1%</span><small id="call-kapan">dari harga call</small></div>
+      </div>
+      <div class="call-angka">
+        <div class="garis-call"><span>Harga call</span><b>$0,05009</b></div>
+        <div><span>Sekarang</span><b id="call-kini">$0,08619</b></div>
+        <div><span>Tertinggi setelah call</span><b id="call-puncak">$0,09550</b></div>
+        <div><span>Naik ke puncak</span><b id="call-puncak-persen">+90,7%</b></div>
+      </div>
+      <svg class="call-grafik" id="call-grafik" viewBox="0 0 1000 340" role="img" aria-label="Grafik harian ZAMA/USDT dengan garis harga call"></svg>
+      <div class="call-bawah"><span id="call-sumber">Sumber: data harian Binance ZAMA/USDT.</span><a href="https://www.tradingview.com/symbols/ZAMAUSDT/?exchange=BINANCE" target="_blank" rel="noopener">Cek sendiri di TradingView →</a></div>
+      <details class="call-bukti">
+        <summary>Lihat tangkapan grafik saya (garis hijau = harga call)</summary>
+        <img src="bukti/zama-2026-09-21.png" alt="Tangkapan grafik harian ZAMA/USDT Binance, garis call di 0,05009" loading="lazy">
+        <p>Tangkapan TradingView, Binance ZAMA/USDT harian, 21 September 2026 pukul 09.34 WIB. Tanpa diedit.</p>
+      </details>
+      <div class="call-lain">
+        <div>
+          <h3 class="serif">ZAMA bukan satu-satunya.</h3>
+          <p>Beberapa koin lain sudah saya call, insyaallah menyusul. Nama koin, harga masuk, dan kapan call itu saya anggap batal hanya ada di laporan anggota.</p>
+          <button class="call-ajak" type="button" id="call-ajak">Jangan sampai ketinggalan, daftar sekarang →</button>
+        </div>
+        <div class="call-kunci" aria-label="Daftar call lain, khusus anggota">
+          <div><i></i><s></s><em>khusus anggota</em></div>
+          <div><i></i><s></s><em>khusus anggota</em></div>
+          <div><i></i><s></s><em>khusus anggota</em></div>
+        </div>
+      </div>
+      <p class="call-catatan">Call adalah catatan pribadi, bukan ajakan beli dan bukan jaminan hasil. Harga crypto bisa turun secepat naiknya. Hanif Dossier Crypto bukan penasihat investasi berizin OJK.</p>
+    </div>
+  </div>
+</section>
+
 <section class="musim" id="musim" hidden>
   <div class="musim-bungkus">
     <div class="musim-kepala">
@@ -215,6 +290,64 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   </div>
 </section>
 
+<script>
+// Catatan call: harga, persen, dan grafik dihitung saat halaman dibuka dari data harian Binance
+// (data-api.binance.vision, publik). Kalau gagal, cadangannya CoinGecko; kalau dua-duanya gagal, angka bawaan HTML tetap tampil.
+(async () => {
+  const CALL = 0.05009, $ = id => document.getElementById(id);
+  const rp = (n, d = 5) => '$' + n.toFixed(d).replace('.', ',');
+  const pr = n => (n >= 0 ? '+' : '−') + Math.abs(n).toFixed(1).replace('.', ',') + '%';
+  $('call-ajak').addEventListener('click', () => {
+    const b = document.querySelector('.tab button[data-mode="daftar"]'); if (b) b.click();
+    document.getElementById('formulir').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => { const n = document.getElementById('nama'); if (n) n.focus({ preventScroll: true }); }, 500);
+  });
+  let lilin = [], sumber = 'Binance';
+  try {
+    const r = await fetch('https://data-api.binance.vision/api/v3/klines?symbol=ZAMAUSDT&interval=1d&limit=90');
+    lilin = (await r.json()).map(k => ({ t: k[0], o: +k[1], h: +k[2], l: +k[3], c: +k[4] }));
+  } catch {
+    try {
+      const r = await fetch('https://api.coingecko.com/api/v3/coins/zama/ohlc?vs_currency=usd&days=90');
+      lilin = (await r.json()).map(k => ({ t: k[0], o: k[1], h: k[2], l: k[3], c: k[4] })); sumber = 'CoinGecko';
+    } catch { return; }
+  }
+  if (!Array.isArray(lilin) || lilin.length < 10) return;
+  const kini = lilin[lilin.length - 1].c;
+  // "setelah call": sejak lilin terakhir yang masih tutup di sekitar garis call sebelum naik
+  var awal = 0; for (let i = lilin.length - 1; i >= 0; i--) if (lilin[i].c <= CALL * 1.03) { awal = i; break; }
+  const puncak = Math.max(...lilin.slice(awal).map(k => k.h));
+  $('call-kini').textContent = rp(kini);
+  $('call-persen').textContent = pr((kini / CALL - 1) * 100);
+  $('call-judul-naik').textContent = 'Sekarang naik ' + Math.round((kini / CALL - 1) * 100) + '%.';
+  $('call-puncak').textContent = rp(puncak);
+  $('call-puncak-persen').textContent = pr((puncak / CALL - 1) * 100);
+  $('call-kapan').textContent = 'dari harga call · ' + new Date().toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + ' WIB';
+  $('call-sumber').textContent = 'Sumber: data harian ' + sumber + ' ZAMA/USDT, diperbarui setiap halaman dibuka.';
+
+  // Grafik lilin harian + garis call. Di HP: 45 hari terakhir dan bidang lebih tinggi supaya lilinnya terbaca.
+  const hp = innerWidth < 600, semua = lilin;
+  if (hp) { const buang = Math.max(0, lilin.length - 45); lilin = lilin.slice(buang); awal = Math.max(0, awal - buang); }
+  const W = hp ? 600 : 1000, H = hp ? 470 : 340, kiri = 8, kanan = hp ? 92 : 78, atas = 16, bawah = 34, fs = hp ? 19 : 12;
+  $('call-grafik').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  const naik = Math.max(...lilin.map(k => k.h)) * 1.06, turun = Math.min(...lilin.map(k => k.l)) * 0.94;
+  const y = v => atas + (naik - v) / (naik - turun) * (H - atas - bawah);
+  const lebar = (W - kiri - kanan) / lilin.length, x = i => kiri + lebar * (i + .5);
+  let g = '';
+  for (let v = 0.02; v <= naik; v += 0.02) if (v >= turun) g += '<line x1="' + kiri + '" x2="' + (W - kanan) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="#eef0ec"/><text x="' + (W - kanan + 8) + '" y="' + (y(v) + 4) + '" font-size="' + fs + '" fill="#a3aca7">' + v.toFixed(2).replace('.', ',') + '</text>';
+  let bulan = '';
+  lilin.forEach((k, i) => { const d = new Date(k.t); if (d.getUTCDate() === 1) bulan += '<text x="' + x(i) + '" y="' + (H - 8) + '" font-size="' + fs + '" fill="#a3aca7" text-anchor="middle">' + d.toLocaleDateString('id-ID', { month: 'short', timeZone: 'UTC' }) + '</text>'; });
+  const batang = lilin.map((k, i) => { const hijau = k.c >= k.o, w = Math.max(2, lebar * .62), top = y(Math.max(k.o, k.c)), tb = Math.max(1.5, Math.abs(y(k.o) - y(k.c)));
+    const w8 = hijau ? '#4f9a78' : '#c98272';
+    return '<line x1="' + x(i) + '" x2="' + x(i) + '" y1="' + y(k.h) + '" y2="' + y(k.l) + '" stroke="' + w8 + '" stroke-width="1.4"/><rect x="' + (x(i) - w / 2) + '" y="' + top + '" width="' + w + '" height="' + tb + '" rx="1" fill="' + w8 + '"/>'; }).join('');
+  const yc = y(CALL), xa = x(awal), xk = x(lilin.length - 1), yk = y(kini);
+  const garis = '<rect x="' + xa + '" y="' + yk + '" width="' + (xk - xa) + '" height="' + Math.max(0, yc - yk) + '" fill="#4f9a78" opacity=".07"/>' +
+    '<line x1="' + kiri + '" x2="' + (W - kanan) + '" y1="' + yc + '" y2="' + yc + '" stroke="#2e7d4f" stroke-width="2.4" stroke-dasharray="7 5"/>' +
+    '<rect x="' + (W - kanan + 2) + '" y="' + (yc - fs) + '" width="' + (kanan - 4) + '" height="' + fs * 2 + '" rx="5" fill="#2e7d4f"/><text x="' + (W - kanan / 2) + '" y="' + (yc + fs * .38) + '" font-size="' + fs + '" font-weight="700" fill="#fff" text-anchor="middle">call</text>' +
+    '<circle cx="' + xk + '" cy="' + yk + '" r="5" fill="#2e7d4f" stroke="#fff" stroke-width="2"/>';
+  $('call-grafik').innerHTML = g + bulan + batang + garis;
+})();
+</script>
 <script>
 // Musim pasar: dibaca dari data/pasar.json yang diperbarui otomatis tiap 04.47 WIB.
 (async () => {
