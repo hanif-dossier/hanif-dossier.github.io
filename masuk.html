@@ -123,6 +123,10 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
 .call-angka span{font-size:12px;color:var(--lb);font-weight:700}
 .call-angka .garis-call{background:#e3efe6}.call-angka .garis-call b{color:#2e7d4f}
 .call-grafik{width:100%;height:auto;display:block}
+.call-live{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2e9d5f;margin-right:6px;vertical-align:1px;box-shadow:0 0 0 0 rgba(46,157,95,.5);animation:call-denyut 1.8s infinite}
+@keyframes call-denyut{70%{box-shadow:0 0 0 7px rgba(46,157,95,0)}100%{box-shadow:0 0 0 0 rgba(46,157,95,0)}}
+@media (prefers-reduced-motion:reduce){.call-live{animation:none}}
+.hd .call-grafik.tanpa-anim .lilin,.hd .call-grafik.tanpa-anim .akhir{animation:none}
 .call-pilih{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px}
 .call-pilih button{display:inline-flex;align-items:baseline;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--gr);background:var(--bg2);color:var(--tx);font:800 14px/1 "Nunito Sans",system-ui,sans-serif;cursor:pointer}
 .call-pilih button em{font-style:normal;color:var(--sage);font-size:13px}
@@ -343,18 +347,20 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
   $('call-pilih').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
     $('call-pilih').querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b)); tampil(siap[+b.dataset.i], true); });
 
-  let pertama = true;
-  function tampil(c, ganti) {
+  let pertama = true, aktif = siap[0], animSejak = 0;
+  function tampil(c, ganti, langsung) {
+    aktif = c;
     const rp = n => '$' + n.toFixed(c.d).replace('.', ',');
     $('call-judul').textContent = c.kode + ' sudah saya call di ' + c.teks + '.';
     $('call-harga').textContent = rp(c.call);
     $('call-kini').textContent = rp(c.kini);
     $('call-persen').textContent = pr((c.kini / c.call - 1) * 100);
+    const pil = $('call-pilih').querySelector('button[data-i="' + siap.indexOf(c) + '"] em'); if (pil) pil.textContent = pr((c.kini / c.call - 1) * 100);
     $('call-judul-naik').textContent = 'Sekarang naik ' + Math.round((c.kini / c.call - 1) * 100) + '%.';
     $('call-puncak').textContent = rp(c.puncak);
     $('call-puncak-persen').textContent = pr((c.puncak / c.call - 1) * 100);
-    $('call-kapan').textContent = 'dari harga call · ' + new Date().toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + ' WIB';
-    $('call-sumber').textContent = 'Sumber: data harian ' + c.sumber + ' ' + c.kode + '/USDT, diperbarui setiap halaman dibuka.';
+    $('call-kapan').innerHTML = (c.live ? '<i class="call-live"></i>live · ' : 'dari harga call · ') + new Date(c.waktu || Date.now()).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+    $('call-sumber').textContent = 'Sumber: harga ' + c.sumber + ' ' + c.kode + '/USDT' + (c.live ? ', bergerak langsung mengikuti pasar.' : ', diambil saat halaman dibuka.');
     $('call-tv').href = 'https://www.tradingview.com/symbols/' + c.kode + 'USDT/?exchange=BINANCE';
     $('call-bukti-img').src = c.bukti;
     $('call-bukti-img').alt = 'Tangkapan grafik harian ' + c.kode + '/USDT Binance, garis call di ' + c.teks.slice(1);
@@ -384,13 +390,43 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.6;c
       '<line x1="' + kiri + '" x2="' + (W - kanan) + '" y1="' + yc + '" y2="' + yc + '" stroke="#2e7d4f" stroke-width="2.4" stroke-dasharray="7 5"/>' +
       '<rect x="' + (W - kanan + 2) + '" y="' + (yc - fs) + '" width="' + (kanan - 4) + '" height="' + fs * 2 + '" rx="5" fill="#2e7d4f"/><text x="' + (W - kanan / 2) + '" y="' + (yc + fs * .38) + '" font-size="' + fs + '" font-weight="700" fill="#fff" text-anchor="middle">call</text>' +
       '<circle cx="' + xk + '" cy="' + yk + '" r="5" fill="#2e7d4f" stroke="#fff" stroke-width="2"/></g>';
+    // Pembaruan langsung tidak mengulang animasi lilin tumbuh.
+    $('call-grafik').classList.toggle('tanpa-anim', !!langsung);
     $('call-grafik').innerHTML = g + bulan + batang + garis;
-    if (ganti) { const el = $('call-grafik'); el.classList.remove('hd-tumbuh'); void el.getBoundingClientRect(); el.classList.add('hd-tumbuh'); hidup.hitung($('call-persen'), 900); }
+    if (ganti) { const el = $('call-grafik'); el.classList.remove('hd-tumbuh'); void el.getBoundingClientRect(); el.classList.add('hd-tumbuh'); hidup.hitung($('call-persen'), 900); animSejak = Date.now(); }
     if (pertama) { pertama = false;
       // Lilin baru tumbuh saat grafiknya terlihat; persennya menghitung naik bersamaan.
-      hidup.saatTerlihat($('call-grafik'), () => { $('call-grafik').classList.add('hd-tumbuh'); hidup.hitung($('call-persen'), 1400); }); }
+      hidup.saatTerlihat($('call-grafik'), () => { $('call-grafik').classList.add('hd-tumbuh'); hidup.hitung($('call-persen'), 1400); animSejak = Date.now(); }); }
   }
   tampil(siap[0]);
+
+  // Real-time: aliran lilin harian Binance lewat WebSocket publik. Lilin terakhir diperbarui tiap ada transaksi;
+  // layar digambar ulang paling sering sekali per 2 detik. Kalau WebSocket putus, harga diambil ulang tiap 30 detik.
+  const bn = siap.filter(c => c.sumber === 'Binance');
+  function masuk(c, k) {
+    const l = { t: +k.t, o: +k.o, h: +k.h, l: +k.l, c: +k.c }, akhir = c.lilin[c.lilin.length - 1];
+    if (l.t === akhir.t) c.lilin[c.lilin.length - 1] = l; else if (l.t > akhir.t) c.lilin.push(l);
+    c.kini = l.c; c.puncak = Math.max(c.puncak, l.h); c.waktu = Date.now(); c.live = true; c.berubah = true;
+  }
+  setInterval(() => {
+    siap.forEach(c => { if (!c.berubah) return; c.berubah = false;
+      const pil = $('call-pilih').querySelector('button[data-i="' + siap.indexOf(c) + '"] em'); if (pil) pil.textContent = pr((c.kini / c.call - 1) * 100);
+      if (c === aktif && Date.now() - animSejak > 2500) tampil(c, false, $('call-grafik').classList.contains('hd-tumbuh')); });
+  }, 2000);
+  let putus = 0;
+  function sambung() {
+    if (!bn.length || !('WebSocket' in window)) return;
+    const ws = new WebSocket('wss://data-stream.binance.vision/stream?streams=' + bn.map(c => c.kode.toLowerCase() + 'usdt@kline_1d').join('/'));
+    ws.onmessage = e => { const d = JSON.parse(e.data).data; if (!d || !d.k) return; const c = bn.find(x => x.kode + 'USDT' === d.s); if (c) masuk(c, d.k); putus = 0; };
+    ws.onclose = () => { if (++putus <= 5) setTimeout(sambung, 3000 * putus); else cadangan(); };
+  }
+  function cadangan() {
+    setInterval(async () => { for (const c of bn) { try {
+      const r = await fetch('https://data-api.binance.vision/api/v3/klines?symbol=' + c.kode + 'USDT&interval=1d&limit=1');
+      const k = (await r.json())[0]; masuk(c, { t: k[0], o: k[1], h: k[2], l: k[3], c: k[4] });
+    } catch {} } }, 30000);
+  }
+  sambung();
 })();
 </script>
 <script>
