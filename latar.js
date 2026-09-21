@@ -1,6 +1,6 @@
-// latar.js — latar hidup percobaan: garis kontur seperti peta topografi, bergeser pelan.
-// Hanya menyala kalau alamatnya diberi ?latar (contoh: masuk.html?latar), supaya
-// pengunjung biasa tidak melihatnya selama masih dicoba.
+// latar.js — latar hidup: garis kontur seperti peta topografi, bergeser pelan.
+// Dipakai di halaman Masuk untuk semua pengunjung sejak 21 September 2026. Halaman lain
+// cukup menambahkan <script src="latar.js" defer></script> untuk ikut memakainya.
 //
 // Cara kerjanya:
 //  1. Ada "medan" angka acak yang halus (value noise): tiap titik layar punya ketinggian.
@@ -10,7 +10,6 @@
 // Kanvasnya di belakang semua isi (z-index -1), digambar 24 kali per detik saja,
 // dan berhenti saat tab tidak dilihat atau HP diatur "kurangi gerakan".
 (() => {
-  if (!/[?&]latar\b/.test(location.search)) return;
   const diam = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const kanvas = document.createElement('canvas');
