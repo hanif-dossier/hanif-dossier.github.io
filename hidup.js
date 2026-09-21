@@ -1,15 +1,17 @@
-// hidup.js — gerakan halaman depan (tentang.html). Dimuat di <head> tanpa defer,
+// hidup.js — gerakan halaman Hanif Dossier (tentang, masuk, kelas, pasar, dll.). Dimuat di <head> tanpa defer,
 // supaya kelas "hd" sudah terpasang sebelum halaman tergambar; kalau tidak,
 // isi sambutan sempat terlihat sekejap lalu hilang dan muncul lagi.
 //
-// Isinya tiga hal:
+// Isinya empat hal:
 //  1. hidup.hitung(el)  angka di dalam el menghitung naik dari nol.
 //  2. Pengamat guliran: bagian yang belum terlihat menunggu, lalu muncul
 //     berurutan saat masuk layar. Yang sudah terlihat saat dibuka tidak disembunyikan.
 //  3. hidup.pindai(akar) untuk isi yang datang belakangan (kartu dossier).
+//  4. hidup.saatTerlihat(el, fn) menjalankan fn sekali, saat el pertama kali terlihat
+//     (dipakai grafik call dan musim di halaman Masuk).
 (() => {
   const diam = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (diam || !('IntersectionObserver' in window)) { window.hidup = { hitung() {}, pindai() {} }; return; }
+  if (diam || !('IntersectionObserver' in window)) { window.hidup = { hitung() {}, pindai() {}, saatTerlihat(el, fn) { fn(); } }; return; }
   document.documentElement.classList.add('hd');
 
   // Angka Indonesia: titik pemisah ribuan, koma desimal ("8.412", "2,41", "57,3%").
@@ -63,6 +65,12 @@
     });
   }
 
-  window.hidup = { hitung, pindai };
+  function saatTerlihat(el, fn) {
+    if (!el) return;
+    const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { o.disconnect(); fn(); } }, { threshold: .25 });
+    o.observe(el);
+  }
+
+  window.hidup = { hitung, pindai, saatTerlihat };
   document.addEventListener('DOMContentLoaded', () => pindai());
 })();

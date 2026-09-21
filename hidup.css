@@ -1,4 +1,4 @@
-/* hidup.css — gerakan halaman depan (tentang.html).
+/* hidup.css — gerakan halaman Hanif Dossier (tentang, masuk, kelas, pasar, dll.).
    Semua efek hanya aktif kalau <html> punya kelas "hd", yang dipasang hidup.js.
    Tanpa JavaScript, atau kalau HP diatur "kurangi gerakan", halaman tampil diam
    dan utuh seperti biasa. */
@@ -8,8 +8,8 @@
 @keyframes hd-timbul { from { opacity: 0; transform: scale(.94) } to { opacity: 1; transform: none } }
 
 /* 1. Saat halaman dibuka: lambang tetes digambar, lalu isi sambutan naik berurutan. */
-.hd .merek .daun path { stroke-dasharray: 1; animation: hd-gambar 1.1s cubic-bezier(.5, 0, .2, 1) both }
-.hd .merek .daun path + path { animation-delay: .7s; animation-duration: .5s }
+.hd .merek .daun path[pathLength] { stroke-dasharray: 1; animation: hd-gambar 1.1s cubic-bezier(.5, 0, .2, 1) both }
+.hd .merek .daun path[pathLength] + path { animation-delay: .7s; animation-duration: .5s }
 .hd .sapa > * { animation: hd-naik .8s cubic-bezier(.2, .7, .2, 1) both }
 .hd .sapa > :nth-child(1) { animation-delay: .15s }
 .hd .sapa > :nth-child(2) { animation-delay: .28s }
@@ -21,7 +21,7 @@
 /* Coretan spidol di bawah "argumen lawannya", digambar sesudah judulnya muncul. */
 .spidol { position: relative; display: inline-block; font-style: normal }
 .spidol svg { position: absolute; left: -2%; bottom: -.14em; width: 104%; height: .36em; overflow: visible; pointer-events: none }
-.spidol path { fill: none; stroke: var(--emas); stroke-width: 5; stroke-linecap: round; opacity: .85; stroke-dasharray: 1 }
+.spidol path { fill: none; stroke: var(--emas, #c9a961); stroke-width: 5; stroke-linecap: round; opacity: .85; stroke-dasharray: 1 }
 .hd .spidol path { animation: hd-gambar .9s cubic-bezier(.6, 0, .3, 1) 1.1s both }
 
 /* Cincin dominasi dan busur Fear & Greed menyapu dari nol begitu angkanya datang. */
@@ -44,8 +44,38 @@
 .lapis .koin a { transition: background .2s, color .2s, transform .2s }
 .lapis .koin a:hover { transform: translateY(-1px) }
 
+/* Halaman Masuk: kolom kiri naik berurutan, formulir timbul, kartu harga menyusul. */
+.hd .panel > .kiri > * { animation: hd-naik .8s cubic-bezier(.2, .7, .2, 1) both }
+.hd .panel > .kiri > :nth-child(1) { animation-delay: .1s }
+.hd .panel > .kiri > :nth-child(2) { animation-delay: .2s }
+.hd .panel > .kiri > :nth-child(3) { animation-delay: .32s }
+.hd .panel > .kiri > :nth-child(n+4) { animation-delay: .44s }
+.hd .paket .kartu-p { animation: hd-naik .7s cubic-bezier(.2, .7, .2, 1) both }
+.hd .paket .kartu-p:nth-child(1) { animation-delay: .5s }
+.hd .paket .kartu-p:nth-child(2) { animation-delay: .6s }
+.hd .paket .kartu-p:nth-child(3) { animation-delay: .7s }
+.hd .paket .kartu-p:nth-child(4) { animation-delay: .8s }
+.hd .panel > .kotak { animation: hd-timbul .9s cubic-bezier(.2, .7, .2, 1) .3s both }
+.hd .paket .kartu-p { transition: transform .25s ease, box-shadow .25s ease }
+.hd .paket .kartu-p:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(43, 51, 48, .1) }
+
+/* Grafik call: lilin tumbuh satu per satu dari kiri, lalu garis call dan titik harga muncul. */
+@keyframes hd-lilin { from { transform: scaleY(0); opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes hd-pudar { from { opacity: 0 } to { opacity: 1 } }
+.hd .call-grafik.hd-tumbuh .lilin { transform-box: fill-box; transform-origin: center; animation: hd-lilin .45s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i) * 12ms) }
+.hd .call-grafik.hd-tumbuh .akhir { animation: hd-pudar .6s ease both; animation-delay: calc(var(--n) * 12ms + .2s) }
+.hd .call-grafik:not(.hd-tumbuh) .lilin, .hd .call-grafik:not(.hd-tumbuh) .akhir { opacity: 0 }
+
+/* Musim pasar: garis 90 hari digambar, penunjuk meluncur ke nilainya. */
+.hd .musim-garis polyline { stroke-dasharray: 1 }
+.hd .musim-garis.hd-tumbuh polyline { animation: hd-gambar 1.6s cubic-bezier(.4, 0, .2, 1) both }
+.hd .musim-garis:not(.hd-tumbuh) polyline { stroke-dashoffset: 1 }
+.hd #musim-tunjuk { transition: left 1.3s cubic-bezier(.2, .7, .2, 1) }
+
 @media (prefers-reduced-motion: reduce) {
   .hd *, .hd *::before, .hd *::after { animation: none !important; transition: none !important }
   .hd .hd-tunggu { opacity: 1; transform: none }
   .spidol path { stroke-dashoffset: 0 }
+  .hd .lilin, .hd .akhir { opacity: 1 !important }
+  .hd .musim-garis polyline { stroke-dashoffset: 0 !important }
 }
