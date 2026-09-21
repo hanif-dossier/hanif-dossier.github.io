@@ -598,5 +598,158 @@
           pilihan: ['Pemakaian yang terus berjalan dengan nilai besar, bukan hanya pilot kecil dan siaran pers', 'Banyaknya siaran pers yang menyebut kata blockchain', 'Perusahaan meluncurkan token sendiri', 'Logo blockchain di situs perusahaan'],
           jelas: 'Banyak proyek berhenti di tahap pilot. Ukuran dan kesinambungan pemakaian, seperti dana tertokenisasi bernilai miliaran dolar, lebih bisa dipercaya.' },
       ] },
+
+    // ─────────────────────────────────────────────────────────────────────
+    // KURSUS 11 — INFRASTRUKTUR DATA WEB3 (21 Sep 2026)
+    // Ditulis sendiri dari dokumentasi resmi tiap proyek. Fokus: apa yang dikerjakan koinnya.
+    // ─────────────────────────────────────────────────────────────────────
+    { kode: 'infra-data', judul: 'Infrastruktur Data Web3',
+      ringkas: 'Lapisan yang jarang dilihat pengguna tapi dipakai setiap aplikasi: data availability, penyimpanan, rollup siap pakai, node RPC, dan indexing. Di tiap lapisan kita cek satu hal: koinnya sebenarnya dipakai untuk apa.',
+      pelajaran: [
+        { judul: 'Data availability: tempat rollup menaruh datanya', isi: `
+<h3>Konsepnya</h3>
+<p>Rollup menjalankan transaksi di luar chain utama, lalu mengirim ringkasannya ke chain utama. Supaya siapa pun bisa mengecek ringkasan itu jujur, data transaksinya harus bisa diunduh orang lain, setidaknya untuk beberapa waktu. Jaminan bahwa data itu benar-benar dipublikasikan dan bisa diambil disebut <b>data availability</b> (DA).</p>
+<p>Kalau data disembunyikan, operator rollup bisa mengklaim saldo yang salah dan tidak ada yang bisa membuktikan sebaliknya. Jadi DA adalah fondasi keamanan rollup. Masalahnya, menaruh data di Ethereum dulu mahal. Dari sinilah lahir jaringan yang khusus menjual ruang data.</p>
+<h3>Cara kerjanya</h3>
+<p>Ada dua pendekatan besar. Pertama, <b>Ethereum sendiri</b>. Sejak upgrade Dencun pada 13 Maret 2024 (EIP-4844), rollup bisa mengirim data dalam bentuk <b>blob</b>. Blob jauh lebih murah dari calldata biasa, dan dihapus dari node setelah sekitar 18 hari karena tugasnya hanya memberi waktu untuk pengecekan.</p>
+<p>Kedua, <b>jaringan DA terpisah</b>. Kuncinya teknik <b>data availability sampling</b>: data dipecah dan diberi kode tambahan (erasure coding), lalu node ringan cukup mengambil potongan acak kecil. Kalau banyak potongan acak berhasil diambil, peluang ada data yang disembunyikan menjadi sangat kecil. Node ringan tidak perlu mengunduh semuanya.</p>
+<h3>Apa yang dikerjakan koinnya</h3>
+<table>
+<tr><th>Jaringan</th><th>Koin</th><th>Tugas koinnya</th><th>Siapa yang membayar</th></tr>
+<tr><td>Ethereum (blob)</td><td>ETH</td><td>Membayar biaya blob. Biaya dasarnya dibakar</td><td>Rollup yang mengirim blob</td></tr>
+<tr><td>Celestia</td><td>TIA</td><td>Membayar ruang data (transaksi PayForBlobs), di-stake validator untuk mengamankan jaringan, dipakai voting</td><td>Rollup yang memakai Celestia</td></tr>
+<tr><td>EigenDA</td><td>EIGEN, ETH yang di-restake</td><td>Operator menaruh jaminan lewat restaking EigenLayer. Jaminan bisa dipotong kalau curang</td><td>Rollup yang memesan kapasitas data</td></tr>
+<tr><td>Avail</td><td>AVAIL</td><td>Di-stake validator, membayar biaya pengiriman data</td><td>Rollup dan chain yang memakai Avail</td></tr>
+</table>
+<h3>Contoh</h3>
+<p>Satu rollup bisa berpindah lapisan DA tanpa mengganti aplikasinya. Rollup yang memakai Celestia membayar dalam TIA per ukuran data. Kalau rollup yang sama pindah ke blob Ethereum, uangnya mengalir ke ETH. Artinya permintaan koin DA sangat bergantung pada keputusan beberapa tim rollup besar, dan keputusan itu bisa berubah.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Harga ruang data terus turun karena pasokannya bertambah dari banyak jaringan sekaligus, termasuk Ethereum yang terus menambah jumlah blob per blok. Pendapatan jaringan DA bisa tetap kecil walau pemakaiannya naik. Sebelum menilai koinnya, bandingkan biaya yang dibayar rollup dengan nilai token baru yang dicetak untuk validator. DA juga hanya menjamin data tersedia, bukan bahwa isinya benar. Kebenaran transaksi tetap urusan bukti fraud atau bukti ZK milik rollup.</div>
+<div class="sumber">Sumber: <a href="https://eips.ethereum.org/EIPS/eip-4844" target="_blank" rel="noopener">EIP-4844</a>; <a href="https://docs.celestia.org/learn/how-celestia-works/overview" target="_blank" rel="noopener">Dokumentasi Celestia</a>; <a href="https://docs.eigenda.xyz" target="_blank" rel="noopener">Dokumentasi EigenDA</a>; <a href="https://docs.availproject.org" target="_blank" rel="noopener">Dokumentasi Avail</a>.</div>` },
+
+        { judul: 'Penyimpanan terdesentralisasi: menyewa, membeli sekali, atau memecah file', isi: `
+<h3>Konsepnya</h3>
+<p>Blockchain mahal untuk menyimpan file besar. Gambar NFT, video, arsip, dan data latih AI biasanya disimpan di tempat lain, dan blockchain hanya menyimpan penunjuknya. Kalau tempat penyimpanannya satu perusahaan, file bisa hilang saat perusahaan itu tutup atau berubah pikiran. Jaringan penyimpanan terdesentralisasi mencoba menjawab pertanyaan sederhana: siapa yang menjamin file saya masih ada lima tahun lagi?</p>
+<h3>Cara kerjanya: tiga model</h3>
+<ul>
+<li><b>Sewa dengan bukti berkala (Filecoin).</b> Pemilik data membuat kesepakatan dengan penyedia penyimpanan. Penyedia menaruh jaminan dalam FIL, lalu wajib membuktikan secara kriptografis bahwa mereka menyimpan salinan unik (<i>proof of replication</i>) dan terus menyimpannya dari waktu ke waktu (<i>proof of spacetime</i>). Kalau gagal membuktikan, jaminannya dipotong.</li>
+<li><b>Bayar sekali untuk selamanya (Arweave).</b> Pengguna membayar AR satu kali. Sebagian besar pembayaran masuk dana abadi yang dicairkan pelan-pelan untuk membayar penambang di masa depan, dengan asumsi biaya penyimpanan per gigabyte terus turun.</li>
+<li><b>Pecah dan sebar (Walrus di Sui).</b> File dipecah dengan erasure coding ke banyak node. File masih bisa disusun ulang walau sebagian node hilang. Pembayaran dan staking memakai WAL.</li>
+</ul>
+<p>IPFS sering disebut di sini, tetapi IPFS hanyalah cara menamai dan mengambil file berdasarkan isinya. IPFS tidak punya koin dan tidak menjamin siapa pun menyimpan file Anda. Filecoin dibangun untuk mengisi kekosongan itu.</p>
+<h3>Apa yang dikerjakan koinnya</h3>
+<table>
+<tr><th>Jaringan</th><th>Koin</th><th>Tugas koinnya</th></tr>
+<tr><td>Filecoin</td><td>FIL</td><td>Alat bayar sewa penyimpanan, jaminan yang dikunci penyedia, hadiah blok untuk penyedia. Sebagian biaya transaksi dibakar</td></tr>
+<tr><td>Arweave</td><td>AR</td><td>Alat bayar penyimpanan permanen dan sumber dana abadi untuk penambang</td></tr>
+<tr><td>Walrus</td><td>WAL</td><td>Alat bayar penyimpanan dan jaminan yang di-stake node penyimpan, bisa didelegasikan</td></tr>
+</table>
+<h3>Contoh</h3>
+<p>Sebuah proyek NFT ingin gambarnya tidak bisa hilang. Di Arweave, biayanya dibayar sekali di depan dan urusan selesai. Di Filecoin, proyek harus memperpanjang kesepakatan sewa sebelum habis atau memakai layanan yang mengurusnya otomatis. Pilihan yang tepat bergantung pada kebutuhan: arsip permanen cocok dengan model Arweave, data besar yang sering diambil lebih cocok dengan pasar sewa.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Kapasitas yang disediakan tidak sama dengan data yang benar-benar dibayar pelanggan. Di sektor ini kapasitas sering jauh lebih besar dari permintaan, dan penyedia hidup dari hadiah token, bukan dari pelanggan. Model "bayar sekali selamanya" bergantung pada asumsi harga penyimpanan terus turun. Asumsi itu wajar secara sejarah tetapi tetap asumsi. Pesaingnya juga berat: penyimpanan cloud terpusat murah, cepat, dan sudah dipercaya perusahaan.</div>
+<div class="sumber">Sumber: <a href="https://docs.filecoin.io/basics/what-is-filecoin" target="_blank" rel="noopener">Dokumentasi Filecoin</a>; <a href="https://www.arweave.org/yellow-paper.pdf" target="_blank" rel="noopener">Arweave yellow paper</a>; <a href="https://docs.wal.app" target="_blank" rel="noopener">Dokumentasi Walrus</a>; <a href="https://docs.ipfs.tech/concepts/what-is-ipfs/" target="_blank" rel="noopener">Dokumentasi IPFS</a>.</div>` },
+
+        { judul: 'Rollup as a Service: membuat chain sendiri tanpa tim infrastruktur', isi: `
+<h3>Konsepnya</h3>
+<p>Dulu membuat blockchain sendiri butuh tim besar. Sekarang kerangka rollup seperti OP Stack, Arbitrum Orbit, ZK Stack, dan Polygon CDK tersedia terbuka. Yang masih sulit adalah menjalankannya setiap hari: sequencer harus hidup terus, node harus diperbarui, bridge dan penjelajah blok harus disiapkan. <b>Rollup as a Service</b> (RaaS) adalah perusahaan yang mengerjakan semua itu dengan biaya langganan.</p>
+<h3>Cara kerjanya</h3>
+<ol>
+<li>Pelanggan, misalnya sebuah game atau protokol DeFi, memilih kerangka rollup dan lapisan DA.</li>
+<li>Penyedia RaaS memasang sequencer, node, RPC, bridge, dan penjelajah blok.</li>
+<li>Pelanggan membayar biaya bulanan atau bagi hasil dari biaya transaksi chain-nya.</li>
+<li>Chain baru itu menaruh datanya di lapisan DA dan menyelesaikan transaksinya di chain induk.</li>
+</ol>
+<h3>Apa yang dikerjakan koinnya</h3>
+<table>
+<tr><th>Penyedia</th><th>Koin</th><th>Tugas koinnya</th></tr>
+<tr><td>Conduit</td><td>Tidak ada</td><td>Perusahaan jasa biasa. Pendapatannya tidak mengalir ke token mana pun</td></tr>
+<tr><td>Caldera</td><td>ERA</td><td>Dipakai di jaringan yang menghubungkan rollup buatan Caldera: staking, biaya lintas chain, dan tata kelola</td></tr>
+<tr><td>AltLayer</td><td>ALT</td><td>Di-stake bersama aset yang di-restake untuk layanan verifikasi dan finalitas cepat rollup ("restaked rollup")</td></tr>
+</table>
+<p>Tabel ini sengaja memuat penyedia tanpa token. Di sektor ini banyak perusahaan untung tanpa menerbitkan koin, dan itu hal penting bagi investor.</p>
+<h3>Contoh</h3>
+<p>Sebuah game ingin transaksi pemainnya murah dan tidak berebut ruang dengan aplikasi lain. Game itu menyewa RaaS untuk membuat rollup khusus. Biaya transaksi di chain game itu masuk ke operatornya, data dikirim ke lapisan DA, dan penyedia RaaS menerima biaya jasa. Koin penyedia RaaS ikut diuntungkan hanya kalau jasanya memang mewajibkan koin itu.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Kebanyakan rollup yang dibuat lewat RaaS masih memakai satu sequencer yang dijalankan penyedianya. Kalau sequencer itu mati, chain berhenti. Kalau disalahgunakan, transaksi bisa ditunda atau diurutkan ulang. Banyak chain baru juga sepi pemakai setelah insentif awal habis. Jumlah rollup yang diluncurkan bukan ukuran keberhasilan; lihat berapa yang masih punya pengguna harian dan biaya transaksi nyata.</div>
+<div class="sumber">Sumber: <a href="https://docs.optimism.io/stacks/opstack" target="_blank" rel="noopener">Dokumentasi OP Stack</a>; <a href="https://docs.arbitrum.io/launch-arbitrum-chain/a-gentle-introduction" target="_blank" rel="noopener">Dokumentasi Arbitrum chain</a>; <a href="https://docs.conduit.xyz" target="_blank" rel="noopener">Dokumentasi Conduit</a>; <a href="https://docs.caldera.xyz" target="_blank" rel="noopener">Dokumentasi Caldera</a>; <a href="https://docs.altlayer.io" target="_blank" rel="noopener">Dokumentasi AltLayer</a>.</div>` },
+
+        { judul: 'Node as a Service dan RPC: pintu yang dipakai dompet Anda', isi: `
+<h3>Konsepnya</h3>
+<p>Setiap kali dompet menampilkan saldo atau mengirim transaksi, dompet itu bertanya ke sebuah node lewat <b>RPC</b> (remote procedure call). Menjalankan node penuh sendiri butuh server, penyimpanan besar, dan pemeliharaan. Karena itu hampir semua dompet dan aplikasi memakai penyedia node. Inilah <b>Node as a Service</b>.</p>
+<p>Akibatnya, jaringan yang terdesentralisasi sering diakses lewat segelintir perusahaan. Pada November 2020, gangguan di Infura membuat sejumlah bursa menghentikan penarikan ETH sementara dan banyak dompet menampilkan data yang salah. Chain-nya berjalan normal. Pintunya yang macet.</p>
+<h3>Cara kerjanya</h3>
+<p>Penyedia terpusat seperti Infura dan Alchemy menjalankan ribuan node dan menjual akses per jumlah permintaan. Jaringan RPC terdesentralisasi mencoba membagi pekerjaan itu ke banyak operator node independen. Operator menaruh jaminan token, menjawab permintaan, dan dibayar per permintaan yang dilayani. Jawaban yang salah atau lambat bisa membuat operator kehilangan pekerjaan atau jaminannya.</p>
+<h3>Apa yang dikerjakan koinnya</h3>
+<table>
+<tr><th>Penyedia</th><th>Koin</th><th>Tugas koinnya</th></tr>
+<tr><td>Infura, Alchemy, QuickNode</td><td>Tidak ada</td><td>Perusahaan jasa biasa, dibayar langganan</td></tr>
+<tr><td>Pocket Network</td><td>POKT</td><td>Di-stake operator node dan gateway, dicetak sebagai upah per permintaan yang dilayani, dibakar oleh pemakai</td></tr>
+<tr><td>Ankr</td><td>ANKR</td><td>Alat bayar layanan RPC premium dan jaminan yang di-stake penyedia node</td></tr>
+<tr><td>Lava Network</td><td>LAVA</td><td>Di-stake penyedia RPC, dipakai membayar dan memberi insentif pada chain yang ingin aksesnya dilayani</td></tr>
+</table>
+<h3>Contoh</h3>
+<p>Buka pengaturan jaringan di dompet Anda dan lihat alamat RPC-nya. Hampir pasti itu alamat milik satu perusahaan. Anda bisa menggantinya dengan RPC lain atau dengan node sendiri. Transaksi tetap sama, tetapi Anda tidak lagi bergantung pada satu pintu.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Penyedia RPC melihat alamat dompet dan alamat IP pemakainya, jadi memilih RPC juga soal privasi. Jaringan RPC terdesentralisasi harus bersaing harga dan kecepatan dengan penyedia terpusat yang sangat efisien. Periksa apakah pendapatan dari pemakai sungguhan sudah menutup token yang dicetak untuk operator, atau jaringan masih hidup dari subsidi.</div>
+<div class="sumber">Sumber: <a href="https://docs.pokt.network" target="_blank" rel="noopener">Dokumentasi Pocket Network</a>; <a href="https://www.ankr.com/docs/" target="_blank" rel="noopener">Dokumentasi Ankr</a>; <a href="https://docs.lavanet.xyz" target="_blank" rel="noopener">Dokumentasi Lava</a>; <a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank" rel="noopener">ethereum.org: JSON-RPC</a>.</div>` },
+
+        { judul: 'Indexing: mengubah catatan blok jadi data yang bisa dicari', isi: `
+<h3>Konsepnya</h3>
+<p>Blockchain menyimpan data per blok, berurutan menurut waktu. Cara itu bagus untuk keamanan tetapi buruk untuk pertanyaan seperti "tampilkan semua transaksi dompet ini di Uniswap bulan lalu". Menjawabnya langsung dari node berarti membaca jutaan blok. <b>Indexer</b> membaca chain sekali, menyusunnya ke dalam basis data, lalu menjawab pertanyaan itu dalam hitungan milidetik. Hampir semua dasbor, penjelajah blok, dan aplikasi DeFi bergantung pada indexer.</p>
+<h3>Cara kerjanya: The Graph sebagai contoh</h3>
+<p>Pengembang menulis <b>subgraph</b>, yaitu resep data apa yang diambil dari kontrak tertentu dan bagaimana menyusunnya. Jaringan The Graph punya beberapa peran:</p>
+<ul>
+<li><b>Indexer</b> menjalankan server, mengindeks subgraph, dan menjawab permintaan. Mereka wajib menaruh jaminan GRT dan bisa dipotong kalau curang.</li>
+<li><b>Delegator</b> menitipkan GRT ke indexer dan ikut mendapat bagian hasil, tanpa menjalankan server.</li>
+<li><b>Curator</b> menaruh GRT pada subgraph yang menurut mereka berguna, sebagai sinyal bagi indexer.</li>
+<li><b>Pemakai</b> membayar setiap permintaan data dengan GRT.</li>
+</ul>
+<h3>Apa yang dikerjakan koinnya</h3>
+<table>
+<tr><th>Jaringan</th><th>Koin</th><th>Tugas koinnya</th></tr>
+<tr><td>The Graph</td><td>GRT</td><td>Alat bayar permintaan data, jaminan indexer, delegasi, dan sinyal curator. Sebagian biaya dibakar</td></tr>
+<tr><td>SQD (Subsquid)</td><td>SQD</td><td>Jaminan operator node data dan alat untuk mendapatkan kuota akses data</td></tr>
+<tr><td>Dune, Goldsky, Nansen</td><td>Tidak ada</td><td>Perusahaan data biasa, dibayar langganan</td></tr>
+</table>
+<h3>Contoh</h3>
+<p>Dasbor yang menampilkan volume harian sebuah DEX mengambil angkanya dari indexer, bukan langsung dari chain. Kalau indexer telat menyinkronkan data atau salah membaca kontrak, angka di dasbor ikut salah walau chain-nya benar. Saat angka sebuah dasbor terlihat aneh, cek dulu apakah indexer-nya sudah sampai blok terbaru.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Banyak pengembang memilih penyedia data terpusat karena lebih mudah dan cepat, jadi permintaan jaringan terdesentralisasi tidak otomatis ikut naik saat pemakaian data on-chain naik. Nilai koin indexing bergantung pada biaya permintaan yang benar-benar dibayar, bukan jumlah subgraph yang terdaftar. Data dari satu indexer juga bisa keliru; untuk angka penting, cocokkan dengan sumber kedua.</div>
+<div class="sumber">Sumber: <a href="https://thegraph.com/docs/en/resources/tokenomics/" target="_blank" rel="noopener">The Graph: tokenomics</a>; <a href="https://thegraph.com/docs/en/subgraphs/developing/subgraphs/" target="_blank" rel="noopener">The Graph: subgraph</a>; <a href="https://docs.sqd.ai" target="_blank" rel="noopener">Dokumentasi SQD</a>.</div>` },
+
+        { judul: 'Menilai koin infrastruktur: pemakaiannya naik, koinnya ikut untung?', isi: `
+<h3>Konsepnya</h3>
+<p>Koin infrastruktur mudah dijual dengan satu kalimat: "semua aplikasi butuh ini". Kalimat itu sering benar untuk layanannya, tetapi belum tentu benar untuk koinnya. Pertanyaan investor ada tiga. Apakah pemakai wajib memakai koin itu? Apakah pembayaran pemakai lebih besar dari koin baru yang dicetak? Apakah ada pesaing tanpa koin yang lebih murah?</p>
+<h3>Cara kerjanya: empat pertanyaan pemeriksaan</h3>
+<ol>
+<li><b>Siapa yang membayar dan pakai apa?</b> Kalau pemakai bisa membayar dengan dolar atau stablecoin lalu jaringan menukarnya diam-diam, tekanan beli pada koin jauh lebih kecil dari kesan pertama.</li>
+<li><b>Pendapatan dibanding emisi.</b> Bandingkan biaya yang dibayar pemakai dalam sebulan dengan nilai token yang dibagikan ke operator pada bulan yang sama. Data ini bisa diperiksa di Token Terminal dan DefiLlama.</li>
+<li><b>Jaminan yang dikunci.</b> Koin yang wajib di-stake untuk bekerja memang mengurangi pasokan beredar, tetapi hanya selama operatornya untung. Kalau tidak untung, mereka keluar dan menjual.</li>
+<li><b>Pesaing tanpa koin.</b> Setiap lapisan di kursus ini punya pesaing terpusat atau pesaing yang tidak menerbitkan token. Kalau pesaing itu lebih murah dan lebih cepat, kebutuhan akan koinnya harus datang dari alasan lain, misalnya ketahanan sensor atau netralitas.</li>
+</ol>
+<h3>Contoh</h3>
+<p>Ambil jaringan DA. Pemakaiannya diukur dari megabyte data yang dikirim rollup per hari. Angka ini bisa naik tajam. Tetapi kalau harga per megabyte turun lebih cepat karena persaingan, pendapatannya bisa tetap datar. Untuk investor, grafik pemakaian dan grafik pendapatan harus dibaca berdampingan, jangan satu saja.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Empat pertanyaan ini menyaring, tidak memutuskan. Koin yang lolos semua pertanyaan tetap bisa turun karena harga pasar, jadwal unlock, atau siklus. Koin yang gagal di satu pertanyaan juga bisa naik tinggi karena narasi. Pakai ini untuk tahu apa yang Anda pegang, bukan untuk menebak harga besok.</div>
+<div class="sumber">Sumber data yang disarankan: <a href="https://tokenterminal.com" target="_blank" rel="noopener">Token Terminal</a> (pendapatan dan emisi), <a href="https://defillama.com/fees" target="_blank" rel="noopener">DefiLlama Fees</a>, dokumentasi tokenomics resmi tiap proyek.</div>` },
+      ],
+      kuis: [
+        { tanya: 'Apa arti data availability bagi sebuah rollup?',
+          pilihan: ['Jaminan bahwa data transaksi rollup benar-benar dipublikasikan sehingga orang lain bisa mengeceknya', 'Jaminan bahwa semua transaksi rollup pasti benar', 'Kecepatan rollup memproses transaksi', 'Tempat menyimpan kunci privat pengguna'],
+          jelas: 'DA hanya menjamin data tersedia. Kebenaran transaksinya dicek lewat bukti fraud atau bukti ZK, dan itu hanya mungkin kalau datanya bisa diambil.' },
+        { tanya: 'Apa tugas TIA di jaringan Celestia?',
+          pilihan: ['Membayar ruang data yang dipakai rollup, di-stake untuk keamanan, dan dipakai untuk voting', 'Membayar gas di Ethereum', 'Menyimpan file permanen seperti Arweave', 'Membayar langganan RPC'],
+          jelas: 'Rollup membayar TIA untuk menaruh data. Validator menaruh TIA sebagai jaminan keamanan jaringan.' },
+        { tanya: 'Apa beda model penyimpanan Filecoin dan Arweave?',
+          pilihan: ['Filecoin menyewa dengan bukti berkala dan jaminan FIL; Arweave dibayar sekali untuk penyimpanan permanen', 'Filecoin gratis, Arweave berbayar', 'Arweave memakai bukti berkala, Filecoin bayar sekali', 'Keduanya hanya menyimpan penunjuk, bukan file'],
+          jelas: 'Penyedia Filecoin harus terus membuktikan data masih disimpan. Arweave memakai dana abadi dari pembayaran di muka.' },
+        { tanya: 'Kenapa kejadian gangguan Infura pada November 2020 penting?',
+          pilihan: ['Chain berjalan normal, tetapi banyak dompet dan bursa terganggu karena bergantung pada satu penyedia RPC', 'Ethereum berhenti membuat blok selama sehari', 'Semua ETH di Infura dicuri', 'Infura mengganti aturan konsensus Ethereum'],
+          jelas: 'Jaringannya terdesentralisasi, tetapi pintu aksesnya terpusat. Gangguan di pintu itu terasa seperti gangguan jaringan bagi pengguna.' },
+        { tanya: 'Dalam jaringan The Graph, peran indexer adalah…',
+          pilihan: ['Menjalankan server, mengindeks subgraph, menjawab permintaan, dan menaruh jaminan GRT', 'Menulis resep subgraph untuk aplikasi', 'Hanya menitipkan GRT tanpa menjalankan server', 'Mencetak GRT baru untuk curator'],
+          jelas: 'Indexer adalah operator. Delegator menitipkan GRT, curator memberi sinyal, dan pengembang menulis subgraph.' },
+        { tanya: 'Penyedia RaaS atau RPC tanpa token mengajarkan hal apa kepada investor?',
+          pilihan: ['Layanan bisa laris tanpa memberi keuntungan pada koin mana pun, jadi cek apakah koinnya benar-benar wajib dipakai', 'Semua layanan tanpa token pasti gagal', 'Token selalu membuat layanan lebih murah', 'Layanan infrastruktur tidak punya pesaing'],
+          jelas: 'Conduit, Infura, dan Alchemy untung tanpa koin. Pemakaian yang naik hanya menguntungkan koin kalau koin itu memang diperlukan dalam pembayarannya.' },
+        { tanya: 'Pemakaian jaringan DA naik tiga kali lipat, tetapi pendapatannya datar. Penjelasan yang paling mungkin adalah…',
+          pilihan: ['Harga per megabyte turun lebih cepat karena persaingan pasokan ruang data', 'Data pemakaiannya pasti palsu', 'Rollup berhenti mengirim data', 'Token jaringan dibakar semuanya'],
+          jelas: 'Pasokan ruang data bertambah dari banyak jaringan, termasuk blob Ethereum. Pemakaian dan pendapatan harus dibaca berdampingan.' },
+      ] },
   ],
 });
