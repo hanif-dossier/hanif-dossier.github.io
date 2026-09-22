@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pasang aplikasi — Hanif Dossier Crypto</title>
+<title>Pasang aplikasi · Hanif Dossier Crypto</title>
 <meta name="description" content="Pasang Hanif Dossier Crypto di layar utama HP atau desktop: briefing pagi, radar portofolio, dan dossier token terbuka seperti aplikasi, lengkap dengan notifikasi.">
 <link rel="icon" href="ikon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.55;
 
   <div class="kartu notif">
     <div class="ikon">🔔</div>
-    <div><h3>Notifikasi briefing & screening</h3><p>Setelah terpasang, masuk sebagai anggota, buka <b>Pengaturan → Notifikasi</b>, lalu nyalakan saklar perangkat ini. Setiap briefing terunggah (sekitar 06.10 WIB), satu notifikasi mampir ke perangkat ini — berisi kalimat pertama bagian <i>Yang Paling Penting Hari Ini</i>. Di iPhone, notifikasi hanya bekerja kalau dibuka dari ikon di Layar Utama.</p></div>
+    <div><h3>Notifikasi briefing & screening</h3><p>Setelah terpasang, masuk sebagai anggota, buka <b>Pengaturan → Notifikasi</b>, lalu nyalakan saklar perangkat ini. Setiap briefing terunggah (sekitar 06.10 WIB), satu notifikasi mampir ke perangkat ini, berisi kalimat pertama bagian <i>Yang Paling Penting Hari Ini</i>. Di iPhone, notifikasi hanya bekerja kalau dibuka dari ikon di Layar Utama.</p></div>
   </div>
 </main>
 <div class="kaki">Riset dan analisis, bukan nasihat investasi berizin.</div>
@@ -90,7 +90,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.55;
   const terpasang = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   $('alamat').textContent = location.host + '/pasang.html';
   if (terpasang) { $('judul-pasang').textContent = 'Sudah terpasang'; ket.textContent = 'Kamu sedang membukanya sebagai aplikasi. Tinggal masuk, lalu nyalakan notifikasi di Beranda.'; tombol.textContent = 'Buka Beranda'; tombol.disabled = false; tombol.onclick = () => location.href = 'dasbor.html'; return; }
-  const siap = () => { tombol.disabled = false; ket.textContent = 'Browser ini bisa memasangnya langsung — satu ketukan.'; };
+  const siap = () => { tombol.disabled = false; ket.textContent = 'Browser ini bisa memasangnya langsung, satu ketukan.'; };
   if (window.__pasangSiap) siap();
   window.addEventListener('pasang-siap', siap);
   tombol.onclick = async () => {
@@ -99,7 +99,7 @@ button.utama:hover{background:var(--sage-tua)}button.utama:disabled{opacity:.55;
   };
   setTimeout(() => { if (tombol.disabled) ket.textContent = iOS
     ? 'Di iPhone/iPad pemasangan lewat Safari: Bagikan → Tambah ke Layar Utama (langkah di bawah).'
-    : 'Browser ini tidak menawarkan tombol pasang otomatis — kalau sudah terpasang, buka dari ikonnya; kalau belum, ikuti langkah di bawah (menu browser → Tambahkan ke layar utama / Pasang).'; }, 3000);
+    : 'Browser ini tidak menawarkan tombol pasang otomatis, kalau sudah terpasang, buka dari ikonnya; kalau belum, ikuti langkah di bawah (menu browser → Tambahkan ke layar utama / Pasang).'; }, 3000);
 })();
 </script>
 </body>

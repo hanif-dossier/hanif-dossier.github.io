@@ -1,10 +1,10 @@
-// kelas/lanjutan.js — data kelas kategori Teknologi Lanjutan & Tren. Hanya data; logika ada di kelas.html.
+// kelas/lanjutan.js, data kelas kategori Teknologi Lanjutan & Tren. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'lanjutan', urut: 6, nama: 'Teknologi Lanjutan & Tren', warna: '#5a9a9a',
   ringkas: 'Cara kerja teknologi di tepi dunia crypto, dari koin privasi, NFT, RWA, DePIN, dan AI sampai CBDC dan adopsi perusahaan, beserta batas-batasnya.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — KOIN PRIVASI: MONERO & ZCASH
+    // KURSUS 1, KOIN PRIVASI: MONERO & ZCASH
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'koin-privasi', judul: 'Koin Privasi: Monero & Zcash',
       ringkas: 'Kenapa privasi finansial penting, bagaimana Monero dan Zcash menyembunyikan transaksi dengan cara yang berbeda, dan kenapa bursa serta regulator mewaspadainya.',
@@ -95,7 +95,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — NFT & TOKENISASI DI LUAR ERC-721
+    // KURSUS 2, NFT & TOKENISASI DI LUAR ERC-721
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'nft-tokenisasi', judul: 'NFT & Tokenisasi di Luar ERC-721',
       ringkas: 'NFT sebagai bukti kepemilikan digital beserta batasnya, lalu keluarga standar token lain: ERC-1155, security token ERC-3643, fraksionalisasi, dan nama ENS.',
@@ -155,7 +155,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — ETHEREUM NAME SERVICE (ENS)
+    // KURSUS 3, ETHEREUM NAME SERVICE (ENS)
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'ens', judul: 'Ethereum Name Service (ENS)',
       ringkas: 'Cara nama .eth menggantikan alamat panjang, bagaimana registrasi, resolver, dan reverse record bekerja, serta jebakan nama mirip dan nama kedaluwarsa.',
@@ -193,7 +193,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — REAL-WORLD ASSETS (RWA)
+    // KURSUS 4, REAL-WORLD ASSETS (RWA)
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'rwa', judul: 'Real-World Assets (RWA)',
       ringkas: 'Aset dunia nyata yang haknya dipindahkan ke blockchain, dari obligasi pemerintah AS sampai emas dan saham, beserta struktur hukum dan risiko yang menopangnya.',
@@ -266,7 +266,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 5 — FAN TOKEN
+    // KURSUS 5, FAN TOKEN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'fan-token', judul: 'Fan Token',
       ringkas: 'Token klub olahraga seperti di ekosistem Chiliz/Socios: apa yang sebenarnya Anda dapat, dan kenapa harganya sangat bergantung pada sensasi.',
@@ -311,7 +311,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 6 — DePIN
+    // KURSUS 6, DePIN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'depin', judul: 'DePIN: Infrastruktur Fisik Terdesentralisasi',
       ringkas: 'Jaringan fisik yang dibangun orang banyak dengan imbalan token, dari hotspot nirkabel sampai GPU, dan ujian terberatnya: adakah pelanggan yang benar-benar membayar.',
@@ -380,7 +380,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 7 — BLOCKCHAIN & AI
+    // KURSUS 7, BLOCKCHAIN & AI
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'blockchain-ai', judul: 'Blockchain & AI',
       ringkas: 'Titik temu blockchain dan AI, dari pasar GPU dan asal-usul data sampai agen AI yang memegang dompet, beserta cara memisahkan kegunaan nyata dari label pemasaran.',
@@ -435,7 +435,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 8 — CENTRAL BANK DIGITAL CURRENCY (CBDC)
+    // KURSUS 8, CENTRAL BANK DIGITAL CURRENCY (CBDC)
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'cbdc', judul: 'Central Bank Digital Currency (CBDC)',
       ringkas: 'Uang digital yang diterbitkan bank sentral: bedanya dengan stablecoin dan crypto, contoh dari Tiongkok, Nigeria, dan Indonesia, serta pertanyaan soal privasi dan kontrol.',
@@ -480,7 +480,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 9 — SMART LEGAL CONTRACT
+    // KURSUS 9, SMART LEGAL CONTRACT
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'smart-legal-contract', judul: 'Smart Legal Contract',
       ringkas: 'Kontrak hukum yang sebagian kewajibannya dijalankan kode: bedanya dengan smart contract murni, contoh escrow dan asuransi parametrik, serta batas yang tetap dipegang hukum.',
@@ -524,7 +524,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 10 — ENTERPRISE & ADOPSI DUNIA NYATA
+    // KURSUS 10, ENTERPRISE & ADOPSI DUNIA NYATA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'adopsi-enterprise', judul: 'Enterprise & Adopsi Dunia Nyata',
       ringkas: 'Kapan perusahaan memilih blockchain berizin atau publik, kapan blockchain sama sekali tidak dibutuhkan, dan contoh adopsi nyata beserta tahunnya.',
@@ -600,7 +600,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 11 — INFRASTRUKTUR DATA WEB3 (21 Sep 2026)
+    // KURSUS 11, INFRASTRUKTUR DATA WEB3 (21 Sep 2026)
     // Ditulis sendiri dari dokumentasi resmi tiap proyek. Fokus: apa yang dikerjakan koinnya.
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'infra-data', judul: 'Infrastruktur Data Web3',

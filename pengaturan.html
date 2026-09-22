@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pengaturan — Hanif Dossier Crypto</title>
+<title>Pengaturan · Hanif Dossier Crypto</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="ikon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -245,7 +245,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
             <a class="tombol kedua" href="pasang.html">Cara memasang</a>
             <button class="tombol kedua" type="button" id="segarkan">Segarkan aplikasi</button>
           </div>
-          <p class="ket" style="margin-top:12px">"Segarkan" membuang salinan lama di perangkat ini lalu memuat ulang — pakai kalau tampilan tidak ikut berubah setelah pembaruan.</p>
+          <p class="ket" style="margin-top:12px">"Segarkan" membuang salinan lama di perangkat ini lalu memuat ulang, pakai kalau tampilan tidak ikut berubah setelah pembaruan.</p>
           <div class="pesan" id="app-pesan"></div>
         </div>
       </div>
@@ -273,7 +273,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
 (async () => {
   const $ = id => document.getElementById(id);
   const pesan = (id, teks, jenis) => { const p = $(id); p.textContent = teks; p.className = 'pesan ' + (jenis || ''); if (!teks) p.className = 'pesan'; };
-  const tgl = s => s ? new Date(s).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+  const tgl = s => s ? new Date(s).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '–';
 
   // ---- Tab: satu panel tampil, dipilih lewat menu kiri, #hash, atau pilihan terakhir.
   const tombolTab = [...document.querySelectorAll('#tab-set [data-tab]')];
@@ -296,7 +296,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   // ---- Akun
   $('peran').textContent = { owner: 'Owner', admin: 'Admin', anggota: 'Members', tamu: 'Tamu' }[p.peran] || 'Tamu';
   $('peran').className = 'pil-peran ' + p.peran;
-  $('akun-nama').textContent = a.nama || (p.pengguna.user_metadata && p.pengguna.user_metadata.nama) || '—';
+  $('akun-nama').textContent = a.nama || (p.pengguna.user_metadata && p.pengguna.user_metadata.nama) || '–';
   $('akun-email').textContent = p.pengguna.email;
   $('akun-peran').textContent = { owner: 'Pemilik', admin: 'Admin', anggota: 'Anggota', tamu: 'Terdaftar, menunggu konfirmasi' }[p.peran];
   $('akun-sejak').textContent = tgl(a.dibuat_pada || p.pengguna.created_at);
@@ -315,7 +315,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   const hariIni = new Date(); hariIni.setHours(0, 0, 0, 0);
   const sampai = a.langganan_sampai ? new Date(a.langganan_sampai + 'T00:00:00') : null;
   const sisaHari = sampai ? Math.ceil((sampai - hariIni) / 86400000) : null;
-  const paket = a.paket ? (a.paket === 'tahunan' ? 'Tahunan' : 'Bulanan') : (p.admin ? 'Akses pemilik' : '—');
+  const paket = a.paket ? (a.paket === 'tahunan' ? 'Tahunan' : 'Bulanan') : (p.admin ? 'Akses pemilik' : '–');
   let status, kelas;
   if (p.admin) { status = 'Aktif · tanpa batas'; kelas = 'aktif'; }
   else if (a.status === 'disetujui' && (!sampai || sisaHari >= 0)) { status = 'Aktif'; kelas = 'aktif'; }
@@ -325,7 +325,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   $('lg-status').innerHTML = `<span class="status-pil ${kelas}">${status}</span>`;
   $('lg-paket').textContent = paket;
   $('lg-sampai').textContent = p.admin || (!sampai && a.status === 'disetujui') ? 'Tanpa batas' : tgl(a.langganan_sampai);
-  $('lg-sisa').innerHTML = sampai && !p.admin ? (sisaHari >= 0 ? `${sisaHari}<small>hari lagi</small>` : `<span style="color:var(--bata)">habis</span><small>${-sisaHari} hari lalu</small>`) : (kelas === 'aktif' ? '∞<small>tanpa batas</small>' : '—');
+  $('lg-sisa').innerHTML = sampai && !p.admin ? (sisaHari >= 0 ? `${sisaHari}<small>hari lagi</small>` : `<span style="color:var(--bata)">habis</span><small>${-sisaHari} hari lalu</small>`) : (kelas === 'aktif' ? '∞<small>tanpa batas</small>' : '–');
   const lc = $('lencana-langganan');
   if (kelas !== 'aktif') { lc.textContent = kelas === 'menunggu' ? 'menunggu' : 'habis'; lc.hidden = false; }
   else if (sisaHari != null && sisaHari <= 7 && !p.admin) { lc.textContent = sisaHari + ' hari'; lc.hidden = false; }
@@ -349,7 +349,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   const bacaJenis = () => Object.fromEntries(kotakJenis.map(k => [k.dataset.jenis, k.checked]));
   const tunggu = async () => { for (let i = 0; i < 20 && !window.notifBriefing; i++) await new Promise(r => setTimeout(r, 100)); return window.notifBriefing; };
   const nb = await tunggu();
-  // Nama perangkat yang ramah dibaca — baris lama menyimpan user-agent mentah.
+  // Nama perangkat yang ramah dibaca, baris lama menyimpan user-agent mentah.
   const ringkasUA = ua => {
     if (!ua) return 'Perangkat';
     if (!/Mozilla\//.test(ua)) return ua;
@@ -361,7 +361,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
     const sub = await nb.langganan();
     const { data, error } = await akun.sb.from('dossier_push').select('endpoint,perangkat,dibuat,jenis').order('dibuat', { ascending: false });
     const ul = $('notif-perangkat'), ln = $('lencana-notif');
-    if (error) { ul.innerHTML = `<li><span>${/jenis/i.test(error.message) ? 'Kolom pilihan jenis belum dibuat di database — jalankan SQL-nya dulu.' : 'Tidak bisa memuat: ' + error.message}</span></li>`; return; }
+    if (error) { ul.innerHTML = `<li><span>${/jenis/i.test(error.message) ? 'Kolom pilihan jenis belum dibuat di database, jalankan SQL-nya dulu.' : 'Tidak bisa memuat: ' + error.message}</span></li>`; return; }
     ln.hidden = !data.length; ln.textContent = data.length;
     if (!data.length) { ul.innerHTML = '<li><span>Belum ada perangkat. Nyalakan saklar "Perangkat ini" di kiri.</span></li>'; return; }
     ul.innerHTML = data.map(d => `<li><span>${ringkasUA(d.perangkat)}${sub && sub.endpoint === d.endpoint ? ' <span class="ini">· ini</span>' : ''}<small>${tgl(d.dibuat)} · ${Object.entries(d.jenis || {}).filter(([, v]) => v).map(([k]) => k).join(', ') || 'semua'}</small></span><button type="button" data-hapus="${encodeURIComponent(d.endpoint)}">hapus</button></li>`).join('');
@@ -376,7 +376,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
     const sub = await nb.langganan();
     const aktif = !!sub && Notification.permission === 'granted';
     saklar.checked = aktif; saklar.disabled = false;
-    ket.textContent = aktif ? `Aktif · ${nb.namaPerangkat()}` : Notification.permission === 'denied' ? 'Izin ditolak di browser — buka ikon gembok di bilah alamat untuk mengizinkan.' : 'Belum menyala di perangkat ini.';
+    ket.textContent = aktif ? `Aktif · ${nb.namaPerangkat()}` : Notification.permission === 'denied' ? 'Izin ditolak di browser, buka ikon gembok di bilah alamat untuk mengizinkan.' : 'Belum menyala di perangkat ini.';
     kotakJenis.forEach(k => k.disabled = !aktif);
     if (aktif) {
       const { data } = await akun.sb.from('dossier_push').select('jenis').eq('endpoint', sub.endpoint).maybeSingle();

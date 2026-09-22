@@ -1,10 +1,10 @@
-// kelas/riset.js — data kelas kategori Riset Fundamental Crypto. Hanya data; logika ada di kelas.html.
+// kelas/riset.js, data kelas kategori Riset Fundamental Crypto. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'riset', urut: 9, nama: 'Riset Fundamental Crypto', warna: '#7d8a4f',
   ringkas: 'Cara menilai sebuah aset crypto dengan angka, bukan dengan cerita: pasokan dan jadwal unlock, pendapatan protokol yang nyata, data on-chain, dan delapan sumber data yang dipakai di laporan Hanif Dossier. Setiap tesis ditutup dengan bear case.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — KERANGKA RISET
+    // KURSUS 1, KERANGKA RISET
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'kerangka', judul: 'Kerangka Riset',
       ringkas: 'Tiga pertanyaan yang harus dijawab sebelum menilai token apa pun, dan kebiasaan yang membuat riset Hanif Dossier berbeda: mencari alasan tesis sendiri salah.',
@@ -21,10 +21,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Fundamental</b> — hal yang menentukan nilai di luar harga: pengguna, pemasukan, biaya, pasokan, dan siapa mengendalikan apa.</li>
-<li><b>Tesis</b> — kalimat yang merangkum kenapa Anda membeli, lengkap dengan apa yang harus terjadi supaya Anda benar.</li>
-<li><b>Katalis</b> — peristiwa yang bisa membuat pasar menilai ulang: peluncuran produk, unlock besar, keputusan regulasi.</li>
-<li><b>Moat</b> — alasan pengguna tetap bertahan walaupun ada pesaing yang lebih murah.</li>
+<li><b>Fundamental</b>: hal yang menentukan nilai di luar harga, pengguna, pemasukan, biaya, pasokan, dan siapa mengendalikan apa.</li>
+<li><b>Tesis</b>: kalimat yang merangkum kenapa Anda membeli, lengkap dengan apa yang harus terjadi supaya Anda benar.</li>
+<li><b>Katalis</b>: peristiwa yang bisa membuat pasar menilai ulang, peluncuran produk, unlock besar, keputusan regulasi.</li>
+<li><b>Moat</b>: alasan pengguna tetap bertahan walaupun ada pesaing yang lebih murah.</li>
 </ul>
 
 <h3>Bentuk tesis yang layak</h3>
@@ -89,7 +89,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — TOKENOMICS
+    // KURSUS 2, TOKENOMICS
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'tokenomics', judul: 'Tokenomics',
       ringkas: 'Pasokan beredar dan terdilusi penuh, jadwal emisi dan unlock, serta siapa memegang berapa. Bagian riset yang paling sering dilewati dan paling sering jadi penyebab kerugian.',
@@ -100,11 +100,11 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Pasokan beredar (circulating supply)</b> — token yang sudah berada di tangan publik dan bisa diperdagangkan.</li>
-<li><b>Pasokan total (total supply)</b> — yang sudah dibuat, termasuk yang masih terkunci.</li>
-<li><b>Pasokan maksimum (max supply)</b> — batas tertinggi yang akan pernah ada. Sebagian token tidak punya batas.</li>
-<li><b>Kapitalisasi pasar (market cap)</b> — harga dikali pasokan beredar.</li>
-<li><b>FDV (fully diluted valuation)</b> — harga dikali pasokan maksimum. Inilah nilai proyek seandainya semua token sudah beredar hari ini.</li>
+<li><b>Pasokan beredar (circulating supply)</b>: token yang sudah berada di tangan publik dan bisa diperdagangkan.</li>
+<li><b>Pasokan total (total supply)</b>: yang sudah dibuat, termasuk yang masih terkunci.</li>
+<li><b>Pasokan maksimum (max supply)</b>: batas tertinggi yang akan pernah ada. Sebagian token tidak punya batas.</li>
+<li><b>Kapitalisasi pasar (market cap)</b>: harga dikali pasokan beredar.</li>
+<li><b>FDV (fully diluted valuation)</b>: harga dikali pasokan maksimum. Inilah nilai proyek seandainya semua token sudah beredar hari ini.</li>
 </ul>
 
 <h3>Kenapa selisih market cap dan FDV penting</h3>
@@ -130,9 +130,9 @@
 <h3>Konsepnya</h3>
 <p>Kalau pasokan menjawab "berapa banyak", jadwal menjawab "kapan". Dan "kapan" sering lebih menentukan harga dalam setahun ke depan daripada apa pun yang dibangun proyeknya.</p>
 <ul>
-<li><b>Emisi</b> — token baru yang dicetak terus-menerus, biasanya sebagai hadiah untuk penambang, validator, atau penyedia likuiditas. Sifatnya mengalir.</li>
-<li><b>Unlock</b> — token yang sudah ada tetapi terkunci, lalu dilepas pada tanggal tertentu. Sifatnya melonjak.</li>
-<li><b>Vesting</b> — jadwal pelepasan bertahap untuk tim dan investor awal. Biasanya ada <b>cliff</b> (masa tunggu penuh, sering 12 bulan) lalu pelepasan bulanan selama beberapa tahun.</li>
+<li><b>Emisi</b>: token baru yang dicetak terus-menerus, biasanya sebagai hadiah untuk penambang, validator, atau penyedia likuiditas. Sifatnya mengalir.</li>
+<li><b>Unlock</b>: token yang sudah ada tetapi terkunci, lalu dilepas pada tanggal tertentu. Sifatnya melonjak.</li>
+<li><b>Vesting</b>: jadwal pelepasan bertahap untuk tim dan investor awal. Biasanya ada <b>cliff</b> (masa tunggu penuh, sering 12 bulan) lalu pelepasan bulanan selama beberapa tahun.</li>
 </ul>
 
 <h3>Kenapa unlock besar berbahaya</h3>
@@ -194,7 +194,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — MEMBACA PENDAPATAN PROTOKOL
+    // KURSUS 3, MEMBACA PENDAPATAN PROTOKOL
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'pendapatan', judul: 'Membaca Pendapatan Protokol',
       ringkas: 'Biaya, pendapatan, dan laba sebuah protokol: siapa yang sebenarnya dibayar, dan bagaimana membandingkannya dengan penilaian pasar tanpa tertipu rasio yang terlihat murah.',
@@ -203,9 +203,9 @@
 <h3>Konsepnya</h3>
 <p>Ini bagian yang membuat riset crypto mendekati analisis bisnis biasa, dan bagian yang paling sering dijelaskan secara keliru. Tiga angka berikut sering disebut bergantian padahal artinya sangat berbeda.</p>
 <ul>
-<li><b>Fee (biaya)</b> — total yang dibayar pengguna untuk memakai protokol. Ini seperti omzet kotor: uang yang masuk ke sistem secara keseluruhan.</li>
-<li><b>Revenue (pendapatan protokol)</b> — bagian dari biaya itu yang masuk ke kas protokol atau ke pemegang token. Sisanya pergi ke pihak lain, misalnya penyedia likuiditas atau validator.</li>
-<li><b>Earnings (laba)</b> — pendapatan dikurangi pengeluaran, terutama insentif token yang dibagikan protokol untuk menarik pengguna.</li>
+<li><b>Fee (biaya)</b>: total yang dibayar pengguna untuk memakai protokol. Ini seperti omzet kotor: uang yang masuk ke sistem secara keseluruhan.</li>
+<li><b>Revenue (pendapatan protokol)</b>: bagian dari biaya itu yang masuk ke kas protokol atau ke pemegang token. Sisanya pergi ke pihak lain, misalnya penyedia likuiditas atau validator.</li>
+<li><b>Earnings (laba)</b>: pendapatan dikurangi pengeluaran, terutama insentif token yang dibagikan protokol untuk menarik pengguna.</li>
 </ul>
 <p>Perhatikan bahwa susunannya persis sama dengan laporan laba rugi usaha biasa: omzet, lalu bagian yang benar-benar jadi milik perusahaan, lalu sisa setelah semua beban. Kursus Keuangan Pribadi & Bisnis membahas bentuk aslinya.</p>
 
@@ -237,9 +237,9 @@
 <h3>Konsepnya</h3>
 <p>Setelah tahu pendapatannya, pertanyaan berikutnya adalah apakah pasar menilainya mahal atau murah. Alatnya dipinjam dari analisis saham, dengan penyesuaian.</p>
 <ul>
-<li><b>P/S (price to sales)</b> — kapitalisasi pasar dibagi pendapatan setahun. Berapa tahun pendapatan yang sedang dibayar pasar.</li>
-<li><b>P/F (price to fees)</b> — kapitalisasi pasar dibagi total biaya yang dibayar pengguna. Lebih longgar, karena tidak semua biaya jadi milik protokol.</li>
-<li><b>P/E</b> — dipakai kalau protokol punya laba nyata. Masih jarang di crypto.</li>
+<li><b>P/S (price to sales)</b>: kapitalisasi pasar dibagi pendapatan setahun. Berapa tahun pendapatan yang sedang dibayar pasar.</li>
+<li><b>P/F (price to fees)</b>: kapitalisasi pasar dibagi total biaya yang dibayar pengguna. Lebih longgar, karena tidak semua biaya jadi milik protokol.</li>
+<li><b>P/E</b>: dipakai kalau protokol punya laba nyata. Masih jarang di crypto.</li>
 </ul>
 <p>Rasio ini berguna untuk <b>membandingkan protokol sejenis</b>, bukan untuk menentukan harga wajar. Membandingkan P/S bursa terdesentralisasi dengan P/S protokol pinjaman sama tidak berartinya dengan membandingkan P/E restoran dengan P/E perusahaan tambang.</p>
 
@@ -331,7 +331,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — ANALISIS ON-CHAIN
+    // KURSUS 4, ANALISIS ON-CHAIN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'onchain', judul: 'Analisis On-chain',
       ringkas: 'Keunggulan yang tidak dimiliki pasar saham: seluruh buku besarnya terbuka. Metrik pasokan dan dompet, metrik derivatif, dan cara membedakan aktivitas nyata dari aktivitas yang dibuat-buat.',
@@ -342,11 +342,11 @@
 
 <h3>Istilah dan alat yang dipakai</h3>
 <ul>
-<li><b>Alamat aktif</b> — jumlah alamat yang bertransaksi dalam periode tertentu. Ukuran kasar pemakaian, mudah digelembungkan.</li>
-<li><b>Arus bursa (exchange flow)</b> — berapa banyak koin masuk ke atau keluar dari dompet bursa. Arus masuk besar sering mendahului penjualan, arus keluar sering menandakan pemindahan ke simpanan jangka panjang.</li>
-<li><b>Pasokan menurut umur (HODL waves)</b> — berapa porsi koin yang tidak bergerak selama 1 tahun, 2 tahun, dan seterusnya. Porsi yang naik menandakan pemegang bertahan.</li>
-<li><b>Realized cap dan MVRV</b> — perbandingan harga pasar dengan harga rata-rata saat koin terakhir berpindah. Memberi gambaran apakah pemegang rata-rata sedang untung atau rugi.</li>
-<li><b>Pasokan di dompet besar</b> — porsi yang dipegang alamat dengan saldo di atas ambang tertentu.</li>
+<li><b>Alamat aktif</b>: jumlah alamat yang bertransaksi dalam periode tertentu. Ukuran kasar pemakaian, mudah digelembungkan.</li>
+<li><b>Arus bursa (exchange flow)</b>: berapa banyak koin masuk ke atau keluar dari dompet bursa. Arus masuk besar sering mendahului penjualan, arus keluar sering menandakan pemindahan ke simpanan jangka panjang.</li>
+<li><b>Pasokan menurut umur (HODL waves)</b>: berapa porsi koin yang tidak bergerak selama 1 tahun, 2 tahun, dan seterusnya. Porsi yang naik menandakan pemegang bertahan.</li>
+<li><b>Realized cap dan MVRV</b>: perbandingan harga pasar dengan harga rata-rata saat koin terakhir berpindah. Memberi gambaran apakah pemegang rata-rata sedang untung atau rugi.</li>
+<li><b>Pasokan di dompet besar</b>: porsi yang dipegang alamat dengan saldo di atas ambang tertentu.</li>
 </ul>
 <p>Glassnode dan CryptoQuant adalah dua sumber utama untuk metrik ini, dan keduanya punya tampilan gratis yang sudah cukup untuk sebagian besar pertanyaan.</p>
 
@@ -370,10 +370,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Open interest</b> — total nilai posisi yang sedang terbuka. Naik berarti uang baru masuk ke posisi berjangka; turun berarti posisi ditutup atau dilikuidasi.</li>
-<li><b>Funding rate</b> — biaya berkala antar pemegang posisi di kontrak perpetual. Positif berarti pemegang posisi beli membayar penjual, yang menandakan permintaan beli dengan pinjaman sedang tinggi.</li>
-<li><b>Long/short ratio</b> — perbandingan posisi beli dan jual. Berguna sebagai tanda keramaian, bukan sebagai arah.</li>
-<li><b>Peta likuidasi</b> — perkiraan di harga berapa banyak posisi akan tertutup paksa. Menunjukkan daerah yang rawan gerakan cepat.</li>
+<li><b>Open interest</b>: total nilai posisi yang sedang terbuka. Naik berarti uang baru masuk ke posisi berjangka; turun berarti posisi ditutup atau dilikuidasi.</li>
+<li><b>Funding rate</b>: biaya berkala antar pemegang posisi di kontrak perpetual. Positif berarti pemegang posisi beli membayar penjual, yang menandakan permintaan beli dengan pinjaman sedang tinggi.</li>
+<li><b>Long/short ratio</b>: perbandingan posisi beli dan jual. Berguna sebagai tanda keramaian, bukan sebagai arah.</li>
+<li><b>Peta likuidasi</b>: perkiraan di harga berapa banyak posisi akan tertutup paksa. Menunjukkan daerah yang rawan gerakan cepat.</li>
 </ul>
 <p>Coinglass adalah sumber yang paling lengkap untuk kelompok metrik ini, dan sebagian besar tampilannya gratis.</p>
 
@@ -397,10 +397,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>TVL (total value locked)</b> — nilai aset yang disimpan di dalam sebuah protokol. Sumber utamanya DefiLlama.</li>
-<li><b>Pasokan stablecoin</b> — total stablecoin yang beredar di sebuah jaringan. Sering dipakai sebagai ukuran kasar berapa banyak uang siap pakai di ekosistem itu.</li>
-<li><b>Double counting</b> — aset yang sama dihitung di beberapa protokol sekaligus karena dipakai berlapis.</li>
-<li><b>Wash trading</b> — transaksi bolak-balik antar dompet sendiri untuk menggelembungkan volume atau jumlah pengguna.</li>
+<li><b>TVL (total value locked)</b>: nilai aset yang disimpan di dalam sebuah protokol. Sumber utamanya DefiLlama.</li>
+<li><b>Pasokan stablecoin</b>: total stablecoin yang beredar di sebuah jaringan. Sering dipakai sebagai ukuran kasar berapa banyak uang siap pakai di ekosistem itu.</li>
+<li><b>Double counting</b>: aset yang sama dihitung di beberapa protokol sekaligus karena dipakai berlapis.</li>
+<li><b>Wash trading</b>: transaksi bolak-balik antar dompet sendiri untuk menggelembungkan volume atau jumlah pengguna.</li>
 </ul>
 
 <h3>Bagaimana tiap metrik bisa menipu</h3>
@@ -441,7 +441,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 5 — DELAPAN SUMBER DATA
+    // KURSUS 5, DELAPAN SUMBER DATA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'sumber', judul: 'Delapan Sumber Data dan Cara Memakainya',
       ringkas: 'Sumber mana untuk pertanyaan mana, dan apa yang dilakukan ketika dua sumber memberi angka yang berbeda untuk hal yang sama.',

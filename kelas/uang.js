@@ -1,10 +1,10 @@
-// kelas/uang.js — data kelas kategori Keuangan Pribadi & Bisnis. Hanya data; logika ada di kelas.html.
+// kelas/uang.js, data kelas kategori Keuangan Pribadi & Bisnis. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'uang', urut: 10, nama: 'Keuangan Pribadi & Bisnis', warna: '#a8794a',
   ringkas: 'Fondasi yang menentukan apakah investasi Anda bisa bertahan: urutan membangun keuangan, cara menangani hutang, dan cara membaca laporan keuangan usaha sendiri maupun perusahaan yang sahamnya Anda beli. Ditutup dengan pajak dan pencatatan di Indonesia.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — URUTAN MEMBANGUN KEUANGAN
+    // KURSUS 1, URUTAN MEMBANGUN KEUANGAN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'urutan', judul: 'Urutan Membangun Keuangan',
       ringkas: 'Lima anak tangga yang urutannya tidak boleh dibalik, dan dua angka yang harus Anda tahu tentang diri sendiri sebelum bicara investasi.',
@@ -42,8 +42,8 @@
 <h3>Konsepnya</h3>
 <p>Orang bisa menghabiskan bertahun-tahun mengurus investasi tanpa pernah tahu dua angka paling dasar tentang keuangannya sendiri. Keduanya mudah dihitung dan langsung mengubah cara Anda mengambil keputusan.</p>
 <ul>
-<li><b>Arus kas bulanan</b> — pemasukan dikurangi pengeluaran. Menjawab "berapa yang bisa saya sisihkan tiap bulan".</li>
-<li><b>Kekayaan bersih</b> — seluruh aset dikurangi seluruh hutang. Menjawab "berapa sebenarnya yang saya punya".</li>
+<li><b>Arus kas bulanan</b>: pemasukan dikurangi pengeluaran. Menjawab "berapa yang bisa saya sisihkan tiap bulan".</li>
+<li><b>Kekayaan bersih</b>: seluruh aset dikurangi seluruh hutang. Menjawab "berapa sebenarnya yang saya punya".</li>
 </ul>
 <p>Perhatikan bahwa keduanya persis sama dengan dua laporan yang dipakai perusahaan: arus kas adalah versi pribadi dari laporan laba rugi, dan kekayaan bersih adalah versi pribadi dari neraca. Kursus berikutnya membahas bentuk perusahaannya.</p>
 
@@ -90,7 +90,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — HUTANG
+    // KURSUS 2, HUTANG
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'hutang', judul: 'Hutang',
       ringkas: 'Membedakan hutang yang bekerja untuk Anda dari hutang yang memakan Anda, urutan pelunasan yang masuk akal, dan dua rasio yang dipakai bank untuk menilai Anda.',
@@ -101,10 +101,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Hutang produktif</b> — dipakai membeli sesuatu yang menghasilkan pemasukan atau naik nilainya: modal usaha, kendaraan operasional, pendidikan yang menaikkan penghasilan.</li>
-<li><b>Hutang konsumtif</b> — dipakai membeli sesuatu yang habis atau menyusut: liburan, barang elektronik, kendaraan pribadi untuk gaya hidup.</li>
-<li><b>Bunga efektif</b> — bunga sebenarnya yang Anda bayar, dihitung dari sisa pokok. Berbeda dari bunga flat yang terlihat lebih kecil padahal lebih mahal.</li>
-<li><b>Bunga berbunga</b> — bunga yang dihitung di atas bunga yang belum dibayar. Inilah yang membuat sebagian hutang tumbuh jauh lebih cepat daripada dugaan.</li>
+<li><b>Hutang produktif</b>: dipakai membeli sesuatu yang menghasilkan pemasukan atau naik nilainya, modal usaha, kendaraan operasional, pendidikan yang menaikkan penghasilan.</li>
+<li><b>Hutang konsumtif</b>: dipakai membeli sesuatu yang habis atau menyusut, liburan, barang elektronik, kendaraan pribadi untuk gaya hidup.</li>
+<li><b>Bunga efektif</b>: bunga sebenarnya yang Anda bayar, dihitung dari sisa pokok. Berbeda dari bunga flat yang terlihat lebih kecil padahal lebih mahal.</li>
+<li><b>Bunga berbunga</b>: bunga yang dihitung di atas bunga yang belum dibayar. Inilah yang membuat sebagian hutang tumbuh jauh lebih cepat daripada dugaan.</li>
 </ul>
 <p>Perhatikan jebakan bunga flat. Pinjaman 12 juta dengan "bunga 1 persen per bulan flat" selama 12 bulan terdengar seperti 12 persen setahun. Karena pokoknya berkurang tiap bulan tetapi bunganya tetap dihitung dari 12 juta, bunga efektifnya mendekati dua kali lipat angka itu.</p>
 
@@ -172,7 +172,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — MEMBACA LAPORAN KEUANGAN
+    // KURSUS 3, MEMBACA LAPORAN KEUANGAN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'laporan', judul: 'Membaca Laporan Keuangan',
       ringkas: 'Tiga laporan yang dipakai setiap usaha, dari warung sampai perusahaan terbuka. Laba rugi, neraca, dan arus kas, dijelaskan dengan bahasa sehari-hari tanpa mengorbankan istilah bakunya.',
@@ -184,12 +184,12 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Omzet (penjualan, revenue)</b> — total nilai barang atau jasa yang terjual. Ini uang masuk, bukan untung. Banyak usaha beromzet besar yang rugi.</li>
-<li><b>HPP (harga pokok penjualan, COGS)</b> — biaya langsung barang yang terjual. Untuk pedagang, ini harga kulakan barang yang laku. Barang yang masih di gudang belum masuk HPP.</li>
-<li><b>Laba kotor (gross profit)</b> — omzet dikurangi HPP. Menunjukkan untung dari barangnya saja, sebelum biaya menjalankan usaha.</li>
-<li><b>Beban operasional (opex)</b> — biaya menjalankan usaha: gaji, sewa, listrik, bensin, perawatan kendaraan.</li>
-<li><b>Laba bersih (net profit)</b> — laba kotor dikurangi seluruh beban, termasuk bunga dan pajak. Inilah uang yang benar-benar tersisa untuk pemilik.</li>
-<li><b>Margin</b> — laba dinyatakan sebagai persen dari omzet. Margin kotor dan margin bersih dihitung terpisah.</li>
+<li><b>Omzet (penjualan, revenue)</b>: total nilai barang atau jasa yang terjual. Ini uang masuk, bukan untung. Banyak usaha beromzet besar yang rugi.</li>
+<li><b>HPP (harga pokok penjualan, COGS)</b>: biaya langsung barang yang terjual. Untuk pedagang, ini harga kulakan barang yang laku. Barang yang masih di gudang belum masuk HPP.</li>
+<li><b>Laba kotor (gross profit)</b>: omzet dikurangi HPP. Menunjukkan untung dari barangnya saja, sebelum biaya menjalankan usaha.</li>
+<li><b>Beban operasional (opex)</b>: biaya menjalankan usaha, gaji, sewa, listrik, bensin, perawatan kendaraan.</li>
+<li><b>Laba bersih (net profit)</b>: laba kotor dikurangi seluruh beban, termasuk bunga dan pajak. Inilah uang yang benar-benar tersisa untuk pemilik.</li>
+<li><b>Margin</b>: laba dinyatakan sebagai persen dari omzet. Margin kotor dan margin bersih dihitung terpisah.</li>
 </ul>
 
 <h3>Contoh sebuah usaha dagang</h3>
@@ -225,11 +225,11 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Aset lancar</b> — yang bisa jadi uang dalam setahun: kas, piutang pelanggan, stok barang.</li>
-<li><b>Aset tetap</b> — yang dipakai bertahun-tahun: kendaraan, bangunan, mesin. Dicatat setelah dikurangi penyusutan.</li>
-<li><b>Piutang</b> — uang yang belum dibayar pelanggan. Ini aset, tetapi aset yang belum bisa dipakai.</li>
-<li><b>Kewajiban lancar</b> — yang harus dibayar dalam setahun: hutang ke pemasok, cicilan tahun berjalan, gaji terhutang.</li>
-<li><b>Modal (ekuitas)</b> — bagian pemilik. Terdiri dari setoran awal ditambah laba yang ditahan selama usaha berjalan.</li>
+<li><b>Aset lancar</b>: yang bisa jadi uang dalam setahun, kas, piutang pelanggan, stok barang.</li>
+<li><b>Aset tetap</b>: yang dipakai bertahun-tahun, kendaraan, bangunan, mesin. Dicatat setelah dikurangi penyusutan.</li>
+<li><b>Piutang</b>: uang yang belum dibayar pelanggan. Ini aset, tetapi aset yang belum bisa dipakai.</li>
+<li><b>Kewajiban lancar</b>: yang harus dibayar dalam setahun, hutang ke pemasok, cicilan tahun berjalan, gaji terhutang.</li>
+<li><b>Modal (ekuitas)</b>: bagian pemilik. Terdiri dari setoran awal ditambah laba yang ditahan selama usaha berjalan.</li>
 </ul>
 <p>Hubungan antara dua laporan ini sering membingungkan, padahal sederhana: <b>laba bersih dari laporan laba rugi masuk ke bagian modal di neraca</b>. Untung menambah modal, rugi menguranginya. Itulah jembatan antara keduanya.</p>
 
@@ -254,9 +254,9 @@
 
 <h3>Tiga bagian laporan arus kas</h3>
 <ul>
-<li><b>Arus kas operasi</b> — uang yang benar-benar masuk dan keluar dari kegiatan utama usaha. Ini yang paling penting. Usaha sehat menghasilkan kas dari sini secara konsisten.</li>
-<li><b>Arus kas investasi</b> — pembelian atau penjualan aset jangka panjang: kendaraan, mesin, bangunan. Biasanya negatif pada usaha yang sedang tumbuh.</li>
-<li><b>Arus kas pendanaan</b> — uang dari atau ke pemberi pinjaman dan pemilik: menerima pinjaman, membayar pokok, menarik keuntungan.</li>
+<li><b>Arus kas operasi</b>: uang yang benar-benar masuk dan keluar dari kegiatan utama usaha. Ini yang paling penting. Usaha sehat menghasilkan kas dari sini secara konsisten.</li>
+<li><b>Arus kas investasi</b>: pembelian atau penjualan aset jangka panjang, kendaraan, mesin, bangunan. Biasanya negatif pada usaha yang sedang tumbuh.</li>
+<li><b>Arus kas pendanaan</b>: uang dari atau ke pemberi pinjaman dan pemilik, menerima pinjaman, membayar pokok, menarik keuntungan.</li>
 </ul>
 
 <h3>Pola yang perlu dikenali</h3>
@@ -296,7 +296,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — PAJAK DAN PENCATATAN DI INDONESIA
+    // KURSUS 4, PAJAK DAN PENCATATAN DI INDONESIA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'pajak', judul: 'Pajak dan Pencatatan di Indonesia',
       ringkas: 'Bagaimana pajak aset kripto bekerja di Indonesia, apa bedanya dengan pajak penghasilan biasa, dan pencatatan sederhana yang menyelamatkan Anda saat ditanya.',
@@ -308,10 +308,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Pajak final</b> — dipungut sekali saat transaksi dan selesai. Tidak digabung lagi dengan penghasilan lain untuk dihitung ulang.</li>
-<li><b>Pedagang terdaftar</b> — penyelenggara perdagangan aset kripto yang memegang izin resmi di Indonesia. Bertransaksi di tempat tidak terdaftar biasanya dikenai tarif lebih tinggi dan tidak punya perlindungan hukum yang sama.</li>
-<li><b>Bukti potong</b> — keterangan bahwa pajak Anda sudah dipungut. Pedagang terdaftar menyediakannya, biasanya bisa diunduh dari aplikasi.</li>
-<li><b>SPT Tahunan</b> — laporan pajak tahunan. Penghasilan yang sudah dikenai pajak final tetap perlu dilaporkan di bagian yang sesuai, dan aset kripto yang Anda miliki dilaporkan di daftar harta.</li>
+<li><b>Pajak final</b>: dipungut sekali saat transaksi dan selesai. Tidak digabung lagi dengan penghasilan lain untuk dihitung ulang.</li>
+<li><b>Pedagang terdaftar</b>: penyelenggara perdagangan aset kripto yang memegang izin resmi di Indonesia. Bertransaksi di tempat tidak terdaftar biasanya dikenai tarif lebih tinggi dan tidak punya perlindungan hukum yang sama.</li>
+<li><b>Bukti potong</b>: keterangan bahwa pajak Anda sudah dipungut. Pedagang terdaftar menyediakannya, biasanya bisa diunduh dari aplikasi.</li>
+<li><b>SPT Tahunan</b>: laporan pajak tahunan. Penghasilan yang sudah dikenai pajak final tetap perlu dilaporkan di bagian yang sesuai, dan aset kripto yang Anda miliki dilaporkan di daftar harta.</li>
 </ul>
 
 <h3>Yang perlu Anda lakukan</h3>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Pusat laporan Hanif Dossier Crypto: briefing harian, radar portofolio, schedule, dan screening altcoin — satu pintu, dengan tenang.">
-<title>Laporan — Hanif Dossier Crypto</title>
+<meta name="description" content="Pusat laporan Hanif Dossier Crypto: briefing harian, radar portofolio, schedule, dan screening altcoin, satu pintu, dengan tenang.">
+<title>Laporan · Hanif Dossier Crypto</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
@@ -122,7 +122,7 @@ body.tamu .daftar-laptop{display:none}
 @media(max-width:860px){.sambut,.tengah{grid-template-columns:1fr}.ubin{grid-template-columns:1fr}.koin{grid-template-columns:1fr}}
 @media(max-width:480px){main{padding:16px 14px 48px}.kartu{padding:18px 18px;border-radius:20px}.jadwal{flex-wrap:wrap}}
 
-/* Musim pasar: Altcoin Season Index — pita pelangi dari musim Bitcoin (oranye)
+/* Musim pasar: Altcoin Season Index, pita pelangi dari musim Bitcoin (oranye)
    ke musim altcoin (hijau), dengan penunjuk di nilai hari ini dan garis 90 hari. */
 .musim{margin-top:18px}
 .musim .isi{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:center}
@@ -236,7 +236,7 @@ body.tamu .daftar-laptop{display:none}
   <div class="kartu">
     <div class="isi">
       <div>
-        <div class="catatan" style="margin-bottom:10px">Altcoin Season Index — berapa persen dari 50 koin terbesar yang mengalahkan Bitcoin dalam 90 hari</div>
+        <div class="catatan" style="margin-bottom:10px">Altcoin Season Index, berapa persen dari 50 koin terbesar yang mengalahkan Bitcoin dalam 90 hari</div>
         <div class="pita"><b class="kiri">Musim Bitcoin</b><b class="kanan">Musim altcoin</b><i id="musim-tunjuk" style="left:0%"></i></div>
         <div class="musim-skala"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
         <div class="musim-kecil" id="musim-ket">Memuat…</div>
@@ -386,7 +386,7 @@ body.tamu .daftar-laptop{display:none}
       $('dom-ket').textContent = e != null ? `Bitcoin ${dom[1]}%, Ethereum ${eth[1]}%, sisanya ${(100 - b - e).toFixed(1).replace('.', ',')}%.` : `Bitcoin ${dom[1]}% dari seluruh pasar.`;
     }
 
-  }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'); });
+  }).catch(() => { gagal('c-briefing', 'Cuplikan belum bisa dimuat, buka halamannya langsung.'); });
 
   // 2. Radar: koinmu hari ini, diurutkan dari yang paling naik
   if (!tamu) ambil('/laporan-harian/harian/radar.md').then(md => {
@@ -400,7 +400,7 @@ body.tamu .daftar-laptop{display:none}
     const jumlahPeringatan = bagian(md, 'Peringatan Hari Ini').split('\n').filter(b => /^[-*]\s/.test(b.trim())).length;
     const masuk = [...bagian(md, 'Rotasi Sektor vs Portofolio').matchAll(/^[-*]\s+\*\*([A-Z0-9]+)\*\*\s*—\s*modal masuk/gm)].map(m => m[1]);
     $('koin-catatan').textContent = `${tgl}${jam ? ` · ${jam} WIB` : ''} · ${jumlahPeringatan} peringatan hari ini.` + (masuk.length ? ` Sektor ${masuk.join(', ')} sedang menarik modal.` : '') + ' Angka = perubahan 24 jam; sentuh untuk 7 dan 30 hari.';
-  }).catch(() => gagal('koin', 'Cuplikan belum bisa dimuat — buka Radar Portofolio langsung.'));
+  }).catch(() => gagal('koin', 'Cuplikan belum bisa dimuat, buka Radar Portofolio langsung.'));
 
   // 3. Schedule: tiga acara terjadwal terdekat (unlock, rilis makro, agenda jaringan)
   if (!tamu) ambil('/laporan-harian/harian/jadwal.md').then(md => {
@@ -408,8 +408,8 @@ body.tamu .daftar-laptop{display:none}
     if (!baris.length) return gagal('c-jadwal', 'Belum ada acara terjadwal dalam 45 hari.');
     const pekan = baris.filter(r => /^(Hari ini|Besok|H-[1-7])$/.test(r[0])).length;
     $('c-jadwal').innerHTML = `<div class="kapan">Schedule terdekat · ${pekan} acara dalam 7 hari · ${baris.length} dalam 45 hari</div>` +
-      baris.slice(0, 3).map(r => `<div class="acara"><span class="pil jenis">${esc(r[0])}</span>${r[4] && r[4] !== 'semua' ? `<span class="pil">${esc(r[4])}</span>` : ''}${esc(polos(r[2]).split(' — ')[0])}</div>`).join('');
-  }).catch(() => gagal('c-jadwal', 'Schedule belum bisa dimuat — buka halaman Schedule langsung.'));
+      baris.slice(0, 3).map(r => `<div class="acara"><span class="pil jenis">${esc(r[0])}</span>${r[4] && r[4] !== 'semua' ? `<span class="pil">${esc(r[4])}</span>` : ''}${esc(polos(r[2]).split(', ')[0])}</div>`).join('');
+  }).catch(() => gagal('c-jadwal', 'Schedule belum bisa dimuat, buka halaman Schedule langsung.'));
 
   // 4. Screening: daftar pendek final + narasi yang menghangat
   if (!tamu) Promise.all([ambil('/potret-pasar-crypto/laporan/daftar-pendek-terbaru.md').catch(() => ''), ambil('/potret-pasar-crypto/laporan/terbaru.md').catch(() => '')]).then(([final, mesin]) => {
@@ -428,7 +428,7 @@ body.tamu .daftar-laptop{display:none}
       if (b != null) { $('dom-btc').setAttribute('stroke-dasharray', `${(b / 100 * 251.3).toFixed(1)} 251.3`); $('dom-teks').textContent = pasar[1]; if (!/Ethereum/.test($('dom-ket').textContent)) $('dom-ket').textContent = `Bitcoin ${pasar[1]} dari seluruh pasar.`; }
     }
     $('c-screening').innerHTML = `<div style="font-size:12px;color:var(--lb)">${esc(tgl)} · ${nama.length ? 'daftar pendek final' : 'kandidat mesin, final belum terbit'}</div><div class="keping">${keping.join('') || 'Belum ada kandidat.'}</div>${hangat.length ? `<div style="margin-top:8px;font-size:13px;color:var(--lb)">Narasi yang menghangat: ${hangat.join(' ')}</div>` : ''}`;
-  }).catch(() => gagal('c-screening', 'Cuplikan belum bisa dimuat — buka halamannya langsung.'));
+  }).catch(() => gagal('c-screening', 'Cuplikan belum bisa dimuat, buka halamannya langsung.'));
 
   // Angka pasar dari sumber publik (tanpa laporan): dipakai tamu, dan cadangan kalau
   // laporan belum terbaca. Format ringkas: $2,65 triliun.

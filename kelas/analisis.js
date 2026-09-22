@@ -1,10 +1,10 @@
-// kelas/analisis.js — data kelas kategori Analisis Pasar & Trading. Hanya data; logika ada di kelas.html.
+// kelas/analisis.js, data kelas kategori Analisis Pasar & Trading. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'analisis', urut: 7, nama: 'Analisis Pasar & Trading', warna: '#3d5570',
   ringkas: 'Cara membaca grafik tanpa menipu diri sendiri: apa yang sebenarnya digambar sebuah candle, di mana batas kegunaan indikator, strategi mana yang sudah diuji orang banyak, dan bagaimana menyusun rencana masuk dan keluar sebelum uang dipertaruhkan.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — MEMBACA GRAFIK HARGA
+    // KURSUS 1, MEMBACA GRAFIK HARGA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'grafik', judul: 'Membaca Grafik Harga',
       ringkas: 'Apa yang benar-benar ditunjukkan sebuah candle, kenapa pilihan timeframe mengubah kesimpulan, dan kenapa volume sering lebih jujur daripada harga.',
@@ -17,10 +17,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Timeframe</b> — lama waktu yang dirangkum satu candle. Candle 4 jam merangkum semua transaksi selama empat jam menjadi satu batang.</li>
-<li><b>Wick panjang</b> — harga sempat jauh ke satu arah lalu ditolak kembali. Sering diartikan sebagai penolakan, padahal bisa juga sekadar tanda likuiditas tipis.</li>
-<li><b>Gap</b> — lompatan harga tanpa transaksi di antaranya. Di crypto jarang terjadi karena pasar buka 24 jam, berbeda dengan saham yang tutup semalam.</li>
-<li><b>OHLC</b> — singkatan open, high, low, close. Format data mentah yang dipakai hampir semua penyedia grafik.</li>
+<li><b>Timeframe</b>: lama waktu yang dirangkum satu candle. Candle 4 jam merangkum semua transaksi selama empat jam menjadi satu batang.</li>
+<li><b>Wick panjang</b>: harga sempat jauh ke satu arah lalu ditolak kembali. Sering diartikan sebagai penolakan, padahal bisa juga sekadar tanda likuiditas tipis.</li>
+<li><b>Gap</b>: lompatan harga tanpa transaksi di antaranya. Di crypto jarang terjadi karena pasar buka 24 jam, berbeda dengan saham yang tutup semalam.</li>
+<li><b>OHLC</b>: singkatan open, high, low, close. Format data mentah yang dipakai hampir semua penyedia grafik.</li>
 </ul>
 
 <h3>Kenapa timeframe mengubah kesimpulan</h3>
@@ -50,11 +50,11 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Tren naik</b> — rangkaian puncak yang makin tinggi dan lembah yang makin tinggi. Tren turun kebalikannya.</li>
-<li><b>Sideways (ranging)</b> — harga berputar di antara support dan resistance tanpa arah jelas. Sebagian besar waktu pasar ada di keadaan ini.</li>
-<li><b>Breakout</b> — harga menembus level lalu bertahan di luarnya.</li>
-<li><b>Fakeout</b> — harga menembus lalu cepat kembali. Sering terjadi persis di level yang paling banyak diperhatikan, karena di situlah order stop menumpuk.</li>
-<li><b>Flip</b> — resistance yang tertembus lalu berubah peran jadi support, dan sebaliknya.</li>
+<li><b>Tren naik</b>: rangkaian puncak yang makin tinggi dan lembah yang makin tinggi. Tren turun kebalikannya.</li>
+<li><b>Sideways (ranging)</b>: harga berputar di antara support dan resistance tanpa arah jelas. Sebagian besar waktu pasar ada di keadaan ini.</li>
+<li><b>Breakout</b>: harga menembus level lalu bertahan di luarnya.</li>
+<li><b>Fakeout</b>: harga menembus lalu cepat kembali. Sering terjadi persis di level yang paling banyak diperhatikan, karena di situlah order stop menumpuk.</li>
+<li><b>Flip</b>: resistance yang tertembus lalu berubah peran jadi support, dan sebaliknya.</li>
 </ul>
 
 <h3>Contoh</h3>
@@ -70,11 +70,11 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Order book</b> — daftar order beli dan jual yang sedang menunggu di bursa, lengkap dengan harga dan jumlahnya.</li>
-<li><b>Spread</b> — selisih antara harga beli tertinggi dan harga jual terendah. Spread lebar menandakan likuiditas tipis.</li>
-<li><b>Slippage</b> — selisih antara harga yang Anda harapkan dan harga yang benar-benar Anda dapat. Muncul ketika order Anda lebih besar dari likuiditas di harga itu.</li>
-<li><b>Depth</b> — banyaknya order yang menumpuk di sekitar harga sekarang.</li>
-<li><b>Wash trading</b> — transaksi palsu yang dibuat untuk menggelembungkan angka volume. Nyata dan masih terjadi di sebagian bursa.</li>
+<li><b>Order book</b>: daftar order beli dan jual yang sedang menunggu di bursa, lengkap dengan harga dan jumlahnya.</li>
+<li><b>Spread</b>: selisih antara harga beli tertinggi dan harga jual terendah. Spread lebar menandakan likuiditas tipis.</li>
+<li><b>Slippage</b>: selisih antara harga yang Anda harapkan dan harga yang benar-benar Anda dapat. Muncul ketika order Anda lebih besar dari likuiditas di harga itu.</li>
+<li><b>Depth</b>: banyaknya order yang menumpuk di sekitar harga sekarang.</li>
+<li><b>Wash trading</b>: transaksi palsu yang dibuat untuk menggelembungkan angka volume. Nyata dan masih terjadi di sebagian bursa.</li>
 </ul>
 
 <h3>Langkah memeriksanya</h3>
@@ -114,7 +114,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — SIKLUS DAN STRUKTUR PASAR
+    // KURSUS 2, SIKLUS DAN STRUKTUR PASAR
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'struktur', judul: 'Siklus dan Struktur Pasar',
       ringkas: 'Empat fase yang berulang di hampir setiap pasar, tanda-tanda yang bisa dilihat di grafik dan di data on-chain, serta seberapa jauh gagasan "uang pintar" boleh dipercaya.',
@@ -132,10 +132,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Rentang (trading range)</b> — daerah menyamping tempat akumulasi atau distribusi berlangsung. Bisa berbulan-bulan.</li>
-<li><b>Spring</b> — penurunan singkat ke bawah rentang lalu cepat kembali masuk. Menyapu stop loss dan sering muncul di akhir akumulasi.</li>
-<li><b>Upthrust</b> — kebalikannya. Lonjakan singkat ke atas rentang lalu jatuh kembali, sering muncul di akhir distribusi.</li>
-<li><b>Kapitulasi</b> — penjualan massal karena putus asa, biasanya dengan volume sangat besar dan candle merah panjang.</li>
+<li><b>Rentang (trading range)</b>: daerah menyamping tempat akumulasi atau distribusi berlangsung. Bisa berbulan-bulan.</li>
+<li><b>Spring</b>: penurunan singkat ke bawah rentang lalu cepat kembali masuk. Menyapu stop loss dan sering muncul di akhir akumulasi.</li>
+<li><b>Upthrust</b>: kebalikannya. Lonjakan singkat ke atas rentang lalu jatuh kembali, sering muncul di akhir distribusi.</li>
+<li><b>Kapitulasi</b>: penjualan massal karena putus asa, biasanya dengan volume sangat besar dan candle merah panjang.</li>
 </ul>
 
 <h3>Kenapa fase menyamping paling sulit</h3>
@@ -200,7 +200,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — INDIKATOR DAN BATASNYA
+    // KURSUS 3, INDIKATOR DAN BATASNYA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'indikator', judul: 'Indikator dan Batasnya',
       ringkas: 'Apa yang sebenarnya dihitung moving average, RSI, dan MACD, kenapa semuanya terlambat, dan bagaimana memakainya tanpa tertipu oleh sinyal yang terlihat meyakinkan.',
@@ -212,9 +212,9 @@
 
 <h3>Istilah dan alat yang dipakai</h3>
 <ul>
-<li><b>Moving average (MA)</b> — harga rata-rata selama sekian periode terakhir. MA 200 hari adalah rata-rata penutupan 200 hari terakhir. Gunanya meratakan gejolak sehingga arah umum terlihat. Versi <b>EMA</b> memberi bobot lebih besar pada data terbaru, jadi bereaksi lebih cepat tetapi juga lebih sering memberi sinyal palsu.</li>
-<li><b>RSI (Relative Strength Index)</b> — membandingkan besarnya kenaikan dan penurunan selama 14 periode terakhir, lalu memetakannya ke skala 0 sampai 100. Angka di atas 70 sering disebut jenuh beli, di bawah 30 jenuh jual. Yang sebenarnya diukur hanyalah kecepatan perubahan harga belakangan, bukan mahal atau murah.</li>
-<li><b>MACD</b> — selisih antara dua EMA (biasanya 12 dan 26 periode), plus satu garis sinyal. Gunanya melihat apakah gerakan jangka pendek sedang menjauh atau mendekat dari gerakan jangka menengah.</li>
+<li><b>Moving average (MA)</b>: harga rata-rata selama sekian periode terakhir. MA 200 hari adalah rata-rata penutupan 200 hari terakhir. Gunanya meratakan gejolak sehingga arah umum terlihat. Versi <b>EMA</b> memberi bobot lebih besar pada data terbaru, jadi bereaksi lebih cepat tetapi juga lebih sering memberi sinyal palsu.</li>
+<li><b>RSI (Relative Strength Index)</b>: membandingkan besarnya kenaikan dan penurunan selama 14 periode terakhir, lalu memetakannya ke skala 0 sampai 100. Angka di atas 70 sering disebut jenuh beli, di bawah 30 jenuh jual. Yang sebenarnya diukur hanyalah kecepatan perubahan harga belakangan, bukan mahal atau murah.</li>
+<li><b>MACD</b>: selisih antara dua EMA (biasanya 12 dan 26 periode), plus satu garis sinyal. Gunanya melihat apakah gerakan jangka pendek sedang menjauh atau mendekat dari gerakan jangka menengah.</li>
 </ul>
 
 <h3>Kenapa semuanya terlambat</h3>
@@ -241,9 +241,9 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Divergence</b> — harga membuat puncak baru tetapi indikator tidak ikut. Sering dianggap tanda pelemahan, tetapi sering pula gagal, terutama di tren kuat.</li>
-<li><b>Golden cross</b> — MA pendek memotong ke atas MA panjang. <b>Death cross</b> kebalikannya. Populer di berita, tetapi sinyalnya muncul jauh setelah gerakan besarnya terjadi.</li>
-<li><b>Konfluensi</b> — beberapa alasan berbeda menunjuk ke level yang sama. Lebih berarti daripada satu alasan, selama alasannya memang berbeda jenis, bukan tiga indikator yang menghitung hal serupa.</li>
+<li><b>Divergence</b>: harga membuat puncak baru tetapi indikator tidak ikut. Sering dianggap tanda pelemahan, tetapi sering pula gagal, terutama di tren kuat.</li>
+<li><b>Golden cross</b>: MA pendek memotong ke atas MA panjang. <b>Death cross</b> kebalikannya. Populer di berita, tetapi sinyalnya muncul jauh setelah gerakan besarnya terjadi.</li>
+<li><b>Konfluensi</b>: beberapa alasan berbeda menunjuk ke level yang sama. Lebih berarti daripada satu alasan, selama alasannya memang berbeda jenis, bukan tiga indikator yang menghitung hal serupa.</li>
 </ul>
 
 <h3>Contoh</h3>
@@ -274,7 +274,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — TIGA KELUARGA STRATEGI
+    // KURSUS 4, TIGA KELUARGA STRATEGI
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'strategi', judul: 'Tiga Keluarga Strategi',
       ringkas: 'Hampir semua strategi yang dijual orang adalah variasi dari tiga gagasan dasar: mengikuti tren, bertaruh harga kembali ke rata-rata, atau membeli terjadwal tanpa meramal sama sekali.',
@@ -370,7 +370,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 5 — RENCANA MASUK DAN RENCANA KELUAR
+    // KURSUS 5, RENCANA MASUK DAN RENCANA KELUAR
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'rencana', judul: 'Rencana Masuk dan Rencana Keluar',
       ringkas: 'Keputusan paling menentukan dibuat sebelum uang masuk. Cara menyusun alasan masuk, titik berhenti rugi, penjualan bertahap, dan rencana keluar untuk siklus panjang.',
@@ -393,9 +393,9 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Risiko per transaksi</b> — persen modal yang Anda relakan hilang kalau transaksi ini salah. Angka 1 sampai 2 persen umum dipakai trader profesional.</li>
-<li><b>Risk-reward ratio</b> — perbandingan antara jarak ke target dan jarak ke stop. Rasio 1:3 berarti target tiga kali lebih jauh daripada stop.</li>
-<li><b>Masuk bertahap (scaling in)</b> — membeli dalam beberapa bagian, bukan sekaligus. Mengurangi penyesalan soal waktu, tetapi menambah biaya transaksi.</li>
+<li><b>Risiko per transaksi</b>: persen modal yang Anda relakan hilang kalau transaksi ini salah. Angka 1 sampai 2 persen umum dipakai trader profesional.</li>
+<li><b>Risk-reward ratio</b>: perbandingan antara jarak ke target dan jarak ke stop. Rasio 1:3 berarti target tiga kali lebih jauh daripada stop.</li>
+<li><b>Masuk bertahap (scaling in)</b>: membeli dalam beberapa bagian, bukan sekaligus. Mengurangi penyesalan soal waktu, tetapi menambah biaya transaksi.</li>
 </ul>
 
 <h3>Contoh</h3>
@@ -447,7 +447,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 6 — MENGUJI STRATEGI DENGAN DATA
+    // KURSUS 6, MENGUJI STRATEGI DENGAN DATA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'uji', judul: 'Menguji Strategi dengan Data',
       ringkas: 'Cara memeriksa apakah sebuah aturan benar-benar bekerja atau hanya terlihat bagus di masa lalu, serta angka apa saja yang layak dicatat dari transaksi Anda sendiri.',

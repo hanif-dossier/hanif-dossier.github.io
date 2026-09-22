@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Membaca — Hanif Dossier Crypto</title>
+<title>Membaca · Hanif Dossier Crypto</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +78,7 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Nunito Sa
   try {
     const pk = await (await fetch('pustaka.json', { cache: 'no-cache' })).json();
     const d = pk.dossier.find(x => x.pdf === berkas || x.catatan === berkas);
-    if (d) { const catatan = d.catatan === berkas; $('judul').textContent = (catatan ? 'Catatan pembaruan · ' : '') + d.tampil; document.title = `${d.tampil} — Hanif Dossier Crypto`; }
+    if (d) { const catatan = d.catatan === berkas; $('judul').textContent = (catatan ? 'Catatan pembaruan · ' : '') + d.tampil; document.title = `${d.tampil} · Hanif Dossier Crypto`; }
   } catch {}
 
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';

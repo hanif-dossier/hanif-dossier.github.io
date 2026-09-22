@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anggota — Hanif Dossier Crypto</title>
+<title>Anggota · Hanif Dossier Crypto</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700&display=swap">
@@ -133,7 +133,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
   $('tg-tautan').href = akun.tautanLangganan(profilTg);
   $('tg-status').textContent = profilTg.anggota && profilTg.anggota.telegram_chat_id
     ? 'Telegram Anda sudah terhubung: setiap bukti transfer dikirim ke chat Anda dengan tombol Setujui / Tolak. Perintah di bot: /menunggu untuk melihat antrean.'
-    : 'Belum terhubung. Tekan tombol, lalu Start di Telegram — sesudah itu bukti transfer dari calon anggota dikirim ke chat Anda.';
+    : 'Belum terhubung. Tekan tombol, lalu Start di Telegram, sesudah itu bukti transfer dari calon anggota dikirim ke chat Anda.';
 
   let semua = [], saringan = 'menunggu';
 
@@ -194,7 +194,7 @@ p.sub{margin:0 0 20px;color:var(--tx2);font-size:14px}
         // Email pemberitahuan berisi tombol Masuk: memakai tautan masuk sekali pakai (magic link)
         // dari Supabase, sehingga anggota langsung masuk tanpa mengetik kata sandi.
         const kirim = await akun.sb.auth.signInWithOtp({ email: anggota.email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + '/dasbor.html' } });
-        pesan(anggota.email + ' disetujui. ' + (kirim.error ? 'Email pemberitahuan belum terkirim (' + kirim.error.message + ') — kabari lewat WhatsApp.' : 'Email berisi tombol Masuk sudah dikirim.'), kirim.error ? 'salah' : 'baik');
+        pesan(anggota.email + ' disetujui. ' + (kirim.error ? 'Email pemberitahuan belum terkirim (' + kirim.error.message + '): kabari lewat WhatsApp.' : 'Email berisi tombol Masuk sudah dikirim.'), kirim.error ? 'salah' : 'baik');
       } else pesan(anggota.email + ' sekarang ' + status + '.', 'baik');
       await muat();
     });

@@ -1,10 +1,10 @@
-// kelas/keamanan.js — data kelas kategori Keamanan Web3. Hanya data; logika ada di kelas.html.
+// kelas/keamanan.js, data kelas kategori Keamanan Web3. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'keamanan', urut: 4, nama: 'Keamanan Web3', warna: '#b86b5c',
   ringkas: 'Menjaga aset dari kesalahan sendiri, penipu, celah kode, dan bursa yang gagal: dari menyimpan seed phrase sampai menilai bursa.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — SELF CUSTODY
+    // KURSUS 1, SELF CUSTODY
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'self-custody', judul: 'Self Custody: Menyimpan Aset Sendiri',
       ringkas: 'Beda menitipkan aset di bursa dengan memegang kunci sendiri, cara menyiapkan dompet yang benar, dan cara memastikan aset tidak hilang saat Anda lupa atau tiada.',
@@ -118,7 +118,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — MENGENALI TRIK PENIPUAN
+    // KURSUS 2, MENGENALI TRIK PENIPUAN
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'penipuan', judul: 'Mengenali Trik Penipuan & Tips Keamanan',
       ringkas: 'Modus penipuan crypto yang paling sering memakan korban, dari situs palsu dan tanda tangan jebakan sampai pig butchering, beserta kebiasaan sederhana yang mencegahnya.',
@@ -268,7 +268,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — ISU KEAMANAN SMART CONTRACT
+    // KURSUS 3, ISU KEAMANAN SMART CONTRACT
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'keamanan-smart-contract', judul: 'Isu Keamanan Smart Contract',
       ringkas: 'Celah yang paling sering menguras protokol DeFi, dari reentrancy sampai kunci admin, dan kenapa status "sudah diaudit" bukan jaminan aman.',
@@ -393,7 +393,7 @@ function tarik() public {
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — KEAMANAN AKUN BURSA & OPERASIONAL
+    // KURSUS 4, KEAMANAN AKUN BURSA & OPERASIONAL
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'keamanan-bursa', judul: 'Keamanan Akun Bursa & Operasional',
       ringkas: 'Cara mengunci akun bursa secara berlapis, lalu cara menilai apakah bursanya sendiri layak dipercaya.',

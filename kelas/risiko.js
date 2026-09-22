@@ -1,10 +1,10 @@
-// kelas/risiko.js — data kelas kategori Risiko, Portofolio & Psikologi. Hanya data; logika ada di kelas.html.
+// kelas/risiko.js, data kelas kategori Risiko, Portofolio & Psikologi. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'risiko', urut: 8, nama: 'Risiko, Portofolio & Psikologi', warna: '#9a5f7a',
   ringkas: 'Bagian yang menentukan apakah Anda masih ada di pasar lima tahun lagi: cara mengukur risiko dengan angka, menyusun portofolio yang tidak bergantung pada satu tebakan, dan mengenali bias yang membuat orang pintar mengambil keputusan bodoh.',
   kursus: [
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 1 — MENGUKUR RISIKO DENGAN ANGKA
+    // KURSUS 1, MENGUKUR RISIKO DENGAN ANGKA
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'ukur-risiko', judul: 'Mengukur Risiko dengan Angka',
       ringkas: 'Volatilitas, penurunan terdalam, dan peluang kehabisan modal. Tiga angka yang lebih menentukan nasib Anda daripada tebakan arah harga.',
@@ -16,10 +16,10 @@
 
 <h3>Istilah dan alat yang dipakai</h3>
 <ul>
-<li><b>Volatilitas</b> — ukuran seberapa jauh harga biasanya bergerak naik turun. Bitcoin jauh lebih bergejolak daripada emas, dan altcoin kecil jauh lebih bergejolak daripada Bitcoin.</li>
-<li><b>Drawdown</b> — penurunan dari titik tertinggi ke titik terendah sesudahnya. <b>Max drawdown</b> adalah yang terdalam dalam satu periode.</li>
-<li><b>Waktu pemulihan</b> — lama waktu dari dasar sampai kembali ke puncak lama. Ini sering lebih menyakitkan daripada kedalamannya.</li>
-<li><b>Risk of ruin</b> — peluang modal Anda habis atau mengecil sampai tidak bisa dipakai lagi.</li>
+<li><b>Volatilitas</b>: ukuran seberapa jauh harga biasanya bergerak naik turun. Bitcoin jauh lebih bergejolak daripada emas, dan altcoin kecil jauh lebih bergejolak daripada Bitcoin.</li>
+<li><b>Drawdown</b>: penurunan dari titik tertinggi ke titik terendah sesudahnya. <b>Max drawdown</b> adalah yang terdalam dalam satu periode.</li>
+<li><b>Waktu pemulihan</b>: lama waktu dari dasar sampai kembali ke puncak lama. Ini sering lebih menyakitkan daripada kedalamannya.</li>
+<li><b>Risk of ruin</b>: peluang modal Anda habis atau mengecil sampai tidak bisa dipakai lagi.</li>
 </ul>
 
 <h3>Matematika yang tidak simetris</h3>
@@ -47,10 +47,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Likuidasi</b> — bursa menutup paksa posisi Anda ketika jaminan tidak lagi cukup. Anda tidak ditanya dulu.</li>
-<li><b>Harga likuidasi</b> — harga yang memicu penutupan paksa. Makin besar leverage, makin dekat ke harga sekarang.</li>
-<li><b>Funding rate</b> — biaya berkala yang dibayar antar pemegang posisi di kontrak perpetual. Kalau banyak orang memegang posisi beli, pemegang posisi beli yang membayar.</li>
-<li><b>Margin terisolasi vs silang</b> — terisolasi membatasi kerugian pada jaminan satu posisi; silang memakai seluruh saldo Anda sebagai jaminan, jadi satu posisi bisa menghabiskan semuanya.</li>
+<li><b>Likuidasi</b>: bursa menutup paksa posisi Anda ketika jaminan tidak lagi cukup. Anda tidak ditanya dulu.</li>
+<li><b>Harga likuidasi</b>: harga yang memicu penutupan paksa. Makin besar leverage, makin dekat ke harga sekarang.</li>
+<li><b>Funding rate</b>: biaya berkala yang dibayar antar pemegang posisi di kontrak perpetual. Kalau banyak orang memegang posisi beli, pemegang posisi beli yang membayar.</li>
+<li><b>Margin terisolasi vs silang</b>: terisolasi membatasi kerugian pada jaminan satu posisi; silang memakai seluruh saldo Anda sebagai jaminan, jadi satu posisi bisa menghabiskan semuanya.</li>
 </ul>
 
 <h3>Tiga hal yang membuatnya lebih buruk dari kelihatannya</h3>
@@ -88,7 +88,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 2 — MENYUSUN PORTOFOLIO
+    // KURSUS 2, MENYUSUN PORTOFOLIO
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'portofolio', judul: 'Menyusun Portofolio',
       ringkas: 'Alokasi inti dan satelit, kenapa sepuluh altcoin bukan diversifikasi, dan cara menyeimbangkan ulang tanpa menebak apa pun.',
@@ -98,9 +98,9 @@
 <p>Pertanyaan "koin apa yang bagus" jauh kurang penting daripada "berapa persen dari kekayaan saya yang ada di crypto". Yang kedua menentukan apakah Anda tidur nyenyak, dan orang yang tidur nyenyak mengambil keputusan lebih baik.</p>
 <p>Susunan yang dipakai banyak pengelola dana bisa dipinjam apa adanya untuk portofolio pribadi:</p>
 <ul>
-<li><b>Inti (core)</b> — bagian terbesar, ditaruh di aset yang paling mungkin masih ada sepuluh tahun lagi. Dipegang lama, jarang disentuh.</li>
-<li><b>Satelit</b> — bagian kecil untuk taruhan yang lebih berisiko dan lebih menarik. Boleh habis tanpa merusak keseluruhan.</li>
-<li><b>Peluru cadangan</b> — stablecoin atau kas yang sengaja tidak dipakai, supaya Anda punya tenaga membeli ketika harga jatuh.</li>
+<li><b>Inti (core)</b>: bagian terbesar, ditaruh di aset yang paling mungkin masih ada sepuluh tahun lagi. Dipegang lama, jarang disentuh.</li>
+<li><b>Satelit</b>: bagian kecil untuk taruhan yang lebih berisiko dan lebih menarik. Boleh habis tanpa merusak keseluruhan.</li>
+<li><b>Peluru cadangan</b>: stablecoin atau kas yang sengaja tidak dipakai, supaya Anda punya tenaga membeli ketika harga jatuh.</li>
 </ul>
 <p>Yang menentukan bukan nama asetnya, melainkan disiplin porsinya. Portofolio dengan 70 persen di aset besar dan 30 persen tersebar di taruhan kecil punya sifat yang sangat berbeda dari portofolio dengan porsi terbalik, walaupun isinya token yang sama persis.</p>
 
@@ -133,10 +133,10 @@
 
 <h3>Istilah yang dipakai</h3>
 <ul>
-<li><b>Korelasi</b> — ukuran seberapa sering dua aset bergerak searah. Nilainya dari −1 (selalu berlawanan) sampai +1 (selalu searah).</li>
-<li><b>Beta</b> — seberapa besar sebuah aset bergerak dibanding acuannya. Altcoin dengan beta 2 terhadap Bitcoin cenderung naik dan turun dua kali lebih tajam.</li>
-<li><b>Risiko sistematis</b> — risiko yang menimpa seluruh pasar dan tidak bisa dihilangkan dengan menambah aset sejenis.</li>
-<li><b>Risiko spesifik</b> — risiko satu proyek: timnya bubar, kontraknya diretas, tokennya dibuang pendiri. Inilah yang bisa dikurangi dengan menyebar.</li>
+<li><b>Korelasi</b>: ukuran seberapa sering dua aset bergerak searah. Nilainya dari −1 (selalu berlawanan) sampai +1 (selalu searah).</li>
+<li><b>Beta</b>: seberapa besar sebuah aset bergerak dibanding acuannya. Altcoin dengan beta 2 terhadap Bitcoin cenderung naik dan turun dua kali lebih tajam.</li>
+<li><b>Risiko sistematis</b>: risiko yang menimpa seluruh pasar dan tidak bisa dihilangkan dengan menambah aset sejenis.</li>
+<li><b>Risiko spesifik</b>: risiko satu proyek, timnya bubar, kontraknya diretas, tokennya dibuang pendiri. Inilah yang bisa dikurangi dengan menyebar.</li>
 </ul>
 
 <h3>Cara menyebar yang benar-benar menyebar</h3>
@@ -198,7 +198,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 3 — BIAS YANG MENGURAS REKENING
+    // KURSUS 3, BIAS YANG MENGURAS REKENING
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'bias', judul: 'Bias yang Menguras Rekening',
       ringkas: 'Kesalahan berpikir yang bukan soal kurang pintar, melainkan cara kerja bawaan otak manusia. Mengenalinya tidak menghilangkannya, tetapi membuat Anda bisa memasang pagar.',
@@ -256,9 +256,9 @@
 <h3>Konsepnya</h3>
 <p>Tiga bias berikut bekerja bersama-sama dan hampir selalu muncul dalam urutan yang sama ketika sebuah posisi merugi.</p>
 <ul>
-<li><b>Loss aversion</b> — rasa sakit kehilangan terasa jauh lebih besar daripada nikmat mendapat jumlah yang sama. Akibatnya orang menahan posisi rugi terlalu lama, karena menjual berarti mengubah kerugian di kertas menjadi kerugian yang diakui.</li>
-<li><b>Sunk cost</b> — menganggap uang yang sudah keluar sebagai alasan untuk bertahan. "Saya sudah rugi 40 persen, sayang kalau dijual sekarang." Uang itu sudah hilang apa pun keputusan Anda; yang tersisa cuma pertanyaan ke mana sisa modal sebaiknya ditaruh.</li>
-<li><b>Efek kepemilikan (endowment)</b> — menilai barang yang sudah Anda miliki lebih tinggi daripada barang yang sama kalau belum Anda miliki.</li>
+<li><b>Loss aversion</b>: rasa sakit kehilangan terasa jauh lebih besar daripada nikmat mendapat jumlah yang sama. Akibatnya orang menahan posisi rugi terlalu lama, karena menjual berarti mengubah kerugian di kertas menjadi kerugian yang diakui.</li>
+<li><b>Sunk cost</b>: menganggap uang yang sudah keluar sebagai alasan untuk bertahan. "Saya sudah rugi 40 persen, sayang kalau dijual sekarang." Uang itu sudah hilang apa pun keputusan Anda; yang tersisa cuma pertanyaan ke mana sisa modal sebaiknya ditaruh.</li>
+<li><b>Efek kepemilikan (endowment)</b>: menilai barang yang sudah Anda miliki lebih tinggi daripada barang yang sama kalau belum Anda miliki.</li>
 </ul>
 
 <h3>Satu pertanyaan yang membongkar ketiganya</h3>
@@ -301,7 +301,7 @@
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
-    // KURSUS 4 — RENCANA KALAU SEMUANYA SALAH
+    // KURSUS 4, RENCANA KALAU SEMUANYA SALAH
     // ─────────────────────────────────────────────────────────────────────
     { kode: 'skenario', judul: 'Rencana Kalau Semuanya Salah',
       ringkas: 'Kerugian terbesar di crypto jarang datang dari harga turun. Kebanyakan datang dari bursa bangkrut, kunci hilang, atau proyek berhenti. Ini cara menyiapkan jawabannya lebih dulu.',

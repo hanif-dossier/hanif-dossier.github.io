@@ -1,4 +1,4 @@
-// kelas/bitcoin.js — data kelas kategori Bitcoin. Hanya data; logika ada di kelas.html.
+// kelas/bitcoin.js, data kelas kategori Bitcoin. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'bitcoin', urut: 2, nama: 'Bitcoin', warna: '#c9a961',
   ringkas: 'Cara Bitcoin bekerja dari dalam: koin sebagai UTXO, transaksi dan Script, penambangan, Lightning, sampai batas privasinya.',

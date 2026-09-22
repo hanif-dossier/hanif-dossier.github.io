@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kuis Crypto — Hanif Dossier Crypto</title>
+<title>Kuis Crypto · Hanif Dossier Crypto</title>
 <meta name="description" content="Jalur belajar crypto dalam bentuk kuis: 11 level berurutan dari teknologi blockchain, Bitcoin, Ethereum, teknologi dan kegunaan tiap koin, keamanan dompet, stablecoin, DeFi, sampai membaca token dan mengelola portofolio. Gratis, tanpa daftar.">
-<meta property="og:title" content="Kuis Crypto — Hanif Dossier Crypto">
+<meta property="og:title" content="Kuis Crypto · Hanif Dossier Crypto">
 <meta property="og:description" content="11 level, dari cara kerja blockchain sampai membaca token. Setiap jawaban dijelaskan. Gratis, tanpa daftar.">
 <meta property="og:url" content="https://hanif-dossier.github.io/kuis.html">
 <meta name="theme-color" content="#4f7a68">
@@ -19,7 +19,7 @@
 .tbl-kuis.utama{background:var(--sage);color:#fff}.tbl-kuis.utama:hover{background:var(--sage-tua);color:#fff}
 .tbl-kuis.kedua{background:var(--kartu);border-color:#d9dfda;color:var(--tx)}.tbl-kuis.kedua:hover{border-color:var(--sage)}
 
-/* Layar 1 — jalur belajar. Setiap level adalah satu "stasiun" bernomor yang
+/* Layar 1, jalur belajar. Setiap level adalah satu "stasiun" bernomor yang
    disambung garis vertikal, supaya urutannya terbaca sebagai perjalanan. */
 .ringkasan-jalur{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px}
 .batang{flex:1;min-width:200px;height:10px;border-radius:999px;background:var(--gr);overflow:hidden}
@@ -40,7 +40,7 @@
 .stasiun.ujian .bulat{background:var(--tx)}
 @media(max-width:560px){.jalur::before{left:19px}.stasiun .bulat{width:40px;height:40px;font-size:15px}.stasiun{gap:12px}.stasiun .kartu{padding:14px 16px}}
 
-/* Layar 2 — arena soal */
+/* Layar 2, arena soal */
 .arena{max-width:760px;margin:26px auto 0}
 .arena-atas{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--lb);font-weight:700}
 .titik-titik{display:flex;gap:4px;margin:12px 0 14px}
@@ -67,7 +67,7 @@
 .bawah-soal{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
 .bawah-soal .catatan{font-size:12px}
 
-/* Layar 3 — hasil */
+/* Layar 3, hasil */
 .hasil-atas{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
 .hasil-atas svg{flex:none}
 .hasil-atas .isi{flex:1;min-width:240px}
@@ -186,7 +186,7 @@
 <script src="kuis-soal.js"></script>
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
-// PENGATURAN — semua angka yang boleh diubah ada di sini.
+// PENGATURAN, semua angka yang boleh diubah ada di sini.
 // Bank soal dan daftar level ada di kuis-soal.js (hanya data, tanpa logika).
 // ─────────────────────────────────────────────────────────────────────────────
 const PENGATURAN = {
@@ -198,7 +198,7 @@ const PENGATURAN = {
 
 const LEVEL = window.KUIS_LEVEL;
 const SOAL = window.KUIS_SOAL.map((s, i) => ({ ...s, urut: i }));   // urut = posisi di bank, dipakai untuk menjaga urutan belajar
-const UJIAN = { kode: 'ujian', nomor: '★', nama: 'Ujian akhir', warna: '#2b3330', ringkas: `${PENGATURAN.jumlahUjian} soal acak dari kesebelas level. Cocok untuk menguji diri — atau menantang teman.` };
+const UJIAN = { kode: 'ujian', nomor: '★', nama: 'Ujian akhir', warna: '#2b3330', ringkas: `${PENGATURAN.jumlahUjian} soal acak dari kesebelas level. Cocok untuk menguji diri, atau menantang teman.` };
 const semuaLevel = [...LEVEL, UJIAN];
 const cariLevel = kode => semuaLevel.find(l => l.kode === kode);
 
@@ -212,7 +212,7 @@ let main = null;             // keadaan permainan yang sedang berjalan
 
 // Acak urutan larik tanpa mengubah aslinya (algoritma Fisher–Yates).
 // Kenapa bukan arr.sort(() => Math.random() - .5)? Cara itu terlihat acak tapi
-// hasilnya berat sebelah — sebagian urutan jauh lebih sering muncul.
+// hasilnya berat sebelah, sebagian urutan jauh lebih sering muncul.
 function acak(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -248,7 +248,7 @@ function gambarJalur() {
 
   $('batang').style.width = `${Math.round(jumlahLulus / LEVEL.length * 100)}%`;
   $('teks-kemajuan').textContent = `${jumlahLulus} dari ${LEVEL.length} level lulus`;
-  $('lanjutkan').textContent = jumlahLulus === 0 ? 'Mulai dari Level 1 →' : berikut === UJIAN ? 'Semua lulus — ambil ujian akhir →' : `Lanjutkan ke Level ${berikut.nomor} →`;
+  $('lanjutkan').textContent = jumlahLulus === 0 ? 'Mulai dari Level 1 →' : berikut === UJIAN ? 'Semua lulus, ambil ujian akhir →' : `Lanjutkan ke Level ${berikut.nomor} →`;
   $('lanjutkan').onclick = () => mulai(berikut.kode);
 
   $('jalur').innerHTML = semuaLevel.map(l => {
@@ -293,7 +293,7 @@ function gambarSoal() {
     `<span class="${i < main.ke ? (main.hasil[i] ? 'ya' : 'tidak') : i === main.ke ? 'kini' : ''}"></span>`).join('');
   $('tanya').textContent = s.tanya;
   // Tombol ditampilkan menurut susunan acak, tapi data-i menyimpan indeks asli
-  // di larik pilihan — dengan begitu "indeks asli 0 = benar" tetap berlaku.
+  // di larik pilihan, dengan begitu "indeks asli 0 = benar" tetap berlaku.
   $('pilihan').innerHTML = s.susunan.map((asli, pos) =>
     `<button class="opsi" data-i="${asli}"><span class="huruf">${HURUF[pos]}</span><span></span></button>`).join('');
   $('pilihan').querySelectorAll('.opsi').forEach(b => { b.lastElementChild.textContent = s.pilihan[Number(b.dataset.i)]; });
@@ -343,7 +343,7 @@ function gelarUntuk(persen) {
   if (persen === 100) return ['Sempurna', 'Semua tepat. Fondasi level ini sudah Anda pegang.'];
   if (lulus(persen)) return ['Lulus', 'Fondasi level ini sudah cukup kuat untuk lanjut. Baca ulang soal yang meleset di bawah.'];
   if (persen >= 50) return ['Hampir lulus', `Butuh minimal ${PENGATURAN.batasLulus}% untuk lulus. Baca penjelasan soal yang meleset, lalu coba lagi.`];
-  return ['Baru mulai — dan itu wajar', 'Setiap soal yang meleset adalah satu hal yang sekarang Anda kenali sebelum uang sungguhan dipertaruhkan.'];
+  return ['Baru mulai, dan itu wajar', 'Setiap soal yang meleset adalah satu hal yang sekarang Anda kenali sebelum uang sungguhan dipertaruhkan.'];
 }
 
 function selesai() {
@@ -404,11 +404,11 @@ function keJalur() { gambarJalur(); history.replaceState(null, '', location.path
 async function bagikan() {
   const lv = cariLevel(main.kode), n = main.soal.length;
   const nama = lv === UJIAN ? 'Ujian akhir' : `Level ${lv.nomor} (${lv.nama})`;
-  const teks = `Saya dapat ${main.benar}/${n} di Kuis Crypto Hanif Dossier — ${nama}. Coba kalahkan: ${PENGATURAN.alamat}`;
+  const teks = `Saya dapat ${main.benar}/${n} di Kuis Crypto Hanif Dossier, ${nama}. Coba kalahkan: ${PENGATURAN.alamat}`;
   if (navigator.share) {
-    try { await navigator.share({ title: 'Kuis Crypto — Hanif Dossier', text: teks }); return; } catch (e) { if (e.name === 'AbortError') return; }
+    try { await navigator.share({ title: 'Kuis Crypto · Hanif Dossier', text: teks }); return; } catch (e) { if (e.name === 'AbortError') return; }
   }
-  try { await navigator.clipboard.writeText(teks); $('tersalin').textContent = 'Teks skor tersalin — tinggal tempel di WhatsApp atau Instagram.'; }
+  try { await navigator.clipboard.writeText(teks); $('tersalin').textContent = 'Teks skor tersalin, tinggal tempel di WhatsApp atau Instagram.'; }
   catch { $('tersalin').textContent = teks; }
   $('tersalin').hidden = false;
 }

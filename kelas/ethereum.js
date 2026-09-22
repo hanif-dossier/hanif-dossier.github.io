@@ -1,4 +1,4 @@
-// kelas/ethereum.js — data kelas kategori Ethereum & Smart Contract. Hanya data; logika ada di kelas.html.
+// kelas/ethereum.js, data kelas kategori Ethereum & Smart Contract. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'ethereum', urut: 3, nama: 'Ethereum & Smart Contract', warna: '#6b7fb5',
   ringkas: 'Cara Ethereum menjalankan program bersama: gas dan staking, smart contract, jenis akun, rollup, sampai standar token yang dipakai hampir semua aplikasi crypto.',

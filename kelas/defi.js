@@ -1,4 +1,4 @@
-// kelas/defi.js — data kelas kategori DeFi & Aplikasi Terdesentralisasi. Hanya data; logika ada di kelas.html.
+// kelas/defi.js, data kelas kategori DeFi & Aplikasi Terdesentralisasi. Hanya data; logika ada di kelas.html.
 (window.KELAS = window.KELAS || []).push({
   kode: 'defi', urut: 5, nama: 'DeFi & Aplikasi Terdesentralisasi', warna: '#8a6fb0',
   ringkas: 'Cara kerja stablecoin, DEX, lending, liquid staking, oracle, bridge, dan DAO: mesin keuangan yang berjalan tanpa bank, lengkap dengan risikonya.',
