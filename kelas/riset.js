@@ -255,6 +255,53 @@
 <p>Angka 10 dan 25 menceritakan dua hal berbeda. Yang pertama menggambarkan hari ini, yang kedua menggambarkan keadaan setelah semua token beredar. Investor yang berencana memegang beberapa tahun sebaiknya memakai angka kedua, karena selama masa itulah sisa tokennya akan masuk.</p>
 
 <div class="batas-berlaku"><b>Batas & risiko.</b> Sebagian besar token tidak memberi pemegangnya hak atas pendapatan protokol sama sekali. Kalau tidak ada mekanisme yang mengalirkan pendapatan ke pemegang token, entah lewat pembelian kembali, pembakaran, atau pembagian, maka rasio penilaian hanya perbandingan angka tanpa klaim ekonomi di belakangnya. Periksa dulu apakah tokennya benar-benar berhak atas sesuatu sebelum memakai rasio apa pun.</div>` },
+
+        { judul: 'Studi kasus PONS: pendapatan yang dipakai membeli kembali token', isi: `
+<h3>Konsepnya</h3>
+<p>Pada 5 September 2026 sebuah akun crypto Indonesia di Instagram mengunggah PONS dengan klaim "naik ribuan persen dalam 2 bulan". Rahasia yang disebutnya satu: pendapatan platform tidak dibagikan ke tim, tapi dipakai untuk <b>membeli kembali lalu membakar tokennya</b> (<i>buyback and burn</i>).</p>
+<p>Klaimnya sebagian besar benar, dan justru karena itu kasus ini bagus untuk belajar. Pelajaran sebelumnya berakhir dengan satu syarat: rasio apa pun baru berarti kalau pemegang token benar-benar berhak atas pendapatan protokol. PONS adalah contoh token yang memenuhi syarat itu, sekaligus contoh betapa cepatnya syarat itu bisa goyah.</p>
+
+<h3>Cara kerjanya</h3>
+<p>Pons adalah <i>launchpad</i> di Robinhood Chain, jaringan Layer 2 milik Robinhood yang aktif sejak 1 Juli 2026. Siapa pun bisa membuat koin baru di sana dengan nama, simbol, dan gambar sendiri, mirip Pump.fun di Solana. Pons dibuat tim independen, bukan oleh Robinhood.</p>
+<ol>
+<li>Setiap transaksi jual beli koin buatan pengguna dikenai biaya perdagangan.</li>
+<li>Menurut penjelasan yang beredar, biaya itu dibagi: sebagian besar ke pembuat koinnya, sisanya ke protokol Pons.</li>
+<li>Sekitar 80% pendapatan protokol dipakai membeli PONS di pasar, lalu token yang dibeli dimusnahkan.</li>
+<li>Makin ramai orang membuat dan memperdagangkan koin, makin besar pembelian PONS, dan makin sedikit PONS yang tersisa.</li>
+</ol>
+<p>Jadi harga PONS terikat langsung ke satu angka: seberapa ramai orang bermain memecoin di Robinhood Chain.</p>
+
+<h3>Empat bahan yang membuatnya naik</h3>
+<ol>
+<li><b>Pendapatan nyata, bukan janji.</b> Biaya $5,95 juta dalam 24 jam pada 2 September, peringkat 4 di DefiLlama, di atas Pump ($4,64 juta).<br><i>Cek sendiri:</i> DefiLlama, menu Fees, cari nama protokolnya, lalu lihat grafik 30 hari.</li>
+<li><b>Pendapatan mengalir ke pemegang token.</b> Sekitar 80% pendapatan dipakai untuk buyback dan burn.<br><i>Cek sendiri:</i> dokumentasi resmi proyek, lalu cocokkan dengan transaksi pembakaran di penjelajah blok.</li>
+<li><b>Suplai menyusut.</b> Sekitar 29% dari 1 miliar token sudah dibakar pada awal September. CoinGecko mencatat 685 juta tersisa pada 22 September.<br><i>Cek sendiri:</i> CoinGecko atau CoinMarketCap, bandingkan total supply dengan max supply.</li>
+<li><b>Jaringan baru, pemain pertama.</b> Pons aktif beberapa hari setelah Robinhood Chain dibuka, dan hampir 25.000 koin dibuat dalam sehari pada 2 September.<br><i>Cek sendiri:</i> berita peluncuran jaringannya dan data aktivitas harian di DefiLlama.</li>
+</ol>
+<p>Kalau salah satu bahan hilang, rumusnya tidak jalan. Pendapatan besar tanpa buyback tidak menyentuh harga token. Buyback tanpa pendapatan cuma membakar kas. Dan tanpa jaringan baru yang sedang ramai, pendapatannya tidak akan pernah sebesar itu.</p>
+
+<h3>Contoh: perjalanan harganya</h3>
+<table>
+<tr><th>Tanggal</th><th>Harga PONS</th><th>Yang terjadi</th></tr>
+<tr><td>17 Jul 2026</td><td>$0,0033</td><td>Titik terendah, beberapa hari setelah mulai diperdagangkan</td></tr>
+<tr><td>Agustus 2026</td><td>sekitar $0,016</td><td>Uniswap membuka launchpad pesaing tanpa biaya dan sempat merebut separuh volume</td></tr>
+<tr><td>3 Sep 2026</td><td>$0,5978</td><td>Setelah biaya harian memuncak; sekitar 180 kali lipat dari titik terendah</td></tr>
+<tr><td>5 Sep 2026</td><td>$0,971 (puncak)</td><td>Hari yang sama dengan unggahan Instagram tadi</td></tr>
+<tr><td>22 Sep 2026</td><td>$0,593</td><td>Sekitar 39% di bawah puncak</td></tr>
+</table>
+<p>Perhatikan baris keempat. Konten "naik ribuan persen" biasanya muncul saat kenaikannya sudah terjadi. Orang yang membeli karena unggahan itu masuk di harga tertinggi.</p>
+
+<h3>Cara memakai pola ini untuk memilih koin</h3>
+<ol>
+<li>Cari protokol yang pendapatannya bisa dilihat di DefiLlama atau Token Terminal, bukan yang cuma berjanji.</li>
+<li>Pastikan ada mekanisme tertulis yang mengalirkan pendapatan itu ke pemegang token: buyback, burn, atau pembagian.</li>
+<li>Cek apakah suplainya benar-benar turun dari waktu ke waktu, bukan sekadar diumumkan.</li>
+<li>Tanyakan dari mana pendapatannya datang dan seberapa mudah pesaing menirunya. Biaya yang bisa dipotong jadi nol oleh pesaing adalah pendapatan yang rapuh.</li>
+<li>Bandingkan kapitalisasi pasar dengan pendapatan rata-rata beberapa bulan, bukan dengan hari tersibuknya. Aturan ini sama dengan pelajaran rasio penilaian sebelumnya.</li>
+</ol>
+
+<div class="batas-berlaku"><b>Batas & risiko.</b> Pendapatan PONS datang dari satu sumber: mania memecoin di satu jaringan. Kalau keramaian itu reda, pembelian kembali ikut mengecil, dan penopang harga yang tadi bekerja ke atas akan bekerja ke bawah. Agustus sudah memberi contohnya: satu pesaing tanpa biaya cukup untuk menjatuhkan harga ke kisaran $0,016. Rincian pembagian biaya di atas berasal dari artikel pihak ketiga, dan tim di balik Pons tidak diungkap. Studi kasus ini untuk memahami polanya, bukan ajakan membeli PONS.</div>
+<div class="sumber">Sumber: <a href="https://www.instagram.com/p/Dc57j3nDyFx/" target="_blank" rel="noopener">unggahan Instagram @cryptolyfe.xyz, 5 Sep 2026</a>; <a href="https://www.coindesk.com/tech/2026/09/03/a-memecoin-making-app-becomes-crypto-s-top-fee-generators-as-robinhood-chain-activity-explodes" target="_blank" rel="noopener">CoinDesk, 3 Sep 2026</a>; <a href="https://finance.yahoo.com/markets/crypto/articles/pons-robinhood-chain-meme-coin-204604745.html" target="_blank" rel="noopener">Yahoo Finance</a>; <a href="https://www.kucoin.com/blog/why-pons-on-robinhood-chain-is-emerging-as-the-most-cost-effective-high-revenue-token" target="_blank" rel="noopener">KuCoin Blog</a>; <a href="https://www.coingecko.com/en/coins/pons" target="_blank" rel="noopener">CoinGecko, data 22 Sep 2026</a>; <a href="https://ponsfamily.com/" target="_blank" rel="noopener">situs Pons</a>.</div>` },
       ],
       kuis: [
         { tanya: 'Urutan yang benar dari yang terbesar ke terkecil biasanya…',
@@ -275,6 +322,12 @@
         { tanya: 'Sebelum memakai rasio penilaian apa pun, hal yang wajib diperiksa lebih dulu adalah…',
           pilihan: ['Apakah pemegang token benar-benar berhak atas pendapatan protokol', 'Berapa harga tertinggi token itu tahun lalu', 'Bursa mana saja yang mencatatkannya', 'Siapa investor awalnya'],
           jelas: 'Tanpa mekanisme yang mengalirkan pendapatan ke pemegang token, rasio penilaian hanya perbandingan angka tanpa klaim ekonomi di belakangnya.' },
+        { tanya: 'Dalam kasus PONS, apa yang membuat pendapatan platform berpengaruh langsung ke harga token?',
+          pilihan: ['Sebagian besar pendapatan dipakai membeli PONS di pasar lalu membakarnya', 'Robinhood menjamin harga PONS', 'Tim membagikan pendapatan sebagai gaji', 'Jumlah PONS bertambah setiap hari'],
+          jelas: 'Sekitar 80% pendapatan protokol dipakai untuk buyback dan burn, sehingga makin ramai platformnya, makin banyak PONS yang dibeli dan dimusnahkan. Pons juga bukan produk resmi Robinhood.' },
+        { tanya: 'Risiko terbesar dari pola buyback seperti PONS adalah…',
+          pilihan: ['Pendapatannya bergantung pada keramaian yang bisa reda atau direbut pesaing', 'Suplainya terus bertambah', 'Tidak bisa dicek di mana pun', 'Harganya pasti naik terus'],
+          jelas: 'Pada Agustus 2026 satu launchpad pesaing tanpa biaya sempat merebut separuh volume, dan PONS jatuh ke kisaran $0,016. Penopang yang bekerja ke atas juga bekerja ke bawah.' },
       ] },
 
     // ─────────────────────────────────────────────────────────────────────
