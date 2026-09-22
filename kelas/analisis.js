@@ -529,5 +529,120 @@
           pilihan: ['Apakah Anda mengikuti rencana sendiri atau tidak', 'Nama bursa yang dipakai', 'Warna candle saat masuk', 'Jumlah indikator yang dipasang'],
           jelas: 'Setelah puluhan transaksi, pola pelanggaran aturan sendiri sering jadi temuan yang lebih penting daripada pertanyaan strategi mana yang benar.' },
       ] },
+    // ─────────────────────────────────────────────────────────────────────
+    // KURSUS 7: ARBITRASE, BOT, DAN HFT
+    // ─────────────────────────────────────────────────────────────────────
+    { kode: 'arbitrase', judul: 'Arbitrase, Bot & HFT',
+      ringkas: 'Cara kerja bot yang "trading 28.000 kali tiap 15 menit", kenapa selisih harga antar bursa itu ada, dan hitungan jujur kenapa dari laptop di rumah hampir semuanya habis dimakan biaya.',
+      pelajaran: [
+        { judul: 'Arbitrase: untung dari selisih harga, bukan dari menebak arah', isi: `
+<h3>Konsepnya</h3>
+<p>Arbitrase adalah membeli sesuatu di tempat yang lebih murah dan menjualnya di tempat yang lebih mahal pada saat yang sama. Tidak ada tebakan harga naik atau turun. Yang dipertaruhkan hanya satu hal: apakah dua transaksi itu selesai sebelum selisihnya hilang.</p>
+<p>Di crypto, aset yang sama diperdagangkan di puluhan bursa sekaligus. Binance, Gate.io, OKX, Bybit, Indodax, semuanya punya buku pesanan sendiri. Harga BTC di tiap bursa ditentukan pembeli dan penjual di bursa itu, jadi wajar kalau sesaat ada selisih beberapa dolar.</p>
+
+<h3>Cara kerjanya</h3>
+<ol>
+<li><b>Baca dua angka di tiap bursa.</b> <i>Bid</i> adalah harga tertinggi yang mau dibayar pembeli. <i>Ask</i> adalah harga terendah yang diminta penjual. Anda membeli di harga ask dan menjual di harga bid.</li>
+<li><b>Bandingkan silang.</b> Peluang ada kalau bid di bursa B lebih tinggi daripada ask di bursa A. Selisihnya, dalam persen, disebut selisih bruto.</li>
+<li><b>Kurangi biaya dua sisi.</b> Beli kena biaya, jual kena biaya. Akun biasa membayar sekitar 0,1% per sisi, jadi 0,2% pulang-pergi. Sisanya disebut selisih neto.</li>
+<li><b>Eksekusi bersamaan.</b> Kalau salah satu sisi terlambat satu detik, harganya sudah bergerak dan "arbitrase" berubah jadi taruhan arah biasa.</li>
+</ol>
+
+<h3>Contoh</h3>
+<table>
+<tr><th></th><th>Binance</th><th>Gate.io</th></tr>
+<tr><td>Bid (pembeli tertinggi)</td><td>$86.266,17</td><td>$86.266,00</td></tr>
+<tr><td>Ask (penjual terendah)</td><td>$86.266,18</td><td>$86.266,10</td></tr>
+</table>
+<p>Beli di Gate.io pada $86.266,10, jual di Binance pada $86.266,17. Selisih bruto $0,07 per BTC, atau 0,00008%. Biaya pulang-pergi 0,2% berarti $172 per BTC. Angka-angka ini nyata, diambil 22 September 2026 pukul 22.13 WIB, dan itu tampilan yang paling sering Anda lihat: bursa besar hampir selalu selaras sampai sen terakhir.</p>
+
+<h3>Kenapa selisihnya tetap ada</h3>
+<p>Karena ada yang menutupnya. Ribuan bot memindahkan uang antar bursa tiap milidetik, dan justru pekerjaan mereka yang membuat harga di semua bursa terlihat sama. Selisih yang cukup besar untuk menutup biaya hanya muncul saat pasar panik, saat satu bursa macet, atau di koin kecil yang likuiditasnya tipis. Di situlah risikonya juga paling besar.</p>
+
+<div class="batas-berlaku"><b>Batas & risiko.</b> Arbitrase antar bursa juga butuh saldo di kedua bursa sekaligus, karena memindahkan koin lewat blockchain butuh menit sampai jam, jauh lebih lama daripada umur selisih harganya. Saldo yang "menganggur" di bursa itu menanggung risiko bursa: peretasan, penarikan dibekukan, atau bursa tutup.</div>
+<div class="sumber">Sumber: data harga Binance (data-api.binance.vision) dan Gate.io (api.gateio.ws), 22 September 2026; <a href="https://www.binance.com/en/fee/schedule" target="_blank" rel="noopener">jadwal biaya Binance</a>; <a href="https://www.gate.io/fee" target="_blank" rel="noopener">jadwal biaya Gate.io</a>.</div>` },
+
+        { judul: 'Bot "28.000 trade tiap 15 menit": cara kerjanya dan siapa yang benar-benar untung', isi: `
+<h3>Konsepnya</h3>
+<p>Pada April 2026 sebuah reel Instagram mengklaim seorang programmer untung $868 ribu dari "bot AI" yang trading Bitcoin 28.000 kali tiap 15 menit. Caption-nya sendiri, kalau dibaca sampai habis, membongkar klaimnya: tidak ada "program AI", yang ada bot arbitrase dan <i>market making</i> buatan sendiri, biasanya Python dengan kerangka seperti Hummingbot, tersambung ke API bursa.</p>
+<p>28.000 transaksi per 15 menit sama dengan <b>31 transaksi per detik</b>. Itu bukan trading, itu <i>high-frequency trading</i> (HFT). Bot seperti ini tidak menebak apa pun. Ia memasang pesanan beli dan jual sekaligus di sekitar harga pasar, mengambil selisih kecil setiap kali keduanya terisi, dan mengulanginya tanpa henti.</p>
+
+<h3>Empat hal yang membuat HFT jalan, dan tidak ada di rumah Anda</h3>
+<table>
+<tr><th>Bahan</th><th>Pemain HFT</th><th>Laptop di rumah</th></tr>
+<tr><td>Biaya</td><td>Akun VIP dengan biaya taker mendekati nol, atau <i>rebate maker</i>: dibayar bursa karena memberi likuiditas</td><td>0,1% per sisi; 31 transaksi per detik menghabiskan modal dalam hitungan jam</td></tr>
+<tr><td>Kecepatan</td><td>Server disewa di pusat data yang sama dengan bursa, latensi di bawah 1 milidetik</td><td>Latensi ratusan milidetik lewat WiFi rumah; selisih sudah hilang sebelum pesanan sampai</td></tr>
+<tr><td>Modal</td><td>Puluhan BTC di tiap bursa supaya selisih $15 per BTC berarti</td><td>Selisih $15 pada 0,01 BTC adalah 15 sen</td></tr>
+<tr><td>Akses</td><td>Sambungan API khusus, batas permintaan tinggi</td><td>API publik dibatasi, dan banyak bursa memblokir wilayah tertentu</td></tr>
+</table>
+<p>Yang paling menentukan adalah baris pertama. Dengan biaya 0,1% per sisi, bot harus menemukan selisih lebih dari 0,2% pada tiap transaksi. Dengan rebate maker, bot justru <b>dibayar</b> untuk transaksi yang tidak untung sama sekali. Dua orang menjalankan kode yang sama persis bisa berakhir dengan satu kaya dan satu bangkrut hanya karena tarif biayanya beda.</p>
+
+<h3>Contoh: apa yang terlihat dari laptop biasa</h3>
+<p>Hanif Dossier menjalankan simulator kecil pada 22 September 2026: membaca harga Binance dan Gate.io tiap detik selama 3 menit untuk BTC, ETH, SOL, XRP, dan DOGE, lalu menghitung selisihnya dengan biaya 0,1% per sisi. Uang bohongan, tanpa kunci API.</p>
+<table>
+<tr><th>Koin</th><th>Selisih bruto rata-rata</th><th>Selisih bruto terbaik</th><th>Untung setelah biaya 0,2%?</th></tr>
+<tr><td>BTC</td><td>0,018%</td><td>0,063%</td><td>Tidak pernah</td></tr>
+<tr><td>ETH</td><td>0,024%</td><td>0,096%</td><td>Tidak pernah</td></tr>
+<tr><td>SOL</td><td>0,019%</td><td>0,120%</td><td>Tidak pernah</td></tr>
+<tr><td>XRP</td><td>0,050%</td><td>0,223%</td><td>3 kali, sisa 0,004% sampai 0,023%</td></tr>
+<tr><td>DOGE</td><td>0,035%</td><td>0,241%</td><td>1 kali, sisa 0,041%</td></tr>
+</table>
+<p>Dari 190 pasangan harga, 153 punya selisih bruto positif. Yang bertahan setelah biaya hanya 4, semuanya di koin yang lebih tipis likuiditasnya, dengan sisa untung total <b>$0,71 dari modal $1.000 per transaksi</b>. Dan itu belum menghitung satu hal: laptop ini butuh 2 sampai 5 detik untuk membaca harga dari kedua bursa. Keempat peluang tadi masing-masing hanya tampil satu sampai tiga detik. Dalam praktik, pesanan Anda tiba setelah selisihnya hilang.</p>
+<p>Bukan berarti arbitrase tidak ada. Artinya, di bursa besar dan koin besar, selisih yang tersisa untuk pemain berbiaya 0,2% adalah nol. Yang mengambilnya adalah pemain berbiaya nol dengan server di sebelah bursa.</p>
+
+<h3>Cara membaca klaim seperti ini</h3>
+<ol>
+<li><b>Cari kata "AI".</b> Bot arbitrase adalah aturan if-then yang cepat, bukan kecerdasan. Kata AI dipasang supaya terdengar bisa dibeli.</li>
+<li><b>Cari bukti yang bisa diperiksa.</b> Riwayat transaksi bursa, alamat dompet, atau akun yang bisa dilacak. Video layar bukan bukti.</li>
+<li><b>Hitung biayanya.</b> Kalikan jumlah transaksi dengan biaya per transaksi. Kalau angkanya lebih besar daripada klaim untungnya, ceritanya tidak mungkin dengan tarif biasa.</li>
+<li><b>Tanya apa yang dijual.</b> Reel yang berakhir dengan "komentar kata X untuk dapat botnya" sedang menjual sesuatu, dan botnya bukan sumber untung pembuatnya.</li>
+</ol>
+
+<div class="batas-berlaku"><b>Batas & risiko.</b> Ada orang yang benar-benar hidup dari HFT crypto, tapi mereka perusahaan dengan modal, insinyur, dan kontrak biaya khusus. Kode yang mereka pakai tidak dijual di komentar Instagram. Bot berbayar yang dijual ke ritel hampir selalu untung bagi penjualnya, bukan pemakainya. Jangan pernah memberi bot mana pun kunci API dengan hak penarikan.</div>
+<div class="sumber">Sumber: <a href="https://www.instagram.com/reel/DXXJIsAAT0i/" target="_blank" rel="noopener">reel @ai.interrupt, 20 April 2026</a> (klaim dan pengakuan di caption); <a href="https://hummingbot.org/strategies/" target="_blank" rel="noopener">dokumentasi strategi Hummingbot</a>; <a href="https://www.binance.com/en/fee/schedule" target="_blank" rel="noopener">tarif VIP dan maker Binance</a>; simulator Hanif Dossier (riset/arbitrase-simulasi), 22 September 2026.</div>` },
+
+        { judul: 'Mencoba tanpa rugi: paper trading dan cara membaca hasilnya', isi: `
+<h3>Konsepnya</h3>
+<p><i>Paper trading</i> adalah menjalankan strategi dengan uang bohongan pada harga sungguhan. Semua yang menentukan hasil ikut dihitung: selisih harga, biaya, latensi. Yang tidak ikut hanya kerugiannya. Ini satu-satunya cara jujur menguji klaim bot tanpa membiayai pelajaran dengan tabungan sendiri.</p>
+
+<h3>Cara kerjanya</h3>
+<ol>
+<li><b>Tentukan aturannya dengan angka.</b> Bursa mana, koin mana, biaya berapa per sisi, modal berapa per transaksi, dan kapan dianggap ada peluang (selisih neto lebih dari nol).</li>
+<li><b>Baca harga sungguhan tiap detik</b> dari API publik bursa. Tidak perlu akun, tidak perlu kunci.</li>
+<li><b>Catat setiap pengecekan</b>, bukan hanya yang untung: selisih bruto, selisih neto, latensi. Angka yang tidak untung justru yang paling banyak mengajarkan.</li>
+<li><b>Jalankan cukup lama.</b> Tiga menit memberi gambaran, tiga hari memberi jawaban. Pasar tenang dan pasar panik menghasilkan angka yang sangat berbeda.</li>
+<li><b>Baca ringkasannya:</b> berapa persen pengecekan yang punya selisih bruto positif, berapa yang bertahan setelah biaya, dan biaya berapa yang dibutuhkan supaya selisih terbaik masih untung. Angka terakhir itulah harga tiket masuk ke permainan ini.</li>
+</ol>
+
+<h3>Dua alat</h3>
+<p><b>Simulator Hanif Dossier.</b> Satu berkas Python, tanpa pustaka tambahan, membaca Binance dan Gate.io. Jalankan <code>python simulasi.py --menit 3 --fee 0.1 --modal 1000</code>, dan hasilnya tersimpan di berkas CSV. Anggota bisa meminta berkasnya lewat Telegram.</p>
+<p><b>Hummingbot.</b> Kerangka sumber terbuka yang dipakai bot sungguhan, punya mode <code>paper_trade</code> dengan saldo bohongan di banyak bursa. Butuh Docker atau Linux. Cocok untuk langkah berikutnya kalau simulator kecil sudah dipahami, karena di sana Anda bisa mencoba strategi <i>market making</i> dan bukan cuma arbitrase.</p>
+
+<h3>Contoh: membaca satu hasil</h3>
+<p>Selama 3 menit, selisih bruto rata-rata BTC antara dua bursa 0,018%, terbaik 0,063%. Biaya pulang-pergi 0,2%. Supaya selisih terbaik itu masih untung, biaya per sisi harus di bawah 0,03%, sekitar tiga kali lebih murah daripada tarif akun biasa, dan itu untuk satu momen terbaik dalam 3 menit, bukan rata-ratanya. Kesimpulan yang bisa ditulis dari satu baris angka itu: strategi ini bukan soal kode, melainkan soal tarif, dan tarif itu tidak dijual ke ritel.</p>
+
+<div class="batas-berlaku"><b>Batas & risiko.</b> Paper trading terlalu optimistis dalam satu hal: ia menganggap pesanan Anda selalu terisi pada harga yang tampil. Di pasar sungguhan, pesanan besar menggeser harga (<i>slippage</i>), dan pesanan Anda antre di belakang pesanan lain. Hasil nyata hampir selalu lebih buruk daripada hasil simulasi, bukan lebih baik.</div>
+<div class="sumber">Sumber: <a href="https://hummingbot.org/global-configs/paper-trade/" target="_blank" rel="noopener">dokumentasi paper trade Hummingbot</a>; <a href="https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints" target="_blank" rel="noopener">dokumentasi API pasar Binance</a>; <a href="https://www.gate.io/docs/developers/apiv4/" target="_blank" rel="noopener">dokumentasi API Gate.io</a>.</div>` },
+      ],
+      kuis: [
+        { tanya: 'Arbitrase antar bursa mengambil untung dari…',
+          pilihan: ['Selisih harga aset yang sama di dua tempat pada saat yang sama', 'Tebakan arah harga jangka pendek', 'Berita yang belum diketahui pasar', 'Bunga pinjaman'],
+          jelas: 'Tidak ada tebakan arah. Yang dipertaruhkan hanya apakah dua transaksi selesai sebelum selisihnya hilang.' },
+        { tanya: 'Dengan biaya taker 0,1% per sisi, selisih bruto minimal supaya arbitrase tidak rugi adalah…',
+          pilihan: ['0,2%, karena beli dan jual sama-sama kena biaya', '0,1%', '1%', 'Tidak ada batas, asal selisihnya positif'],
+          jelas: 'Beli kena biaya, jual kena biaya. Selisih neto adalah selisih bruto dikurangi biaya dua sisi.' },
+        { tanya: '28.000 transaksi tiap 15 menit sama dengan sekitar…',
+          pilihan: ['31 transaksi per detik, ciri high-frequency trading', '3 transaksi per detik', '31 transaksi per menit', '280 transaksi per jam'],
+          jelas: '28.000 dibagi 900 detik. Itu bukan trading manual maupun "AI", melainkan market making otomatis di server dekat bursa.' },
+        { tanya: 'Faktor yang paling menentukan apakah bot HFT untung atau bangkrut adalah…',
+          pilihan: ['Tarif biaya: rebate maker versus taker 0,1%', 'Bahasa pemrograman yang dipakai', 'Jumlah indikator teknikal', 'Warna tema terminalnya'],
+          jelas: 'Kode yang sama bisa untung di akun berbiaya nol dan bangkrut di akun biasa. Selisih di bursa besar tidak cukup menutup 0,2%.' },
+        { tanya: 'Bukti yang layak dipercaya untuk klaim "bot saya untung $868 ribu" adalah…',
+          pilihan: ['Riwayat transaksi bursa atau alamat dompet yang bisa dilacak', 'Video layar dengan angka hijau', 'Jumlah like di reel-nya', 'Testimoni di kolom komentar'],
+          jelas: 'Video layar bisa dibuat siapa saja. Klaim yang tidak menyertakan sesuatu yang bisa diperiksa sebaiknya dianggap iklan.' },
+        { tanya: 'Kelemahan paper trading dibanding transaksi sungguhan adalah…',
+          pilihan: ['Terlalu optimistis: menganggap pesanan selalu terisi di harga yang tampil', 'Tidak memakai harga sungguhan', 'Hasilnya selalu lebih buruk dari kenyataan', 'Butuh kunci API dengan hak penarikan'],
+          jelas: 'Slippage dan antrean pesanan tidak ikut dihitung, jadi hasil nyata hampir selalu lebih buruk daripada simulasi.' },
+      ] },
   ],
 });
