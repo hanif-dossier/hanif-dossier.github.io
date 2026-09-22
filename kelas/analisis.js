@@ -568,14 +568,13 @@
 <p>28.000 transaksi per 15 menit sama dengan <b>31 transaksi per detik</b>. Itu bukan trading, itu <i>high-frequency trading</i> (HFT). Bot seperti ini tidak menebak apa pun. Ia memasang pesanan beli dan jual sekaligus di sekitar harga pasar, mengambil selisih kecil setiap kali keduanya terisi, dan mengulanginya tanpa henti.</p>
 
 <h3>Empat hal yang membuat HFT jalan, dan tidak ada di rumah Anda</h3>
-<table>
-<tr><th>Bahan</th><th>Pemain HFT</th><th>Laptop di rumah</th></tr>
-<tr><td>Biaya</td><td>Akun VIP dengan biaya taker mendekati nol, atau <i>rebate maker</i>: dibayar bursa karena memberi likuiditas</td><td>0,1% per sisi; 31 transaksi per detik menghabiskan modal dalam hitungan jam</td></tr>
-<tr><td>Kecepatan</td><td>Server disewa di pusat data yang sama dengan bursa, latensi di bawah 1 milidetik</td><td>Latensi ratusan milidetik lewat WiFi rumah; selisih sudah hilang sebelum pesanan sampai</td></tr>
-<tr><td>Modal</td><td>Puluhan BTC di tiap bursa supaya selisih $15 per BTC berarti</td><td>Selisih $15 pada 0,01 BTC adalah 15 sen</td></tr>
-<tr><td>Akses</td><td>Sambungan API khusus, batas permintaan tinggi</td><td>API publik dibatasi, dan banyak bursa memblokir wilayah tertentu</td></tr>
-</table>
-<p>Yang paling menentukan adalah baris pertama. Dengan biaya 0,1% per sisi, bot harus menemukan selisih lebih dari 0,2% pada tiap transaksi. Dengan rebate maker, bot justru <b>dibayar</b> untuk transaksi yang tidak untung sama sekali. Dua orang menjalankan kode yang sama persis bisa berakhir dengan satu kaya dan satu bangkrut hanya karena tarif biayanya beda.</p>
+<ol>
+<li><b>Biaya.</b> Pemain HFT memakai akun VIP dengan biaya taker mendekati nol, atau <i>rebate maker</i>: dibayar bursa karena memberi likuiditas. Akun biasa membayar 0,1% per sisi; 31 transaksi per detik menghabiskan modal dalam hitungan jam.</li>
+<li><b>Kecepatan.</b> Server mereka disewa di pusat data yang sama dengan bursa, latensi di bawah 1 milidetik. Dari WiFi rumah latensinya ratusan milidetik sampai beberapa detik; selisih sudah hilang sebelum pesanan sampai.</li>
+<li><b>Modal.</b> Puluhan BTC di tiap bursa supaya selisih $15 per BTC berarti. Selisih $15 pada 0,01 BTC adalah 15 sen.</li>
+<li><b>Akses.</b> Sambungan API khusus dengan batas permintaan tinggi. API publik dibatasi, dan banyak bursa memblokir wilayah tertentu.</li>
+</ol>
+<p>Yang paling menentukan adalah yang pertama. Dengan biaya 0,1% per sisi, bot harus menemukan selisih lebih dari 0,2% pada tiap transaksi. Dengan rebate maker, bot justru <b>dibayar</b> untuk transaksi yang tidak untung sama sekali. Dua orang menjalankan kode yang sama persis bisa berakhir dengan satu kaya dan satu bangkrut hanya karena tarif biayanya beda.</p>
 
 <h3>Contoh: apa yang terlihat dari laptop biasa</h3>
 <p>Hanif Dossier menjalankan simulator kecil pada 22 September 2026: membaca harga Binance dan Gate.io tiap detik selama 3 menit untuk BTC, ETH, SOL, XRP, dan DOGE, lalu menghitung selisihnya dengan biaya 0,1% per sisi. Uang bohongan, tanpa kunci API.</p>
