@@ -2,7 +2,14 @@
 // Dimuat setelah pustaka supabase-js (UMD) dari jsdelivr.
 //
 // Cara pakai di halaman:
-//   const p = await akun.wajibMasuk();      // memaksa masuk + disetujui, kalau tidak dialihkan
+//   const p = await akun.wajibMasuk();      // memaksa masuk; halaman umum: wajibMasuk({ bolehTamu: true }) -> null bila tamu
+//
+// AKSES (sejak 24 Sep 2026 situs terbuka dan gratis, model Token Terminal / DefiLlama):
+//   Tanpa akun : tentang, pasar (leaderboard aplikasi/rantai/sektor, indeks musim altcoin),
+//                bitcoin, metrik, kelas, kuis, riset (daftar isi dossier), privasi.
+//   Akun gratis: dasbor, laporan (briefing, schedule, screening), pustaka & baca (dossier
+//                penuh), tab Koinmu di pasar, nilai kuis, notifikasi, pengaturan.
+//   Tidak ada pembayaran dan tidak ada persetujuan admin: daftar = aktif.
 //   const teks = await akun.unduh('terbaru.md');   // berkas teks dari gudang privat "laporan"
 //   const url = await akun.tautanUnduh('dossier/X.pdf'); // tautan sementara untuk PDF
 //   await akun.pasangMenu();                 // halaman publik: sesuaikan menu dengan sesi
@@ -16,7 +23,7 @@
   const ADMIN = [OWNER, 'abdhanif033@gmail.com'];        // admin: akses sama dengan owner (untuk sekarang)
   // Bot Telegram yang memproses langganan (tanpa @). Kosong = bot belum dipasang,
   // halaman memakai DM Instagram sebagai cadangan.
-  const BOT_TELEGRAM = 'HanifDossierBot';
+  const BOT_TELEGRAM = '';   // bot pembayaran tidak dipakai lagi (situs gratis sejak 24 Sep 2026)
   const IG = 'https://ig.me/m/hanif.dossiercrypto';
 
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -30,8 +37,9 @@
     const { data } = await sb.from('anggota').select('*').eq('id', s.user.id).maybeSingle();
     const admin = ADMIN.includes((s.user.email || '').toLowerCase());
     // Disetujui = status 'disetujui' dan masa langganan belum lewat (kosong = tanpa batas: undangan pemilik).
-    const hariIni = new Date().toISOString().slice(0, 10);
-    const disetujui = admin || !!(data && data.status === 'disetujui' && (!data.langganan_sampai || data.langganan_sampai >= hariIni));
+    // Situs gratis: setiap akun yang sudah masuk dianggap anggota. Kolom status dan
+    // langganan_sampai tidak lagi membatasi apa pun (hanya 'ditolak' yang masih menutup).
+    const disetujui = admin || !(data && data.status === 'ditolak');
     // peran: admin (pemilik), anggota (disetujui), tamu (sudah daftar, belum disetujui)
     const email = (s.user.email || '').toLowerCase();
     return { sesi: s, pengguna: s.user, anggota: data, admin, disetujui, peran: email === OWNER ? 'owner' : admin ? 'admin' : disetujui ? 'anggota' : 'tamu' };
@@ -42,7 +50,7 @@
   async function wajibMasuk({ hanyaAdmin = false, bolehTamu = false } = {}) {
     const p = await profil();
     const tujuan = encodeURIComponent(location.pathname.split('/').pop() + location.search);
-    if (!p) { location.replace(`masuk.html?ke=${tujuan}`); return new Promise(() => {}); }
+    if (!p) { if (bolehTamu) return null; location.replace(`masuk.html?ke=${tujuan}`); return new Promise(() => {}); }
     if (hanyaAdmin && !p.admin) { location.replace('dasbor.html'); return new Promise(() => {}); }
     if (!p.disetujui && !bolehTamu) { location.replace('masuk.html#status'); return new Promise(() => {}); }
     return p;
@@ -85,12 +93,9 @@
   // supaya bot langsung tahu akun mana yang sedang diproses. Cadangan: DM Instagram.
   // paket: 'bulanan' | 'tahunan' | '' — ikut dikirim ke bot supaya bot langsung
   // menyebut harga paket itu. Tanpa akun pun bot tetap membuka chat (kode paket_<paket>).
-  function tautanLangganan(p, paket) {
-    if (!paket) { try { paket = localStorage.getItem('paket-dipilih') || ''; } catch { paket = ''; } }
-    paket = /^(bulanan|tahunan)$/.test(paket || '') ? paket : '';
-    if (!BOT_TELEGRAM) return IG;
-    if (p && p.pengguna) return `https://t.me/${BOT_TELEGRAM}?start=${p.pengguna.id.replace(/-/g, '')}${paket ? '_' + paket : ''}`;
-    return `https://t.me/${BOT_TELEGRAM}?start=paket_${paket || 'bulanan'}`;
+  function tautanLangganan(p) {
+    // Tidak ada langganan berbayar lagi; semua tautan lama mengarah ke pendaftaran gratis.
+    return p && p.pengguna ? 'dasbor.html' : 'masuk.html?daftar';
   }
   function pilihPaket(paket) { try { localStorage.setItem('paket-dipilih', paket); } catch {} }
 

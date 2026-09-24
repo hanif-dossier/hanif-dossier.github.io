@@ -177,7 +177,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     <a href="kelas.html">Kelas</a>
     <a href="metrik.html">Metrics</a>
     <a href="kuis.html">Kuis</a>
-    <a href="masuk.html#status" data-menunggu hidden>Langganan</a>
+    <a href="masuk.html?daftar" data-tamu hidden>Daftar gratis</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="pengaturan.html" data-sesi hidden>Pengaturan</a>
@@ -434,14 +434,17 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     let tt;
     try {
       // Dua berkas: leaderboard.json (DefiLlama, tab besar) dan tokenterminal.json (koin portofolio).
+      // leaderboard.json terbuka untuk umum (bucket "publik"); tokenterminal.json (13 koin
+      // portofolio, tab Koinmu) hanya untuk yang sudah masuk, gratis.
       const [lb, porto] = await Promise.all([
-        akun.unduh('leaderboard.json').then(JSON.parse).catch(() => null),
+        fetch(akun.sb.storage.from('publik').getPublicUrl('leaderboard.json').data.publicUrl, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null)
+          .then(async j => j || akun.unduh('leaderboard.json').then(JSON.parse).catch(() => null)),
         akun.unduh('tokenterminal.json').then(JSON.parse).catch(() => null),
       ]);
       if (!lb && !porto) throw new Error('kosong');
       tt = lb ? { ...(porto || {}), ...lb, portofolio: porto?.portofolio || [], tanggalPortofolio: porto?.tanggalData || null } : porto;
     }
-    catch { $('tt-wadah').innerHTML = '<div class="tt-kunci">Leaderboard Token Terminal terbuka untuk anggota. <a href="masuk.html">Masuk atau berlangganan →</a></div>'; $('tt-tab').hidden = true; return; }
+    catch { $('tt-wadah').innerHTML = '<div class="tt-kunci">Leaderboard belum bisa dimuat. Muat ulang halaman ini beberapa menit lagi.</div>'; $('tt-tab').hidden = true; return; }
     const tglData = new Date(tt.tanggalData + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
     const tglPorto = tt.tanggalPortofolio ? new Date(tt.tanggalPortofolio + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : null;
     $('tt-tanggal').textContent = `30 hari s.d. ${tglData} · DefiLlama & CoinGecko${tglPorto ? ` · Koinmu: Token Terminal per ${tglPorto}` : ''}`;
@@ -497,7 +500,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
       `${tt.aplikasi.length} aplikasi teratas: <b>${uang(totalApp)}</b> fee dalam 30 hari`,
       tumbuh ? `Fee tumbuh tercepat: <b>${esc(tumbuh.name)}</b> ${persen(tumbuh.fees_change * 100, 0)}` : '',
       rantai1 ? `Rantai #1: <b>${esc(rantai1.name)}</b> ${uang(rantai1.fees_30d)}` : '',
-    ].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+    ].filter(Boolean).map(t => `<span>${t}</span>`).join('') + (tt.portofolio?.length ? '' : '<span>Tab <b>Koinmu</b> (13 koin portofolio, laba & pengguna aktif dari Token Terminal) terbuka setelah <a href="masuk.html?daftar">masuk, gratis</a>.</span>');
     if (TABS.length) gambar(0);
   })();
 

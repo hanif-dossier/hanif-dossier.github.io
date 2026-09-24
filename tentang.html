@@ -57,12 +57,12 @@
     <a href="dasbor.html" data-anggota hidden>Beranda</a>
     <a class="aktif" href="tentang.html">Tentang</a>
     <a data-sesi hidden href="masuk.html?ke=riset.html">Riset</a>
-    <a data-sesi hidden href="masuk.html?ke=pasar.html">Pasar</a>
-    <a data-sesi hidden href="masuk.html?ke=bitcoin.html">Bitcoin</a>
+    <a href="pasar.html">Pasar</a>
+    <a href="bitcoin.html">Bitcoin</a>
     <a href="kelas.html">Kelas</a>
     <a href="metrik.html">Metrics</a>
     <a href="kuis.html">Kuis</a>
-    <a href="masuk.html">Langganan</a>
+    <a href="masuk.html?daftar" data-tamu hidden>Daftar gratis</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="pengaturan.html" data-sesi hidden>Pengaturan</a>
@@ -72,7 +72,7 @@
 </header>
 
 <div class="spanduk hijau" data-anggota hidden>Anda sudah masuk sebagai anggota. <a href="dasbor.html">Buka laporan hari ini →</a></div>
-<div class="spanduk" data-menunggu hidden>Akun Anda terdaftar dan sedang menunggu konfirmasi. <a href="masuk.html#status">Lihat cara menyelesaikan langganan →</a></div>
+<div class="spanduk" data-menunggu hidden>Akun Anda sedang diaktifkan otomatis. <a href="masuk.html#status">Lihat status →</a></div>
 
 <section class="sambut">
   <div class="sapa">
@@ -150,7 +150,7 @@
     <div class="kartu" style="background:var(--sage-lembut)">
       <div class="ikon" style="background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
       <h3 class="serif">Dossier Token</h3>
-      <p>Seluruh dossier yang sudah tersusun, PDF berdiagram, 6.000–10.000 kata per token, dibaca langsung di situs begitu Anda berlangganan, plus setiap dossier baru yang terbit.</p>
+      <p>Seluruh dossier yang sudah tersusun, PDF berdiagram, 6.000–10.000 kata per token, dibaca langsung di situs setelah masuk (akunnya gratis), plus setiap dossier baru yang terbit.</p>
       <div class="jam" id="pustaka-jumlah">Belasan dossier</div>
     </div>
     <div class="kartu">
@@ -168,7 +168,7 @@
 <section class="bagian">
   <div class="mata">Riset</div>
   <div class="judul"><h2 class="serif">Dossier terbaru</h2><a href="masuk.html?daftar">Daftar akun untuk melihat daftar isinya →</a></div>
-  <p class="pengantar">Daftar isi dan kutipan pembukanya terbuka untuk siapa saja, jadi kedalamannya bisa Anda nilai sebelum membayar apa pun. Isi penuhnya untuk anggota.</p>
+  <p class="pengantar">Daftar isi dan kutipan pembukanya terbuka untuk siapa saja. Isi penuhnya terbuka setelah daftar akun, gratis.</p>
   <div class="kisi" id="dossier-terbaru"><span class="memuat">Memuat daftar dossier…</span></div>
 </section>
 
@@ -209,7 +209,7 @@
     <div class="kartu"><h3 class="serif">Sumber yang bertentangan dilaporkan</h3><p>Kedua angka disebut, beserta kemungkinan penyebab selisihnya, lalu diarahkan ke sumber primernya.</p></div>
   </div>
   <div class="batas">
-    <h3 class="serif">Batas layanan ini: tolong dibaca sebelum berlangganan</h3>
+    <h3 class="serif">Batas layanan ini: tolong dibaca sebelum memakai</h3>
     <ul>
       <li><strong>Saya bukan Penasihat Investasi berizin OJK.</strong> Yang dijual adalah riset dan edukasi, bukan nasihat investasi personal.</li>
       <li><strong>Tidak ada perintah beli atau jual.</strong> Laporan menyajikan fakta, tafsiran, dan skenario. Keputusan, berikut seluruh risikonya, tetap sepenuhnya di tangan Anda.</li>
@@ -226,10 +226,10 @@
   <div style="margin-top:18px">
     <details><summary>Jadi saya dikasih tahu beli apa, tidak?</summary><p>Tidak. Yang Anda terima adalah bahan untuk memutuskan: apa yang membuat proyek ini hidup, apa yang bisa membunuhnya, angka mana yang bisa diverifikasi dan mana yang tidak berhasil saya temukan. Kalau yang Anda cari adalah seseorang yang menyebut nama dan tanggal, saya bukan orangnya, dan orang yang bersedia melakukan itu tanpa izin OJK sebaiknya Anda hindari.</p></details>
     <details><summary>Katanya pakai AI. Nanti angkanya ngarang, dong?</summary><p>Itu risiko nyata, dan cara saya menanganinya berlapis: setiap angka wajib punya sumber dan tanggal, angka yang tidak ketemu ditulis "tidak tersedia" alih-alih ditebak, lalu ada tahap pemeriksaan terpisah yang membandingkan tulisan jadi dengan bahan mentahnya. Laporan harian disusun mesin dari data publik; dossier ditulis dengan proses riset bertahap dan diperiksa sebelum terbit.</p></details>
-    <details><summary>Bagaimana cara berlangganan dan bisa berhenti kapan saja?</summary><p>Daftar akun di <a href="masuk.html">halaman masuk</a> (harganya ada di sana), lalu tombol di halaman status akun membawa Anda ke bot Telegram kami untuk membayar dan mengirim bukti transfer. Begitu kami setujui, akun aktif saat itu juga dan email konfirmasi terkirim. Langganan berlaku 30 hari (atau setahun); kalau tidak diperpanjang, akses berhenti sendiri tanpa tagihan diam-diam.</p></details>
-    <details><summary>Bisa titip dana untuk dikelola?</summary><p>Tidak, dan ini bukan soal harga atau kesiapan. Mengelola dana orang lain adalah kegiatan yang harus berizin, dan saya tidak punya izin itu. Pembayaran yang saya terima hanya untuk langganan riset dan penyusunan dossier.</p></details>
+    <details><summary>Berapa biayanya?</summary><p>Gratis. Sebagian besar isi (Pasar, Kelas, Kuis, daftar isi dossier) terbuka tanpa akun. Briefing pagi, dossier lengkap, screening, dan tab Koinmu butuh akun, dan akunnya gratis juga: daftar di <a href="masuk.html?daftar">halaman masuk</a>, klik tautan di email, selesai. Akun sosial media saya masih baru; yang saya kejar dulu kepercayaan pembaca, bukan bayaran.</p></details>
+    <details><summary>Bisa titip dana untuk dikelola?</summary><p>Tidak, dan ini bukan soal harga atau kesiapan. Mengelola dana orang lain adalah kegiatan yang harus berizin, dan saya tidak punya izin itu. Situs ini gratis; saya tidak menerima pembayaran apa pun lewat situs ini.</p></details>
     <details><summary>Kenapa bear case selalu ada? Bikin ragu saja.</summary><p>Justru itu gunanya. Anda pasti akan menemukan alasan untuk membeli, itu bagian yang mudah dan tersedia di mana-mana. Yang mahal adalah menemukan alasan untuk tidak membeli sebelum uangnya masuk, bukan sesudahnya.</p></details>
-    <details><summary>Koin yang saya pegang tidak ada di radar. Bisa ditambah?</summary><p>Bisa. Kirim nama koinnya lewat DM; koin yang dipegang beberapa anggota masuk ke daftar pantauan radar. Untuk dossier lengkap satu token yang belum pernah disusun, ada layanan dossier pesanan di halaman langganan.</p></details>
+    <details><summary>Koin yang saya pegang tidak ada di radar. Bisa ditambah?</summary><p>Bisa. Kirim nama koinnya lewat DM; koin yang dipegang beberapa anggota masuk ke daftar pantauan radar. Untuk dossier lengkap satu token yang belum pernah disusun, sebutkan juga lewat DM; yang paling banyak diminta disusun lebih dulu.</p></details>
   </div>
 </section>
 

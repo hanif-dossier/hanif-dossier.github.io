@@ -183,7 +183,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
     </section>
 
     <section class="panel" id="langganan">
-      <h2 class="serif">Langganan</h2>
+      <h2 class="serif">Akses akun</h2>
       <p class="ket">Status akses ke laporan dan dossier.</p>
       <div class="dua">
         <div>
@@ -315,13 +315,12 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
   const hariIni = new Date(); hariIni.setHours(0, 0, 0, 0);
   const sampai = a.langganan_sampai ? new Date(a.langganan_sampai + 'T00:00:00') : null;
   const sisaHari = sampai ? Math.ceil((sampai - hariIni) / 86400000) : null;
-  const paket = a.paket ? (a.paket === 'tahunan' ? 'Tahunan' : 'Bulanan') : (p.admin ? 'Akses pemilik' : '–');
+  const paket = p.admin ? 'Akses pemilik' : 'Gratis';
   let status, kelas;
   if (p.admin) { status = 'Aktif · tanpa batas'; kelas = 'aktif'; }
-  else if (a.status === 'disetujui' && (!sampai || sisaHari >= 0)) { status = 'Aktif'; kelas = 'aktif'; }
-  else if (a.status === 'disetujui') { status = 'Habis'; kelas = 'habis'; }
+  else if (a.status !== 'ditolak') { status = 'Aktif · gratis'; kelas = 'aktif'; }
   else if (a.status === 'ditolak') { status = 'Ditolak'; kelas = 'habis'; }
-  else { status = 'Menunggu konfirmasi'; kelas = 'menunggu'; }
+  else { status = 'Ditolak'; kelas = 'habis'; }
   $('lg-status').innerHTML = `<span class="status-pil ${kelas}">${status}</span>`;
   $('lg-paket').textContent = paket;
   $('lg-sampai').textContent = p.admin || (!sampai && a.status === 'disetujui') ? 'Tanpa batas' : tgl(a.langganan_sampai);
@@ -334,7 +333,7 @@ input:focus{outline:2px solid var(--sage);border-color:var(--sage)}
     $('lg-meter').firstElementChild.style.width = Math.max(2, Math.min(100, sisaHari / total * 100)) + '%';
   }
   const aksi = $('lg-aksi');
-  if (!p.admin && (kelas !== 'aktif' || (sisaHari != null && sisaHari <= 7))) {
+  if (false) {
     aksi.innerHTML = `<a class="tombol utama" href="${akun.tautanLangganan ? akun.tautanLangganan(a.paket || 'bulanan') : 'masuk.html'}" target="_blank" rel="noopener">${kelas === 'aktif' ? 'Perpanjang lewat Telegram' : kelas === 'menunggu' ? 'Lanjutkan pembayaran di Telegram' : 'Berlangganan lagi'}</a>`;
   }
   try {
