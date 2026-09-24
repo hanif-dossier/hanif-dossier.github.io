@@ -30,7 +30,7 @@ jobs:
         run: |
           git config user.name "data-pasar bot"
           git config user.email "bot@hanif-dossier.github.io"
-          git add data/pasar.json data/sektor-riwayat.json data/koin.json
+          git add data/pasar.json data/sektor-riwayat.json data/koin.json data/musim-altcoin.json
           git diff --cached --quiet && echo "tidak ada perubahan" && exit 0
           git commit -m "data pasar $(TZ=Asia/Jakarta date +'%Y-%m-%d %H:%M') WIB"
           git pull --rebase origin main
