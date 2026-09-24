@@ -129,6 +129,67 @@ const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'Coi
   console.log('  pasar: kap total', Math.round((hasil.pasar.kapTotal || 0) / 1e9), 'M | premium', hasil.pasar.coinbasePremium?.persen?.toFixed(3));
 }
 
+// ---- 1b. Indeks musim altcoin (metode Blockchain Center, dihitung sendiri)
+// Berapa persen dari 50 altcoin terbesar (tanpa stablecoin dan aset terbungkus) yang
+// mengalahkan Bitcoin dalam 90 hari. >= 75 disebut musim altcoin, <= 25 musim Bitcoin.
+// Ditambahkan 24 Sep 2026 setelah unggahan @crypto.radius memakai sinyal Glassnode
+// (berbayar) untuk mengumumkan "altcoin season"; ini versi gratis yang bisa dicek siapa saja.
+// CoinGecko tidak punya kolom 90 hari di /coins/markets, jadi tiap koin ditarik candle
+// hariannya dari Binance Vision (CoinGecko hanya cadangan untuk yang tidak ada di Binance).
+{
+  const STABIL = /usd|dai|eur|frax|gho|\bust|susd|pyusd|fdusd|rlusd|buidl|usyc|ustb|xaut|paxg|usds|tusd/i;
+  const BUNGKUS_N = /wrapped|bridged|binance-peg|\bpeg\b|staked|restaked|liquid staking|\bbridge\b/i;
+  const BUNGKUS_S = /^(w|cb|l|st|wst|we|r|rs|m|j|b|ez|pz|k|s|os|sol|u|t|f|x)(btc|eth|sol|bnb|hype|avax|sui)$/i;
+  const RIWAYAT_MUSIM = join(AKAR, 'data', 'musim-altcoin.json');
+  const pasar100 = (await cg('/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&price_change_percentage=30d')) || [];
+  const btc = pasar100.find(c => c.id === 'bitcoin');
+  const alt = pasar100.filter(c => c.id !== 'bitcoin' && !STABIL.test(c.symbol) && !STABIL.test(c.name) && !BUNGKUS_N.test(c.name) && !BUNGKUS_S.test(c.symbol)).slice(0, 50);
+  // Harga 90 hari: Binance Vision dulu (cepat, tanpa batas laju yang ketat; pasangan
+  // <SIMBOL>USDT, candle harian), CoinGecko hanya untuk koin yang tidak ada di Binance
+  // atau baru tercatat (< 60 candle). Tanpa kunci CoinGecko, 51 panggilan market_chart
+  // berturut-turut selalu kena 429 (uji lokal 24 Sep 2026).
+  const dariBinance = async simbol => {
+    const k = await ambil(`https://data-api.binance.vision/api/v3/klines?symbol=${simbol.toUpperCase()}USDT&interval=1d&limit=91`, { coba: 1 });
+    if (!Array.isArray(k) || k.length < 60) return null;
+    return (Number(k.at(-1)[4]) / Number(k[0][1]) - 1) * 100;
+  };
+  let jatuhCg = 0;
+  const ubah90 = async (id, simbol) => {
+    const b = await dariBinance(simbol); if (b != null) return b;
+    jatuhCg++; await tidur(2600);
+    const d = await cg(`/coins/${id}/market_chart?vs_currency=usd&days=91&interval=daily`);
+    const h = d?.prices; if (!h || h.length < 60) return null;
+    const awal = h.find(x => Date.now() - x[0] <= 90.5 * 864e5) || h[0];
+    return (h.at(-1)[1] / awal[1] - 1) * 100;
+  };
+  if (btc && alt.length >= 30) {
+    const btc90 = await ubah90('bitcoin', 'BTC');
+    const baris = [];
+    for (const c of alt) { await tidur(150); const r = await ubah90(c.id, c.symbol); if (r != null) baris.push({ simbol: c.symbol.toUpperCase(), nama: c.name, id: c.id, r90: r, r30: c.price_change_percentage_30d_in_currency ?? null }); }
+    console.log(`  musim altcoin: ${baris.length} koin terhitung, ${jatuhCg} lewat CoinGecko`);
+    if (btc90 != null && baris.length >= 30) {
+      const menang = baris.filter(b => b.r90 > btc90);
+      const indeks90 = Math.round(menang.length / baris.length * 100);
+      const ada30 = baris.filter(b => b.r30 != null), btc30 = btc.price_change_percentage_30d_in_currency ?? null;
+      const indeks30 = btc30 != null && ada30.length >= 30 ? Math.round(ada30.filter(b => b.r30 > btc30).length / ada30.length * 100) : null;
+      const label = indeks90 >= 75 ? 'Musim altcoin' : indeks90 <= 25 ? 'Musim Bitcoin' : 'Netral';
+      const hariIni = new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+      const lama = existsSync(RIWAYAT_MUSIM) ? JSON.parse(await readFile(RIWAYAT_MUSIM, 'utf8')) : {};
+      const riwayat = Object.fromEntries(Object.keys({ ...lama, [hariIni]: indeks90 }).sort().slice(-400).map(t => [t, t === hariIni ? indeks90 : lama[t]]));
+      await writeFile(RIWAYAT_MUSIM, JSON.stringify(riwayat), 'utf8');
+      const urut = [...baris].sort((a, b) => b.r90 - a.r90);
+      hasil.musimAltcoin = {
+        indeks90, indeks30, label, menang: menang.length, dari: baris.length, btc90, btc30, ambang: { altcoin: 75, bitcoin: 25 },
+        teratas: urut.slice(0, 5).map(b => ({ simbol: b.simbol, r90: b.r90 })), terbawah: urut.slice(-5).reverse().map(b => ({ simbol: b.simbol, r90: b.r90 })),
+        koinmu: baris.filter(b => KOIN.some(k => k.gecko === b.id)).map(b => ({ simbol: b.simbol, r90: b.r90, kalahkanBtc: b.r90 > btc90 })),
+        riwayat: Object.entries(riwayat).slice(-90).map(([t, v]) => ({ t, v })),
+        metode: '50 altcoin terbesar menurut kapitalisasi (tanpa stablecoin dan aset terbungkus) dibanding Bitcoin, kinerja 90 hari; sama dengan metode Altcoin Season Index Blockchain Center. Dihitung sendiri dari harga harian CoinGecko.',
+      };
+      console.log(`  musim altcoin: ${indeks90}/100 (${label}), ${menang.length} dari ${baris.length} alt mengalahkan BTC (${btc90.toFixed(1)}%) dalam 90 hari`);
+    } else console.log('  musim altcoin: data kurang, dilewati');
+  } else console.log('  musim altcoin: daftar pasar kosong, dilewati');
+}
+
 // ---- 2. Protokol (dipakai RWA, ekosistem aplikasi, dan peringkat)
 const protokol = (await llama('/protocols')) || [];
 const perSlug = Object.fromEntries(protokol.map(p => [p.slug, p]));

@@ -177,6 +177,54 @@
 <p>Menjelang penurunan tajam, pola yang berulang biasanya begini: harga naik pelan selama beberapa hari, open interest di pasar berjangka naik tajam, dan funding rate positif tinggi. Artinya makin banyak orang masuk dengan pinjaman di arah yang sama. Ketika harga turun sedikit saja, posisi-posisi itu dilikuidasi, dan likuidasi itu sendiri menjadi penjualan paksa yang menurunkan harga lagi. Tidak perlu ada bandar. Strukturnya sendiri yang rapuh.</p>
 
 <div class="batas-berlaku"><b>Batas & risiko.</b> Data on-chain menunjukkan perpindahan, bukan alasan. Koin yang keluar dari bursa bisa berarti disimpan jangka panjang, bisa juga dipindahkan ke kustodian lain atau dipakai sebagai jaminan pinjaman. Label dompet di berbagai layanan analitik adalah dugaan, bukan kepastian, dan sering keliru. Jangan membangun keputusan besar hanya dari satu label dompet.</div>` },
+        { judul: 'Musim altcoin: membaca sinyalnya tanpa ikut terseret', isi: `
+<h3>Konsepnya</h3>
+<p>"Musim altcoin" adalah periode ketika sebagian besar altcoin naik lebih kencang daripada Bitcoin. Kebalikannya "musim Bitcoin": uang berkumpul di BTC, altcoin tertinggal. Yang sering dilupakan: ini <b>pengukur ke belakang</b>. Ia menghitung apa yang sudah terjadi 30 atau 90 hari terakhir, bukan meramal 90 hari ke depan.</p>
+<p>Ada dua pengukur yang paling sering dikutip, dan pada hari yang sama keduanya bisa memberi jawaban berbeda. Itu pelajaran pertama.</p>
+
+<h3>Dua alat ukur</h3>
+<table>
+<tr><th></th><th>Glassnode Altcoin Cycle Signal</th><th>Altcoin Season Index (Blockchain Center)</th></tr>
+<tr><td>Yang dibandingkan</td><td>Bitcoin vs keranjang 250 koin terbesar, ditimbang kapitalisasi, tanpa stablecoin</td><td>Bitcoin vs 50 koin terbesar, tanpa stablecoin dan aset terbungkus (WBTC, stETH)</td></tr>
+<tr><td>Periode</td><td>Momentum pendek, rata-rata 7 hari</td><td>Kinerja 90 hari</td></tr>
+<tr><td>Skala</td><td>0 sampai 100; 75 ke atas = musim altcoin</td><td>Persen koin yang mengalahkan BTC; 75 ke atas musim altcoin, 25 ke bawah musim Bitcoin</td></tr>
+<tr><td>Akses</td><td>Berbayar (Glassnode Studio); publik membacanya lewat berita</td><td>Gratis di situsnya; Hanif Dossier menghitung versi sendiri tiap pagi di halaman Pasar</td></tr>
+<tr><td>22 September 2026</td><td>81,25, masuk zona musim altcoin, pertama sejak Januari 2026</td><td>49, "bukan musim altcoin"; 24 September 51</td></tr>
+</table>
+<p>Dua alat, satu hari, dua kesimpulan. Bukan salah satunya bohong. Glassnode mengukur momentum pendek, jadi ia cepat berbalik; Blockchain Center mengukur 90 hari, jadi ia butuh waktu lama untuk yakin. Kalau Anda mengutip "altcoin season" tanpa menyebut alat dan periodenya, Anda belum mengatakan apa-apa.</p>
+
+<h3>Konteks di sekitar angka</h3>
+<p>Pada 22 September 2026 dominasi Bitcoin turun ke 59,7 persen setelah gagal bertahan di 60 persen awal bulan, dan kapitalisasi altcoin naik ke sekitar $1,17 triliun, 33 persen lebih tinggi dari 19 Agustus. Bedanya dengan reli Agustus: waktu itu Bitcoin naik dari $64.000 ke $77.000 sampai $80.000 sendirian, altcoin tidak ikut. Kali ini Bitcoin di $86.000 dan altcoin ikut bergerak. Itulah yang dibaca Glassnode sebagai "lebar pasar" (breadth) yang menyala.</p>
+
+<h3>Cara menghitung sendiri, gratis</h3>
+<ol>
+<li>Ambil 100 koin terbesar dari CoinGecko. Buang stablecoin (USDT, USDC, DAI, dan sebangsanya) dan aset terbungkus atau turunan (WBTC, stETH, wETH). Sisakan 50 teratas.</li>
+<li>Ambil harga 90 hari lalu dan harga hari ini untuk tiap koin dan untuk Bitcoin. Hitung perubahannya.</li>
+<li>Hitung berapa koin yang kenaikannya lebih besar dari kenaikan Bitcoin. Bagi 50, kali 100. Itulah indeksnya.</li>
+<li>Catat tiap hari. Satu angka tidak berarti; arah angkanya selama beberapa minggu yang berarti.</li>
+</ol>
+<p>Halaman Pasar situs ini melakukan persis langkah itu tiap pagi (ubin "Musim altcoin"), lengkap dengan koin mana yang mengalahkan Bitcoin dan mana yang tidak. Anda tidak perlu langganan apa pun untuk memeriksanya.</p>
+
+<h3>Studi kasus: unggahan "inilah waktunya"</h3>
+<p>Dua hari setelah sinyal Glassnode berbalik, sebuah akun Instagram crypto berbahasa Indonesia dengan pengikut besar mengunggah grafiknya dengan judul "Buat yang mau kaya dari crypto, inilah waktunya! Data on-chain menunjukkan sekarang sudah masuk altcoin season." Seribu lebih orang menyukainya. Baca kolom komentarnya, itu bagian paling berharga:</p>
+<ul>
+<li>"Waktunya TP" (ambil untung) muncul berulang kali. Sebagian pembaca justru membaca sinyal ini sebagai tanda keluar, bukan masuk.</li>
+<li>"Telat. Alt season itu dari awal bulan." Pengukur ke belakang memang selalu terlambat; ketika sampai ke feed semua orang, sebagian kenaikannya sudah lewat.</li>
+<li>"Bukannya harganya lagi tinggi ya?" Pertanyaan yang benar. Sinyal mengatakan altcoin <i>sudah</i> naik lebih kencang dari Bitcoin, bukan bahwa ia <i>akan</i> naik lagi.</li>
+</ul>
+<p>Yang tidak disebut unggahan itu: alat lain di hari yang sama menunjukkan 49 dari 100, jauh dari ambang 75. Judulnya menjual kepastian yang datanya sendiri tidak punya.</p>
+
+<h3>Aturan bacanya</h3>
+<ol>
+<li><b>Sebut alatnya dan periodenya.</b> "Glassnode 7 hari di 81" dan "Blockchain Center 90 hari di 51" adalah dua kalimat yang jujur. "Sudah altcoin season" bukan.</li>
+<li><b>Lihat arah dominasi Bitcoin,</b> bukan angkanya saja. Dominasi yang turun berminggu-minggu lebih meyakinkan daripada satu hari di bawah 60 persen.</li>
+<li><b>Lihat lebarnya.</b> Berapa dari 50 koin yang benar-benar mengalahkan Bitcoin? Kalau hanya lima koin meme yang menyeret rata-rata, itu bukan musim, itu lima koin.</li>
+<li><b>Sinyal pasar bukan alasan membeli koin tertentu.</b> Ia hanya mengatur seberapa berani Anda. Koin mana yang dibeli tetap urusan dossier: pendapatan, unlock, siapa yang memegang.</li>
+<li><b>Rencana keluar dulu.</b> Musim altcoin dalam sejarah berlangsung mingguan sampai beberapa bulan, dan berakhirnya lebih cepat daripada mulainya. Kalau Anda masuk karena sinyal, tulis di angka berapa Anda keluar sebelum membeli.</li>
+</ol>
+
+<div class="batas-berlaku"><b>Batas &amp; risiko.</b> Kedua indeks dihitung dari harga, dan harga bisa dipompa sebentar. Keranjang 50 atau 250 koin didominasi koin besar, jadi altcoin kecil yang Anda pegang bisa bergerak sama sekali berbeda dari indeksnya. Angka di pelajaran ini adalah potret 22 sampai 24 September 2026; periksa angka hari ini di halaman Pasar sebelum menyimpulkan apa pun.</div>
+<div class="sumber">Sumber: Glassnode, Altcoin Cycle Signal (dikutip KuCoin Blog dan Coinpedia, 22 September 2026); Blockchain Center, Altcoin Season Index (metodologi dan nilai 22 dan 24 September 2026); unggahan @crypto.radius di Instagram, 22 September 2026, beserta kolom komentarnya; CoinGecko untuk perhitungan mandiri Hanif Dossier Crypto.</div>` },
       ],
       kuis: [
         { tanya: 'Fase akumulasi biasanya ditandai oleh…',
@@ -197,6 +245,12 @@
         { tanya: 'Label "dompet milik institusi X" di layanan analitik sebaiknya diperlakukan sebagai…',
           pilihan: ['Dugaan yang bisa keliru, bukan kepastian', 'Fakta yang diverifikasi blockchain', 'Data resmi dari institusi tersebut', 'Informasi yang selalu diperbarui secara otomatis'],
           jelas: 'Blockchain mencatat alamat, bukan nama. Pemberian label adalah hasil penelusuran pihak ketiga dan sering salah.' },
+        { tanya: 'Pada 22 September 2026 sinyal Glassnode menunjukkan 81 (zona musim altcoin) sementara Altcoin Season Index Blockchain Center menunjukkan 49. Penjelasan yang paling tepat adalah…',
+          pilihan: ['Keduanya mengukur hal berbeda: Glassnode momentum pendek 250 koin, Blockchain Center kinerja 90 hari 50 koin, jadi wajar tidak sejalan', 'Salah satu datanya pasti palsu', 'Blockchain Center belum memperbarui datanya sejak Januari', 'Glassnode menghitung stablecoin sebagai altcoin'],
+          jelas: 'Alat yang mengukur momentum pendek berbalik cepat; alat yang mengukur 90 hari butuh waktu lama untuk yakin. Sebut alat dan periodenya setiap kali mengutip "musim altcoin".' },
+        { tanya: 'Sebuah akun besar mengunggah grafik sinyal musim altcoin dengan judul "inilah waktunya kaya dari crypto". Sikap yang paling masuk akal…',
+          pilihan: ['Memperlakukannya sebagai pengukur ke belakang: cek alat, periode, lebar pasar, lalu kembali ke dossier koin sebelum memutuskan apa pun', 'Membeli altcoin yang paling banyak disebut di komentar', 'Menganggap sinyal itu ramalan 90 hari ke depan', 'Mengabaikan semua data on-chain karena pernah salah'],
+          jelas: 'Indeks musim altcoin menghitung yang sudah terjadi. Ia mengatur seberapa berani Anda, bukan koin mana yang dibeli.' },
       ] },
 
     // ─────────────────────────────────────────────────────────────────────

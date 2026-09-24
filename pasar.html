@@ -251,7 +251,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 </section>
 
 <div class="kaki">
-  <div class="penafian" id="sumber">Sumber: DefiLlama dan CoinGecko (leaderboard aplikasi, rantai, dan sektor, harian), Token Terminal (koin portofolio di tab Koinmu), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
+  <div class="penafian" id="sumber">Sumber: DefiLlama dan CoinGecko (leaderboard aplikasi, rantai, dan sektor, harian), Token Terminal (koin portofolio di tab Koinmu), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor, harga harian untuk indeks musim altcoin), alternative.me (Fear &amp; Greed). Indeks musim altcoin dihitung sendiri: berapa dari 50 altcoin terbesar (tanpa stablecoin dan aset terbungkus) yang mengalahkan Bitcoin dalam 90 hari, mengikuti metode Altcoin Season Index Blockchain Center; 75 ke atas musim altcoin, 25 ke bawah musim Bitcoin. Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
 </div>
 
 <div class="pn" id="pn" hidden>
@@ -295,6 +295,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     ['Kapitalisasi total', uang(p.kapTotal), `<span class="${kelas(p.ubah24)}">${persen(p.ubah24, 2)}</span> dalam 24 jam`],
     ['Volume 24 jam', uang(p.volume24), 'seluruh pasar'],
     ['Dominasi Bitcoin', persen(p.domBtc, 1).replace(/^[+−]/, ''), `Ethereum ${persen(p.domEth, 1).replace(/^[+−]/, '')}`],
+    ['Musim altcoin', d.musimAltcoin ? `${d.musimAltcoin.indeks90}<span style="font-size:.55em;color:var(--redup)">/100</span>` : 'n/a', d.musimAltcoin ? `${d.musimAltcoin.label} · ${d.musimAltcoin.menang} dari ${d.musimAltcoin.dari} alt mengalahkan BTC dalam 90 hari` : 'dihitung tiap pagi'],
     ['Fear & Greed', p.fng ? p.fng.nilai : 'n/a', p.fng ? p.fng.label : ''],
     ['Stablecoin beredar', uang(d.stable?.total), `${d.stable?.perRantai?.[0]?.nama || ''} terbesar`],
     ['Aset dunia nyata', uang(d.rwa?.total), `${d.rwa?.jumlahProtokol || 0} protokol`],
