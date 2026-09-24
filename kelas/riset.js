@@ -170,7 +170,19 @@
 <p>Sebuah token baru terlihat menjanjikan: produknya jalan, penggunanya bertambah. Pemeriksaan daftar pemegang menunjukkan satu dompet non-bursa memegang 22 persen pasokan beredar, dan dompet itu menerima token langsung dari kontrak penerbitan pada hari pertama. Angka itu tidak membuktikan niat buruk, tetapi mengubah ukuran risiko: harga aset ini bergantung pada keputusan satu pihak yang bisa menjual kapan saja.</p>
 <p>Tindakan yang masuk akal bukan otomatis membatalkan, melainkan memperkecil porsi dan memantau pergerakan dompet itu. Kalau ia mulai memindahkan token ke bursa, Anda punya peringatan lebih awal daripada orang yang tidak pernah memeriksa.</p>
 
-<div class="batas-berlaku"><b>Batas & risiko.</b> Satu dompet besar bisa milik kustodian yang menyimpan aset banyak orang, dan satu pihak bisa memecah kepemilikannya ke banyak dompet sehingga terlihat tersebar. Jadi angka konsentrasi adalah batas bawah kecurigaan, bukan kesimpulan. Label dompet dari layanan analitik juga dugaan, bukan kepastian.</div>` },
+<h3>Cara melacak dompet sendiri, gratis</h3>
+<p>Semua yang dibahas di atas bisa Anda periksa sendiri lewat <b>penjelajah blockchain</b>. Penjelajah adalah situs yang membaca isi blockchain dan menampilkannya seperti mutasi rekening: saldo tiap alamat, riwayat transaksinya, dan isi tiap blok. Tidak perlu akun, tidak perlu dompet tersambung.</p>
+<ol>
+<li><b>Pilih penjelajahnya.</b> <a href="https://www.blockchain.com/explorer" target="_blank" rel="noopener">Blockchain.com Explorer</a> untuk Bitcoin, Ethereum, Solana, dan beberapa rantai lain dalam satu tempat; Etherscan untuk Ethereum dan token ERC-20 (Arbiscan, Basescan, dan sejenisnya untuk rantai EVM lain); Solscan untuk Solana; penjelajah resmi rantainya untuk yang lain (MonadVision untuk Monad, InjScan untuk Injective).</li>
+<li><b>Cari alamat, bukan nama.</b> Tempel alamat dompet atau alamat kontrak token ke kolom pencarian. Untuk token, buka tab <b>Holders</b>: daftar pemegang terbesar beserta persentasenya.</li>
+<li><b>Pisahkan dompet bursa dan kontrak.</b> Penjelajah biasanya memberi label untuk dompet bursa besar dan kontrak staking. Sisanya, dompet tanpa label yang memegang porsi besar, itulah yang perlu diawasi.</li>
+<li><b>Baca arah alirannya.</b> Klik dompet besar itu dan lihat transaksi terakhirnya. Token yang bergerak <b>ke</b> alamat bursa adalah persiapan menjual; yang <b>keluar</b> dari bursa ke dompet pribadi cenderung untuk disimpan.</li>
+<li><b>Cocokkan dengan jadwal unlock.</b> Kalau dompet tim atau investor menerima token dari kontrak vesting lalu segera mengirimnya ke bursa, Anda melihat pola cair-jual yang dibahas di pelajaran sebelumnya.</li>
+</ol>
+<p>Blockchain.com juga menampilkan ringkasan aktivitas jaringan Bitcoin 24 jam: alamat aktif, total biaya, jumlah transaksi, dan volume. Angka itu berguna sebagai pembanding cepat saat berita mengklaim "jaringan sedang ramai".</p>
+<p>Untuk anggota, langkah 2 sampai 4 sudah dirangkum otomatis oleh alat dompet Hanif Dossier saat screening: lima alamat teratas, porsi suplainya, arah alirannya, dan tautan langsung ke penjelajah untuk memeriksa sendiri.</p>
+<div class="batas-berlaku"><b>Batas & risiko.</b> Satu dompet besar bisa milik kustodian yang menyimpan aset banyak orang, dan satu pihak bisa memecah kepemilikannya ke banyak dompet sehingga terlihat tersebar. Jadi angka konsentrasi adalah batas bawah kecurigaan, bukan kesimpulan. Label dompet dari layanan analitik juga dugaan, bukan kepastian.</div>
+<div class="sumber">Sumber: <a href="https://www.blockchain.com/explorer" target="_blank" rel="noopener">Blockchain.com Explorer</a>; <a href="https://info.etherscan.com/" target="_blank" rel="noopener">Panduan Etherscan</a>; <a href="https://docs.solscan.io/" target="_blank" rel="noopener">Dokumentasi Solscan</a>.</div>` },
       ],
       kuis: [
         { tanya: 'Yang dibandingkan antar aset crypto adalah…',
