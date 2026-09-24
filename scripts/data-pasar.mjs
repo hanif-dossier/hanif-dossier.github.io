@@ -137,7 +137,7 @@ const hasil = { diperbarui: new Date().toISOString(), sumber: ['DefiLlama', 'Coi
 // CoinGecko tidak punya kolom 90 hari di /coins/markets, jadi tiap koin ditarik candle
 // hariannya dari Binance Vision (CoinGecko hanya cadangan untuk yang tidak ada di Binance).
 {
-  const STABIL = /usd|dai|eur|frax|gho|\bust|susd|pyusd|fdusd|rlusd|buidl|usyc|ustb|xaut|paxg|usds|tusd/i;
+  const STABIL = /usd|dai|eur|frax|gho|\bust|susd|pyusd|fdusd|rlusd|buidl|usyc|ustb|xaut|paxg|usds|tusd|heloc|treasur|tbill|figr/i;
   const BUNGKUS_N = /wrapped|bridged|binance-peg|\bpeg\b|staked|restaked|liquid staking|\bbridge\b/i;
   const BUNGKUS_S = /^(w|cb|l|st|wst|we|r|rs|m|j|b|ez|pz|k|s|os|sol|u|t|f|x)(btc|eth|sol|bnb|hype|avax|sui)$/i;
   const RIWAYAT_MUSIM = join(AKAR, 'data', 'musim-altcoin.json');
