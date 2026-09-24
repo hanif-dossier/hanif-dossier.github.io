@@ -1,4 +1,11 @@
-// Bot Telegram langganan Hanif Dossier Crypto — Supabase Edge Function.
+// Bot Telegram Hanif Dossier Crypto — Supabase Edge Function.
+//
+// SEJAK 24 SEPTEMBER 2026 SITUS GRATIS: tidak ada paket, pembayaran, atau persetujuan.
+// Bot ini tidak lagi ditautkan dari situs. Pesan di bawah diganti supaya siapa pun yang
+// masih membukanya diberi tahu bahwa semuanya gratis dan diarahkan ke situs. Bukti transfer
+// yang dikirim ditolak dengan sopan. Perubahan ini baru berlaku setelah di-deploy ulang
+// (supabase functions deploy telegram-langganan). Alur lama di bawah disimpan sebagai arsip.
+//
 //
 // Alur: di situs orang menekan tombol paket ("Pilih & lanjut ke Telegram") ->
 // bot menerima /start <kode> dengan kode:
@@ -56,7 +63,14 @@ const samarkan = (email: string) => email.replace(/^(.{2}).*(@.*)$/, '$1••�
 const teksPaket = (paket?: string | null) => paket && HARGA[paket]
   ? `<b>${HARGA[paket].nama}</b> — ${HARGA[paket].teks}`
   : `<b>Pilihan paket:</b>\n• Bulanan — ${HARGA.bulanan.teks}\n• Tahunan — ${HARGA.tahunan.teks}`;
-const teksBayar = (paket?: string | null) => `${teksPaket(paket)}\n\n<b>Cara bayar:</b>\n${CARA_BAYAR}${paket && HARGA[paket] ? `\nNominal: <b>${HARGA[paket].nominal}</b>` : ''}\n\nSetelah transfer, <b>kirim foto bukti transfernya di sini</b>. Kami periksa maksimal 24 jam; begitu disetujui, akun Anda aktif dan email konfirmasi terkirim.`;
+const teksBayar = (_paket?: string | null) => `<b>Hanif Dossier Crypto sekarang gratis.</b>
+
+Tidak ada paket, tidak ada pembayaran, dan tidak ada yang perlu dikonfirmasi. Sebagian besar isi terbuka tanpa akun; briefing pagi, dossier penuh, dan screening cukup dengan akun gratis yang langsung aktif saat mendaftar.
+
+Mulai di sini: ${SITUS}/masuk.html?daftar
+Data pasar tanpa akun: ${SITUS}/pasar.html
+
+Kalau ada pihak yang meminta transfer atas nama Hanif Dossier, itu penipuan.`;
 
 // Email "Akun Anda sudah dikonfirmasi" (templat Magic Link Supabase).
 async function emailKonfirmasi(email: string) {
@@ -105,6 +119,7 @@ async function tanganiPesan(m: any) {
   // Bukti transfer: foto atau dokumen
   const foto = m.photo?.at(-1)?.file_id || m.document?.file_id;
   if (foto) {
+    return kirim(chat, `Terima kasih, tapi tidak perlu membayar apa pun: Hanif Dossier sekarang gratis. Kalau ini bukti transfer, mohon hubungi bank Anda untuk menariknya kembali; kami tidak pernah meminta pembayaran. Semua fitur terbuka di ${SITUS}/masuk.html?daftar.`);
     const paket = /tahun/i.test(m.caption || '') ? 'tahunan' : /bulan/i.test(m.caption || '') ? 'bulanan' : (a.paket || 'bulanan');
     const [p] = (await rest('/pembayaran', { method: 'POST', body: JSON.stringify({ anggota_id: a.id, paket, bukti_file_id: foto }) })) || [];
     if (!p) return kirim(chat, 'Maaf, bukti belum tercatat. Coba kirim ulang.');

@@ -113,7 +113,7 @@
     <a href="metrik.html">Metrics</a>
     <a class="aktif" href="kuis.html">Kuis</a>
     <a href="pustaka.html" data-anggota hidden>Pustaka</a>
-    <a href="masuk.html#status" data-menunggu hidden>Langganan</a>
+    <a href="masuk.html?daftar" data-tamu hidden>Daftar gratis</a>
     <a href="admin.html" data-admin hidden>Anggota</a>
     <a href="tentang.html">Tentang</a>
     <a href="pengaturan.html" data-sesi hidden>Pengaturan</a>
@@ -389,9 +389,9 @@ function selesai() {
   // Ajakan penutup menyesuaikan siapa yang bermain.
   const p = profilPengguna;
   $('ajakan').innerHTML = !p
-    ? `<h2 class="serif">Mau tahu cara membaca token sungguhan?</h2><p>Daftar akun gratis untuk membuka modul 1–2 dan melihat daftar isi setiap dossier. Anggota berlangganan membaca kesembilan modul, empat laporan pagi, dan seluruh dossier token.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html?daftar">Daftar akun gratis</a><a class="kedua" href="tentang.html">Apa isi Hanif Dossier?</a></div>`
+    ? `<h2 class="serif">Mau tahu cara membaca token sungguhan?</h2><p>Semua kelas dan kuis terbuka untuk siapa saja. Daftar akun gratis kalau ingin nilai kuis tersimpan, membaca dossier penuh, dan menerima briefing pagi.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html?daftar">Daftar akun gratis</a><a class="kedua" href="tentang.html">Apa isi Hanif Dossier?</a></div>`
     : !p.disetujui
-      ? `<h2 class="serif">Modul 3–9 menunggu Anda</h2><p>Level 9–11 diambil dari modul untuk anggota. Selesaikan langganan untuk membaca semuanya, bersama laporan pagi dan dossier.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html#status">Selesaikan langganan</a></div>`
+      ? `<h2 class="serif">Akun Anda sedang diaktifkan</h2><p>Biasanya hanya beberapa detik. Sementara itu semua kelas dan kuis sudah bisa dipakai.</p><div class="tombol" style="justify-content:center"><a class="utama" href="masuk.html#status">Lihat status akun</a></div>`
       : `<h2 class="serif">Lanjutkan dari sini</h2><p>Buka modul yang soalnya meleset, lalu coba lagi. Atau langsung pakai kerangkanya pada laporan pagi ini.</p><div class="tombol" style="justify-content:center"><a class="utama" href="kelas.html#kategori/metode">Buka metode riset</a><a class="kedua" href="dasbor.html">Laporan hari ini</a></div>`;
 
   tampilkan('layar-hasil');
