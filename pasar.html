@@ -226,9 +226,9 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 </section>
 
 <section class="bagian" id="leaderboard">
-  <div class="mata">Leaderboard · Token Terminal</div>
-  <div class="judul"><h2 class="serif">Siapa yang menghasilkan, siapa yang untung</h2><span class="catatan" id="tt-tanggal">30 hari terakhir · Token Terminal</span></div>
-  <p class="pengantar">Cara Token Terminal membaca crypto: seperti laporan keuangan perusahaan. <b>Fee</b> = yang dibayar pengguna. <b>Pendapatan</b> = bagian yang ditahan protokol. <b>Laba</b> = pendapatan dikurangi biaya, termasuk insentif token yang dibagikan. <b>P/F</b> dan <b>P/S</b> = berapa kali lipat nilai pasarnya terhadap fee atau pendapatan setahun; makin kecil, makin "murah" terhadap bisnisnya. Baris berwarna = koin yang punya dossier.</p>
+  <div class="mata">Leaderboard · DefiLlama &amp; Token Terminal</div>
+  <div class="judul"><h2 class="serif">Siapa yang menghasilkan, siapa yang untung</h2><span class="catatan" id="tt-tanggal">30 hari terakhir</span></div>
+  <p class="pengantar">Crypto dibaca seperti laporan keuangan perusahaan. <b>Fee</b> = yang dibayar pengguna. <b>Pendapatan</b> = bagian yang ditahan protokol atau dibakar. <b>TVL</b> = dana yang dipercayakan pengguna. <b>P/F</b> dan <b>P/S</b> = berapa kali lipat nilai pasarnya terhadap fee atau pendapatan setahun; makin kecil, makin "murah" terhadap bisnisnya. Tab Aplikasi, Rantai, dan Sektor dari DefiLlama dan CoinGecko, diperbarui tiap pagi. Tab Koinmu dari Token Terminal, dengan <b>laba</b> setelah insentif token dan pengguna aktif. Baris berwarna = koin yang punya dossier.</p>
   <div class="tt-ringkas" id="tt-ringkas"></div>
   <div class="tab" id="tt-tab"></div>
   <div class="kartu gulir" id="tt-wadah"><div class="tt-kunci">Memuat leaderboard…</div></div>
@@ -251,7 +251,7 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
 </section>
 
 <div class="kaki">
-  <div class="penafian" id="sumber">Sumber: Token Terminal (leaderboard aplikasi, rantai, dan sektor, snapshot harian), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
+  <div class="penafian" id="sumber">Sumber: DefiLlama dan CoinGecko (leaderboard aplikasi, rantai, dan sektor, harian), Token Terminal (koin portofolio di tab Koinmu), DefiLlama (TVL, fee, pendapatan, DEX, stablecoin, RWA), CoinGecko (harga, kapitalisasi, FDV, harga per bursa, kategori sektor untuk indeks sektor), alternative.me (Fear &amp; Greed). Diperbarui otomatis tiap pagi lewat GitHub Actions. Menyajikan situasi pasar, bukan nasihat investasi.</div>
 </div>
 
 <div class="pn" id="pn" hidden>
@@ -431,10 +431,20 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
   // ---- leaderboard Token Terminal (anggota; berkasnya di gudang privat)
   (async () => {
     let tt;
-    try { tt = JSON.parse(await akun.unduh('tokenterminal.json')); }
+    try {
+      // Dua berkas: leaderboard.json (DefiLlama, tab besar) dan tokenterminal.json (koin portofolio).
+      const [lb, porto] = await Promise.all([
+        akun.unduh('leaderboard.json').then(JSON.parse).catch(() => null),
+        akun.unduh('tokenterminal.json').then(JSON.parse).catch(() => null),
+      ]);
+      if (!lb && !porto) throw new Error('kosong');
+      tt = lb ? { ...(porto || {}), ...lb, portofolio: porto?.portofolio || [], tanggalPortofolio: porto?.tanggalData || null } : porto;
+    }
     catch { $('tt-wadah').innerHTML = '<div class="tt-kunci">Leaderboard Token Terminal terbuka untuk anggota. <a href="masuk.html">Masuk atau berlangganan →</a></div>'; $('tt-tab').hidden = true; return; }
     const tglData = new Date(tt.tanggalData + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-    $('tt-tanggal').textContent = `30 hari s.d. ${tglData} · Token Terminal`;
+    const tglPorto = tt.tanggalPortofolio ? new Date(tt.tanggalPortofolio + 'T00:00:00Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : null;
+    $('tt-tanggal').textContent = `30 hari s.d. ${tglData} · DefiLlama & CoinGecko${tglPorto ? ` · Koinmu: Token Terminal per ${tglPorto}` : ''}`;
+    const SN = tt.sektorNama || {};
     // Nama di Token Terminal -> ticker dossier
     const DOSSIER = { 'Bitcoin': 'BTC', 'Tron': 'TRX', 'Monad': 'MON', 'Arbitrum One': 'ARB', 'Injective': 'INJ', 'Aster': 'ASTER', 'Ethena': 'ENA', 'Ondo Finance': 'ONDO', 'Centrifuge': 'CFG', 'Huma Finance': 'HUMA', 'Zama': 'ZAMA', 'Arkham': 'ARKM', 'Renzo': 'REZ' };
     const SEKTOR = { 'stablecoin-issuers': 'Penerbit stablecoin', exchange: 'Bursa (DEX)', lending: 'Pinjam-meminjam', 'liquid-staking': 'Liquid staking', 'prediction-markets': 'Pasar prediksi', infrastructure: 'Infrastruktur', 'dex-aggregators': 'Agregator DEX', derivatives: 'Derivatif', 'risk-curators': 'Kurator risiko', 'wallet-providers': 'Dompet', 'asset-management': 'Manajemen aset', 'rwa-issuers': 'Penerbit RWA', 'blockchains-l1': 'Rantai L1', 'blockchains-l2': 'Rantai L2' };
@@ -447,24 +457,30 @@ table.tt td .kecil{display:block;color:var(--lb);font-size:11.5px;font-weight:40
     const TABS = [
       ['Aplikasi', tt.aplikasi, () => {
         const maks = Math.max(...tt.aplikasi.map(x => x.fees_30d || 0), 1);
-        return `<thead><tr><th>#</th><th>Proyek</th><th>Sektor</th><th class="n">Fee 30h</th><th></th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th class="n">Laba</th><th class="n">Pengguna aktif</th><th class="n">Kap. pasar</th><th class="n">P/F</th><th class="n">P/S</th></tr></thead><tbody>` +
-          tt.aplikasi.map((x, i) => `<tr class="${DOSSIER[x.name] ? 'milik' : ''}"><td class="no">${i + 1}</td><td>${namaSel(x.name)}</td><td class="sektor">${esc(SEKTOR[x.sector] || x.sector)}</td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td class="n">${uang(x.earnings_30d)}</td><td class="n">${orang(x.active_users_30d)}</td><td class="n">${uang(x.market_cap)}</td><td class="n">${kali(x.pf)}</td><td class="n">${kali(x.ps)}</td></tr>`).join('') + '</tbody>';
+        return `<thead><tr><th>#</th><th>Proyek</th><th>Sektor</th><th class="n">Fee 30h</th><th></th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th class="n">TVL</th><th class="n">Kap. pasar</th><th class="n">P/F</th><th class="n">P/S</th></tr></thead><tbody>` +
+          tt.aplikasi.map((x, i) => `<tr class="${DOSSIER[x.name] ? 'milik' : ''}"><td class="no">${i + 1}</td><td>${namaSel(x.name)}</td><td class="sektor">${esc(SN[x.sector] || SEKTOR[x.sector] || x.sector)}</td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td class="n">${uang(x.tvl)}</td><td class="n">${uang(x.market_cap)}</td><td class="n">${kali(x.pf)}</td><td class="n">${kali(x.ps)}</td></tr>`).join('') + '</tbody>';
       }],
       ['Rantai', tt.rantai, () => {
         const maks = Math.max(...tt.rantai.map(x => x.fees_30d || 0), 1);
-        return `<thead><tr><th>#</th><th>Rantai</th><th class="n">Fee 30h</th><th></th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th class="n">Laba</th><th class="n">Pengguna aktif</th><th class="n">Transaksi</th><th class="n">TVL ekosistem</th><th class="n">Stablecoin</th><th class="n">P/F</th></tr></thead><tbody>` +
-          tt.rantai.map((x, i) => `<tr class="${DOSSIER[x.name] ? 'milik' : ''}"><td class="no">${i + 1}</td><td>${namaSel(x.name)}</td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td class="n">${uang(x.earnings_30d)}</td><td class="n">${orang(x.active_users_30d)}</td><td class="n">${orang(x.transactions_30d)}</td><td class="n">${uang(x.tvl)}</td><td class="n">${uang(x.stablecoins)}</td><td class="n">${kali(x.pf)}</td></tr>`).join('') + '</tbody>';
+        return `<thead><tr><th>#</th><th>Rantai</th><th class="n">Fee 30h</th><th></th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th class="n">TVL ekosistem</th><th class="n">Stablecoin</th><th class="n">Kap. pasar</th><th class="n">P/F</th></tr></thead><tbody>` +
+          tt.rantai.map((x, i) => `<tr class="${DOSSIER[x.name] ? 'milik' : ''}"><td class="no">${i + 1}</td><td>${namaSel(x.name)}</td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td class="n">${uang(x.tvl)}</td><td class="n">${uang(x.stablecoins)}</td><td class="n">${uang(x.market_cap)}</td><td class="n">${kali(x.pf)}</td></tr>`).join('') + '</tbody>';
       }],
       ['Sektor', tt.sektor, () => {
         const maks = Math.max(...tt.sektor.map(x => x.fees_30d || 0), 1);
         return `<thead><tr><th>#</th><th>Sektor</th><th class="n">Fee 30h</th><th></th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th>Tiga teratas</th></tr></thead><tbody>` +
-          tt.sektor.map((x, i) => `<tr><td class="no">${i + 1}</td><td><b>${esc(SEKTOR_ID[x.sector] || x.sector)}</b></td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td style="white-space:normal;min-width:260px">${(x.top_projects || []).map(t => `${esc(t.name)} <span class="catatan">${uang(t.fees_30d)}</span>`).join(' · ')}</td></tr>`).join('') + '</tbody>';
+          tt.sektor.map((x, i) => `<tr><td class="no">${i + 1}</td><td><b>${esc(SN[x.sector] || SEKTOR_ID[x.sector] || x.sector)}</b></td><td class="n">${uang(x.fees_30d)}</td>${batang(x.fees_30d, maks)}${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td style="white-space:normal;min-width:260px">${(x.top_projects || []).map(t => `${esc(t.name)} <span class="catatan">${uang(t.fees_30d)}</span>`).join(' · ')}</td></tr>`).join('') + '</tbody>';
+      }],
+      ['Koinmu', tt.portofolio, () => {
+        const d = [...tt.portofolio].sort((a, b) => (b.fees_30d ?? -1) - (a.fees_30d ?? -1));
+        return `<thead><tr><th>Koin</th><th>Sektor</th><th class="n">Fee 30h</th><th class="n">Δ fee</th><th class="n">Pendapatan</th><th class="n">Laba</th><th class="n">Insentif token</th><th class="n">Pengguna aktif</th><th class="n">Kap. pasar</th><th class="n">FDV</th><th class="n">P/F</th><th class="n">P/S</th></tr></thead><tbody>` +
+          d.map(x => `<tr class="milik"><td>${namaSel(x.name)}</td><td class="sektor">${esc(SEKTOR[x.sector] || x.sector || '')}</td><td class="n">${x.fees_30d == null ? '<span class="catatan">belum dilacak</span>' : uang(x.fees_30d)}</td>${ubah(x.fees_change)}<td class="n">${uang(x.revenue_30d)}</td><td class="n">${uang(x.earnings_30d)}</td><td class="n">${uang(x.token_incentives_30d)}</td><td class="n">${orang(x.active_users_30d)}</td><td class="n">${uang(x.market_cap)}</td><td class="n">${uang(x.fdv)}</td><td class="n">${kali(x.pf)}</td><td class="n">${kali(x.ps)}</td></tr>`).join('') + '</tbody>';
       }],
     ].filter(t => t[1]?.length);
     const CATATAN = [
-      'Δ fee = perubahan fee 30 hari terakhir dibanding 30 hari sebelumnya. Laba negatif berarti insentif token atau biaya lebih besar dari pendapatan. n/a = tidak dilacak Token Terminal.',
-      'TVL dan stablecoin rantai = seluruh ekosistem di rantai itu (versi Token Terminal), jadi bisa berbeda dari angka DefiLlama di bawah. P/F Bitcoin sangat besar karena fee jaringan kecil dibanding nilai pasarnya, Bitcoin tidak dinilai dari fee.',
-      'Satu proyek bisa masuk beberapa sektor (Tether dan Circle dihitung di Penerbit stablecoin sekaligus RWA), jadi total antarsektor tidak boleh dijumlahkan.',
+      'Δ fee = fee 30 hari terakhir dibanding 30 hari sebelumnya. Fee dan pendapatan versi DefiLlama; versi-versi satu proyek (Uniswap V2, V3, V4) digabung ke induknya. P/F dan P/S dihitung dari kapitalisasi CoinGecko dibagi fee atau pendapatan 30 hari yang disetahunkan. n/a = tidak tersedia.',
+      'Fee rantai versi DefiLlama, pendapatan = bagian yang dibakar atau masuk ke protokol. TVL dan stablecoin = seluruh ekosistem di rantai itu. P/F Bitcoin sangat besar karena fee jaringan kecil dibanding nilai pasarnya; Bitcoin tidak dinilai dari fee.',
+      'Sektor = kategori DefiLlama, satu proyek satu kategori, dihitung dari semua proyek yang dilacak, bukan hanya 50 teratas. Rantai dihitung sebagai satu sektor sendiri.',
+      'Tab Koinmu memakai Token Terminal: laba = pendapatan dikurangi insentif token dan biaya. Definisinya berbeda dari DefiLlama, jadi angka di tab ini jangan dibandingkan langsung dengan tab lain.',
     ];
     const gambar = i => {
       $('tt-wadah').innerHTML = `<table class="papan tt">${TABS[i][2]()}</table>`;
