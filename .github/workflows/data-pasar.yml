@@ -22,6 +22,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Lapor ke Kantor AI (mulai)
+        env: { KANTOR_KUNCI: "${{ secrets.KANTOR_KUNCI }}" }
+        run: node scripts/kantor-lapor.mjs pasar kerja "Menarik data pasar untuk halaman Pasar"
+
       - name: Tarik data pasar
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
@@ -35,3 +39,7 @@ jobs:
           git commit -m "data pasar $(TZ=Asia/Jakarta date +'%Y-%m-%d %H:%M') WIB"
           git pull --rebase origin main
           git push origin main
+      - name: Lapor ke Kantor AI (hasil)
+        if: always()
+        env: { KANTOR_KUNCI: "${{ secrets.KANTOR_KUNCI }}" }
+        run: node scripts/kantor-lapor.mjs pasar "${{ job.status == 'success' && 'selesai' || 'gagal' }}" "Data pasar $(TZ=Asia/Jakarta date '+%d %b %H:%M')" "${{ job.status == 'success' && 'Harga, sektor, dan musim altcoin diperbarui' || 'Tarikan data gagal, lihat log GitHub' }}" "https://hanif-dossier.github.io/pasar.html"
