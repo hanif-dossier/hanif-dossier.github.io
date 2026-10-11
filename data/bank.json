@@ -1,0 +1,254 @@
+{
+ "diperbarui": "2026-10-11",
+ "periode": "Semester I 2026 (30 Juni 2026)",
+ "periodeLaba": "semester I 2026",
+ "tglHarga": "9 Oktober 2026",
+ "asumsi": {
+  "g": 6,
+  "coe": 12
+ },
+ "catatanSumber": "Rasio (CAR, CET1, NPL, NIM, BOPO, CIR, ROA, ROE, LDR, LCR) memakai angka bank saja (individual), karena BCA hanya menerbitkan versi itu. Pengecualian karena data yang tersedia: LAR BCA dan BRI, coverage BRI, serta CASA BCA dan BNI adalah konsolidasi; NPL net Mandiri Juni 2026 tidak diterbitkan; ROA BNI setelah pajak tidak diterbitkan; BOPO BNI dikutip media dari rilis bank. Aset, kredit, dana pihak ketiga, dan laba adalah konsolidasi; laba Mandiri sudah tanpa BSI sejak Februari 2026. PBV dihitung dari harga penutupan 9 Oktober 2026 dibagi ekuitas milik induk per saham beredar 30 Juni 2026. PER memakai laba 12 bulan terakhir. Dividend yield memakai dividen yang dibayar dalam 12 bulan terakhir. Laporan kuartal III 2026 belum terbit per 11 Oktober 2026.",
+ "bank": [
+  {
+   "kode": "BBCA",
+   "nama": "Bank Central Asia",
+   "model": "bank transaksi",
+   "harga": 6050,
+   "bvps": 2201.5,
+   "m": {
+    "car": 26.79,
+    "cet1": 25.67,
+    "npl": 1.86,
+    "npln": 0.75,
+    "lar": 4.9,
+    "coverage": 165.5,
+    "cc": 0.5,
+    "casa": 84.3,
+    "nim": 5.32,
+    "bopo": 41.22,
+    "cir": 29.29,
+    "roa": 3.82,
+    "roe": 24.13,
+    "labaYoy": 1.8,
+    "ldr": 78.67,
+    "lcr": 277.63,
+    "pbv": 2.75,
+    "per": 12.85,
+    "dy": 6.3,
+    "aset": 1660580000000000.0,
+    "kredit": 1036000000000000.0,
+    "dpk": 1284000000000000.0,
+    "laba": 29550000000000.0
+   },
+   "catatan": "Dana murah paling tebal (CASA 84%) dan biaya paling hemat (BOPO 41%), sehingga ROE 24% dengan kredit bermasalah rendah. Laba semester I hanya naik 1,8% karena NIM turun dari 5,8% setahun lalu ke 5,3%. Harga 2,75 kali nilai buku sudah membayar kualitas itu.",
+   "sumber": [
+    {
+     "nama": "Laporan keuangan konsolidasian 30 Jun 2026",
+     "url": "https://www.bca.co.id/-/media/Feature/Report/File/S8/Laporan-Triwulan/2026/20260728-laporan-keuangan-konsolidasi-pt-bca-tbk-periode-30-juni-2026-billingual.pdf",
+     "tgl": "28 Jul 2026"
+    },
+    {
+     "nama": "Laporan publikasi Juni 2026",
+     "url": "https://www.bca.co.id/-/media/Feature/Report/File/S8/Laporan-Triwulan/2026/20260728-laporan-keuangan-juni-2026.pdf",
+     "tgl": "28 Jul 2026"
+    },
+    {
+     "nama": "Eksposur risiko & permodalan Juni 2026",
+     "url": "https://www.bca.co.id/-/media/Feature/Report/File/S8/Laporan-Triwulan/2026/20260731-laporan-eksposur-risiko-dan-permodalan-juni-2026-ind.pdf",
+     "tgl": "31 Jul 2026"
+    },
+    {
+     "nama": "Presentasi kinerja 1H26",
+     "url": "https://www.bca.co.id/-/media/Feature/Report/File/Berita-Investor/2026/20260728-1h26-presentasi-perusahaan.pdf",
+     "tgl": "28 Jul 2026"
+    },
+    {
+     "nama": "Harga: Investing.com",
+     "url": "https://www.investing.com/equities/bnk-central-as-historical-data",
+     "tgl": "9 Okt 2026"
+    }
+   ]
+  },
+  {
+   "kode": "BBRI",
+   "nama": "Bank Rakyat Indonesia",
+   "model": "kredit mikro & UMKM",
+   "harga": 3100,
+   "bvps": 2136.41,
+   "m": {
+    "car": 19.35,
+    "cet1": 18.25,
+    "npl": 3.15,
+    "npln": 1.04,
+    "lar": 9.15,
+    "coverage": 180.25,
+    "cc": 3.2,
+    "casa": 67.8,
+    "nim": 6.4,
+    "bopo": 69.56,
+    "cir": 35.49,
+    "roa": 2.7,
+    "roe": 18.5,
+    "labaYoy": 17.5,
+    "ldr": 91.3,
+    "lcr": 124.5,
+    "pbv": 1.45,
+    "per": 7.62,
+    "dy": 11.16,
+    "aset": 2352380000000000.0,
+    "kredit": 1645530000000000.0,
+    "dpk": 1580680000000000.0,
+    "laba": 31180000000000.0
+   },
+   "catatan": "NIM tertinggi (6,4%) dari kredit mikro, dibayar dengan risiko kredit terbesar: NPL 3,15%, LAR 9,2%, cost of credit 3,2%. LDR 91% sudah dekat batas atas, jadi kredit berikutnya butuh dana baru. Laba konsolidasi naik 17,5% dan harganya 1,45 kali nilai buku.",
+   "sumber": [
+    {
+     "nama": "Laporan publikasi Q2 2026",
+     "url": "https://ir-bri.com/misc/QR/2026/BRI-Lapkeu-Q2-2026-Eng.pdf",
+     "tgl": "31 Agu 2026"
+    },
+    {
+     "nama": "Laporan keuangan 30 Jun 2026 (audit)",
+     "url": "https://ir-bri.com/misc/QR/2026/Q2-2026.pdf",
+     "tgl": "31 Agu 2026"
+    },
+    {
+     "nama": "Presentasi 1H 2026",
+     "url": "https://www.ir-bri.com/misc/PS/2026/1H-2026-FU-Presentation.pdf",
+     "tgl": "31 Agu 2026"
+    },
+    {
+     "nama": "Dividen: situs IR BRI",
+     "url": "https://www.ir-bri.com/dividend.html",
+     "tgl": "11 Okt 2026"
+    },
+    {
+     "nama": "Harga: situs IR BRI",
+     "url": "https://www.ir-bri.com/stock_fundamentals.html",
+     "tgl": "9 Okt 2026"
+    }
+   ]
+  },
+  {
+   "kode": "BMRI",
+   "nama": "Bank Mandiri",
+   "model": "korporasi & transaksi",
+   "harga": 4040,
+   "bvps": 3049.2,
+   "m": {
+    "car": 17.52,
+    "cet1": 16.4,
+    "npl": 0.98,
+    "npln": null,
+    "lar": 5.93,
+    "coverage": 242,
+    "cc": 0.52,
+    "casa": 70.5,
+    "nim": 4.37,
+    "bopo": 57.6,
+    "cir": 35.6,
+    "roa": 2.49,
+    "roe": 22.0,
+    "labaYoy": 24.4,
+    "ldr": 92.7,
+    "lcr": 123.4,
+    "pbv": 1.32,
+    "per": 6.05,
+    "dy": 11.81,
+    "aset": 2527570000000000.0,
+    "kredit": 1677450000000000.0,
+    "dpk": 1763170000000000.0,
+    "laba": 30410000000000.0
+   },
+   "catatan": "Laba naik 24,4%, tercepat di antara keempatnya, dengan NPL terendah (0,98%) dan cadangan tertebal (coverage 242%). Tetapi LDR 92,7% sudah di ujung atas rentang Bank Indonesia dan CASA turun dari 78% ke 70,5%, sehingga NIM tertekan dan perkiraan NIM 2026 diturunkan. Sejak Februari 2026 BSI tidak lagi dikonsolidasi, jadi neraca konsolidasinya tidak sebanding dengan tahun lalu.",
+   "sumber": [
+    {
+     "nama": "Laporan keuangan konsolidasian interim 30 Jun 2026",
+     "url": "https://www.bankmandiri.co.id/documents/38265486/0/bank+mandiri_consol_interim_30+june+2026_released+(1).pdf/a5498c48-612f-8548-93d5-d08981a120d0?t=1784869342007",
+     "tgl": "24 Jul 2026"
+    },
+    {
+     "nama": "Analyst meeting 2Q26",
+     "url": "https://www.bankmandiri.co.id/documents/38265486/0/2Q26+Analyst+Meeting+-+Long+Form+%284%29.pdf/7f491f29-f934-362b-b34d-dc30544be908?t=1784868563782",
+     "tgl": "23 Jul 2026"
+    },
+    {
+     "nama": "Siaran pers 1H26",
+     "url": "https://www.bankmandiri.co.id/en/press-detail?primaryKey=602867717&backUrl=%2Fen%2Fpress",
+     "tgl": "23 Jul 2026"
+    },
+    {
+     "nama": "Dividen: CNBC Indonesia",
+     "url": "https://www.cnbcindonesia.com/market/20260504215414-17-732187/bank-mandiri-siap-bagi-dividen-rp37695-per-saham-catat-tanggalnya",
+     "tgl": "4 Mei 2026"
+    },
+    {
+     "nama": "Harga: Infobanknews",
+     "url": "https://infobanknews.com/indeks-infobank15-menguat-ke-80483-saham-bbri-paling-moncer",
+     "tgl": "9 Okt 2026"
+    }
+   ]
+  },
+  {
+   "kode": "BBNI",
+   "nama": "Bank Negara Indonesia",
+   "model": "korporasi & BUMN",
+   "harga": 3430,
+   "bvps": 4402.6,
+   "m": {
+    "car": 18.09,
+    "cet1": 15.5,
+    "npl": 1.93,
+    "npln": 0.72,
+    "lar": 8.1,
+    "coverage": 198.3,
+    "cc": 1.12,
+    "casa": 65.4,
+    "nim": 3.6,
+    "bopo": 73.11,
+    "cir": 44.6,
+    "roa": null,
+    "roe": 13.4,
+    "labaYoy": 6.56,
+    "ldr": 87.7,
+    "lcr": 129.8,
+    "pbv": 0.78,
+    "per": 6.17,
+    "dy": 10.19,
+    "aset": 1461000000000000.0,
+    "kredit": 968540000000000.0,
+    "dpk": 1100190000000000.0,
+    "laba": 10760000000000.0
+   },
+   "catatan": "Kredit tumbuh 24% dalam setahun, tercepat di antara keempatnya, tetapi CASA turun dari 72% ke 65% dan NIM menyempit ke 3,6%: pertumbuhan dibiayai dana yang lebih mahal. CAR turun dari 20,7% ke 18,1%. ROE 13,4% hanya sedikit di atas biaya modal, sejalan dengan harga 0,78 kali nilai buku. BOPO 73% dikutip media dari rilis bank.",
+   "sumber": [
+    {
+     "nama": "Laporan keuangan konsolidasian interim 30 Jun 2026",
+     "url": "https://www.bni.co.id/Portals/1/BNI/Perusahaan/HubunganInvestor/Docs/2026/LKFS-BNI-Billingual-30-Jun-2026.pdf",
+     "tgl": "3 Agu 2026"
+    },
+    {
+     "nama": "Presentasi 1H26",
+     "url": "https://www.bni.co.id/Portals/1/BNI/Perusahaan/HubunganInvestor/Docs/2026/Corporate-Presentation-BNI-1H26.pdf",
+     "tgl": "5 Agu 2026"
+    },
+    {
+     "nama": "BOPO: CNBC Indonesia",
+     "url": "https://www.cnbcindonesia.com/market/20260805112750-17-756702/breaking-news-bni--bbni--cetak-laba-rp108-t-di-semester-i-2026",
+     "tgl": "5 Agu 2026"
+    },
+    {
+     "nama": "Dividen: CNBC Indonesia",
+     "url": "https://www.cnbcindonesia.com/market/20260317071555-17-719648/pemburu-thr-dividen-merapat-hari-ini-cum-date-bbni",
+     "tgl": "17 Mar 2026"
+    },
+    {
+     "nama": "Harga: Yahoo Finance",
+     "url": "https://finance.yahoo.com/quote/BBNI.JK/history",
+     "tgl": "9 Okt 2026"
+    }
+   ]
+  }
+ ],
+ "periodeSingkat": "30 Jun 2026"
+}

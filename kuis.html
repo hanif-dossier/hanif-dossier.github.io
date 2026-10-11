@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kuis Crypto · Hanif Dossier Crypto</title>
-<meta name="description" content="Jalur belajar crypto dalam bentuk kuis: 11 level berurutan dari teknologi blockchain, Bitcoin, Ethereum, teknologi dan kegunaan tiap koin, keamanan dompet, stablecoin, DeFi, sampai membaca token dan mengelola portofolio. Gratis, tanpa daftar.">
+<meta name="description" content="Jalur belajar crypto dan keuangan dalam bentuk kuis: 12 level berurutan dari teknologi blockchain, Bitcoin, Ethereum, teknologi dan kegunaan tiap koin, keamanan dompet, stablecoin, DeFi, sampai membaca token dan mengelola portofolio. Gratis, tanpa daftar.">
 <meta property="og:title" content="Kuis Crypto · Hanif Dossier Crypto">
-<meta property="og:description" content="11 level, dari cara kerja blockchain sampai membaca token. Setiap jawaban dijelaskan. Gratis, tanpa daftar.">
+<meta property="og:description" content="12 level, dari cara kerja blockchain sampai membaca token dan bank. Setiap jawaban dijelaskan. Gratis, tanpa daftar.">
 <meta property="og:url" content="https://hanif-dossier.github.io/kuis.html">
 <meta name="theme-color" content="#4f7a68">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
@@ -91,10 +91,10 @@
 <meta name="apple-mobile-web-app-title" content="Hanif Dossier">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png?v=2">
-<link rel="stylesheet" href="aplikasi.css?v=7">
+<link rel="stylesheet" href="aplikasi.css?v=8">
 <link rel="stylesheet" href="hidup.css">
 <script src="hidup.js"></script>
-<script src="aplikasi.js?v=7" defer></script>
+<script src="aplikasi.js?v=8" defer></script>
 </head>
 <body>
 <main>
@@ -109,6 +109,7 @@
     <a href="riset.html" data-sesi hidden>Riset</a>
     <a href="pasar.html" data-sesi hidden>Pasar</a>
     <a href="bitcoin.html" data-sesi hidden>Bitcoin</a>
+    <a href="bank.html">Bank</a>
     <a href="kelas.html">Kelas</a>
     <a href="metrik.html">Metrics</a>
     <a class="aktif" href="kuis.html">Kuis</a>
@@ -198,7 +199,7 @@ const PENGATURAN = {
 
 const LEVEL = window.KUIS_LEVEL;
 const SOAL = window.KUIS_SOAL.map((s, i) => ({ ...s, urut: i }));   // urut = posisi di bank, dipakai untuk menjaga urutan belajar
-const UJIAN = { kode: 'ujian', nomor: '★', nama: 'Ujian akhir', warna: '#2b3330', ringkas: `${PENGATURAN.jumlahUjian} soal acak dari kesebelas level. Cocok untuk menguji diri, atau menantang teman.` };
+const UJIAN = { kode: 'ujian', nomor: '★', nama: 'Ujian akhir', warna: '#2b3330', ringkas: `${PENGATURAN.jumlahUjian} soal acak dari kedua belas level. Cocok untuk menguji diri, atau menantang teman.` };
 const semuaLevel = [...LEVEL, UJIAN];
 const cariLevel = kode => semuaLevel.find(l => l.kode === kode);
 

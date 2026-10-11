@@ -26,6 +26,7 @@ window.KUIS_LEVEL = [
   { kode: 'token',      nomor: 9,  nama: 'Membaca token',               warna: '#6b5b95', ringkas: 'Kebutuhan dulu baru token, jantung protokol, nilai intrinsik, FDV × float, unlock, alokasi. Modul 1–5.' },
   { kode: 'pasar',      nomor: 10, nama: 'Siklus, makro & data on-chain', warna: '#c98a4b', ringkas: 'Tiga tahap altcoin, rantai makro, aliran ETF, mindshare, tahap adopsi, treasury company. Modul 6–7.' },
   { kode: 'mental',     nomor: 11, nama: 'Mental, alokasi & trading naratif', warna: '#a0526b', ringkas: 'Bias yang merugikan, aturan 1%, barbell, tiga skenario alokasi, take profit, dan aturan invalidasi. Modul 8–9.' },
+  { kode: 'bank',       nomor: 12, nama: 'Membaca bank',                warna: '#2f5d73', ringkas: 'Cara bank menghasilkan uang, CAR, NPL, LAR, CASA, NIM, BOPO, LDR, dan PBV wajar dari ROE. Kelas Membaca Bank.' },
 ];
 
 window.KUIS_SOAL = [
@@ -657,4 +658,39 @@ window.KUIS_SOAL = [
 { level: 'mental', tanya: 'Dana seperti apa yang pantas dipakai untuk crypto?',
   pilihan: ['Dana dingin — uang yang tidak dibutuhkan dalam waktu dekat dan siap menanggung penurunan besar', 'Dana darurat keluarga', 'Uang pinjaman', 'Uang kuliah bulan depan'],
   jelas: 'Aset crypto bisa turun 80% dalam setahun. Uang yang harus tersedia minggu depan akan memaksa Anda menjual di waktu terburuk.' },
+// ═══════════════════════════════════════════════════════════════════════════
+// LEVEL 12 · MEMBACA BANK (kelas/bank.js)
+// ═══════════════════════════════════════════════════════════════════════════
+{ level: 'bank', tanya: 'Dana pihak ketiga (DPK) di sebuah bank adalah…',
+  pilihan: ['Giro, tabungan, dan deposito milik nasabah', 'Modal yang disetor pemegang saham', 'Pinjaman bank dari Bank Indonesia', 'Laba yang ditahan'],
+  jelas: 'DPK adalah bahan baku bank. Dari dana inilah kredit disalurkan.' },
+{ level: 'bank', tanya: 'Rasio CASA yang tinggi menguntungkan bank karena…',
+  pilihan: ['Porsi dana murah (giro dan tabungan) besar sehingga beban bunga kecil', 'Kreditnya pasti tidak macet', 'Bank tidak perlu modal', 'Pajaknya lebih rendah'],
+  jelas: 'Dana murah membuat selisih bunga (NIM) lebih lebar tanpa harus menaikkan bunga kredit.' },
+{ level: 'bank', tanya: 'NIM (net interest margin) dihitung dari…',
+  pilihan: ['Pendapatan bunga bersih dibagi aset produktif', 'Laba bersih dibagi modal', 'Kredit dibagi simpanan', 'Beban operasional dibagi pendapatan operasional'],
+  jelas: 'NIM menunjukkan seberapa lebar selisih bunga yang bisa dipetik dari setiap rupiah aset yang menghasilkan bunga.' },
+{ level: 'bank', tanya: 'Batas NPL net yang ditetapkan OJK adalah…',
+  pilihan: ['Paling tinggi 5%', 'Paling tinggi 1%', 'Paling rendah 5%', 'Tidak ada batas'],
+  jelas: 'NPL net adalah kredit bermasalah setelah dikurangi cadangan yang sudah disiapkan.' },
+{ level: 'bank', tanya: 'Loan at risk (LAR) menggabungkan…',
+  pilihan: ['Kredit dalam perhatian khusus, kredit restrukturisasi yang lancar, dan NPL', 'Kredit lancar dan kredit macet saja', 'Simpanan dan kredit', 'Modal dan cadangan'],
+  jelas: 'LAR menangkap kredit yang berisiko walau belum tercatat macet, sehingga lebih sulit "dirapikan" dibanding NPL.' },
+{ level: 'bank', tanya: 'BOPO yang makin kecil menunjukkan bank…',
+  pilihan: ['Makin hemat menjalankan usahanya', 'Makin banyak kredit macet', 'Makin kekurangan modal', 'Makin kecil asetnya'],
+  jelas: 'BOPO adalah beban operasional dibagi pendapatan operasional. Karena ikut memasukkan beban pencadangan, lihat juga cost to income ratio.' },
+{ level: 'bank', tanya: 'LDR adalah perbandingan antara…',
+  pilihan: ['Kredit yang disalurkan dengan dana pihak ketiga', 'Laba dengan modal', 'Modal dengan aset tertimbang risiko', 'Kredit macet dengan total kredit'],
+  jelas: 'LDR terlalu tinggi berarti dana hampir habis tersalurkan; terlalu rendah berarti dana menganggur.' },
+{ level: 'bank', tanya: 'ROE 20%, pertumbuhan jangka panjang 6%, biaya modal 12%. PBV wajarnya mendekati…',
+  pilihan: ['2,3 kali', '1 kali', '3,3 kali', '0,8 kali'],
+  jelas: '(20 − 6) ÷ (12 − 6) = 14 ÷ 6 ≈ 2,3 kali nilai buku.',
+  sumber: 'Rumus PBV wajar model pertumbuhan konstan; contoh angka dibuat Hanif Dossier' },
+{ level: 'bank', tanya: 'Bank dikelompokkan menurut modal intinya ke dalam KBMI. Bank dengan modal inti di atas Rp70 triliun masuk…',
+  pilihan: ['KBMI 4', 'KBMI 1', 'BUKU IV', 'KBMI 2'],
+  jelas: 'KBMI menggantikan BUKU sejak POJK 12/POJK.03/2021. KBMI 4 adalah kelompok bank terbesar.',
+  sumber: 'POJK 12/POJK.03/2021 tentang Bank Umum' },
+{ level: 'bank', tanya: 'Mana yang paling layak dicurigai sebagai tanda bahaya?',
+  pilihan: ['CASA turun saat kredit tumbuh cepat, dan coverage turun saat NPL naik', 'Laba tumbuh stabil 10% per tahun', 'CAR di atas 20%', 'NIM stabil selama tiga tahun'],
+  jelas: 'Pertumbuhan yang dibiayai dana mahal dan cadangan yang ditipiskan saat kredit memburuk adalah dua tanda yang paling sering mendahului masalah.' },
 ];

@@ -19,6 +19,7 @@
     screening:  '<path d="M3 5h18l-7 8v6l-4-2v-4z"/>',
     pasar:      '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
     bitcoin:    '<circle cx="12" cy="12" r="9"/><path d="M9 7h4.5a2.25 2.25 0 0 1 0 4.5H9m0 0h5a2.25 2.25 0 0 1 0 4.5H9M9 7v9M11 5v2M11 16v2"/>',
+    bank:       '<path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.7 10v8M14.3 10v8M19 10v8M3 20h18"/>',
     kelas:      '<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>',
     modul:      '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
     metrics:    '<path d="M4 19a8 8 0 1 1 16 0"/><path d="m12 19 4-5.5"/><path d="M12 19h.01"/>',
@@ -144,7 +145,7 @@
   }));
   const KELOMPOK = [
     ['Laporan', ['beranda', 'briefing', 'radar', 'schedule', 'screening', 'laporan']],
-    ['Pasar & riset', ['pasar', 'bitcoin', 'riset', 'metrics']],
+    ['Pasar & riset', ['pasar', 'bitcoin', 'bank', 'riset', 'metrics']],
     ['Belajar', ['kelas', 'modul', 'kuis', 'pustaka']],
     ['Akun', ['anggota', 'langganan', 'status', 'tentang', 'masuk']]
   ];

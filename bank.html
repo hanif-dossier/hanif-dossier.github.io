@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank · Hanif Dossier Crypto</title>
+<meta name="description" content="Membaca bank besar Indonesia: perbandingan BBCA, BBRI, BMRI, BBNI per pilar kesehatan, cara menilai bank, kalkulator harga wajar dari ROE, dan kelas Membaca Bank.">
+<meta name="theme-color" content="#4f7a68">
+<meta property="og:title" content="Bank · Hanif Dossier Crypto">
+<meta property="og:description" content="Empat bank terbesar dibandingkan dengan ukuran yang sama, lengkap dengan sumber dan kalkulator harga wajar.">
+<meta property="og:url" content="https://hanif-dossier.github.io/bank.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Ccircle%20cx%3D'32'%20cy%3D'32'%20r%3D'32'%20fill%3D'%23dfe9e1'%2F%3E%3Cpath%20fill-rule%3D'evenodd'%20d%3D'M32%2012c-10%2010-17%2017-17%2026a17%2017%200%200%200%2034%200c0-9-7-16-17-26zM32%2022a2.2%202.2%200%200%201%202.2%202.2v21.6a2.2%202.2%200%200%201-4.4%200V24.2A2.2%202.2%200%200%201%2032%2022z'%20fill%3D'%234f7a68'%2F%3E%3C%2Fsvg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hanif Dossier">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="ikon-180.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="gaya.css">
+<style>
+/* ── Halaman Bank: slot di atas, empat bagian isi ── */
+.judul h1{font-size:clamp(1.65rem,4.4vw,2.6rem);letter-spacing:-.01em}
+.bk-slot{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.bk-slot button{display:flex;gap:12px;align-items:center;text-align:left;border:1.5px solid color-mix(in srgb,var(--gr) 70%,transparent);
+  background:var(--kartu);border-radius:22px;padding:14px 16px;font:inherit;color:var(--tx);cursor:pointer;box-shadow:var(--bayang);
+  transition:transform .15s,border-color .15s}
+.bk-slot button:hover{transform:translateY(-2px);border-color:var(--sage)}
+.bk-slot button.aktif{border-color:var(--sage);background:linear-gradient(160deg,var(--sage-lembut),var(--kartu) 70%)}
+.bk-slot .ik{flex:none;width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:var(--lembut)}
+.bk-slot button.aktif .ik{background:var(--sage);}
+.bk-slot .ik svg{width:20px;height:20px;fill:none;stroke:var(--sage-tua);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bk-slot button.aktif .ik svg{stroke:#fff}
+.bk-slot b{display:block;font-size:14.5px;line-height:1.25}.bk-slot small{display:block;font-size:12px;color:var(--lb);font-weight:700;margin-top:2px}
+.bk-panel{margin-top:22px}
+.bk-panel[hidden]{display:none}
+
+/* perbandingan */
+.bk-bank{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.bk-bank .kartu{padding:16px 18px;border-radius:22px}
+.bk-bank .kode{font-family:"DM Serif Display",serif;font-size:24px;line-height:1}
+.bk-bank .nm{font-size:12.5px;color:var(--lb);font-weight:700;margin-top:3px}
+.bk-bank .kp{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.bk-bank .kp span{font-size:12px;font-weight:700;background:var(--lembut);border-radius:999px;padding:3px 10px;color:var(--tx2)}
+.bk-bank .wajar{margin-top:10px;font-size:13px;color:var(--tx2)}.bk-bank .wajar b{color:var(--tx)}
+.bk-tabel{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.bk-tabel th,.bk-tabel td{padding:9px 10px;border-bottom:1px solid var(--gr);text-align:right;white-space:nowrap}
+.bk-tabel th:first-child,.bk-tabel td:first-child{text-align:left;white-space:normal}
+.bk-tabel thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--lb);font-weight:800}
+.bk-tabel tr.grup td{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:800;padding-top:18px;border-bottom:0}
+.bk-tabel td small{display:block;color:var(--lb);font-size:11.5px;font-weight:600;white-space:normal}
+.bk-tabel td.unggul{color:var(--sage-tua);font-weight:800}
+.bk-tabel td.unggul::after{content:"●";font-size:8px;margin-left:5px;vertical-align:2px;color:var(--sage)}
+.bk-gulir{overflow-x:auto;margin-top:6px}
+.bk-catatan{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk-catatan .kartu{padding:16px 18px;border-radius:22px;font-size:14.5px;color:var(--tx2)}
+.bk-catatan b{color:var(--tx)}
+.bk-sumber{font-size:12.5px;color:var(--lb);line-height:1.7}.bk-sumber a{font-weight:700}
+
+/* cara menilai */
+.bk-pilar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bk-pilar .kartu{border-radius:24px}
+.bk-pilar h3{margin:0 0 4px;font-size:19px}.bk-pilar .no{font-size:12px;font-weight:800;color:var(--sage);letter-spacing:.08em;text-transform:uppercase}
+.bk-pilar p{margin:6px 0 10px;color:var(--tx2);font-size:14.5px}
+.bk-rasio{display:grid;gap:8px}
+.bk-rasio div{background:var(--lembut);border-radius:14px;padding:9px 12px;font-size:13.5px}
+.bk-rasio b{display:block;font-size:14px}.bk-rasio span{color:var(--tx2)}
+.bk-bahaya{margin-top:14px}.bk-bahaya li{margin:4px 0;color:var(--tx2)}
+
+/* kalkulator */
+.bk-kal{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:start}
+.bk-isi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bk-isi label{display:grid;gap:4px;font-size:12.5px;font-weight:800;color:var(--tx2)}
+.bk-isi input{border:1.5px solid var(--gr);border-radius:12px;padding:9px 11px;font:inherit;font-size:15px;background:var(--kartu);color:var(--tx);min-width:0}
+.bk-isi input:focus{outline:none;border-color:var(--sage)}
+.bk-isi .lebar{grid-column:1/-1}
+.bk-isi .sub{grid-column:1/-1;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);font-weight:800;margin-top:6px}
+.bk-isi-bank{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.bk-isi-bank button{border:1.5px solid var(--gr);background:var(--kartu);border-radius:999px;padding:5px 13px;font:inherit;font-size:13px;font-weight:800;color:var(--tx2);cursor:pointer}
+.bk-isi-bank button:hover,.bk-isi-bank button.aktif{border-color:var(--sage);color:var(--sage-tua)}
+.bk-hasil .angka-besar{font-family:"DM Serif Display",serif;font-size:clamp(1.8rem,4vw,2.4rem);line-height:1.1}
+.bk-skn{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.bk-skn div{background:var(--lembut);border-radius:14px;padding:10px 12px}
+.bk-skn small{display:block;font-size:11.5px;color:var(--lb);font-weight:800}.bk-skn b{display:block;font-size:17px}
+.bk-nilai{display:grid;gap:8px;margin-top:12px}
+.bk-nilai div{display:flex;justify-content:space-between;gap:10px;align-items:center;border-radius:14px;padding:9px 12px;background:var(--lembut);font-size:14px}
+.bk-nilai span.status{font-size:12px;font-weight:800;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.st-baik{background:var(--sage-lembut);color:var(--sage-tua)}.st-awas{background:var(--pasir);color:var(--pasir-tua)}.st-bahaya{background:var(--bata-lembut,#f6e4df);color:var(--bata)}
+
+/* belajar */
+.bk-belajar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bk-belajar a.kartu{display:block;color:var(--tx);border-radius:22px;transition:transform .15s}
+.bk-belajar a.kartu:hover{transform:translateY(-2px)}
+.bk-belajar b{display:block;font-size:16px;margin-bottom:4px}.bk-belajar span{font-size:14px;color:var(--tx2)}
+
+@media (max-width:860px){.bk-slot,.bk-bank{grid-template-columns:repeat(2,minmax(0,1fr))}.bk-pilar,.bk-kal,.bk-catatan,.bk-belajar{grid-template-columns:1fr}}
+@media (max-width:620px){.bk-tabel{font-size:12.5px}.bk-tabel td small{display:none}.bk-tabel th,.bk-tabel td{padding:8px 7px}.bk-tabel th:first-child,.bk-tabel td:first-child{position:sticky;left:0;background:var(--kartu);z-index:1;min-width:92px;max-width:110px;box-shadow:6px 0 8px -8px rgba(0,0,0,.25)}.bk-tabel tr.grup td{position:static;box-shadow:none}#tabel-kartu{padding:16px 12px}}
+@media (max-width:480px){.bk-slot button{padding:12px;gap:9px}.bk-slot .ik{width:34px;height:34px}.bk-slot b{font-size:13.5px}.bk-isi{grid-template-columns:1fr 1fr}.bk-skn{grid-template-columns:1fr 1fr 1fr}}
+</style>
+<link rel="stylesheet" href="aplikasi.css?v=8">
+<link rel="stylesheet" href="hidup.css">
+<script src="hidup.js"></script>
+<script src="aplikasi.js?v=8" defer></script>
+</head>
+<body>
+<main>
+
+<header class="atas">
+  <a class="merek" href="index.html">
+    <div class="daun"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f7a68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z"/><path pathLength="1" d="M12 21V11"/></svg></div>
+    <div><b>Hanif Dossier Crypto</b><small>riset &amp; edukasi crypto, dua sisi</small></div>
+  </a>
+  <nav class="menu">
+    <a href="dasbor.html">Beranda</a>
+    <a href="riset.html">Riset</a>
+    <a href="pasar.html">Pasar</a>
+    <a href="bitcoin.html">Bitcoin</a>
+    <a class="aktif" href="bank.html">Bank</a>
+    <a href="kelas.html">Kelas</a>
+    <a href="metrik.html">Metrics</a>
+    <a href="kuis.html">Kuis</a>
+    <a href="masuk.html?daftar" data-tamu hidden>Daftar gratis</a>
+    <a href="pustaka.html" data-anggota hidden>Pustaka</a>
+    <a href="admin.html" data-admin hidden>Anggota</a>
+    <a href="pengaturan.html" data-sesi hidden>Pengaturan</a>
+    <a href="#" data-keluar data-sesi hidden>Keluar</a>
+    <a href="tentang.html">Tentang</a>
+    <a class="masuk" href="masuk.html" data-tamu hidden>Masuk</a>
+  </nav>
+</header>
+
+<section class="bagian" style="margin-top:28px">
+  <div class="mata">Bank · saham perbankan</div>
+  <div class="judul"><h1 class="serif">Membaca bank besar Indonesia</h1></div>
+  <p class="pengantar">Bank menjual uang, jadi cara menilainya berbeda dari perusahaan biasa. Di sini empat bank terbesar dibandingkan dengan ukuran yang sama, lengkap dengan cara membacanya dan kalkulator untuk menakar harga sahamnya.</p>
+
+  <nav class="bk-slot" id="slot" aria-label="Bagian halaman">
+    <button type="button" data-p="banding"><span class="ik"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span><b>Perbandingan 4 Bank</b><small id="slot-banding">memuat…</small></span></button>
+    <button type="button" data-p="cara"><span class="ik"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><span><b>Cara Menilai Bank</b><small>5 hal yang diperiksa</small></span></button>
+    <button type="button" data-p="kal"><span class="ik"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7h7M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h7"/></svg></span><span><b>Kalkulator Bank</b><small>harga wajar & kesehatan</small></span></button>
+    <button type="button" data-p="belajar"><span class="ik"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M7 9v5c0 1.7 2.2 3 5 3s5-1.3 5-3V9"/></svg></span><span><b>Belajar & Kuis</b><small>3 kursus, 10 soal</small></span></button>
+  </nav>
+
+  <!-- 1. Perbandingan -->
+  <div class="bk-panel" data-panel="banding">
+    <div class="bk-bank" id="kartu-bank"></div>
+    <div class="kartu" id="tabel-kartu" style="margin-top:14px">
+      <div class="judul"><h2 style="font-size:20px;margin:0">Angka per pilar</h2><span class="bk-sumber" id="periode-ket"></span></div>
+      <div class="bk-gulir"><table class="bk-tabel" id="tabel"></table></div>
+      <p class="bk-sumber" style="margin:10px 0 0">Titik hijau menandai angka terbaik di antara keempatnya. "Terbaik" di sini membandingkan angka saja; bank dengan model berbeda (kredit mikro lawan transaksi) wajar punya NIM dan NPL berbeda. Cara membacanya ada di bagian Cara Menilai Bank.</p>
+    </div>
+    <div class="bk-catatan" id="catatan-bank"></div>
+    <div class="kartu" style="margin-top:14px"><h2 style="font-size:18px;margin:0 0 6px">Sumber</h2><div class="bk-sumber" id="sumber"></div></div>
+  </div>
+
+  <!-- 2. Cara menilai -->
+  <div class="bk-panel" data-panel="cara" hidden>
+    <p class="pengantar" style="margin-top:0">Periksa berurutan. Bank yang lemah di modal atau kualitas kredit tidak perlu dinilai harganya, karena murahnya biasanya memang pantas.</p>
+    <div class="bk-pilar" id="pilar"></div>
+    <div class="kartu bk-bahaya"><h2 style="font-size:19px;margin:0 0 6px">Tanda bahaya yang paling sering muncul</h2>
+      <ul>
+        <li>Dana murah (CASA) turun, padahal kredit tumbuh cepat.</li>
+        <li>NPL turun, tetapi LAR, restrukturisasi, atau hapus buku naik.</li>
+        <li>Cadangan (coverage) turun tajam padahal kredit bermasalah naik.</li>
+        <li>Manajemen menaikkan perkiraan cost of credit di tengah tahun.</li>
+        <li>Pendapatan bunga bersih turun padahal kredit naik.</li>
+        <li>CAR menipis mendekati batas, bersamaan dengan rencana dividen besar.</li>
+      </ul>
+      <p class="bk-sumber" style="margin:8px 0 0">Aturan yang disebut: POJK 11/POJK.03/2016 (KPMM), POJK 12/POJK.03/2021 (KBMI), aturan LCR dan NSFR OJK, serta rentang rasio intermediasi makroprudensial Bank Indonesia. Angka panduan lain adalah patokan Hanif Dossier untuk bank besar Indonesia, bukan aturan resmi.</p>
+    </div>
+  </div>
+
+  <!-- 3. Kalkulator -->
+  <div class="bk-panel" data-panel="kal" hidden>
+    <div class="bk-kal">
+      <div class="kartu">
+        <h2 style="font-size:19px;margin:0 0 4px">Isi angka bank</h2>
+        <p class="bk-sumber" style="margin:0 0 10px">Ketuk salah satu bank untuk mengisi otomatis dari data terakhir, lalu ubah sesukamu. Semua angka dalam persen kecuali harga dan nilai buku.</p>
+        <div class="bk-isi-bank" id="isi-bank"></div>
+        <form class="bk-isi" id="form" onsubmit="return false">
+          <div class="sub">Harga</div>
+          <label>Harga saham (Rp)<input id="f-harga" type="number" inputmode="decimal" step="any"></label>
+          <label>Nilai buku per saham (Rp)<input id="f-bvps" type="number" inputmode="decimal" step="any"></label>
+          <div class="sub">Asumsi valuasi</div>
+          <label>ROE berkelanjutan<input id="f-roe" type="number" inputmode="decimal" step="any"></label>
+          <label>Pertumbuhan jangka panjang (g)<input id="f-g" type="number" inputmode="decimal" step="any" value="6"></label>
+          <label class="lebar">Biaya modal (COE)<input id="f-coe" type="number" inputmode="decimal" step="any" value="12"></label>
+          <div class="sub">Kesehatan</div>
+          <label>CAR<input id="f-car" type="number" inputmode="decimal" step="any"></label>
+          <label>NPL gross<input id="f-npl" type="number" inputmode="decimal" step="any"></label>
+          <label>Coverage NPL<input id="f-cov" type="number" inputmode="decimal" step="any"></label>
+          <label>CASA<input id="f-casa" type="number" inputmode="decimal" step="any"></label>
+          <label>NIM<input id="f-nim" type="number" inputmode="decimal" step="any"></label>
+          <label>BOPO<input id="f-bopo" type="number" inputmode="decimal" step="any"></label>
+          <label>ROA<input id="f-roa" type="number" inputmode="decimal" step="any"></label>
+          <label>LDR<input id="f-ldr" type="number" inputmode="decimal" step="any"></label>
+        </form>
+      </div>
+      <div class="kartu bk-hasil" id="hasil"></div>
+    </div>
+  </div>
+
+  <!-- 4. Belajar -->
+  <div class="bk-panel" data-panel="belajar" hidden>
+    <div class="bk-belajar">
+      <a class="kartu" href="kelas.html#kelas/bank"><b>Bagaimana Bank Menghasilkan Uang</b><span>Uang orang lain sebagai bahan baku, dan kenapa ukuran perusahaan biasa menyesatkan untuk bank.</span></a>
+      <a class="kartu" href="kelas.html#kelas/bank"><b>Lima Hal yang Menentukan Sehatnya Bank</b><span>Modal, kualitas kredit, dana dan efisiensi, laba, serta likuiditas.</span></a>
+      <a class="kartu" href="kelas.html#kelas/bank"><b>Menakar Harga Saham Bank</b><span>PBV wajar dari ROE, membandingkan bank sekelompok, dan tanda bahaya.</span></a>
+    </div>
+    <div class="kartu" style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div><b style="font-size:17px">Uji pemahaman</b><div class="bk-sumber" style="font-size:14px">Level 12 di Kuis: 10 soal tentang membaca bank, setiap jawaban dijelaskan.</div></div>
+      <a class="tombol" href="kuis.html" style="font-weight:800">Buka Kuis →</a>
+    </div>
+  </div>
+
+  <div class="penafian" style="margin-top:28px">Halaman ini disusun Hanif Dossier untuk edukasi. Angka diambil dari laporan keuangan, laporan publikasi, dan materi paparan kinerja masing-masing bank, dengan sumber di tiap angka; harga saham dari Bursa Efek Indonesia. Bukan nasihat investasi.</div>
+</section>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="akun.js"></script>
+<script>
+(async () => {
+  if (window.akun) akun.pasangMenu();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const ang = (v, d = 1) => v == null || isNaN(v) ? '-' : Number(v).toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d });
+  const rp = v => v == null || isNaN(v) ? '-' : 'Rp' + Math.round(v).toLocaleString('id-ID');
+  const trl = v => v == null || isNaN(v) ? '-' : 'Rp' + ang(v / 1e12, v < 1e14 ? 1 : 0) + ' T';
+
+  // ── slot
+  const buka = p => { document.querySelectorAll('#slot button').forEach(b => b.classList.toggle('aktif', b.dataset.p === p)); document.querySelectorAll('.bk-panel').forEach(x => x.hidden = x.dataset.panel !== p); try { history.replaceState(null, '', '#' + p); } catch {} };
+  $('slot').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) buka(b.dataset.p); });
+  buka(['banding', 'cara', 'kal', 'belajar'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'banding');
+
+  // ── ukuran: [kunci, nama, penjelasan singkat, satuan, arah terbaik ('naik' makin tinggi makin baik, 'turun' sebaliknya, null tidak dibandingkan)]
+  const PILAR = [
+    ['Permodalan', [['car', 'CAR (KPMM)', 'modal ÷ aset berisiko', '%', 'naik'], ['cet1', 'CET1', 'modal inti utama', '%', 'naik']]],
+    ['Kualitas kredit', [['npl', 'NPL gross', 'kredit bermasalah ÷ kredit', '%', 'turun'], ['npln', 'NPL net', 'setelah cadangan', '%', 'turun'], ['lar', 'Loan at risk', 'termasuk restrukturisasi', '%', 'turun'], ['coverage', 'Coverage NPL', 'cadangan ÷ NPL', '%', 'naik'], ['cc', 'Cost of credit', 'beban cadangan ÷ kredit', '%', 'turun']]],
+    ['Dana & efisiensi', [['casa', 'CASA', 'porsi dana murah', '%', 'naik'], ['nim', 'NIM', 'selisih bunga bersih', '%', 'naik'], ['bopo', 'BOPO', 'beban ÷ pendapatan operasional', '%', 'turun'], ['cir', 'Cost to income', 'tanpa beban cadangan', '%', 'turun']]],
+    ['Laba', [['roa', 'ROA', 'laba ÷ aset', '%', 'naik'], ['roe', 'ROE', 'laba ÷ modal', '%', 'naik'], ['labaYoy', 'Pertumbuhan laba', 'dibanding tahun lalu', '%', 'naik']]],
+    ['Likuiditas', [['ldr', 'LDR', 'kredit ÷ dana pihak ketiga', '%', null], ['lcr', 'LCR', 'minimum 100%', '%', null]]],
+    ['Harga saham', [['pbv', 'PBV', 'harga ÷ nilai buku', 'x', 'turun'], ['per', 'PER', 'harga ÷ laba per saham', 'x', 'turun'], ['dy', 'Dividend yield', 'dividen ÷ harga', '%', 'naik']]],
+  ];
+
+  // ── ambang penilaian (patokan Hanif Dossier; aturan resmi disebut di bagian Cara Menilai)
+  const NILAI = {
+    car: v => v >= 20 ? ['baik', 'tebal'] : v >= 15 ? ['awas', 'cukup'] : ['bahaya', 'tipis'],
+    npl: v => v < 2 ? ['baik', 'rendah'] : v <= 3.5 ? ['awas', 'perhatikan'] : ['bahaya', 'tinggi'],
+    coverage: v => v >= 200 ? ['baik', 'tebal'] : v >= 120 ? ['awas', 'cukup'] : ['bahaya', 'tipis'],
+    casa: v => v >= 75 ? ['baik', 'unggul'] : v >= 60 ? ['awas', 'wajar'] : ['bahaya', 'bergantung deposito'],
+    nim: v => v >= 4.5 ? ['baik', 'lebar'] : v >= 3.5 ? ['awas', 'wajar'] : ['bahaya', 'sempit'],
+    bopo: v => v < 60 ? ['baik', 'efisien'] : v <= 80 ? ['awas', 'wajar'] : ['bahaya', 'berat'],
+    roa: v => v >= 2.5 ? ['baik', 'istimewa'] : v >= 1.5 ? ['awas', 'baik'] : ['bahaya', 'rendah'],
+    ldr: v => v > 94 ? ['bahaya', 'ketat'] : v >= 75 ? ['baik', 'sehat'] : ['awas', 'dana menganggur'],
+  };
+  const pbvWajar = (roe, g, coe) => coe > g && roe > g - 50 ? (roe - g) / (coe - g) : null;
+
+  // ── data
+  let D = null;
+  try { D = await (await fetch('data/bank.json?v=' + Date.now())).json(); } catch { $('slot-banding').textContent = 'data belum tersedia'; }
+  const B = D ? D.bank : [];
+  if (D) {
+    $('slot-banding').textContent = 'data ' + (D.periodeSingkat || D.periode || '');
+    $('periode-ket').textContent = 'Periode ' + (D.periode || '-') + ' · harga per ' + (D.tglHarga || '-');
+    const g = D.asumsi?.g ?? 6, coe = D.asumsi?.coe ?? 12;
+    $('kartu-bank').innerHTML = B.map(b => { const m = b.m || {}, w = m.roe != null ? pbvWajar(m.roeBerkelanjutan ?? m.roe, g, coe) : null;
+      return `<div class="kartu"><div class="kode">${esc(b.kode)}</div><div class="nm">${esc(b.nama)} · ${esc(b.model || '')}</div>
+        <div class="kp"><span>${rp(b.harga)}</span><span>PBV ${ang(m.pbv, 2)}x</span><span>ROE ${ang(m.roe)}%</span></div>
+        <div class="wajar">${w ? `PBV wajar ±<b>${ang(w, 2)}x</b> (ROE ${ang(m.roeBerkelanjutan ?? m.roe)}%, g ${g}%, COE ${coe}%)` : 'PBV wajar belum bisa dihitung'}</div></div>`; }).join('');
+    // tabel: baris per ukuran, kolom per bank, angka terbaik ditandai
+    let h = `<thead><tr><th>Ukuran</th>${B.map(b => `<th>${esc(b.kode)}</th>`).join('')}</tr></thead><tbody>`;
+    for (const [pilar, U] of PILAR) {
+      const ada = U.filter(([k]) => B.some(b => b.m?.[k] != null)); if (!ada.length) continue;
+      h += `<tr class="grup"><td colspan="${B.length + 1}">${esc(pilar)}</td></tr>`;
+      for (const [k, nm, ket, sat, arah] of ada) {
+        const vals = B.map(b => b.m?.[k]), ok = vals.filter(v => v != null), best = arah && ok.length > 1 ? (arah === 'naik' ? Math.max(...ok) : Math.min(...ok)) : null;
+        h += `<tr><td>${esc(nm)}<small>${esc(ket)}</small></td>${vals.map(v => `<td class="${v != null && v === best ? 'unggul' : ''}">${v == null ? '<span style="color:var(--redup)">-</span>' : ang(v, sat === 'x' ? 2 : (Math.abs(v) >= 100 ? 0 : 2)) + (sat === 'x' ? 'x' : '%')}</td>`).join('')}</tr>`; } }
+    h += `<tr class="grup"><td colspan="${B.length + 1}">Ukuran usaha</td></tr>`;
+    for (const [k, nm] of [['aset', 'Total aset'], ['kredit', 'Kredit'], ['dpk', 'Dana pihak ketiga'], ['laba', 'Laba bersih ' + (D.periodeLaba || '')]]) h += `<tr><td>${esc(nm)}</td>${B.map(b => `<td>${trl(b.m?.[k])}</td>`).join('')}</tr>`;
+    $('tabel').innerHTML = h + '</tbody>';
+    $('catatan-bank').innerHTML = B.filter(b => b.catatan).map(b => `<div class="kartu"><b>${esc(b.kode)}.</b> ${esc(b.catatan)}</div>`).join('');
+    $('sumber').innerHTML = B.map(b => `<div><b>${esc(b.kode)}</b>: ${(b.sumber || []).map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.nama)}</a>${s.tgl ? ' (' + esc(s.tgl) + ')' : ''}`).join(' · ') || '-'}</div>`).join('') + (D.catatanSumber ? `<div style="margin-top:6px">${esc(D.catatanSumber)}</div>` : '');
+  }
+
+  // ── cara menilai
+  const CARA = [
+    ['1 · Permodalan', 'Seberapa tebal bantalan saat kredit tidak kembali', 'Modal diukur terhadap aset yang sudah ditimbang risikonya. Modal yang terlalu berlebih juga menekan ROE, jadi bank bermodal sangat tebal sebaiknya membagi dividen besar.',
+      [['CAR / KPMM', 'Minimum OJK 8 sampai 14% sesuai profil risiko, ditambah penyangga. Di atas 20% tebal.'], ['CET1', 'Minimum 4,5%. Makin dekat ke CAR, makin berkualitas modalnya.']]],
+    ['2 · Kualitas kredit', 'Seberapa banyak kredit yang tidak kembali', 'NPL bisa diperkecil lewat restrukturisasi dan hapus buku, jadi selalu lihat LAR dan coverage bersamaan.',
+      [['NPL gross & net', 'Di bawah 2% sangat baik. NPL net maksimum 5% menurut OJK.'], ['Loan at risk', 'Kredit dalam perhatian khusus + restrukturisasi lancar + NPL. Di bawah 10% baik.'], ['Coverage NPL', 'Cadangan ÷ NPL. Di atas 200% bantalan tebal.'], ['Cost of credit', 'Bank mikro wajar lebih tinggi karena bunganya juga lebih tinggi.']]],
+    ['3 · Dana & efisiensi', 'Dari mana uang murah dan berapa biaya menjalankannya', 'Dana murah dibangun lewat kebiasaan nasabah puluhan tahun. Ini keunggulan yang paling sulit ditiru.',
+      [['CASA', 'Porsi giro dan tabungan. Di atas 75% unggul.'], ['NIM', 'Selisih bunga bersih ÷ aset produktif. Bank korporasi 4 sampai 5%, bank mikro bisa lebih tinggi.'], ['BOPO & cost to income', 'Makin kecil makin hemat. BOPO ikut memasukkan beban cadangan, cost to income tidak.']]],
+    ['4 · Laba', 'Seberapa pandai modal diputar', 'ROE = ROA × (aset ÷ modal). ROE tinggi dari ROA besar lebih kokoh daripada dari leverage besar.',
+      [['ROA', 'Di atas 2,5% istimewa untuk bank besar.'], ['ROE', 'Di atas 18% istimewa. Di bawah biaya modal (sekitar 11 sampai 13%) berarti merusak nilai.']]],
+    ['5 · Likuiditas', 'Sanggup membayar penabung kapan saja', 'LDR terlalu tinggi memaksa bank berebut deposito mahal untuk tumbuh; terlalu rendah berarti dana menganggur.',
+      [['LDR', 'Rentang rasio intermediasi Bank Indonesia 84 sampai 94%.'], ['LCR & NSFR', 'Minimum 100% menurut OJK.']]],
+    ['Harga saham', 'PBV yang pantas datang dari ROE', 'PBV wajar = (ROE − g) ÷ (COE − g). ROE 20%, g 6%, COE 12% memberi 2,3 kali nilai buku. Hasilnya sangat peka asumsi, jadi pakai tiga skenario.',
+      [['PBV', 'Harga ÷ nilai buku per saham. Bandingkan dengan PBV wajar dan rata-rata historisnya.'], ['Dividend yield', 'Bank bermodal tebal biasanya membagi 50 sampai 80% labanya.']]],
+  ];
+  $('pilar').innerHTML = CARA.map(([no, judul, isi, R]) => `<div class="kartu"><div class="no">${esc(no)}</div><h3>${esc(judul)}</h3><p>${esc(isi)}</p><div class="bk-rasio">${R.map(([n, k]) => `<div><b>${esc(n)}</b><span>${esc(k)}</span></div>`).join('')}</div></div>`).join('');
+
+  // ── kalkulator
+  const F = ['harga', 'bvps', 'roe', 'g', 'coe', 'car', 'npl', 'cov', 'casa', 'nim', 'bopo', 'roa', 'ldr'], nilaiF = k => { const v = parseFloat(String($('f-' + k).value).replace(',', '.')); return isNaN(v) ? null : v; };
+  $('isi-bank').innerHTML = B.map(b => `<button type="button" data-k="${esc(b.kode)}">${esc(b.kode)}</button>`).join('') + '<button type="button" data-k="">Kosongkan</button>';
+  $('isi-bank').addEventListener('click', e => { const t = e.target.closest('[data-k]'); if (!t) return; const b = B.find(x => x.kode === t.dataset.k), m = b?.m || {};
+    document.querySelectorAll('#isi-bank button').forEach(x => x.classList.toggle('aktif', x === t));
+    const isi = { harga: b?.harga, bvps: b?.bvps, roe: m.roeBerkelanjutan ?? m.roe, car: m.car, npl: m.npl, cov: m.coverage, casa: m.casa, nim: m.nim, bopo: m.bopo, roa: m.roa, ldr: m.ldr };
+    for (const k of Object.keys(isi)) $('f-' + k).value = isi[k] ?? ''; hitung(); });
+  function hitung() {
+    const v = Object.fromEntries(F.map(k => [k, nilaiF(k)]));
+    const pbv = v.harga && v.bvps ? v.harga / v.bvps : null, skn = v.roe != null && v.g != null && v.coe != null
+      ? [['Hati-hati', v.roe - 2, v.coe + 1], ['Dasar', v.roe, v.coe], ['Optimis', v.roe + 1, v.coe - 1]].map(([n, r, c]) => [n, pbvWajar(r, v.g, c)]) : null;
+    const dasar = skn ? skn[1][1] : null, hargaWajar = dasar && v.bvps ? dasar * v.bvps : null, beda = hargaWajar && v.harga ? (hargaWajar / v.harga - 1) * 100 : null;
+    const kes = [['car', 'CAR', v.car], ['npl', 'NPL gross', v.npl], ['coverage', 'Coverage NPL', v.cov], ['casa', 'CASA', v.casa], ['nim', 'NIM', v.nim], ['bopo', 'BOPO', v.bopo], ['roa', 'ROA', v.roa], ['ldr', 'LDR', v.ldr]].filter(x => x[2] != null);
+    const skor = kes.map(([k]) => NILAI[k](kes.find(x => x[0] === k)[2])[0]);
+    $('hasil').innerHTML = `<div class="mata">Harga wajar menurut ROE</div>
+      ${hargaWajar ? `<div class="angka-besar">${rp(hargaWajar)}</div><div style="color:var(--tx2);font-size:14px;margin-top:4px">PBV wajar ${ang(dasar, 2)}x${pbv ? ` · PBV sekarang ${ang(pbv, 2)}x · <b style="color:${beda >= 0 ? 'var(--sage-tua)' : 'var(--bata)'}">${beda >= 0 ? 'di bawah' : 'di atas'} nilai wajar ${ang(Math.abs(beda), 0)}%</b>` : ''}</div>`
+        : '<div style="color:var(--tx2)">Isi harga, nilai buku per saham, ROE, g, dan COE untuk menghitung harga wajar.</div>'}
+      ${skn ? `<div class="bk-skn">${skn.map(([n, p]) => `<div><small>${n}</small><b>${p ? ang(p, 2) + 'x' : '-'}</b><small>${p && v.bvps ? rp(p * v.bvps) : ''}</small></div>`).join('')}</div>
+        <div class="bk-sumber">Hati-hati: ROE −2 poin, COE +1 poin. Optimis: ROE +1 poin, COE −1 poin. Rumus: PBV wajar = (ROE − g) ÷ (COE − g).</div>` : ''}
+      <div class="mata" style="margin-top:18px">Kesehatan</div>
+      ${kes.length ? `<div style="font-size:14px;color:var(--tx2)">${skor.filter(s => s === 'baik').length} dari ${kes.length} ukuran di zona sehat${skor.includes('bahaya') ? ', ' + skor.filter(s => s === 'bahaya').length + ' perlu diperiksa lebih dalam' : ''}.</div>
+        <div class="bk-nilai">${kes.map(([k, n, x]) => { const [st, kata] = NILAI[k](x); return `<div><span>${n} <b>${ang(x, Math.abs(x) >= 100 ? 0 : 2)}%</b></span><span class="status st-${st}">${kata}</span></div>`; }).join('')}</div>` : '<div style="color:var(--tx2);font-size:14px">Isi CAR, NPL, CASA, dan lainnya untuk melihat penilaian kesehatan.</div>'}
+      <p class="bk-sumber" style="margin:12px 0 0">Ambang hijau, kuning, merah adalah patokan Hanif Dossier untuk bank besar Indonesia. Bank kredit mikro wajar punya NPL dan NIM lebih tinggi. Bukan nasihat investasi.</p>`;
+  }
+  $('form').addEventListener('input', hitung);
+  const awal = $('isi-bank').querySelector('[data-k]'); if (awal && awal.dataset.k) awal.click(); else hitung();
+})();
+</script>
+<script src="cs.js?v=1" defer></script>
+</body>
+</html>
