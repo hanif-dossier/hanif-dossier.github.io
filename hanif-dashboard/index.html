@@ -329,16 +329,16 @@
       <div class="kartu kekayaan muncul" id="kekayaan" style="--i:2"></div>
     </section>
 
-    <section class="kpi" id="kpi" aria-label="Angka utama usaha"></section>
+    <section class="kpi" id="kpi" aria-label="Angka utama"></section>
 
     <section id="aset" class="aset" aria-labelledby="judul-aset">
       <div class="kartu muncul" style="--i:4">
-        <div class="kepala"><h2 id="judul-aset">Usaha NTA</h2><a class="pil kecil" href="https://mbg.markasku.my.id/#neraca" target="_blank" rel="noopener">Buka neraca</a></div>
-        <div id="rinciNta"></div>
+        <div class="kepala"><h2 id="judul-aset">Aset pribadi</h2><a class="pil kecil" href="https://markasku.my.id/#keuangan" target="_blank" rel="noopener">Buka Markasku</a></div>
+        <div id="rinciPribadi"></div>
       </div>
       <div class="kartu muncul" style="--i:5">
-        <div class="kepala"><h2>Crypto</h2><div style="display:flex;gap:6px;flex-wrap:wrap" id="tombolKoin"></div></div>
-        <div id="koin"></div>
+        <div class="kepala"><h2>Usaha NTA</h2><a class="pil kecil" href="https://mbg.markasku.my.id/#neraca" target="_blank" rel="noopener">Buka neraca</a></div>
+        <div id="rinciNta"></div>
       </div>
     </section>
 
@@ -360,7 +360,7 @@
     </section>
 
     <footer>
-      <span>Diperbarui 12 Oktober 2026. Angka usaha diambil dari aplikasi NTA (posisi terakhir saat Beranda NTA dibuka); harga koin dari CoinGecko.</span>
+      <span>Diperbarui 12 Oktober 2026. Aset pribadi diambil dari Keuangan Markasku; angka usaha dari aplikasi NTA (posisi terakhir saat Beranda NTA dibuka).</span>
       <span>Jadwal sholat dihitung untuk Pontianak dengan metode Kemenag (Subuh 20°, Isya 18°, ihtiyat 2 menit).</span>
       <span>Di HP: buka menu browser, lalu pilih <b>Tambahkan ke layar utama</b> supaya halaman ini jadi ikon seperti aplikasi.</span>
     </footer>
@@ -370,8 +370,9 @@
 <dialog id="dlgSandi">
   <form method="dialog" id="fSandi">
     <h2>Buka angka aset</h2>
-    <p>Pakai sandi aplikasi NTA. Angka hanya tampil di perangkat ini, dan bisa dikunci lagi kapan saja.</p>
-    <input id="iSandi" type="password" autocomplete="current-password" placeholder="Sandi NTA" required>
+    <p>Masuk dengan akun Markasku, sama seperti di markasku.my.id. Angka hanya tampil di perangkat ini dan bisa dikunci lagi kapan saja.</p>
+    <input id="iEmail" type="email" autocomplete="email" placeholder="Email akun Markasku" required style="margin-bottom:8px">
+    <input id="iSandi" type="password" autocomplete="current-password" placeholder="Kata sandi" required>
     <div class="pesan-salah" id="salahSandi"></div>
     <div class="tombol-baris"><button class="pil kecil" value="batal" formnovalidate>Batal</button><button class="pil utama" value="masuk" id="bMasuk">Buka</button></div>
   </form>
@@ -470,35 +471,46 @@ const pengamat = new IntersectionObserver(es => { es.forEach(e => { if (e.isInte
 MENU.forEach(([id]) => pengamat.observe(document.getElementById(id)));
 $('#menu a').classList.add('aktif');
 
-// ---------- sesi NTA (sandi yang sama dengan aplikasi NTA) ----------
+// ---------- sesi: akun Markasku pemilik (Supabase Auth, proyek yang sama dengan NTA) ----------
+// Aset pribadi = dokumen Markasku 'keuangan/aset' (hanya bisa dibaca akunnya sendiri). Ringkasan usaha NTA dibaca lewat
+// fungsi hanif_nta_ringkasan yang hanya menjawab untuk akun pemilik.
 const SB = "https://hzxfheydtrjhizbwbddh.supabase.co", ANON = "sb_publishable_3c_5VhfP4Z9g1dSU9c00HQ_0QkuiHTm";
-async function rpc(fn, args) {
-  const r = await fetch(`${SB}/rest/v1/rpc/${fn}`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${ANON}`, 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
+let SESI = bacaJ('hd-akun', null), PRIBADI = null, NTA = null;
+const terbuka = () => !!(SESI && SESI.refresh);
+async function auth(jenis, isi) {
+  const r = await fetch(`${SB}/auth/v1/token?grant_type=${jenis}`, { method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' }, body: JSON.stringify(isi) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(/invalid/i.test(j.error_description || j.msg || j.error || '') ? 'Email atau sandi salah.' : (j.error_description || j.msg || 'Gagal masuk (' + r.status + ').'));
+  SESI = { akses: j.access_token, refresh: j.refresh_token, sampai: Date.now() + ((j.expires_in || 3600) - 60) * 1000, uid: j.user && j.user.id }; simpanL('hd-akun', SESI); }
+async function tokenSah() { if (!terbuka()) throw new Error('Terkunci.');
+  if (Date.now() > SESI.sampai) { try { await auth('refresh_token', { refresh_token: SESI.refresh }); } catch { kunci_(true); throw new Error('Sesi habis.'); } }
+  return SESI.akses; }
+async function api(jalur, opsi = {}) { const t = await tokenSah();
+  const r = await fetch(`${SB}/rest/v1/${jalur}`, { ...opsi, headers: { apikey: ANON, Authorization: `Bearer ${t}`, 'Content-Type': 'application/json', ...(opsi.headers || {}) } });
+  if (r.status === 401) { kunci_(true); throw new Error('Sesi habis.'); }
   if (!r.ok) throw new Error('Tidak tersambung ke server (' + r.status + ').');
-  return r.json(); }
-let TOKEN = bacaL('hd-sesi'), NTA = null, KOIN = null, HARGA = {}, HARGA_WAKTU = 0, ubahKoin = false, koinSemua = false;
-const terbuka = () => !!TOKEN;
-async function ambil(kunci) { const r = await rpc('mbg_ambil_nilai', { p_token: TOKEN, p_kunci: kunci });
-  if (!r.ok) { if (/Sesi/i.test(r.pesan || '')) kunci_(true); throw new Error(r.pesan || 'Gagal membaca.'); } return r; }
-async function simpan(kunci, nilai) { const r = await rpc('mbg_simpan_nilai', { p_token: TOKEN, p_kunci: kunci, p_nilai: nilai });
-  if (!r.ok) { if (/Sesi/i.test(r.pesan || '')) kunci_(true); throw new Error(r.pesan || 'Gagal menyimpan.'); } }
-function kunci_(habis) { if (TOKEN && !habis) rpc('mbg_keluar', { p_token: TOKEN }).catch(() => {});
-  TOKEN = null; NTA = null; KOIN = null; try { localStorage.removeItem('hd-sesi'); } catch { }
-  if (habis) kabar('Sesi sudah habis. Buka lagi dengan sandi NTA.');
+  const teks = await r.text(); return teks ? JSON.parse(teks) : null; }
+const bacaDok = async jalur => ((await api('markas_dokumen?select=data,diperbarui&path=eq.' + encodeURIComponent(jalur))) || [])[0] || null;
+const tulisDok = (jalur, data) => api('markas_dokumen?on_conflict=user_id,path', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+  body: JSON.stringify({ user_id: SESI.uid, path: jalur, data, diperbarui: data.diperbarui || new Date().toISOString() }) });
+function kunci_(habis) {
+  if (SESI && !habis) fetch(`${SB}/auth/v1/logout?scope=local`, { method: 'POST', headers: { apikey: ANON, Authorization: `Bearer ${SESI.akses}` } }).catch(() => {});
+  SESI = null; PRIBADI = null; NTA = null; try { localStorage.removeItem('hd-akun'); } catch { }
+  if (habis) kabar('Sesi sudah habis. Masuk lagi dengan akun Markasku.');
   gambarGembok(); gambarAset(); }
 function gambarGembok() {
-  $('#gembokSisi').innerHTML = terbuka() ? `${svg('terbuka', 18)}<span>Angka terbuka<small>Ketuk untuk mengunci</small></span>` : `${svg('gembok', 18)}<span>Angka terkunci<small>Buka dengan sandi NTA</small></span>`;
+  $('#gembokSisi').innerHTML = terbuka() ? `${svg('terbuka', 18)}<span>Angka terbuka<small>Ketuk untuk mengunci</small></span>` : `${svg('gembok', 18)}<span>Angka terkunci<small>Masuk dengan akun Markasku</small></span>`;
   $('#gembokAtas').innerHTML = terbuka() ? `${svg('gembok', 16)}Kunci` : `${svg('terbuka', 16)}Buka angka`;
   $('#gembokAtas').classList.toggle('utama', !terbuka()); }
 const tekanGembok = () => terbuka() ? (kunci_(), kabar('Angka dikunci di perangkat ini.')) : bukaDialog();
 $('#gembokSisi').onclick = tekanGembok; $('#gembokAtas').onclick = tekanGembok;
-function bukaDialog() { $('#salahSandi').textContent = ''; $('#iSandi').value = ''; $('#dlgSandi').showModal(); setTimeout(() => $('#iSandi').focus(), 50); }
+function bukaDialog() { $('#salahSandi').textContent = ''; $('#iSandi').value = ''; $('#iEmail').value = bacaL('hd-email', '') || '';
+  $('#dlgSandi').showModal(); setTimeout(() => ($('#iEmail').value ? $('#iSandi') : $('#iEmail')).focus(), 50); }
 $('#fSandi').addEventListener('submit', async e => {
   if (e.submitter && e.submitter.value === 'batal') return;
   e.preventDefault(); const b = $('#bMasuk'); b.disabled = true; $('#salahSandi').textContent = '';
-  try { const r = await rpc('mbg_masuk', { p_sandi: $('#iSandi').value });
-    if (!r.ok) { $('#salahSandi').textContent = r.pesan || 'Sandi salah.'; return; }
-    TOKEN = r.token; simpanL('hd-sesi', TOKEN); $('#dlgSandi').close(); gambarGembok(); kabar('Angka terbuka.'); await muatAset(); muatPapanServer(); }
+  try { const email = $('#iEmail').value.trim(); await auth('password', { email, password: $('#iSandi').value }); simpanL('hd-email', email);
+    $('#dlgSandi').close(); gambarGembok(); kabar('Angka terbuka.'); await muatAset(); muatPapanServer(); }
   catch (err) { $('#salahSandi').textContent = err.message; }
   finally { b.disabled = false; } });
 
@@ -508,122 +520,105 @@ function pasangSamar(on) { document.body.classList.toggle('samar-angka', on); si
 $('#tSamar').onclick = () => pasangSamar(!document.body.classList.contains('samar-angka'));
 pasangSamar(!!bacaL('hd-samar'));
 
-// ---------- aset: data NTA + crypto ----------
+// ---------- aset: Markasku (pribadi) + NTA (usaha) ----------
 async function muatAset() { if (!terbuka()) { gambarAset(); return; }
-  try { const [a, b] = await Promise.all([ambil('ringkasan'), ambil('aset-crypto')]);
-    NTA = a.nilai || null; KOIN = b.nilai || { koin: [] }; }
+  try { const [a, n] = await Promise.all([bacaDok('keuangan/aset'), api('rpc/hanif_nta_ringkasan', { method: 'POST', body: '{}' })]);
+    PRIBADI = a ? a.data : { aset: [], utang: [] }; NTA = n && n.ok ? n.nilai : null; }
   catch (err) { if (terbuka()) kabar(err.message); }
-  gambarAset(); await muatHarga(); gambarAset(); }
-async function muatHarga(paksa) { const ids = (KOIN?.koin || []).map(k => k.id).filter(Boolean);
-  if (!ids.length || (!paksa && Date.now() - HARGA_WAKTU < 60000)) return;
-  try { const r = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids.join(',')}&vs_currencies=idr&include_24hr_change=true`);
-    if (r.ok) { HARGA = await r.json(); HARGA_WAKTU = Date.now(); } }
-  catch { /* harga tidak terambil; tabel tetap tampil tanpa harga */ } }
-function nilaiCrypto() { let total = 0, kemarin = 0;
-  for (const k of KOIN?.koin || []) { const h = HARGA[k.id], j = +k.jumlah || 0; if (!h || !j) continue;
-    const v = j * h.idr; total += v; kemarin += v / (1 + (h.idr_24h_change || 0) / 100); }
-  return { total, ubah: kemarin ? (total / kemarin - 1) * 100 : 0 }; }
-const WARNA_KOIN = ['#F7931A', '#4A54D4', '#0FA3B1', '#E0533D', '#2B6CB0', '#C0841A', '#7C4DBD', '#15905E', '#D04F8A', '#3E7C59', '#8A6D3B', '#5B6B8C', '#B04A31'];
+  gambarAset(); }
+const BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const BLN3 = BLN.map(b => b.slice(0, 3));
 const tglPendek = t => t ? new Date(t + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '-';
+const WARNA_KAT = { 'Kas & Tabungan': 'var(--aksen)', 'Bitcoin': '#F7931A', 'Altcoin': 'var(--c-belajar)', 'Stablecoin': 'var(--c-bisnis)', 'Reksa dana': 'var(--c-mbg)', 'Emas': 'var(--kuning)', 'Saham': 'var(--c-pagi)' };
+const jml = (arr, f = x => +x.nilai || 0) => (arr || []).reduce((n, x) => n + f(x), 0);
+function hitungPribadi() { const P = PRIBADI || {}, aset = jml(P.aset), utang = jml(P.utang), rw = P.riwayat || {};
+  const bulan = Object.keys(rw).sort(), kini = new Date().toLocaleDateString('sv-SE').slice(0, 7), lalu = bulan.filter(b => b < kini).at(-1);
+  return { aset, utang, bersih: aset - utang, lalu, ubah: lalu && rw[lalu] ? (aset / rw[lalu] - 1) * 100 : null, bulan, rw }; }
 
 function gambarAset() {
   const kek = $('#kekayaan');
   if (!terbuka()) {
     kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan bersih</span>${svg('gembok', 18)}</div>
       <div class="nilai-besar rahasia">Rp•••••••</div>
-      <div class="terkunci"><p>Angka aset hanya muncul setelah dibuka dengan sandi NTA. Halaman ini sendiri tidak menyimpan angka apa pun.</p>
+      <div class="terkunci"><p>Angka aset muncul setelah masuk dengan akun Markasku. Halaman ini sendiri tidak menyimpan angka apa pun.</p>
       <button class="pil utama" id="bBukaKek">${svg('terbuka', 16)}Buka angka</button></div>`;
     $('#bBukaKek').onclick = bukaDialog;
     $('#kpi').innerHTML = KPI.map((k, i) => kartuKpi(k, null, i)).join('');
-    $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Buka angka untuk melihat kas, piutang, stok, dan utang usaha.</p>`;
-    $('#tombolKoin').innerHTML = ''; $('#koin').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Jumlah koin dan nilainya tampil setelah angka dibuka.</p>`;
+    $('#rinciPribadi').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Masuk untuk melihat aset dan utang pribadimu dari Markasku.</p>`;
+    $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Masuk untuk melihat kas, piutang, stok, dan utang usaha.</p>`;
     return; }
-  const c = nilaiCrypto(), bersih = NTA ? NTA.bersih : 0, total = Math.max(0, bersih) + c.total;
-  const bagian = [['Usaha NTA', Math.max(0, bersih), 'var(--c-mbg)'], ['Crypto', c.total, 'var(--aksen)']].filter(x => x[1] > 0);
+  const H = hitungPribadi(), bersihNta = NTA ? NTA.bersih : 0, total = H.bersih + bersihNta, kotor = H.aset + Math.max(0, bersihNta);
+  const bagian = [['Aset pribadi', H.aset, 'var(--aksen)'], ['Usaha NTA', Math.max(0, bersihNta), 'var(--c-mbg)']].filter(x => x[1] > 0);
   const labaNaik = NTA && NTA.labaBulan >= 0;
-  kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan bersih</span>${c.total ? `<span class="${c.ubah >= 0 ? 'naik' : 'turun'}" title="perubahan nilai crypto 24 jam">crypto ${c.ubah >= 0 ? '+' : ''}${c.ubah.toFixed(1)}%</span>` : ''}</div>
-    <div><div class="nilai-besar rahasia angka" id="nTotal">${esc(rpRingkas(LALU.nTotal ?? 0))}</div><div class="sub">usaha NTA ditambah crypto · per ${esc(tglPendek(NTA?.tgl))}</div></div>
-    <div class="porsi" id="porsi">${bagian.map(b => `<i style="background:${b[2]}" data-w="${total ? b[1] / total * 100 : 0}"></i>`).join('')}</div>
-    <div class="legenda">${bagian.map(b => `<span><i style="background:${b[2]}"></i>${b[0]} <b class="rahasia">${esc(rpRingkas(b[1]))}</b> · ${total ? Math.round(b[1] / total * 100) : 0}%</span>`).join('') || '<span>Belum ada angka. Buka Beranda NTA sekali supaya ringkasannya terkirim.</span>'}</div>
-    ${NTA ? `<div class="dua-angka"><div><small>Penjualan ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia">${esc(rpRingkas(NTA.omzetBulan || 0))}</b></div>
+  kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan bersih</span>${H.ubah != null ? `<span class="${H.ubah >= 0 ? 'naik' : 'turun'}" title="aset pribadi dibanding akhir ${esc(BLN[+H.lalu.slice(5, 7) - 1])}">pribadi ${H.ubah >= 0 ? '+' : ''}${H.ubah.toFixed(1)}%</span>` : ''}</div>
+    <div><div class="nilai-besar rahasia angka" id="nTotal">${esc(rpRingkas(LALU.nTotal ?? 0))}</div><div class="sub">aset pribadi + usaha NTA − utang pribadi${NTA ? ' · NTA per ' + esc(tglPendek(NTA.tgl)) : ''}</div></div>
+    <div class="porsi" id="porsi">${bagian.map(b => `<i style="background:${b[2]}" data-w="${kotor ? b[1] / kotor * 100 : 0}"></i>`).join('')}</div>
+    <div class="legenda">${bagian.map(b => `<span><i style="background:${b[2]}"></i>${b[0]} <b class="rahasia">${esc(rpRingkas(b[1]))}</b></span>`).join('')}${H.utang ? `<span><i style="background:var(--merah)"></i>Utang pribadi <b class="rahasia">${esc(rpRingkas(-H.utang))}</b></span>` : ''}</div>
+    ${NTA ? `<div class="dua-angka"><div><small>Penjualan NTA ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia">${esc(rpRingkas(NTA.omzetBulan || 0))}</b></div>
       <div><small>Laba bersih ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia" style="color:${labaNaik ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpRingkas(NTA.labaBulan))}</b></div></div>` : ''}`;
   hitungNaik($('#nTotal'), total, rpRingkas);
   requestAnimationFrame(() => requestAnimationFrame(() => $$('#porsi i').forEach(i => i.style.width = i.dataset.w + '%')));
 
-  $('#kpi').innerHTML = KPI.map((k, i) => kartuKpi(k, NTA, i)).join('');
+  $('#kpi').innerHTML = KPI.map((k, i) => kartuKpi(k, { H, N: NTA }, i)).join('');
   $$('#kpi [data-tuju]').forEach(el => hitungNaik(el, +el.dataset.tuju, rpRingkas));
+
+  // aset pribadi dari Markasku
+  const daftar = [...(PRIBADI?.aset || [])].filter(a => +a.nilai).sort((a, b) => b.nilai - a.nilai), kosong = (PRIBADI?.aset || []).filter(a => !+a.nilai);
+  $('#rinciPribadi').innerHTML = !daftar.length && !H.utang ? `<p class="catatan-kecil" style="margin:0">Belum ada aset di Markasku. Isi di halaman Keuangan Markasku.</p>` : `
+    ${grafikRiwayat(H)}
+    <div class="rinci">${daftar.map(a => { const w = WARNA_KAT[a.kategori] || 'var(--c-alat)';
+      return `<div class="bar-baris"><div class="bar-atas"><span>${esc(a.nama)} <small style="color:var(--redup)">· ${esc(a.kategori || '')}${a.kas ? ', dari arus kas' : ''}</small></span><b class="rahasia angka">${esc(rpPenuh(a.nilai))}</b></div><div class="trek"><i style="--w:${w}" data-w="${H.aset ? a.nilai / H.aset * 100 : 0}"></i></div></div>`; }).join('')}
+      <div class="bar-baris" style="border-top:1px solid var(--garis);padding-top:12px"><div class="bar-atas"><span>Jumlah aset pribadi</span><b class="rahasia angka">${esc(rpPenuh(H.aset))}</b></div></div>
+      ${(PRIBADI?.utang || []).filter(u => +u.nilai).map(u => `<div class="bar-baris"><div class="bar-atas"><span style="color:var(--kuning)">Dikurangi ${esc(String(u.nama || 'utang').toLowerCase())}</span><b class="rahasia angka" style="color:var(--kuning)">${esc(rpPenuh(-u.nilai))}</b></div></div>`).join('')}
+      <div class="bar-baris"><div class="bar-atas"><span><b>Bersih pribadi</b></span><b class="rahasia angka" style="color:${H.bersih >= 0 ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpPenuh(H.bersih))}</b></div></div></div>
+    <p class="catatan-kecil">Angka dari halaman Keuangan Markasku${PRIBADI?.diperbarui ? ', terakhir diubah ' + esc(new Date(PRIBADI.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })) : ''}.${kosong.length ? ' ' + esc(kosong.map(a => a.nama).join(', ')) + ' masih Rp0.' : ''} Nilai koin mengikuti yang diketik di Markasku.</p>`;
 
   if (!NTA) $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Ringkasan belum ada. Buka Beranda aplikasi NTA sekali, angkanya akan terkirim ke sini.</p>`;
   else { const isi = [['Kas dan bank', NTA.kas + NTA.bank, 'var(--aksen)'], ['Piutang dapur dan lainnya', NTA.piutang, 'var(--c-bisnis)'], ['Stok barang', NTA.stok, 'var(--c-minyak)'], ...(NTA.asetTetap ? [['Aset tetap', NTA.asetTetap, 'var(--c-alat)']] : [])];
     $('#rinciNta').innerHTML = `<div class="rinci">${isi.map(([n, v, w]) => `<div class="bar-baris"><div class="bar-atas"><span>${n}</span><b class="rahasia angka">${esc(rpPenuh(v))}</b></div><div class="trek"><i style="--w:${w}" data-w="${NTA.aset ? Math.max(0, v) / NTA.aset * 100 : 0}"></i></div></div>`).join('')}
       <div class="bar-baris" style="border-top:1px solid var(--garis);padding-top:12px"><div class="bar-atas"><span>Jumlah aset</span><b class="rahasia angka">${esc(rpPenuh(NTA.aset))}</b></div></div>
-      <div class="bar-baris"><div class="bar-atas"><span style="color:var(--kuning)">Dikurangi utang</span><b class="rahasia angka" style="color:var(--kuning)">${esc(rpPenuh(-NTA.utang))}</b></div></div>
+      <div class="bar-baris"><div class="bar-atas"><span style="color:var(--kuning)">Dikurangi utang usaha</span><b class="rahasia angka" style="color:var(--kuning)">${esc(rpPenuh(-NTA.utang))}</b></div></div>
       <div class="bar-baris"><div class="bar-atas"><span><b>Kekayaan bersih usaha</b></span><b class="rahasia angka" style="color:var(--hijau)">${esc(rpPenuh(NTA.bersih))}</b></div></div></div>
-      <p class="catatan-kecil">Posisi per ${esc(new Date(NTA.tgl + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }))}${NTA.opname ? ', saldo dari opname Sabtu ' + esc(tglPendek(NTA.opname)) : ''}. Ikut berubah tiap Beranda NTA dibuka.</p>`;
-    requestAnimationFrame(() => requestAnimationFrame(() => $$('#rinciNta .trek i').forEach(i => i.style.width = i.dataset.w + '%'))); }
-  gambarKoin(c); }
+      <p class="catatan-kecil">Posisi per ${esc(new Date(NTA.tgl + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }))}${NTA.opname ? ', saldo dari opname Sabtu ' + esc(tglPendek(NTA.opname)) : ''}. Ikut berubah tiap Beranda NTA dibuka.</p>`; }
+  requestAnimationFrame(() => requestAnimationFrame(() => $$('#aset .trek i').forEach(i => i.style.width = i.dataset.w + '%'))); }
 
-const BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+// garis perjalanan aset pribadi per bulan (riwayat yang dipotret Markasku)
+function grafikRiwayat(H) { const b = H.bulan; if (b.length < 2) return '';
+  const v = b.map(k => H.rw[k]), maks = Math.max(...v) * 1.12 || 1, W = 320, T = 86, x = i => 16 + i * (W - 32) / (b.length - 1), y = n => T - 18 - n / maks * (T - 30);
+  const jalur = v.map((n, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(n).toFixed(1)).join('');
+  return `<svg viewBox="0 0 ${W} ${T}" style="width:100%;height:auto;display:block;margin:-4px 0 12px" role="img" aria-label="Perjalanan aset pribadi per bulan">
+    <defs><linearGradient id="gRw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--aksen)" stop-opacity=".28"/><stop offset="1" stop-color="var(--aksen)" stop-opacity="0"/></linearGradient></defs>
+    <path d="${jalur}L${x(v.length - 1).toFixed(1)} ${T - 18}L${x(0).toFixed(1)} ${T - 18}Z" fill="url(#gRw)"/>
+    <path d="${jalur}" fill="none" stroke="var(--aksen)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    ${v.map((n, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(n).toFixed(1)}" r="3.4" fill="var(--kartu)" stroke="var(--aksen)" stroke-width="2"><title>${BLN[+b[i].slice(5, 7) - 1]} ${b[i].slice(0, 4)}: ${rpPenuh(n)}</title></circle>
+      <text x="${x(i).toFixed(1)}" y="${T - 3}" text-anchor="middle" font-size="10" fill="var(--redup)">${BLN3[+b[i].slice(5, 7) - 1]}</text>`).join('')}</svg>`; }
+
 const KPI = [
-  { judul: 'Kas dan bank', ik: 'bank', w: 'var(--aksen)', n: x => x.kas + x.bank, ket: () => 'uang yang siap dipakai' },
-  { judul: 'Piutang', ik: 'tagihan', w: 'var(--c-bisnis)', n: x => x.piutang, ket: () => 'belum dibayar dapur dan lainnya' },
-  { judul: 'Stok barang', ik: 'kotak', w: 'var(--c-minyak)', n: x => x.stok, ket: () => 'nilai modal barang di gudang' },
-  { judul: 'Utang', ik: 'utang', w: 'var(--merah)', n: x => x.utang, ket: x => x.utang ? 'yang masih harus dibayar' : 'tidak ada utang' },
+  { judul: 'Aset pribadi', ik: 'dompet', w: 'var(--aksen)', n: x => x.H.aset, ket: x => x.H.ubah != null ? `${x.H.ubah >= 0 ? 'naik' : 'turun'} ${Math.abs(x.H.ubah).toFixed(1)}% dari ${BLN[+x.H.lalu.slice(5, 7) - 1]}` : 'dari Markasku' },
+  { judul: 'Utang pribadi', ik: 'utang', w: 'var(--merah)', n: x => x.H.utang, ket: x => x.H.utang ? 'yang masih harus dibayar' : 'tidak ada utang' },
+  { judul: 'Kas dan bank usaha', ik: 'bank', w: 'var(--c-mbg)', n: x => x.N ? x.N.kas + x.N.bank : 0, ket: x => x.N ? 'uang NTA yang siap dipakai' : 'ringkasan NTA belum ada' },
+  { judul: 'Piutang usaha', ik: 'tagihan', w: 'var(--c-bisnis)', n: x => x.N ? x.N.piutang : 0, ket: x => x.N ? 'belum dibayar dapur dan lainnya' : 'ringkasan NTA belum ada' },
 ];
 function kartuKpi(k, x, i) { const ada = x != null;
   return `<div class="kartu muncul" style="--w:${k.w};--i:${3 + i * .5}"><div class="atasan"><span class="label">${k.judul}</span><span class="ik">${svg(k.ik, 19)}</span></div>
     <div class="nilai rahasia angka" ${ada ? `data-k="kpi${i}" data-tuju="${k.n(x)}"` : ''}>${ada ? esc(rpRingkas(LALU['kpi' + i] ?? 0)) : 'Rp•••••'}</div><small>${ada ? k.ket(x) : 'terkunci'}</small></div>`; }
 
-// "0,5" dan "0.5" sama-sama setengah; titik dianggap pemisah ribuan hanya kalau ada koma atau titiknya lebih dari satu
-const angkaKoin = t => { let x = String(t).replace(/\s/g, ''); if (!x) return null;
-  if (x.includes(',')) x = x.replace(/\./g, '').replace(',', '.'); else if ((x.match(/\./g) || []).length > 1) x = x.replace(/\./g, '');
-  const v = +x; return isFinite(v) && v > 0 ? v : 0; };
-function gambarKoin(c) {
-  const daftar = KOIN?.koin || [], adaJumlah = daftar.some(k => +k.jumlah > 0);
-  $('#tombolKoin').innerHTML = ubahKoin ? `<button class="pil kecil" id="bBatalKoin">Batal</button><button class="pil kecil utama" id="bSimpanKoin" style="background:var(--aksen);color:#fff">Simpan jumlah</button>`
-    : `<button class="pil kecil" id="bSegarKoin" title="Ambil harga terbaru">${svg('segar', 14)}Harga</button><button class="pil kecil" id="bUbahKoin">${svg('pensil', 14)}Ubah jumlah</button>`;
-  const semua = [...daftar].map((k, i) => ({ ...k, i, h: HARGA[k.id], v: (+k.jumlah || 0) * (HARGA[k.id]?.idr || 0) })).sort((a, b) => ubahKoin ? a.i - b.i : b.v - a.v || a.i - b.i);
-  const dilipat = !ubahKoin && adaJumlah && !koinSemua ? semua.filter(k => !(+k.jumlah > 0)).length : 0;
-  const urut = dilipat ? semua.filter(k => +k.jumlah > 0) : semua;
-  $('#koin').innerHTML = `${!adaJumlah && !ubahKoin ? `<p class="catatan-kecil" style="margin:0 0 12px">Jumlah koin belum diisi. Ketuk <b>Ubah jumlah</b>, isi berapa yang kamu pegang, nilainya dihitung otomatis dari harga hari ini.</p>` : ''}
-    <div class="gulir"><table class="tabel-koin"><thead><tr><th>Koin</th><th>Jumlah</th><th class="sembunyi-hp">Harga</th><th>24 jam</th><th>Nilai</th></tr></thead><tbody>
-    ${urut.map(k => { const ch = k.h?.idr_24h_change, warna = WARNA_KOIN[k.i % WARNA_KOIN.length];
-      return `<tr class="${k.v ? '' : 'nol'}"><td><div class="koin"><span class="lencana${k.simbol.length > 3 ? ' panjang' : ''}" style="background:${warna}">${esc(k.simbol.slice(0, 4))}</span><span><b>${esc(k.simbol)}</b><small>${esc(k.nama)}</small></span></div></td>
-        <td>${ubahKoin ? `<input inputmode="decimal" data-i="${k.i}" value="${k.jumlah ?? ''}" placeholder="0" aria-label="Jumlah ${esc(k.simbol)}">` : `<span class="rahasia">${k.jumlah ? (+k.jumlah).toLocaleString('id-ID', { maximumFractionDigits: 8 }) : '-'}</span>`}</td>
-        <td class="sembunyi-hp">${k.h ? esc(hargaKoin(k.h.idr)) : '-'}</td>
-        <td>${ch == null ? '-' : `<span class="${ch >= 0 ? 'naik' : 'turun'}">${ch >= 0 ? '+' : ''}${ch.toFixed(1)}%</span>`}</td>
-        <td><b class="rahasia">${k.v ? esc(rpRingkas(k.v)) : '-'}</b></td></tr>`; }).join('')}
-    </tbody></table></div>
-    ${dilipat || (koinSemua && adaJumlah && !ubahKoin) ? `<button class="pil kecil lipat-koin" id="bLipatKoin">${koinSemua ? 'Sembunyikan koin yang kosong' : `Lihat ${dilipat} koin lain yang belum diisi`}</button>` : ''}
-    <p class="catatan-kecil">Jumlah seluruhnya <b class="rahasia">${esc(rpPenuh(c.total))}</b>${c.total ? ` · <span class="${c.ubah >= 0 ? 'naik' : 'turun'}">${c.ubah >= 0 ? '+' : ''}${c.ubah.toFixed(1)}% sehari</span>` : ''}${HARGA_WAKTU ? ' · harga ' + new Date(HARGA_WAKTU).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : ''}</p>`;
-  if (ubahKoin) {
-    $('#bBatalKoin').onclick = () => { ubahKoin = false; gambarAset(); };
-    $('#bSimpanKoin').onclick = async () => { const baru = structuredClone(KOIN);
-      $$('#koin input[data-i]').forEach(inp => { baru.koin[+inp.dataset.i].jumlah = angkaKoin(inp.value); });
-      baru.diubah = new Date().toISOString();
-      try { await simpan('aset-crypto', baru); KOIN = baru; ubahKoin = false; gambarAset(); kabar('Jumlah koin tersimpan.'); } catch (err) { kabar(err.message); } };
-  } else {
-    $('#bLipatKoin')?.addEventListener('click', () => { koinSemua = !koinSemua; gambarAset(); });
-    $('#bUbahKoin').onclick = () => { ubahKoin = true; gambarAset(); $('#koin input')?.focus(); };
-    $('#bSegarKoin').onclick = async () => { await muatHarga(true); gambarAset(); kabar('Harga diperbarui.'); };
-  } }
-
 // ---------- papan tugas (kanban) ----------
-// Tersimpan di perangkat ini; kalau angka sedang terbuka ikut disimpan ke server (kunci 'papan') supaya sama di HP dan laptop.
+// Tersimpan di perangkat ini; kalau angka sedang terbuka ikut disimpan ke dokumen Markasku 'dasbor/papan' supaya sama di HP dan laptop.
 const KOLOM = [['rencana', 'Mau dikerjakan', 'var(--aksen)'], ['jalan', 'Sedang jalan', 'var(--kuning)'], ['selesai', 'Selesai', 'var(--hijau)']];
 const TAG = [['NTA', 'var(--c-mbg)'], ['Minyak', 'var(--c-minyak)'], ['Dossier', 'var(--c-bisnis)'], ['Pribadi', 'var(--c-belajar)']];
 const idBaru = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 let PAPAN = bacaJ('hd-papan', null) || { diubah: '2026-10-12T00:00:00.000Z', kartu: [
-  { id: 'a1', kolom: 'rencana', teks: 'Isi jumlah koin di bagian Crypto', tag: 'Pribadi' },
+  { id: 'a1', kolom: 'rencana', teks: 'Perbarui nilai koin di Keuangan Markasku', tag: 'Pribadi' },
   { id: 'a2', kolom: 'rencana', teks: 'Opname saldo bank dan tunai hari Sabtu', tag: 'NTA' },
   { id: 'a3', kolom: 'jalan', teks: 'Tagih piutang dapur yang sudah lewat seminggu', tag: 'NTA' },
   { id: 'a4', kolom: 'selesai', teks: 'Baca briefing pasar pagi', tag: 'Dossier' } ] };
 function simpanPapan() { PAPAN.diubah = new Date().toISOString(); simpanL('hd-papan', PAPAN);
-  if (terbuka()) { clearTimeout(simpanPapan.t); simpanPapan.t = setTimeout(() => simpan('papan', PAPAN).catch(() => {}), 700); } }
+  if (terbuka()) { clearTimeout(simpanPapan.t); simpanPapan.t = setTimeout(() => tulisDok('dasbor/papan', PAPAN).catch(() => {}), 700); } }
 async function muatPapanServer() { if (!terbuka()) return;
-  try { const r = await ambil('papan'); const s = r.nilai;
+  try { const d = await bacaDok('dasbor/papan'), s = d && d.data;
     if (s && s.kartu && (!PAPAN.diubah || s.diubah > PAPAN.diubah)) { PAPAN = s; simpanL('hd-papan', PAPAN); gambarPapan(); }
-    else if (!s || s.diubah < PAPAN.diubah) simpan('papan', PAPAN).catch(() => {}); } catch { } }
+    else if (!s || s.diubah < PAPAN.diubah) tulisDok('dasbor/papan', PAPAN).catch(() => {}); } catch { } }
 const warnaTag = t => (TAG.find(x => x[0] === t) || TAG[3])[1];
 function htmlTugas(k) { const iK = KOLOM.findIndex(c => c[0] === k.kolom);
   return `<div class="tugas${k.kolom === 'selesai' ? ' selesai' : ''}" data-id="${k.id}" style="--k:${KOLOM[iK][2]}"><p>${esc(k.teks)}</p>
@@ -841,8 +836,6 @@ faseSekarang = tentukanFase(sekarangWIB().menit, (() => { const w = sekarangWIB(
 gambarDaftar(); perbarui(); setInterval(perbarui, 20000);
 gambarGembok(); gambarAset(); setTimeout(() => document.body.classList.add('tenang'), 1600);
 if (terbuka()) { muatAset(); muatPapanServer(); }
-// harga koin diperbarui tiap 2 menit selama halaman terbuka
-setInterval(async () => { if (terbuka() && !ubahKoin && !document.hidden) { await muatHarga(); gambarAset(); } }, 120000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && terbuka()) muatAset(); });
 // Di hanif-dossier.github.io/hanif-dashboard/ halaman ini jadi aplikasi (PWA): service worker menyimpan salinannya supaya tetap terbuka saat sinyal jelek.
 if ('serviceWorker' in navigator && location.hostname.endsWith('github.io')) navigator.serviceWorker.register('sw.js').catch(() => {});

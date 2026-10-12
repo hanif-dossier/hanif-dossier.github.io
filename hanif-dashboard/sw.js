@@ -1,5 +1,5 @@
 // Service worker Hanif Dashboard: ambil dari jaringan dulu, salinan terakhir dipakai kalau offline.
-const CACHE = 'hanif-dashboard-v2';
+const CACHE = 'hanif-dashboard-v3';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
 self.addEventListener('fetch', e => {
