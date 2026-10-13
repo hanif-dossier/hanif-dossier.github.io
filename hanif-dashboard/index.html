@@ -530,7 +530,9 @@ async function muatAset() { if (!terbuka()) { gambarAset(); return; }
   catch (err) { if (terbuka()) kabar(err.message); }
   gambarAset();
   // saldo crypto langsung dari bursa (fungsi aset-dompet, kunci Bybit baca-saja milik pemilik)
-  try { const d = await fetch(`${SB}/functions/v1/aset-dompet`, { method: 'POST', headers: { Authorization: 'Bearer ' + await tokenSah(), apikey: ANON, 'x-region': 'ap-southeast-1' } }).then(r => r.json());
+  // sinkron: nilai crypto di Keuangan Markasku ikut disamakan dengan saldo sungguhan (data lama di Markasku diperbarui)
+  try { const d = await fetch(`${SB}/functions/v1/aset-dompet`, { method: 'POST', headers: { Authorization: 'Bearer ' + await tokenSah(), apikey: ANON, 'x-region': 'ap-southeast-1', 'Content-Type': 'application/json' }, body: JSON.stringify({ sinkron: true }) }).then(r => r.json());
+    if (d?.sinkron?.diubah?.length) { const a2 = await bacaDok('keuangan/aset').catch(() => null); if (a2) PRIBADI = a2.data; }
     DOMPET = d && d.ok && d.siap ? d : null; DOMPET_PESAN = d && !d.siap ? d.pesan || '' : d && !d.ok ? 'Bybit: ' + (d.pesan || 'gagal dibaca') : ''; }
   catch { DOMPET = null; DOMPET_PESAN = 'Saldo bursa gagal dibaca.'; }
   gambarAset(); }
