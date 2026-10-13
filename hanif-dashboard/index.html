@@ -16,6 +16,7 @@
 <title>My Little Brain</title>
 </head>
 <body>
+<title>My Little Brain</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
@@ -527,13 +528,29 @@ async function muatAset() { if (!terbuka()) { gambarAset(); return; }
   try { const [a, n] = await Promise.all([bacaDok('keuangan/aset'), api('rpc/hanif_nta_ringkasan', { method: 'POST', body: '{}' })]);
     PRIBADI = a ? a.data : { aset: [], utang: [] }; NTA = n && n.ok ? n.nilai : null; }
   catch (err) { if (terbuka()) kabar(err.message); }
+  gambarAset();
+  // saldo crypto langsung dari bursa (fungsi aset-dompet, kunci Bybit baca-saja milik pemilik)
+  try { const d = await fetch(`${SB}/functions/v1/aset-dompet`, { method: 'POST', headers: { Authorization: 'Bearer ' + await tokenSah(), apikey: ANON, 'x-region': 'ap-southeast-1' } }).then(r => r.json());
+    DOMPET = d && d.ok && d.siap ? d : null; DOMPET_PESAN = d && !d.siap ? d.pesan || '' : d && !d.ok ? 'Bybit: ' + (d.pesan || 'gagal dibaca') : ''; }
+  catch { DOMPET = null; DOMPET_PESAN = 'Saldo bursa gagal dibaca.'; }
   gambarAset(); }
+// Gabungan aset: koin yang ada di bursa memakai saldo bursa x harga sekarang (bukan angka ketikan); koin lain, kas, dan
+// aset non-crypto tetap dari Markasku. Koin bursa yang belum ada di Markasku ikut ditambahkan.
+let DOMPET = null, DOMPET_PESAN = '';
+const KAT_CRYPTO = new Set(['Bitcoin', 'Altcoin', 'Stablecoin', 'Crypto']);
+function asetGabung() { const P = PRIBADI?.aset || [], D = Object.fromEntries((DOMPET?.koin || []).filter(k => k.nilaiIdr > 0).map(k => [k.simbol, k])), dipakai = new Set();
+  const isi = P.map(a => { const k = KAT_CRYPTO.has(a.kategori) ? D[String(a.nama || '').trim().toUpperCase()] : null;
+    if (k) { dipakai.add(k.simbol); return { nama: a.nama, kategori: a.kategori, nilai: Math.round(k.nilaiIdr), sumber: 'bursa', ket: `${(+k.jumlah).toLocaleString('id-ID', { maximumFractionDigits: 8 })} ${k.simbol} di ${DOMPET.sumber} × $${(+k.hargaUsd).toLocaleString('en-US', { maximumFractionDigits: 4 })}` }; }
+    return { ...a, nilai: +a.nilai || 0, sumber: KAT_CRYPTO.has(a.kategori) ? 'ketik' : 'markasku' }; });
+  for (const k of Object.values(D)) if (!dipakai.has(k.simbol)) isi.push({ nama: k.simbol, kategori: k.simbol === 'BTC' ? 'Bitcoin' : ['USDT', 'USDC'].includes(k.simbol) ? 'Stablecoin' : 'Crypto', nilai: Math.round(k.nilaiIdr), sumber: 'bursa',
+    ket: `${(+k.jumlah).toLocaleString('id-ID', { maximumFractionDigits: 8 })} ${k.simbol} di ${DOMPET.sumber}` });
+  return isi; }
 const BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 const BLN3 = BLN.map(b => b.slice(0, 3));
 const tglPendek = t => t ? new Date(t + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '-';
 const WARNA_KAT = { 'Kas & Tabungan': 'var(--aksen)', 'Bitcoin': '#F7931A', 'Altcoin': 'var(--c-belajar)', 'Stablecoin': 'var(--c-bisnis)', 'Reksa dana': 'var(--c-mbg)', 'Emas': 'var(--kuning)', 'Saham': 'var(--c-pagi)' };
 const jml = (arr, f = x => +x.nilai || 0) => (arr || []).reduce((n, x) => n + f(x), 0);
-function hitungPribadi() { const P = PRIBADI || {}, aset = jml(P.aset), utang = jml(P.utang), rw = P.riwayat || {};
+function hitungPribadi() { const P = PRIBADI || {}, aset = jml(asetGabung()), utang = jml(P.utang), rw = P.riwayat || {};
   const bulan = Object.keys(rw).sort(), kini = new Date().toLocaleDateString('sv-SE').slice(0, 7), lalu = bulan.filter(b => b < kini).at(-1);
   return { aset, utang, bersih: aset - utang, lalu, ubah: lalu && rw[lalu] ? (aset / rw[lalu] - 1) * 100 : null, bulan, rw }; }
 
@@ -565,15 +582,15 @@ function gambarAset() {
   $$('#kpi [data-tuju]').forEach(el => hitungNaik(el, +el.dataset.tuju, rpRingkas));
 
   // aset pribadi dari Markasku
-  const daftar = [...(PRIBADI?.aset || [])].filter(a => +a.nilai).sort((a, b) => b.nilai - a.nilai), kosong = (PRIBADI?.aset || []).filter(a => !+a.nilai);
+  const semua = asetGabung(), daftar = semua.filter(a => +a.nilai).sort((a, b) => b.nilai - a.nilai), kosong = semua.filter(a => !+a.nilai), adaKetik = daftar.some(a => a.sumber === 'ketik');
   $('#rinciPribadi').innerHTML = !daftar.length && !H.utang ? `<p class="catatan-kecil" style="margin:0">Belum ada aset di Markasku. Isi di halaman Keuangan Markasku.</p>` : `
     ${grafikRiwayat(H)}
     <div class="rinci">${daftar.map(a => { const w = WARNA_KAT[a.kategori] || 'var(--c-alat)';
-      return `<div class="bar-baris"><div class="bar-atas"><span>${esc(a.nama)} <small style="color:var(--redup)">· ${esc(a.kategori || '')}${a.kas ? ', dari arus kas' : ''}</small></span><b class="rahasia angka">${esc(rpPenuh(a.nilai))}</b></div><div class="trek"><i style="--w:${w}" data-w="${H.aset ? a.nilai / H.aset * 100 : 0}"></i></div></div>`; }).join('')}
+      return `<div class="bar-baris"><div class="bar-atas"><span>${esc(a.nama)} <small style="color:var(--redup)">· ${a.sumber === 'bursa' ? esc(a.ket) : esc(a.kategori || '') + (a.kas ? ', dari arus kas' : '') + (a.sumber === 'ketik' ? ', diketik di Markasku' : '')}</small>${a.sumber === 'bursa' ? ' <small class="naik" style="font-size:10.5px">live</small>' : ''}</span><b class="rahasia angka">${esc(rpPenuh(a.nilai))}</b></div><div class="trek"><i style="--w:${w}" data-w="${H.aset ? a.nilai / H.aset * 100 : 0}"></i></div></div>`; }).join('')}
       <div class="bar-baris" style="border-top:1px solid var(--garis);padding-top:12px"><div class="bar-atas"><span>Jumlah aset pribadi</span><b class="rahasia angka">${esc(rpPenuh(H.aset))}</b></div></div>
       ${(PRIBADI?.utang || []).filter(u => +u.nilai).map(u => `<div class="bar-baris"><div class="bar-atas"><span style="color:var(--kuning)">Dikurangi ${esc(String(u.nama || 'utang').toLowerCase())}</span><b class="rahasia angka" style="color:var(--kuning)">${esc(rpPenuh(-u.nilai))}</b></div></div>`).join('')}
       <div class="bar-baris"><div class="bar-atas"><span><b>Bersih pribadi</b></span><b class="rahasia angka" style="color:${H.bersih >= 0 ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpPenuh(H.bersih))}</b></div></div></div>
-    <p class="catatan-kecil">Angka dari halaman Keuangan Markasku${PRIBADI?.diperbarui ? ', terakhir diubah ' + esc(new Date(PRIBADI.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })) : ''}.${kosong.length ? ' ' + esc(kosong.map(a => a.nama).join(', ')) + ' masih Rp0.' : ''} Nilai koin mengikuti yang diketik di Markasku.</p>`;
+    <p class="catatan-kecil">${DOMPET ? `Koin bertanda live dihitung dari saldo ${esc(DOMPET.sumber)} dan harga ${esc(new Date(DOMPET.waktu).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }))} (kurs $1 = Rp${Math.round(DOMPET.kurs).toLocaleString('id-ID')}). ` : DOMPET_PESAN ? esc(DOMPET_PESAN) + ' ' : ''}${adaKetik ? 'Koin lain masih memakai angka yang diketik di Markasku. ' : ''}Kas, aset lain, dan utang dari Keuangan Markasku${PRIBADI?.diperbarui ? ' (diubah ' + esc(new Date(PRIBADI.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })) + ')' : ''}.${kosong.length ? ' ' + esc(kosong.map(a => a.nama).join(', ')) + ' masih Rp0.' : ''}</p>`;
 
   if (!NTA) $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Ringkasan belum ada. Buka Beranda aplikasi NTA sekali, angkanya akan terkirim ke sini.</p>`;
   else { const isi = [['Kas dan bank', NTA.kas + NTA.bank, 'var(--aksen)'], ['Piutang dapur dan lainnya', NTA.piutang, 'var(--c-bisnis)'], ['Stok barang', NTA.stok, 'var(--c-minyak)'], ...(NTA.asetTetap ? [['Aset tetap', NTA.asetTetap, 'var(--c-alat)']] : [])];
