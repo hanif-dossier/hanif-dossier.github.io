@@ -538,12 +538,13 @@ async function muatAset() { if (!terbuka()) { gambarAset(); return; }
 // aset non-crypto tetap dari Markasku. Koin bursa yang belum ada di Markasku ikut ditambahkan.
 let DOMPET = null, DOMPET_PESAN = '';
 const KAT_CRYPTO = new Set(['Bitcoin', 'Altcoin', 'Stablecoin', 'Crypto']);
+const jmlKoin = n => (+n).toLocaleString('id-ID', { maximumFractionDigits: n >= 100 ? 2 : n >= 1 ? 4 : 8 });
+const ketKoin = k => `${jmlKoin(k.jumlah)} ${k.simbol} · ` + Object.entries(k.akun || {}).sort((a, b) => b[1] - a[1]).map(([a, v]) => Object.keys(k.akun).length > 1 ? `${a} ${jmlKoin(v)}` : a).join(', ');
 function asetGabung() { const P = PRIBADI?.aset || [], D = Object.fromEntries((DOMPET?.koin || []).filter(k => k.nilaiIdr > 0).map(k => [k.simbol, k])), dipakai = new Set();
   const isi = P.map(a => { const k = KAT_CRYPTO.has(a.kategori) ? D[String(a.nama || '').trim().toUpperCase()] : null;
-    if (k) { dipakai.add(k.simbol); return { nama: a.nama, kategori: a.kategori, nilai: Math.round(k.nilaiIdr), sumber: 'bursa', ket: `${(+k.jumlah).toLocaleString('id-ID', { maximumFractionDigits: 8 })} ${k.simbol} di ${DOMPET.sumber} × $${(+k.hargaUsd).toLocaleString('en-US', { maximumFractionDigits: 4 })}` }; }
+    if (k) { dipakai.add(k.simbol); return { nama: a.nama, kategori: a.kategori, nilai: Math.round(k.nilaiIdr), sumber: 'bursa', ket: ketKoin(k) }; }
     return { ...a, nilai: +a.nilai || 0, sumber: KAT_CRYPTO.has(a.kategori) ? 'ketik' : 'markasku' }; });
-  for (const k of Object.values(D)) if (!dipakai.has(k.simbol)) isi.push({ nama: k.simbol, kategori: k.simbol === 'BTC' ? 'Bitcoin' : ['USDT', 'USDC'].includes(k.simbol) ? 'Stablecoin' : 'Crypto', nilai: Math.round(k.nilaiIdr), sumber: 'bursa',
-    ket: `${(+k.jumlah).toLocaleString('id-ID', { maximumFractionDigits: 8 })} ${k.simbol} di ${DOMPET.sumber}` });
+  for (const k of Object.values(D)) if (!dipakai.has(k.simbol)) isi.push({ nama: k.simbol, kategori: k.simbol === 'BTC' ? 'Bitcoin' : ['USDT', 'USDC'].includes(k.simbol) ? 'Stablecoin' : 'Crypto', nilai: Math.round(k.nilaiIdr), sumber: 'bursa', ket: ketKoin(k) });
   return isi; }
 const BLN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 const BLN3 = BLN.map(b => b.slice(0, 3));
@@ -590,7 +591,7 @@ function gambarAset() {
       <div class="bar-baris" style="border-top:1px solid var(--garis);padding-top:12px"><div class="bar-atas"><span>Jumlah aset pribadi</span><b class="rahasia angka">${esc(rpPenuh(H.aset))}</b></div></div>
       ${(PRIBADI?.utang || []).filter(u => +u.nilai).map(u => `<div class="bar-baris"><div class="bar-atas"><span style="color:var(--kuning)">Dikurangi ${esc(String(u.nama || 'utang').toLowerCase())}</span><b class="rahasia angka" style="color:var(--kuning)">${esc(rpPenuh(-u.nilai))}</b></div></div>`).join('')}
       <div class="bar-baris"><div class="bar-atas"><span><b>Bersih pribadi</b></span><b class="rahasia angka" style="color:${H.bersih >= 0 ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpPenuh(H.bersih))}</b></div></div></div>
-    <p class="catatan-kecil">${DOMPET ? `Koin bertanda live dihitung dari saldo ${esc(DOMPET.sumber)} dan harga ${esc(new Date(DOMPET.waktu).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }))} (kurs $1 = Rp${Math.round(DOMPET.kurs).toLocaleString('id-ID')}). ` : DOMPET_PESAN ? esc(DOMPET_PESAN) + ' ' : ''}${adaKetik ? 'Koin lain masih memakai angka yang diketik di Markasku. ' : ''}Kas, aset lain, dan utang dari Keuangan Markasku${PRIBADI?.diperbarui ? ' (diubah ' + esc(new Date(PRIBADI.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })) + ')' : ''}.${kosong.length ? ' ' + esc(kosong.map(a => a.nama).join(', ')) + ' masih Rp0.' : ''}</p>`;
+    <p class="catatan-kecil">${DOMPET ? `Koin bertanda live dihitung dari saldo sungguhan (${esc(DOMPET.sumber)}, termasuk yang sedang di-staking) dan harga CoinGecko pukul ${esc(new Date(DOMPET.waktu).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }))} (kurs $1 = Rp${Math.round(DOMPET.kurs).toLocaleString('id-ID')}).${DOMPET.galat?.length ? ' Belum terbaca: ' + esc(DOMPET.galat.join('; ')) + '.' : ''} ` : DOMPET_PESAN ? esc(DOMPET_PESAN) + ' ' : ''}${adaKetik ? 'Koin lain masih memakai angka yang diketik di Markasku. ' : ''}Kas, aset lain, dan utang dari Keuangan Markasku${PRIBADI?.diperbarui ? ' (diubah ' + esc(new Date(PRIBADI.diperbarui).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' })) + ')' : ''}.${kosong.length ? ' ' + esc(kosong.map(a => a.nama).join(', ')) + ' masih Rp0.' : ''}</p>`;
 
   if (!NTA) $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Ringkasan belum ada. Buka Beranda aplikasi NTA sekali, angkanya akan terkirim ke sini.</p>`;
   else { const isi = [['Kas dan bank', NTA.kas + NTA.bank, 'var(--aksen)'], ['Piutang dapur dan lainnya', NTA.piutang, 'var(--c-bisnis)'], ['Stok barang', NTA.stok, 'var(--c-minyak)'], ...(NTA.asetTetap ? [['Aset tetap', NTA.asetTetap, 'var(--c-alat)']] : [])];
