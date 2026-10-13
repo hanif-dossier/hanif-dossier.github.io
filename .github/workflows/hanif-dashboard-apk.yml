@@ -1,9 +1,9 @@
-# Membangun APK Android Hanif Dashboard (Capacitor, folder aplikasi-hanif-dashboard) lalu mengunggahnya ke rilis
-# "hanif-dashboard-apk" supaya ada satu link unduh tetap:
-#   https://github.com/hanif-dossier/hanif-dossier.github.io/releases/download/hanif-dashboard-apk/hanif-dashboard.apk
+# Membangun APK Android My Little Brain (Capacitor, folder aplikasi-hanif-dashboard) lalu mengunggahnya ke rilis
+# "my-little-brain-apk" supaya ada satu link unduh tetap:
+#   https://github.com/hanif-dossier/hanif-dossier.github.io/releases/download/my-little-brain-apk/my-little-brain.apk
 # Dibuat 13 Okt 2026: versi PWA di HP pemilik malah membuka Hanif Dossier (alamatnya satu situs), jadi dashboard dibungkus
 # jadi aplikasi sendiri.
-name: hanif-dashboard-apk
+name: my-little-brain-apk
 on:
   push:
     branches: [main]
@@ -34,6 +34,6 @@ jobs:
       - name: Unggah ke rilis
         env: { GH_TOKEN: '${{ github.token }}' }
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk hanif-dashboard.apk
-          gh release view hanif-dashboard-apk >/dev/null 2>&1 || gh release create hanif-dashboard-apk --title "Hanif Dashboard untuk Android" --notes "Unduh hanif-dashboard.apk lalu pasang. Aplikasi membuka Hanif Dashboard di dalam aplikasinya sendiri."
-          gh release upload hanif-dashboard-apk hanif-dashboard.apk --clobber
+          cp android/app/build/outputs/apk/debug/app-debug.apk my-little-brain.apk
+          gh release view my-little-brain-apk >/dev/null 2>&1 || gh release create my-little-brain-apk --title "My Little Brain untuk Android" --notes "Unduh my-little-brain.apk lalu pasang. Aplikasi membuka My Little Brain di dalam aplikasinya sendiri."
+          gh release upload my-little-brain-apk my-little-brain.apk --clobber

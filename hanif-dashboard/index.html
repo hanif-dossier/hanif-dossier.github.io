@@ -7,18 +7,20 @@
 <meta name="theme-color" content="#F2F4F9">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="My Little Brain">
+<meta name="application-name" content="My Little Brain">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="ikon-192.png?v=2" type="image/png">
 <link rel="apple-touch-icon" href="ikon-180.png?v=2">
-<title>Hanif Dashboard</title>
+<title>My Little Brain</title>
 </head>
 <body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-  /* Hanif Dashboard (12 Okt 2026): gaya dasbor CRM. Kiri menu, kanan ringkasan aset, jadwal sholat, papan tugas, dan tautan.
+  /* My Little Brain (12 Okt 2026): gaya dasbor CRM. Kiri menu, kanan ringkasan aset, jadwal sholat, papan tugas, dan tautan.
      Angka aset baru tampil setelah dibuka dengan sandi NTA; halaman ini sendiri publik (noindex) dan tidak memuat angka apa pun. */
   :root {
     --latar: #F2F4F9; --kartu: #FFFFFF; --kartu2: #F6F7FB; --tinta: #151B2F; --redup: #636C84; --garis: rgba(21, 27, 47, .08);
@@ -58,7 +60,7 @@
   .sisi { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 6px; padding: 22px 16px; border-right: 1px solid var(--garis); background: var(--kartu); transition: background-color .35s; }
   .merek { display: flex; align-items: center; gap: 11px; padding: 4px 8px 18px; text-decoration: none; }
   .merek img { width: 38px; height: 38px; border-radius: 11px; }
-  .merek b { display: block; font: 400 19px/1.1 var(--judul); }
+  .merek b { display: block; font: 400 18px/1.1 var(--judul); white-space: nowrap; }
   .merek small { display: block; font-size: 11.5px; color: var(--redup); font-weight: 600; }
   .menu { display: flex; flex-direction: column; gap: 4px; }
   .menu a { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 14px; text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--redup); transition: background-color .2s, color .2s; }
@@ -294,7 +296,7 @@
 
 <div class="app">
   <nav class="sisi" aria-label="Menu">
-    <a class="merek" href="#ringkasan"><img src="ikon-192.png?v=2" alt=""><span><b>Hanif</b><small>Dashboard pribadi</small></span></a>
+    <a class="merek" href="#ringkasan"><img src="ikon-192.png?v=2" alt=""><span><b>My Little Brain</b><small>Dasbor pribadi Hanif</small></span></a>
     <div class="menu" id="menu"></div>
     <div class="sisi-bawah">
       <div class="tema" role="group" aria-label="Tema tampilan">

@@ -1,7 +1,7 @@
 {
-  "name": "Hanif Dashboard",
-  "short_name": "Hanif Dashboard",
-  "description": "Dasbor pribadi Hanif: aset usaha dan crypto, jadwal sholat Pontianak, papan tugas, dan semua tautan kerja.",
+  "name": "My Little Brain",
+  "short_name": "My Little Brain",
+  "description": "My Little Brain: dasbor pribadi Hanif. Aset usaha dan pribadi, jadwal sholat Pontianak, papan tugas, dan semua tautan kerja.",
   "start_url": "/hanif-dashboard/",
   "scope": "/hanif-dashboard/",
   "display": "standalone",

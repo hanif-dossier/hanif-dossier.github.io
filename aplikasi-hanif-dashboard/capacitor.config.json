@@ -1,6 +1,6 @@
 {
   "appId": "id.hanif.dashboard",
-  "appName": "Hanif Dashboard",
+  "appName": "My Little Brain",
   "webDir": "www",
   "server": { "url": "https://hanif-dossier.github.io/hanif-dashboard/", "cleartext": false },
   "android": { "allowMixedContent": false, "backgroundColor": "#F2F4F9" }
