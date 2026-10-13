@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Hanif Dashboard</string>
+    <string name="title_activity_main">Hanif Dashboard</string>
+    <string name="package_name">id.hanif.dashboard</string>
+    <string name="custom_url_scheme">id.hanif.dashboard</string>
+</resources>

@@ -1,0 +1,7 @@
+{
+  "appId": "id.hanif.dashboard",
+  "appName": "Hanif Dashboard",
+  "webDir": "www",
+  "server": { "url": "https://hanif-dossier.github.io/hanif-dashboard/", "cleartext": false },
+  "android": { "allowMixedContent": false, "backgroundColor": "#F2F4F9" }
+}

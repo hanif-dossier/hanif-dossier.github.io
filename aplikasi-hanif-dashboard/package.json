@@ -1,0 +1,11 @@
+{
+  "name": "hanif-dashboard-android",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aplikasi Android Hanif Dashboard (Capacitor). Membuka hanif-dossier.github.io/hanif-dashboard/ di dalam aplikasinya sendiri.",
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2"
+  }
+}

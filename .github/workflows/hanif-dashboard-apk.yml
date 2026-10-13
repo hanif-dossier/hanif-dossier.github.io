@@ -1,0 +1,39 @@
+# Membangun APK Android Hanif Dashboard (Capacitor, folder aplikasi-hanif-dashboard) lalu mengunggahnya ke rilis
+# "hanif-dashboard-apk" supaya ada satu link unduh tetap:
+#   https://github.com/hanif-dossier/hanif-dossier.github.io/releases/download/hanif-dashboard-apk/hanif-dashboard.apk
+# Dibuat 13 Okt 2026: versi PWA di HP pemilik malah membuka Hanif Dossier (alamatnya satu situs), jadi dashboard dibungkus
+# jadi aplikasi sendiri.
+name: hanif-dashboard-apk
+on:
+  push:
+    branches: [main]
+    paths: ['aplikasi-hanif-dashboard/**', '.github/workflows/hanif-dashboard-apk.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: aplikasi-hanif-dashboard } }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm, cache-dependency-path: aplikasi-hanif-dashboard/package-lock.json }
+      - uses: actions/setup-java@v5
+        with: { distribution: temurin, java-version: 21 }
+      - name: Siapkan Android SDK (platform 36 + build-tools)
+        run: |
+          SDK="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDK" --licenses >/dev/null 2>&1 || true
+          "$SDK" "platforms;android-36" "build-tools;36.0.0" >/dev/null
+      - run: npm ci
+      - run: npx cap sync android
+      - run: chmod +x android/gradlew
+      - name: Bangun APK
+        run: cd android && ./gradlew assembleDebug --no-daemon
+      - name: Unggah ke rilis
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk hanif-dashboard.apk
+          gh release view hanif-dashboard-apk >/dev/null 2>&1 || gh release create hanif-dashboard-apk --title "Hanif Dashboard untuk Android" --notes "Unduh hanif-dashboard.apk lalu pasang. Aplikasi membuka Hanif Dashboard di dalam aplikasinya sendiri."
+          gh release upload hanif-dashboard-apk hanif-dashboard.apk --clobber
