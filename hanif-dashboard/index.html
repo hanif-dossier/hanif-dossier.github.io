@@ -293,6 +293,10 @@
     .tabel-koin input { width: 88px; }
   }
   @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+.dua-kekayaan{display:grid;grid-template-columns:1fr 1fr;gap:18px}.dua-kekayaan .nilai-besar{font-size:clamp(28px,2.6vw,40px);white-space:nowrap}.dua-kekayaan>div+div{border-left:1px solid var(--garis);padding-left:18px}
+@media (max-width:520px){.dua-kekayaan{grid-template-columns:1fr}.dua-kekayaan>div+div{border-left:0;padding-left:0;border-top:1px solid var(--garis);padding-top:14px}}
+.grup{display:inline-block;font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.grup-pribadi{background:color-mix(in srgb,var(--aksen) 18%,transparent);color:var(--aksen)}.grup-usaha{background:color-mix(in srgb,var(--c-mbg) 20%,transparent);color:var(--c-mbg)}
 </style>
 
 <div class="app">
@@ -340,7 +344,7 @@
         <div id="rinciPribadi"></div>
       </div>
       <div class="kartu muncul" style="--i:5">
-        <div class="kepala"><h2>Usaha NTA</h2><a class="pil kecil" href="https://mbg.markasku.my.id/#neraca" target="_blank" rel="noopener">Buka neraca</a></div>
+        <div class="kepala"><h2>Aset usaha (NTA)</h2><a class="pil kecil" href="https://mbg.markasku.my.id/#neraca" target="_blank" rel="noopener">Buka neraca</a></div>
         <div id="rinciNta"></div>
       </div>
     </section>
@@ -560,7 +564,7 @@ function hitungPribadi() { const P = PRIBADI || {}, aset = jml(asetGabung()), ut
 function gambarAset() {
   const kek = $('#kekayaan');
   if (!terbuka()) {
-    kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan bersih</span>${svg('gembok', 18)}</div>
+    kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan pribadi &amp; usaha</span>${svg('gembok', 18)}</div>
       <div class="nilai-besar rahasia">Rp•••••••</div>
       <div class="terkunci"><p>Angka aset muncul setelah masuk dengan akun Markasku. Halaman ini sendiri tidak menyimpan angka apa pun.</p>
       <button class="pil utama" id="bBukaKek">${svg('terbuka', 16)}Buka angka</button></div>`;
@@ -569,17 +573,16 @@ function gambarAset() {
     $('#rinciPribadi').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Masuk untuk melihat aset dan utang pribadimu dari Markasku.</p>`;
     $('#rinciNta').innerHTML = `<p class="catatan-kecil" style="margin:0">Terkunci. Masuk untuk melihat kas, piutang, stok, dan utang usaha.</p>`;
     return; }
-  const H = hitungPribadi(), bersihNta = NTA ? NTA.bersih : 0, total = H.bersih + bersihNta, kotor = H.aset + Math.max(0, bersihNta);
-  const bagian = [['Aset pribadi', H.aset, 'var(--aksen)'], ['Usaha NTA', Math.max(0, bersihNta), 'var(--c-mbg)']].filter(x => x[1] > 0);
-  const labaNaik = NTA && NTA.labaBulan >= 0;
-  kek.innerHTML = `<div class="kepala" style="margin:0"><span class="label">Kekayaan bersih</span>${H.ubah != null ? `<span class="${H.ubah >= 0 ? 'naik' : 'turun'}" title="aset pribadi dibanding akhir ${esc(BLN[+H.lalu.slice(5, 7) - 1])}">pribadi ${H.ubah >= 0 ? '+' : ''}${H.ubah.toFixed(1)}%</span>` : ''}</div>
-    <div><div class="nilai-besar rahasia angka" id="nTotal">${esc(rpRingkas(LALU.nTotal ?? 0))}</div><div class="sub">aset pribadi + usaha NTA − utang pribadi${NTA ? ' · NTA per ' + esc(tglPendek(NTA.tgl)) : ''}</div></div>
-    <div class="porsi" id="porsi">${bagian.map(b => `<i style="background:${b[2]}" data-w="${kotor ? b[1] / kotor * 100 : 0}"></i>`).join('')}</div>
-    <div class="legenda">${bagian.map(b => `<span><i style="background:${b[2]}"></i>${b[0]} <b class="rahasia">${esc(rpRingkas(b[1]))}</b></span>`).join('')}${H.utang ? `<span><i style="background:var(--merah)"></i>Utang pribadi <b class="rahasia">${esc(rpRingkas(-H.utang))}</b></span>` : ''}</div>
+  // 16 Okt 2026, pemilik: "aset pribadi dan aset bisnis/usaha itu dipisah". Dua angka berdiri sendiri, tidak dijumlahkan.
+  const H = hitungPribadi(), labaNaik = NTA && NTA.labaBulan >= 0;
+  kek.innerHTML = `<div class="dua-kekayaan">
+    <div><div class="kepala" style="margin:0"><span class="label">Kekayaan pribadi</span>${H.ubah != null ? `<span class="${H.ubah >= 0 ? 'naik' : 'turun'}" title="dibanding akhir ${esc(BLN[+H.lalu.slice(5, 7) - 1])}">${H.ubah >= 0 ? '+' : ''}${H.ubah.toFixed(1)}%</span>` : ''}</div>
+      <div class="nilai-besar rahasia angka" id="nPribadi">${esc(rpRingkas(LALU.nPribadi ?? 0))}</div><div class="sub">aset pribadi − utang pribadi · dari Markasku</div></div>
+    <div><div class="kepala" style="margin:0"><span class="label">Kekayaan usaha (NTA)</span></div>
+      <div class="nilai-besar rahasia angka" id="nUsaha">${NTA ? esc(rpRingkas(LALU.nUsaha ?? 0)) : '–'}</div><div class="sub">${NTA ? 'aset usaha − utang usaha · per ' + esc(tglPendek(NTA.tgl)) : 'ringkasan NTA belum ada'}</div></div></div>
     ${NTA ? `<div class="dua-angka"><div><small>Penjualan NTA ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia">${esc(rpRingkas(NTA.omzetBulan || 0))}</b></div>
-      <div><small>Laba bersih ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia" style="color:${labaNaik ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpRingkas(NTA.labaBulan))}</b></div></div>` : ''}`;
-  hitungNaik($('#nTotal'), total, rpRingkas);
-  requestAnimationFrame(() => requestAnimationFrame(() => $$('#porsi i').forEach(i => i.style.width = i.dataset.w + '%')));
+      <div><small>Laba bersih usaha ${esc(BLN[+NTA.bulan.slice(5, 7) - 1])}</small><b class="rahasia" style="color:${labaNaik ? 'var(--hijau)' : 'var(--merah)'}">${esc(rpRingkas(NTA.labaBulan))}</b></div></div>` : ''}`;
+  hitungNaik($('#nPribadi'), H.bersih, rpRingkas); if (NTA) hitungNaik($('#nUsaha'), NTA.bersih, rpRingkas);
 
   $('#kpi').innerHTML = KPI.map((k, i) => kartuKpi(k, { H, N: NTA }, i)).join('');
   $$('#kpi [data-tuju]').forEach(el => hitungNaik(el, +el.dataset.tuju, rpRingkas));
@@ -616,13 +619,13 @@ function grafikRiwayat(H) { const b = H.bulan; if (b.length < 2) return '';
       <text x="${x(i).toFixed(1)}" y="${T - 3}" text-anchor="middle" font-size="10" fill="var(--redup)">${BLN3[+b[i].slice(5, 7) - 1]}</text>`).join('')}</svg>`; }
 
 const KPI = [
-  { judul: 'Aset pribadi', ik: 'dompet', w: 'var(--aksen)', n: x => x.H.aset, ket: x => x.H.ubah != null ? `${x.H.ubah >= 0 ? 'naik' : 'turun'} ${Math.abs(x.H.ubah).toFixed(1)}% dari ${BLN[+x.H.lalu.slice(5, 7) - 1]}` : 'dari Markasku' },
-  { judul: 'Utang pribadi', ik: 'utang', w: 'var(--merah)', n: x => x.H.utang, ket: x => x.H.utang ? 'yang masih harus dibayar' : 'tidak ada utang' },
-  { judul: 'Kas dan bank usaha', ik: 'bank', w: 'var(--c-mbg)', n: x => x.N ? x.N.kas + x.N.bank : 0, ket: x => x.N ? 'uang NTA yang siap dipakai' : 'ringkasan NTA belum ada' },
-  { judul: 'Piutang usaha', ik: 'tagihan', w: 'var(--c-bisnis)', n: x => x.N ? x.N.piutang : 0, ket: x => x.N ? 'belum dibayar dapur dan lainnya' : 'ringkasan NTA belum ada' },
+  { judul: 'Aset pribadi', grup: 'Pribadi', ik: 'dompet', w: 'var(--aksen)', n: x => x.H.aset, ket: x => x.H.ubah != null ? `${x.H.ubah >= 0 ? 'naik' : 'turun'} ${Math.abs(x.H.ubah).toFixed(1)}% dari ${BLN[+x.H.lalu.slice(5, 7) - 1]}` : 'dari Markasku' },
+  { judul: 'Utang pribadi', grup: 'Pribadi', ik: 'utang', w: 'var(--merah)', n: x => x.H.utang, ket: x => x.H.utang ? 'yang masih harus dibayar' : 'tidak ada utang' },
+  { judul: 'Kas dan bank usaha', grup: 'Usaha', ik: 'bank', w: 'var(--c-mbg)', n: x => x.N ? x.N.kas + x.N.bank : 0, ket: x => x.N ? 'uang NTA yang siap dipakai' : 'ringkasan NTA belum ada' },
+  { judul: 'Piutang usaha', grup: 'Usaha', ik: 'tagihan', w: 'var(--c-bisnis)', n: x => x.N ? x.N.piutang : 0, ket: x => x.N ? 'belum dibayar dapur dan lainnya' : 'ringkasan NTA belum ada' },
 ];
 function kartuKpi(k, x, i) { const ada = x != null;
-  return `<div class="kartu muncul" style="--w:${k.w};--i:${3 + i * .5}"><div class="atasan"><span class="label">${k.judul}</span><span class="ik">${svg(k.ik, 19)}</span></div>
+  return `<div class="kartu muncul" style="--w:${k.w};--i:${3 + i * .5}"><div class="atasan"><span class="label"><em class="grup grup-${k.grup.toLowerCase()}">${k.grup}</em>${k.judul}</span><span class="ik">${svg(k.ik, 19)}</span></div>
     <div class="nilai rahasia angka" ${ada ? `data-k="kpi${i}" data-tuju="${k.n(x)}"` : ''}>${ada ? esc(rpRingkas(LALU['kpi' + i] ?? 0)) : 'Rp•••••'}</div><small>${ada ? k.ket(x) : 'terkunci'}</small></div>`; }
 
 // ---------- papan tugas (kanban) ----------

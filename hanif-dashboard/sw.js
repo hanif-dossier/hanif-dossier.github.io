@@ -1,5 +1,5 @@
 // Service worker My Little Brain: ambil dari jaringan dulu, salinan terakhir dipakai kalau offline.
-const CACHE = 'hanif-dashboard-v7';
+const CACHE = 'hanif-dashboard-v8';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
 self.addEventListener('fetch', e => {
